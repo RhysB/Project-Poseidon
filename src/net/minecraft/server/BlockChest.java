@@ -68,6 +68,7 @@ public class BlockChest extends BlockContainer {
                     entityitem.motZ = (double) ((float) this.a.nextGaussian() * f3);
                     world.addEntity(entityitem);
                 }
+                tileentitychest.setItem(l, null);
             }
         }
 

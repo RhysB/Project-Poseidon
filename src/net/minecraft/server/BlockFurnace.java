@@ -137,6 +137,7 @@ public class BlockFurnace extends BlockContainer {
                         entityitem.motZ = (double) ((float) this.a.nextGaussian() * f3);
                         world.addEntity(entityitem);
                     }
+                    tileentityfurnace.setItem(l, null);
                 }
             }
         }

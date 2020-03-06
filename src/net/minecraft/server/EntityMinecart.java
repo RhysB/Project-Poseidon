@@ -160,6 +160,7 @@ public class EntityMinecart extends Entity implements IInventory {
                                 entityitem.motZ = (double) ((float) this.random.nextGaussian() * f3);
                                 this.world.addEntity(entityitem);
                             }
+                            entityminecart.setItem(j, null);
                         }
                     }
 

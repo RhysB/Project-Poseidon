@@ -239,6 +239,7 @@ public class BlockDispenser extends BlockContainer {
                     entityitem.motZ = (double) ((float) this.a.nextGaussian() * f3);
                     world.addEntity(entityitem);
                 }
+                tileentitydispenser.setItem(l, null);
             }
         }
 
