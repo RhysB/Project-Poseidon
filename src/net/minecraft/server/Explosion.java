@@ -198,6 +198,16 @@ public class Explosion {
             this.wasCanceled = true;
             return;
         }
+        //Project Poseidon Start
+        //Credit to Notcz in Modification Station
+        arraylist.clear();
+        this.blocks.clear();
+        for(final org.bukkit.block.Block block2: event.blockList()) {
+            final ChunkPosition coords = new ChunkPosition(block2.getX(), block2.getY(), block2.getZ());
+            arraylist.add(coords);
+            this.blocks.add(coords);
+        }
+        //Project Poseidon End
         // CraftBukkit end
 
         for (int i = arraylist.size() - 1; i >= 0; --i) {
