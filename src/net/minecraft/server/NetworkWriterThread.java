@@ -47,7 +47,7 @@ class NetworkWriterThread extends Thread {
                         NetworkManager.a(this.a, (Exception) ioexception);
                     }
 
-                    ioexception.printStackTrace();
+                    //ioexception.printStackTrace(); //Project Poseidon Remove - Credit to Notcz in Modification Station
                 }
             } finally {
                 if (flag) {

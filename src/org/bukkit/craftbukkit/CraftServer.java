@@ -77,7 +77,7 @@ import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
 
 public final class CraftServer implements Server {
-    private final String serverName = "Craftbukkit";
+    private final String serverName = "Project Poseidon Craftbukkit";
     private final String serverVersion;
     private final String protocolVersion = "1.7.3";
     private final ServicesManager servicesManager = new SimpleServicesManager();
