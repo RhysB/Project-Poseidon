@@ -80,6 +80,7 @@ public final class CraftServer implements Server {
     private final String serverName = "Project Poseidon Craftbukkit";
     private final String serverVersion;
     private final String protocolVersion = "1.7.3";
+    private final String GameVersion = "b1.7.3";
     private final ServicesManager servicesManager = new SimpleServicesManager();
     private final BukkitScheduler scheduler = new CraftScheduler(this);
     private final SimpleCommandMap commandMap = new SimpleCommandMap(this);
@@ -181,6 +182,11 @@ public final class CraftServer implements Server {
         } catch (Throwable ex) {
             Logger.getLogger(CraftServer.class.getName()).log(Level.SEVERE, ex.getMessage() + " loading " + plugin.getDescription().getFullName() + " (Is it up to date?)", ex);
         }
+    }
+
+    @Override
+    public String getGameVersion() {
+        return getGameVersion();
     }
 
     public String getName() {

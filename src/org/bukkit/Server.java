@@ -22,6 +22,14 @@ import org.bukkit.scheduler.BukkitScheduler;
  * Represents a server implementation
  */
 public interface Server {
+
+
+    /**
+     * Gets the name of this server game version
+     *
+     * @return server game version
+     */
+    public String getGameVersion();
     /**
      * Used for all administrative messages, such as an operator using a command.
      *
