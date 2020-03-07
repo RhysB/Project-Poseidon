@@ -1,29 +1,19 @@
 package net.minecraft.server;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Logger;
-
-// CraftBukkit start
+import com.johnymuffin.poseidon.PlayerTracker;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.command.ColouredConsoleSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerPortalEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.Bukkit;
+import org.bukkit.event.player.*;
+
+import java.io.*;
+import java.util.*;
+import java.util.logging.Logger;
+
+// CraftBukkit start
 // CraftBukkit end
 
 public class ServerConfigurationManager {
@@ -111,6 +101,7 @@ public class ServerConfigurationManager {
 
     public void c(EntityPlayer entityplayer) {
         this.players.add(entityplayer);
+        PlayerTracker.getInstance().addPlayer(entityplayer.name);
         WorldServer worldserver = this.server.getWorldServer(entityplayer.dimension);
 
         worldserver.chunkProviderServer.getChunkAt((int) entityplayer.locX >> 4, (int) entityplayer.locZ >> 4);
@@ -139,6 +130,22 @@ public class ServerConfigurationManager {
     }
 
     public String disconnect(EntityPlayer entityplayer) { // CraftBukkit - changed return type
+        //Project POSEIDON Start
+        boolean found = false;
+        for (int i = 0; i < this.players.size(); ++i) {
+            EntityPlayer ep = (EntityPlayer) this.players.get(i);
+            if (entityplayer.name.equalsIgnoreCase(entityplayer.name)) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            return null;
+        }
+        PlayerTracker.getInstance().removePlayer(entityplayer.name);
+        //Project POSEIDON End
+
+
         // CraftBukkit start
         // Quitting must be before we do final save of data, in case plugins need to modify it
         this.getPlayerManager(entityplayer.dimension).removePlayer(entityplayer);
@@ -209,6 +216,7 @@ public class ServerConfigurationManager {
         // this.server.getTracker(entityplayer.dimension).untrackEntity(entityplayer); // CraftBukkit
         this.getPlayerManager(entityplayer.dimension).removePlayer(entityplayer);
         this.players.remove(entityplayer);
+        PlayerTracker.getInstance().removePlayer(entityplayer.name); //Project POSEIDON
         this.server.getWorldServer(entityplayer.dimension).removeEntity(entityplayer);
         ChunkCoordinates chunkcoordinates = entityplayer.getBed();
 
@@ -267,6 +275,7 @@ public class ServerConfigurationManager {
         this.getPlayerManager(entityplayer1.dimension).addPlayer(entityplayer1);
         worldserver.addEntity(entityplayer1);
         this.players.add(entityplayer1);
+        PlayerTracker.getInstance().addPlayer(entityplayer1.name); //Project POSEIDON
         this.updateClient(entityplayer1); // CraftBukkit
         entityplayer1.x();
         return entityplayer1;
@@ -606,7 +615,8 @@ public class ServerConfigurationManager {
         }
     }
 
-    public void a(int i, int j, int k, TileEntity tileentity) {}
+    public void a(int i, int j, int k, TileEntity tileentity) {
+    }
 
     public void k(String s) {
         this.i.add(s);
