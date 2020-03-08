@@ -45,12 +45,14 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      * @param loc
      */
     public void setCompassTarget(Location loc);
+    //Project Poseidon Start
     /**
      * Get the players Mojang UUID.
      *
      * @return Player UUID
      */
     public UUID getPlayerUUID();
+    //Project Poseidon End
     /**
      * Get the previously set compass target.
      *

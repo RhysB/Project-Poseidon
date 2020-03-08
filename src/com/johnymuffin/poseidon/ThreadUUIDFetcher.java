@@ -7,6 +7,7 @@ import org.bukkit.craftbukkit.CraftServer;
 
 import java.util.UUID;
 
+import static com.johnymuffin.poseidon.UUIDPlayerStorage.generateOfflineUUID;
 import static com.johnymuffin.poseidon.evilmidget38.UUIDFetcher.getUUIDOf;
 
 public class ThreadUUIDFetcher extends Thread {
@@ -29,6 +30,7 @@ public class ThreadUUIDFetcher extends Thread {
                 uuid = getUUIDOf(loginPacket.name);
                 if(uuid == null) {
                     System.out.println(loginPacket.name + " does not have a Mojang UUID associated with their name");
+                    System.out.println("Using Offline Based UUID for " + loginPacket.name + " - " + generateOfflineUUID(loginPacket.name));
                 } else {
                     System.out.println("Fetched UUID from Mojang for " + loginPacket.name + " - " + uuid.toString());
                     UUIDPlayerStorage.getInstance().addPlayerOnlineUUID(loginPacket.name, uuid);

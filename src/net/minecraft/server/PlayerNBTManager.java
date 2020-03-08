@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import com.johnymuffin.poseidon.UUIDPlayerStorage;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -178,8 +180,8 @@ public class PlayerNBTManager implements PlayerFileData, IDataManager {
 
             entityhuman.d(nbttagcompound);
             File file1 = new File(this.c, "_tmp_.dat");
-            File file2 = new File(this.c, entityhuman.name + ".dat");
-
+            //File file2 = new File(this.c, entityhuman.name + ".dat");
+            File file2 = new File(this.c, UUIDPlayerStorage.getInstance().getUUIDGraceful(entityhuman.name) + ".dat");
             CompressedStreamTools.a(nbttagcompound, (OutputStream) (new FileOutputStream(file1)));
             if (file2.exists()) {
                 file2.delete();
@@ -198,10 +200,38 @@ public class PlayerNBTManager implements PlayerFileData, IDataManager {
             entityhuman.e(nbttagcompound);
         }
     }
+    //Credit https://www.journaldev.com/861/java-copy-file
+    private static void copyFileUsingStream(File source, File dest) throws IOException {
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new FileInputStream(source);
+            os = new FileOutputStream(dest);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        } finally {
+            is.close();
+            os.close();
+        }
+    }
 
     public NBTTagCompound a(String s) {
         try {
-            File file1 = new File(this.c, s + ".dat");
+            File file1 = new File(this.c, UUIDPlayerStorage.getInstance().getUUIDGraceful(s) + ".dat");
+            File file2 = new File(this.c, s + ".dat");
+            if(!file1.exists()) {
+                if(file2.exists()) {
+                    //Convert player data
+                    copyFileUsingStream(file2, file1);
+                    File file3 = new File(this.c, s + ".datbackup");
+                    file2.renameTo(file3);
+                    System.out.println("Converting playerdata for " + s + " to a UUID");
+                }
+            }
+
 
             if (file1.exists()) {
                 return CompressedStreamTools.a((InputStream) (new FileInputStream(file1)));
