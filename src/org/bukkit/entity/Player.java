@@ -1,6 +1,8 @@
 package org.bukkit.entity;
 
 import java.net.InetSocketAddress;
+import java.util.UUID;
+
 import org.bukkit.Achievement;
 import org.bukkit.Effect;
 import org.bukkit.Instrument;
@@ -43,7 +45,12 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      * @param loc
      */
     public void setCompassTarget(Location loc);
-
+    /**
+     * Get the players Mojang UUID.
+     *
+     * @return Player UUID
+     */
+    public UUID getPlayerUUID();
     /**
      * Get the previously set compass target.
      *

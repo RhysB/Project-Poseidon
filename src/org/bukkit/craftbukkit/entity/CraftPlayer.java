@@ -2,6 +2,9 @@ package org.bukkit.craftbukkit.entity;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.util.UUID;
+
+import com.johnymuffin.poseidon.UUIDPlayerStorage;
 import net.minecraft.server.EntityHuman;
 import net.minecraft.server.EntityPlayer;
 import net.minecraft.server.Packet131;
@@ -150,6 +153,10 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     public void setCompassTarget(Location loc) {
         // Do not directly assign here, from the packethandler we'll assign it.
         getHandle().netServerHandler.sendPacket(new Packet6SpawnPosition(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
+    }
+
+    public UUID getPlayerUUID() {
+        return UUIDPlayerStorage.getInstance().getPlayerUUID(getName());
     }
 
     public Location getCompassTarget() {

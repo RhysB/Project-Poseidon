@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import com.johnymuffin.poseidon.ThreadUUIDFetcher;
+
 import java.net.Socket;
 import java.util.Random;
 import java.util.logging.Logger;
@@ -61,7 +63,7 @@ public class NetLoginHandler extends NetHandler {
         }
     }
 
-    public void a(Packet1Login packet1login) {
+    public void startConnection(Packet1Login packet1login) {
         this.g = packet1login.name;
         if (packet1login.a != 14) {
             if (packet1login.a > 14) {
@@ -70,11 +72,19 @@ public class NetLoginHandler extends NetHandler {
                 this.disconnect("Outdated client!");
             }
         } else {
-            if (!this.server.onlineMode) {
-                this.b(packet1login);
-            } else {
-                (new ThreadLoginVerifier(this, packet1login, this.server.server)).start(); // CraftBukkit
-            }
+            (new ThreadUUIDFetcher(this, packet1login, this.server.server)).start();
+        }
+    }
+
+
+    public void authenticatePlayer(Packet1Login packet1login) {
+        this.g = packet1login.name;
+
+        if (!this.server.onlineMode) {
+            this.b(packet1login);
+        } else {
+            (new ThreadLoginVerifier(this, packet1login, this.server.server)).start(); // CraftBukkit
+
         }
     }
 

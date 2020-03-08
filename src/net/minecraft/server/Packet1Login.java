@@ -35,7 +35,8 @@ public class Packet1Login extends Packet {
     }
 
     public void a(NetHandler nethandler) {
-        nethandler.a(this);
+        //nethandler.authenticatePlayer(this);
+        nethandler.startConnection(this);
     }
 
     public int a() {

@@ -16,7 +16,11 @@ public abstract class NetHandler {
         this.a((Packet) packet255kickdisconnect);
     }
 
-    public void a(Packet1Login packet1login) {
+    public void authenticatePlayer(Packet1Login packet1login) {
+        this.a((Packet) packet1login);
+    }
+
+    public void startConnection(Packet1Login packet1login) {
         this.a((Packet) packet1login);
     }
 
