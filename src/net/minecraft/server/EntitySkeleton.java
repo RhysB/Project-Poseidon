@@ -58,8 +58,8 @@ public class EntitySkeleton extends EntityMonster {
                 float f1 = MathHelper.a(d0 * d0 + d1 * d1) * 0.2F;
 
                 this.world.makeSound(this, "random.bow", 1.0F, 1.0F / (this.random.nextFloat() * 0.4F + 0.8F));
-                this.world.addEntity(entityarrow);
                 entityarrow.a(d0, d2 + (double) f1, d1, 0.6F, 12.0F);
+                this.world.addEntity(entityarrow);
                 this.attackTicks = 30;
             }
 
