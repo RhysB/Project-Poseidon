@@ -19,7 +19,7 @@ public class ThreadUUIDFetcher extends Thread {
     public ThreadUUIDFetcher(NetLoginHandler netloginhandler, Packet1Login packet1login, CraftServer server) {
         this.server = server;
         this.netLoginHandler = netloginhandler;
-        this.loginPacket = packet1login;
+        this.loginPacket = packet1login; // The login packet
 
     }
 
