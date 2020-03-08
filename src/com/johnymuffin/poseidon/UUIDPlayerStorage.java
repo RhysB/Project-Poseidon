@@ -28,7 +28,7 @@ public class UUIDPlayerStorage {
         playerUUIDs.put(playerName, uuid);
     }
 
-    public UUID getPlayerUUID(String playerName) {
+    public synchronized UUID getPlayerUUID(String playerName) {
         if(playerUUIDs.containsKey(playerName)) {
             return playerUUIDs.get(playerName);
         }

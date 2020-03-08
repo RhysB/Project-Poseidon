@@ -23,23 +23,31 @@ public class ThreadUUIDFetcher extends Thread {
     }
 
     public void run() {
-        UUID uuid = null;
-        try {
-            uuid = getUUIDOf(loginPacket.name);
-            if(uuid == null) {
-                System.out.println(loginPacket.name + " does not have a Mojang UUID associated with their name");
-            } else {
-                System.out.println("Fetched UUID from Mojang for " + loginPacket.name + " - " + uuid.toString());
-                UUIDPlayerStorage.getInstance().addPlayerOnlineUUID(loginPacket.name, uuid);
+        UUID uuid = UUIDPlayerStorage.getInstance().getPlayerUUID(loginPacket.name);
+        if(uuid == null) {
+            try {
+                uuid = getUUIDOf(loginPacket.name);
+                if(uuid == null) {
+                    System.out.println(loginPacket.name + " does not have a Mojang UUID associated with their name");
+                } else {
+                    System.out.println("Fetched UUID from Mojang for " + loginPacket.name + " - " + uuid.toString());
+                    UUIDPlayerStorage.getInstance().addPlayerOnlineUUID(loginPacket.name, uuid);
+                }
+
+                netLoginHandler.authenticatePlayer(loginPacket);
+
+
+            } catch (Exception e) {
+                this.netLoginHandler.disconnect(ChatColor.RED + "Sorry, we can't connect to Mojang currently, please try again later");
+                e.printStackTrace();
             }
-
+        } else {
+            System.out.println("Fetched UUID from Cache for " + loginPacket.name + " - " + uuid.toString());
             netLoginHandler.authenticatePlayer(loginPacket);
-
-
-        } catch (Exception e) {
-            this.netLoginHandler.disconnect(ChatColor.RED + "Sorry, we can't connect to Mojang currently, please try again later");
-            e.printStackTrace();
         }
+
+
+
     }
 }
 
