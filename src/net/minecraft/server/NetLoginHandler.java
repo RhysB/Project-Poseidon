@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import com.johnymuffin.poseidon.ThreadUUIDFetcher;
+//import com.johnymuffin.poseidon.ThreadUUIDFetcher;
 
 import java.net.Socket;
 import java.util.Random;
@@ -17,7 +17,6 @@ public class NetLoginHandler extends NetHandler {
     private String g = null;
     private Packet1Login h = null;
     private String i = "";
-    private boolean connectionBlocked = false;
 
     public NetLoginHandler(MinecraftServer minecraftserver, Socket socket, String s) {
         this.server = minecraftserver;
@@ -45,7 +44,6 @@ public class NetLoginHandler extends NetHandler {
     }
 
     public void disconnect(String s) {
-        connectionBlocked = true;
         try {
             a.info("Disconnecting " + this.b() + ": " + s);
             this.networkManager.queue(new Packet255KickDisconnect(s));
@@ -65,7 +63,7 @@ public class NetLoginHandler extends NetHandler {
         }
     }
 
-    public void startConnection(Packet1Login packet1login) {
+    public void a(Packet1Login packet1login) {
         this.g = packet1login.name;
         if (packet1login.a != 14) {
             if (packet1login.a > 14) {
@@ -74,26 +72,18 @@ public class NetLoginHandler extends NetHandler {
                 this.disconnect("Outdated client!");
             }
         } else {
-            (new ThreadUUIDFetcher(this, packet1login, this.server.server)).start();
-        }
-    }
-
-
-    public void authenticatePlayer(Packet1Login packet1login) {
-        this.g = packet1login.name;
-
-        if (!this.server.onlineMode) {
-            this.b(packet1login);
-        } else {
-            (new ThreadLoginVerifier(this, packet1login, this.server.server)).start(); // CraftBukkit
-
+//            if (!this.server.onlineMode) {
+//                this.b(packet1login);
+//            } else {
+                (new ThreadLoginVerifier(this, packet1login, this.server.server)).start(); // CraftBukkit
+//            }
         }
     }
 
     public void b(Packet1Login packet1login) {
         EntityPlayer entityplayer = this.server.serverConfigurationManager.a(this, packet1login.name);
 
-        if (entityplayer != null && !connectionBlocked) {
+        if (entityplayer != null) {
             this.server.serverConfigurationManager.b(entityplayer);
             // entityplayer.a((World) this.server.a(entityplayer.dimension)); // CraftBukkit - set by Entity
             // CraftBukkit - add world and location to 'logged in' message.
