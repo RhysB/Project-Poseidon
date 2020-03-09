@@ -17,6 +17,7 @@ public class NetLoginHandler extends NetHandler {
     private String g = null;
     private Packet1Login h = null;
     private String i = "";
+    private boolean connectionBlocked = false;
 
     public NetLoginHandler(MinecraftServer minecraftserver, Socket socket, String s) {
         this.server = minecraftserver;
@@ -44,6 +45,7 @@ public class NetLoginHandler extends NetHandler {
     }
 
     public void disconnect(String s) {
+        connectionBlocked = true;
         try {
             a.info("Disconnecting " + this.b() + ": " + s);
             this.networkManager.queue(new Packet255KickDisconnect(s));
@@ -91,7 +93,7 @@ public class NetLoginHandler extends NetHandler {
     public void b(Packet1Login packet1login) {
         EntityPlayer entityplayer = this.server.serverConfigurationManager.a(this, packet1login.name);
 
-        if (entityplayer != null) {
+        if (entityplayer != null && !connectionBlocked) {
             this.server.serverConfigurationManager.b(entityplayer);
             // entityplayer.a((World) this.server.a(entityplayer.dimension)); // CraftBukkit - set by Entity
             // CraftBukkit - add world and location to 'logged in' message.

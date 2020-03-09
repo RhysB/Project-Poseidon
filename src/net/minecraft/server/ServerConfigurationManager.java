@@ -1,6 +1,5 @@
 package net.minecraft.server;
 
-import com.johnymuffin.poseidon.PlayerTracker;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
@@ -101,7 +100,7 @@ public class ServerConfigurationManager {
 
     public void c(EntityPlayer entityplayer) {
         this.players.add(entityplayer);
-        PlayerTracker.getInstance().addPlayer(entityplayer.name);
+        //PlayerTracker.getInstance().addPlayer(entityplayer.name);
         WorldServer worldserver = this.server.getWorldServer(entityplayer.dimension);
 
         worldserver.chunkProviderServer.getChunkAt((int) entityplayer.locX >> 4, (int) entityplayer.locZ >> 4);
@@ -130,20 +129,7 @@ public class ServerConfigurationManager {
     }
 
     public String disconnect(EntityPlayer entityplayer) { // CraftBukkit - changed return type
-        //Project POSEIDON Start
-        boolean found = false;
-        for (int i = 0; i < this.players.size(); ++i) {
-            EntityPlayer ep = (EntityPlayer) this.players.get(i);
-            if (entityplayer.name.equalsIgnoreCase(entityplayer.name)) {
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            return null;
-        }
-        PlayerTracker.getInstance().removePlayer(entityplayer.name);
-        //Project POSEIDON End
+        if(entityplayer.netServerHandler.disconnected) return null; // CraftBukkit - exploitsies fix https://github.com/OvercastNetwork/CraftBukkit/commit/6f79ca5c54d30d04803143975757713a01bf4e35
 
 
         // CraftBukkit start
@@ -152,6 +138,22 @@ public class ServerConfigurationManager {
         PlayerQuitEvent playerQuitEvent = new PlayerQuitEvent(this.cserver.getPlayer(entityplayer), "\u00A7e" + entityplayer.name + " left the game.");
         this.cserver.getPluginManager().callEvent(playerQuitEvent);
         // CraftBukkit end
+
+        //Project POSEIDON Start
+//        boolean found = false;
+//        for (int i = 0; i < this.players.size(); ++i) {
+//            EntityPlayer ep = (EntityPlayer) this.players.get(i);
+//            if (entityplayer.name.equalsIgnoreCase(ep.name)) {
+//                found = true;
+//                break;
+//            }
+//        }
+//        if (!found) {
+//            //return null; - This caused a bug which could block future connections if a quit event occurs before a join event, i think
+//            playerQuitEvent.setQuitMessage(null);
+//        }
+//        PlayerTracker.getInstance().removePlayer(entityplayer.name);
+        //Project POSEIDON End
 
         this.playerFileData.a(entityplayer);
         this.server.getWorldServer(entityplayer.dimension).kill(entityplayer);
@@ -216,7 +218,7 @@ public class ServerConfigurationManager {
         // this.server.getTracker(entityplayer.dimension).untrackEntity(entityplayer); // CraftBukkit
         this.getPlayerManager(entityplayer.dimension).removePlayer(entityplayer);
         this.players.remove(entityplayer);
-        PlayerTracker.getInstance().removePlayer(entityplayer.name); //Project POSEIDON
+        //PlayerTracker.getInstance().removePlayer(entityplayer.name); //Project POSEIDON
         this.server.getWorldServer(entityplayer.dimension).removeEntity(entityplayer);
         ChunkCoordinates chunkcoordinates = entityplayer.getBed();
 
@@ -275,7 +277,7 @@ public class ServerConfigurationManager {
         this.getPlayerManager(entityplayer1.dimension).addPlayer(entityplayer1);
         worldserver.addEntity(entityplayer1);
         this.players.add(entityplayer1);
-        PlayerTracker.getInstance().addPlayer(entityplayer1.name); //Project POSEIDON
+        //PlayerTracker.getInstance().addPlayer(entityplayer1.name); //Project POSEIDON
         this.updateClient(entityplayer1); // CraftBukkit
         entityplayer1.x();
         return entityplayer1;
