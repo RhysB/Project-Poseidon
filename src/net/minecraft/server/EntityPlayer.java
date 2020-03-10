@@ -9,9 +9,11 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.ChunkCompressionThread;
 import org.bukkit.craftbukkit.CraftWorld;
+import org.bukkit.craftbukkit.inventory.CraftInventory;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
+import org.bukkit.event.inventory.InventoryOpenedEvent;
 // CraftBukkit end
 
 public class EntityPlayer extends EntityHuman implements ICrafting {
@@ -374,6 +376,13 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
     public void a(IInventory iinventory) {
         this.ai();
+        
+        // poseidon
+        InventoryOpenedEvent event = new InventoryOpenedEvent(Bukkit.getPlayerExact(this.name), new CraftInventory(iinventory));
+        Bukkit.getServer().getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        
         this.netServerHandler.sendPacket(new Packet100OpenWindow(this.bO, 0, iinventory.getName(), iinventory.getSize()));
         this.activeContainer = new ContainerChest(this.inventory, iinventory);
         this.activeContainer.windowId = this.bO;
