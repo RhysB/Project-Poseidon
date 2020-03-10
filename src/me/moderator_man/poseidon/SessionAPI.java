@@ -7,8 +7,9 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * A wrapper class for the Minecraft session API TODO maybe make the HTTP
- * requests asynchronous? idk if it really matters
+ * A wrapper class for the Minecraft session API
+ * 
+ * TODO maybe make the HTTP requests asynchronous? idk if it really matters
  * 
  * @author moderator_man
  */
@@ -18,8 +19,7 @@ public class SessionAPI
 
     public static boolean hasJoined(String username, String serverId)
     {
-        String response = httpGetRequest(
-                SESSION_BASE + String.format("checkserver.jsp?user=%s&serverId=%s", username, serverId));
+        String response = httpGetRequest(SESSION_BASE + String.format("checkserver.jsp?user=%s&serverId=%s", username, serverId));
         if (response != "YES")
             return false;
         return true;
@@ -27,8 +27,7 @@ public class SessionAPI
 
     public static boolean hasJoined(String username, String serverId, String ip)
     {
-        String response = httpGetRequest(
-                SESSION_BASE + String.format("checkserver.jsp?user=%s&serverId=%s&ip=", username, serverId, ip));
+        String response = httpGetRequest(SESSION_BASE + String.format("checkserver.jsp?user=%s&serverId=%s&ip=", username, serverId, ip));
         if (response != "YES")
             return false;
         return true;
