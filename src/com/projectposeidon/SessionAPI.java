@@ -1,4 +1,4 @@
-package me.moderator_man.poseidon;
+package com.projectposeidon;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
