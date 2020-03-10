@@ -25,14 +25,6 @@ public class SessionAPI
         return true;
     }
 
-    public static boolean hasJoined(String username, String serverId, String ip)
-    {
-        String response = httpGetRequest(SESSION_BASE + String.format("checkserver.jsp?user=%s&serverId=%s&ip=", username, serverId, ip));
-        if (response != "YES")
-            return false;
-        return true;
-    }
-
     private static String httpGetRequest(String url)
     {
         try
