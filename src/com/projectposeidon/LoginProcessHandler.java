@@ -22,7 +22,7 @@ public class LoginProcessHandler {
     private ArrayList<Plugin> pluginPauses = new ArrayList<Plugin>();
 
     public LoginProcessHandler(NetLoginHandler netloginhandler, Packet1Login packet1login, CraftServer server, boolean onlineMode) {
-        loginProcessHandler = this;
+        this.loginProcessHandler = this;
         this.netLoginHandler = netloginhandler;
         this.packet1Login = packet1login;
         this.server = server;
@@ -59,7 +59,7 @@ public class LoginProcessHandler {
     }
 
     private void getUserUUID() {
-        UUID uuid = com.johnymuffin.poseidon.UUIDPlayerStorage.getInstance().getPlayerUUID(packet1Login.name);
+        UUID uuid = UUIDPlayerStorage.getInstance().getPlayerUUID(packet1Login.name);
         if (uuid == null) {
             (new ThreadUUIDFetcher(packet1Login, this)).start();
         } else {
@@ -118,7 +118,7 @@ public class LoginProcessHandler {
                             this.cancel();
                         }
                     }
-                }, 0, 1000);
+                }, 0, 500);
 
 
             } else {

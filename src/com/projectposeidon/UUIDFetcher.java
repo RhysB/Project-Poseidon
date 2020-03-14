@@ -1,4 +1,4 @@
-package com.johnymuffin.poseidon.evilmidget38;
+package com.projectposeidon;
 
 import com.google.common.collect.ImmutableList;
 import org.json.simple.JSONArray;

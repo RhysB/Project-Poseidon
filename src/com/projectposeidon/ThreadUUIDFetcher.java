@@ -8,8 +8,8 @@ import org.bukkit.craftbukkit.CraftServer;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import static com.johnymuffin.poseidon.UUIDPlayerStorage.generateOfflineUUID;
-import static com.johnymuffin.poseidon.evilmidget38.UUIDFetcher.getUUIDOf;
+import static com.projectposeidon.UUIDFetcher.getUUIDOf;
+import static com.projectposeidon.UUIDPlayerStorage.generateOfflineUUID;
 
 public class ThreadUUIDFetcher extends Thread {
 
@@ -25,7 +25,7 @@ public class ThreadUUIDFetcher extends Thread {
     }
 
     public void run() {
-        UUID uuid = com.johnymuffin.poseidon.UUIDPlayerStorage.getInstance().getPlayerUUID(loginPacket.name);
+        UUID uuid = UUIDPlayerStorage.getInstance().getPlayerUUID(loginPacket.name);
         if(uuid == null) {
             try {
                 uuid = getUUIDOf(loginPacket.name);
@@ -34,7 +34,7 @@ public class ThreadUUIDFetcher extends Thread {
                     System.out.println("Using Offline Based UUID for " + loginPacket.name + " - " + generateOfflineUUID(loginPacket.name));
                 } else {
                     System.out.println("Fetched UUID from Mojang for " + loginPacket.name + " - " + uuid.toString());
-                    com.johnymuffin.poseidon.UUIDPlayerStorage.getInstance().addPlayerOnlineUUID(loginPacket.name, uuid);
+                    UUIDPlayerStorage.getInstance().addPlayerOnlineUUID(loginPacket.name, uuid);
                 }
                 loginProcessHandler.userUUIDReceived();
                 //netLoginHandler.authenticatePlayer(loginPacket);

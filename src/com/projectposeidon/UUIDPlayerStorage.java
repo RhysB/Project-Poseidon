@@ -1,4 +1,4 @@
-package com.johnymuffin.poseidon;
+package com.projectposeidon;
 
 import java.util.HashMap;
 import java.util.Map;
