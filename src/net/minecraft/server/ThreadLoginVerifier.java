@@ -41,19 +41,19 @@ public class ThreadLoginVerifier extends Thread {
 
             bufferedreader.close();
             if (s1.equals("YES")) {
-                // CraftBukkit start
-                if (this.netLoginHandler.getSocket() == null) {
-                    return;
-                }
-
-                PlayerPreLoginEvent event = new PlayerPreLoginEvent(this.loginPacket.name, this.netLoginHandler.getSocket().getInetAddress());
-                this.server.getPluginManager().callEvent(event);
-
-                if (event.getResult() != PlayerPreLoginEvent.Result.ALLOWED) {
-                    this.netLoginHandler.disconnect(event.getKickMessage());
-                    return;
-                }
-                // CraftBukkit end
+//                // CraftBukkit start
+//                if (this.netLoginHandler.getSocket() == null) {
+//                    return;
+//                }
+//
+//                PlayerPreLoginEvent event = new PlayerPreLoginEvent(this.loginPacket.name, this.netLoginHandler.getSocket().getInetAddress());
+//                this.server.getPluginManager().callEvent(event);
+//
+//                if (event.getResult() != PlayerPreLoginEvent.Result.ALLOWED) {
+//                    this.netLoginHandler.disconnect(event.getKickMessage());
+//                    return;
+//                }
+//                // CraftBukkit end
                 this.loginProcessHandler.userMojangSessionVerified();
                 //NetLoginHandler.a(this.netLoginHandler, this.loginPacket);
             } else {

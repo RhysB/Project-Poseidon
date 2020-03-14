@@ -4,7 +4,7 @@ import net.minecraft.server.NetLoginHandler;
 import net.minecraft.server.Packet1Login;
 import net.minecraft.server.ThreadLoginVerifier;
 import org.bukkit.craftbukkit.CraftServer;
-import sun.rmi.runtime.Log;
+import org.bukkit.event.player.PlayerPreLoginEvent;
 
 import java.util.Timer;
 import java.util.UUID;
@@ -37,7 +37,7 @@ public class LoginProcessHandler {
                         if (!loginSuccessful && !loginCancelled) {
                             cancelLoginProcess("Login Process Handler Timeout");
                         }
-                        if(loginSuccessful && !loginCancelled) {
+                        if (loginSuccessful && !loginCancelled) {
                             loginProcessHandler = null;
                         }
                     }
@@ -90,12 +90,25 @@ public class LoginProcessHandler {
     private void connectPlayer() {
         if (!loginSuccessful && !loginCancelled) {
             loginSuccessful = true;
+
+            //Bukkit Login Event Start
+            if (this.netLoginHandler.getSocket() == null) {
+                return;
+            }
+            PlayerPreLoginEvent event = new PlayerPreLoginEvent(this.packet1Login.name, this.netLoginHandler.getSocket().getInetAddress());
+            this.server.getPluginManager().callEvent(event);
+            if (event.getResult() != PlayerPreLoginEvent.Result.ALLOWED) {
+                this.cancelLoginProcess(event.getKickMessage());
+                return;
+            }
+            //Bukkit Login Event End
+
             NetLoginHandler.a(netLoginHandler, packet1Login);
         }
     }
 
     public synchronized void cancelLoginProcess(String s) {
-        if(!loginCancelled && !loginSuccessful) {
+        if (!loginCancelled && !loginSuccessful) {
             loginCancelled = true;
             netLoginHandler.disconnect(s);
         }
