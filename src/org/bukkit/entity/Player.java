@@ -51,6 +51,15 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      *
      * @return Player UUID
      */
+    public UUID getUniqueId();
+
+
+    /**
+     * Get the players Mojang UUID.
+     *
+     * @return Player UUID
+     */
+    @Deprecated
     public UUID getPlayerUUID();
     //Project Poseidon End
     /**

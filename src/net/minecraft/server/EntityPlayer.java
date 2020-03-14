@@ -41,6 +41,8 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         int k = chunkcoordinates.y;
 
         if (!world.worldProvider.e) {
+            //HA i found what is randomly teleporting players on first connection, i thought it was essentials
+            //TODO add option to disable this in Poseidon config file
             i += this.random.nextInt(20) - 10;
             k = world.f(i, j);
             j += this.random.nextInt(20) - 10;

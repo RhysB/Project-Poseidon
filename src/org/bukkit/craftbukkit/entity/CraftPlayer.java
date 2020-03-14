@@ -156,8 +156,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         getHandle().netServerHandler.sendPacket(new Packet6SpawnPosition(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
     }
 
-    public UUID getPlayerUUID() {
+    public UUID getUniqueId() {
         return UUIDPlayerStorage.getInstance().getPlayerUUID(getName());
+    }
+
+    public UUID getPlayerUUID() {
+        return getUniqueId();
     }
 
     public Location getCompassTarget() {
