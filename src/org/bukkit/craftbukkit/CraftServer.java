@@ -78,6 +78,7 @@ import org.yaml.snakeyaml.error.MarkedYAMLException;
 
 public final class CraftServer implements Server {
     private final String serverName = "Project Poseidon Craftbukkit";
+    private final String serverEnvironment = "POSEIDON";
     private final String serverVersion;
     private final String protocolVersion = "1.7.3";
     private final String GameVersion = "b1.7.3";
@@ -189,8 +190,8 @@ public final class CraftServer implements Server {
         return getGameVersion();
     }
 
-    public String getName() {
-        return serverName;
+    public String getServerEnvironment() {
+        return serverEnvironment;
     }
 
     public String getVersion() {

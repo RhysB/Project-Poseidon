@@ -49,7 +49,7 @@ public interface Server {
      *
      * @return name of this server implementation
      */
-    public String getName();
+    public String getServerEnvironment();
 
     /**
      * Gets the version string of this server implementation.
