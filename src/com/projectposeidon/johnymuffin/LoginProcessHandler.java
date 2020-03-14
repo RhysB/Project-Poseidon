@@ -1,4 +1,4 @@
-package com.projectposeidon;
+package com.projectposeidon.johnymuffin;
 
 import net.minecraft.server.NetLoginHandler;
 import net.minecraft.server.Packet1Login;

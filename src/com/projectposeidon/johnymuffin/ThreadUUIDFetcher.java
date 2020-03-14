@@ -1,4 +1,4 @@
-package com.projectposeidon;
+package com.projectposeidon.johnymuffin;
 
 import net.minecraft.server.NetLoginHandler;
 import net.minecraft.server.Packet1Login;
@@ -8,8 +8,8 @@ import org.bukkit.craftbukkit.CraftServer;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import static com.projectposeidon.UUIDFetcher.getUUIDOf;
-import static com.projectposeidon.UUIDPlayerStorage.generateOfflineUUID;
+import static com.projectposeidon.evilmidget38.UUIDFetcher.getUUIDOf;
+import static com.projectposeidon.johnymuffin.UUIDPlayerStorage.generateOfflineUUID;
 
 public class ThreadUUIDFetcher extends Thread {
 

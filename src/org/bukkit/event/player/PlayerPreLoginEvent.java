@@ -1,7 +1,8 @@
 package org.bukkit.event.player;
 
-import com.projectposeidon.LoginProcessHandler;
 import org.bukkit.event.Event;
+
+import com.projectposeidon.johnymuffin.LoginProcessHandler;
 
 import java.net.InetAddress;
 

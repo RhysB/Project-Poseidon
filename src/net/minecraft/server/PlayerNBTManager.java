@@ -1,7 +1,5 @@
 package net.minecraft.server;
 
-import com.projectposeidon.UUIDPlayerStorage;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -12,6 +10,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.logging.Logger;
+
+import com.projectposeidon.johnymuffin.UUIDPlayerStorage;
 
 import java.util.UUID; // CraftBukkit
 

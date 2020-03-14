@@ -1,12 +1,10 @@
 package net.minecraft.server;
 
-//import com.johnymuffin.poseidon.ThreadUUIDFetcher;
-
-import com.projectposeidon.LoginProcessHandler;
-
 import java.net.Socket;
 import java.util.Random;
 import java.util.logging.Logger;
+
+import com.projectposeidon.johnymuffin.LoginProcessHandler;
 
 public class NetLoginHandler extends NetHandler {
 

@@ -4,7 +4,6 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.UUID;
 
-import com.projectposeidon.UUIDPlayerStorage;
 import net.minecraft.server.EntityHuman;
 import net.minecraft.server.EntityPlayer;
 import net.minecraft.server.Packet131;
@@ -30,6 +29,8 @@ import org.bukkit.craftbukkit.map.RenderData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.map.MapView;
+
+import com.projectposeidon.johnymuffin.UUIDPlayerStorage;
 
 public class CraftPlayer extends CraftHumanEntity implements Player {
     public CraftPlayer(CraftServer server, EntityPlayer entity) {
