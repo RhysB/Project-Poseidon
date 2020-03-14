@@ -5,9 +5,9 @@ import net.minecraft.server.Packet1Login;
 import net.minecraft.server.ThreadLoginVerifier;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.event.player.PlayerPreLoginEvent;
+import org.bukkit.plugin.Plugin;
 
-import java.util.Timer;
-import java.util.UUID;
+import java.util.*;
 
 public class LoginProcessHandler {
 
@@ -18,6 +18,8 @@ public class LoginProcessHandler {
     private boolean loginCancelled = false;
     private LoginProcessHandler loginProcessHandler;
     private boolean loginSuccessful = false;
+
+    private ArrayList<Plugin> pluginPauses = new ArrayList<Plugin>();
 
     public LoginProcessHandler(NetLoginHandler netloginhandler, Packet1Login packet1login, CraftServer server, boolean onlineMode) {
         loginProcessHandler = this;
@@ -35,14 +37,13 @@ public class LoginProcessHandler {
                         // your code here
                         // close the thread
                         if (!loginSuccessful && !loginCancelled) {
-                            cancelLoginProcess("Login Process Handler Timeout");
-                        }
-                        if (loginSuccessful && !loginCancelled) {
+                            System.out.println("LoginProcessHandler for user " + packet1login.name + " has failed to respond after 20 seconds. And future calls to this class will result in error");
                             loginProcessHandler = null;
+                            cancelLoginProcess("Login Process Handler Timeout");
                         }
                     }
                 },
-                5000
+                30000
         );
 
     }
@@ -89,21 +90,41 @@ public class LoginProcessHandler {
 
     private void connectPlayer() {
         if (!loginSuccessful && !loginCancelled) {
-            loginSuccessful = true;
 
             //Bukkit Login Event Start
             if (this.netLoginHandler.getSocket() == null) {
                 return;
             }
-            PlayerPreLoginEvent event = new PlayerPreLoginEvent(this.packet1Login.name, this.netLoginHandler.getSocket().getInetAddress());
+            PlayerPreLoginEvent event = new PlayerPreLoginEvent(this.packet1Login.name, this.netLoginHandler.getSocket().getInetAddress(), loginProcessHandler);
             this.server.getPluginManager().callEvent(event);
             if (event.getResult() != PlayerPreLoginEvent.Result.ALLOWED) {
-                this.cancelLoginProcess(event.getKickMessage());
+                cancelLoginProcess(event.getKickMessage());
                 return;
             }
             //Bukkit Login Event End
+            if (isPlayerConnectionPaused()) {
+                long startTime = System.currentTimeMillis() / 1000L;
+                //Check every 0.5 seconds to see if playerConnection is unpaused
+                Timer t = new Timer();
+                t.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (!loginProcessHandler.isPlayerConnectionPaused()) {
+                            long endTime = System.currentTimeMillis() / 1000L;
+                            int difference = (int) (endTime - startTime);
+                            System.out.println("Player " + loginProcessHandler.packet1Login.name + " was allowed to join after being on hold for " + difference + " seconds");
+                            loginProcessHandler.setLoginSuccessful(true);
+                            NetLoginHandler.a(netLoginHandler, packet1Login);
+                            this.cancel();
+                        }
+                    }
+                }, 0, 1000);
 
-            NetLoginHandler.a(netLoginHandler, packet1Login);
+
+            } else {
+                loginSuccessful = true;
+                NetLoginHandler.a(netLoginHandler, packet1Login);
+            }
         }
     }
 
@@ -114,5 +135,40 @@ public class LoginProcessHandler {
         }
     }
 
+    /**
+     * Set a pause for your plugin
+     */
+    public void addConnectionPause(Plugin plugin) throws Exception {
+        if(pluginPauses.contains(plugin)) {
+            throw new Exception("Plugin " + plugin.getDescription().getName() + " has tried to pause player login multiple times");
+        }
+        pluginPauses.add(plugin);
+    }
 
+    /**
+     * Remove a pause for your plugin
+     */
+    public void removeConnectionPause(Plugin plugin) {
+        if(pluginPauses.contains(plugin)) {
+            pluginPauses.remove(plugin);
+        }
+    }
+    /**
+     * See if the players connection currently paused
+     */
+    public boolean isPlayerConnectionPaused() {
+        if(pluginPauses.size() == 0) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+
+
+
+    private void setLoginSuccessful(boolean loginSuccessful) {
+        this.loginSuccessful = loginSuccessful;
+    }
 }

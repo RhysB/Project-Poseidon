@@ -1,7 +1,9 @@
 package org.bukkit.event.player;
 
-import java.net.InetAddress;
+import com.projectposeidon.LoginProcessHandler;
 import org.bukkit.event.Event;
+
+import java.net.InetAddress;
 
 /**
  * Stores details for players attempting to log in
@@ -11,13 +13,23 @@ public class PlayerPreLoginEvent extends Event {
     private String message;
     private String name;
     private InetAddress ipAddress;
+    private LoginProcessHandler loginProcessHandler; // Project Poseidon
 
-    public PlayerPreLoginEvent(String name, InetAddress ipAddress) {
+    public PlayerPreLoginEvent(String name, InetAddress ipAddress, LoginProcessHandler loginProcessHandler) {
         super(Type.PLAYER_PRELOGIN);
+        this.loginProcessHandler = loginProcessHandler;
         this.result = Result.ALLOWED;
         this.message = "";
         this.name = name;
         this.ipAddress = ipAddress;
+    }
+    /**
+     * Gets the LoginProcessHandler instance for the connection
+     *
+     * @return Gets the LoginProcessHandler
+     */
+    public LoginProcessHandler getLoginProcessHandler() {
+        return loginProcessHandler;
     }
 
     /**
@@ -67,7 +79,7 @@ public class PlayerPreLoginEvent extends Event {
     /**
      * Disallows the player from logging in, with the given reason
      *
-     * @param result New result for disallowing the player
+     * @param result  New result for disallowing the player
      * @param message Kick message to display to the user
      */
     public void disallow(final Result result, final String message) {
