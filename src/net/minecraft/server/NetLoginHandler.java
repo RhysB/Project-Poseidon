@@ -2,6 +2,8 @@ package net.minecraft.server;
 
 //import com.johnymuffin.poseidon.ThreadUUIDFetcher;
 
+import com.projectposeidon.LoginProcessHandler;
+
 import java.net.Socket;
 import java.util.Random;
 import java.util.logging.Logger;
@@ -75,7 +77,8 @@ public class NetLoginHandler extends NetHandler {
 //            if (!this.server.onlineMode) {
 //                this.b(packet1login);
 //            } else {
-                (new ThreadLoginVerifier(this, packet1login, this.server.server)).start(); // CraftBukkit
+            new LoginProcessHandler(this, packet1login, this.server.server, this.server.onlineMode);
+            // (new ThreadLoginVerifier(this, packet1login, this.server.server)).start(); // CraftBukkit
 //            }
         }
     }
@@ -127,7 +130,7 @@ public class NetLoginHandler extends NetHandler {
         return netloginhandler.i;
     }
 
-    static Packet1Login a(NetLoginHandler netloginhandler, Packet1Login packet1login) {
+    public static Packet1Login a(NetLoginHandler netloginhandler, Packet1Login packet1login) {
         return netloginhandler.h = packet1login;
     }
 }
