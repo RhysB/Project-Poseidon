@@ -4,7 +4,7 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.UUID;
 
-import com.johnymuffin.poseidon.UUIDPlayerStorage;
+import com.projectposeidon.UUIDPlayerStorage;
 import net.minecraft.server.EntityHuman;
 import net.minecraft.server.EntityPlayer;
 import net.minecraft.server.Packet131;

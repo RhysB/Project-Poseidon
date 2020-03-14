@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import com.johnymuffin.poseidon.UUIDPlayerStorage;
+import com.projectposeidon.UUIDPlayerStorage;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
