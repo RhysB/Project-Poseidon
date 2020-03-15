@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class UUIDPlayerStorage {
+    //TODO We should probably make our own cache for UUIDs
     private static UUIDPlayerStorage singleton;
     private Map<String, UUID> playerUUIDs = new HashMap();
 
