@@ -1,12 +1,9 @@
 package com.projectposeidon.johnymuffin;
 
-import net.minecraft.server.NetLoginHandler;
 import net.minecraft.server.Packet1Login;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.CraftServer;
 
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import static com.projectposeidon.evilmidget38.UUIDFetcher.getUUIDOf;
 import static com.projectposeidon.johnymuffin.UUIDPlayerStorage.generateOfflineUUID;
@@ -14,7 +11,7 @@ import static com.projectposeidon.johnymuffin.UUIDPlayerStorage.generateOfflineU
 public class ThreadUUIDFetcher extends Thread {
 
     final Packet1Login loginPacket;
-//    final NetLoginHandler netLoginHandler;
+    //    final NetLoginHandler netLoginHandler;
     final LoginProcessHandler loginProcessHandler;
 
     public ThreadUUIDFetcher(Packet1Login packet1Login, LoginProcessHandler loginProcessHandler) {
@@ -26,17 +23,24 @@ public class ThreadUUIDFetcher extends Thread {
 
     public void run() {
         UUID uuid = UUIDPlayerStorage.getInstance().getPlayerUUID(loginPacket.name);
-        if(uuid == null) {
+        if (uuid == null) {
             try {
                 uuid = getUUIDOf(loginPacket.name);
-                if(uuid == null) {
-                    System.out.println(loginPacket.name + " does not have a Mojang UUID associated with their name");
-                    System.out.println("Using Offline Based UUID for " + loginPacket.name + " - " + generateOfflineUUID(loginPacket.name));
+                if (uuid == null) {
+                    if (PoseidonConfig.getInstance().isAllowGracefulUUIDEnabled()) {
+                        System.out.println(loginPacket.name + " does not have a Mojang UUID associated with their name");
+                        System.out.println("Using Offline Based UUID for " + loginPacket.name + " - " + generateOfflineUUID(loginPacket.name));
+                        loginProcessHandler.userUUIDReceived();
+                    } else {
+                        System.out.println(loginPacket.name + " does not have a UUID with Mojang. Player has been kicked as graceful UUID is disabled");
+                        loginProcessHandler.cancelLoginProcess(ChatColor.RED + "Sorry, we only support premium accounts");
+                    }
+
                 } else {
                     System.out.println("Fetched UUID from Mojang for " + loginPacket.name + " - " + uuid.toString());
                     UUIDPlayerStorage.getInstance().addPlayerOnlineUUID(loginPacket.name, uuid);
+                    loginProcessHandler.userUUIDReceived();
                 }
-                loginProcessHandler.userUUIDReceived();
                 //netLoginHandler.authenticatePlayer(loginPacket);
                 //netLoginHandler.playerUUIDFetched(loginPacket);
 
@@ -51,7 +55,6 @@ public class ThreadUUIDFetcher extends Thread {
             //netLoginHandler.authenticatePlayer(loginPacket);
             loginProcessHandler.userUUIDReceived();
         }
-
 
 
     }

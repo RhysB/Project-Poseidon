@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 // CraftBukkit start
 import java.io.PrintStream;
 import java.net.UnknownHostException;
+
+import com.projectposeidon.johnymuffin.PoseidonConfig;
 import jline.ConsoleReader;
 import joptsimple.OptionSet;
 import org.bukkit.World.Environment;
@@ -100,7 +102,7 @@ public class MinecraftServer implements Runnable, ICommandListener {
         this.propertyManager = new PropertyManager(this.options); // CraftBukkit - CLI argument support
         String s = this.propertyManager.getString("server-ip", "");
 
-        this.onlineMode = this.propertyManager.getBoolean("online-mode", true);
+        this.onlineMode = this.propertyManager.getBoolean("online-mode", false); //Project Poseidon - False by default
         this.spawnAnimals = this.propertyManager.getBoolean("spawn-animals", true);
         this.pvpMode = this.propertyManager.getBoolean("pvp", true);
         this.allowFlight = this.propertyManager.getBoolean("allow-flight", false);
@@ -129,6 +131,8 @@ public class MinecraftServer implements Runnable, ICommandListener {
             log.warning("While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.");
             log.warning("To change this, set \"online-mode\" to \"true\" in the server.settings file.");
         }
+
+        PoseidonConfig.getInstance();
 
         this.serverConfigurationManager = new ServerConfigurationManager(this);
         // CraftBukkit - removed trackers
