@@ -15,26 +15,33 @@ public class SayCommand extends VanillaCommand {
 
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
-        if (!testPermission(sender)) return true;
-        if (args.length == 0)  {
-            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
-            return false;
+        try {
+            if (!testPermission(sender)) return true;
+            if (args.length == 0)  {
+                sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
+                return false;
+            }
+
+            String message = "";
+
+            for (int i = 0; i < args.length; i++) {
+                if (i > 0) message += " ";
+                message += args[i];
+            }
+
+            if (!(sender instanceof ConsoleCommandSender)) {
+                Bukkit.getLogger().info("[" + sender.getName() + "] " + message);
+            }
+
+            Bukkit.broadcastMessage("[Server] " + message);
+
+            return true;
+        } catch (Exception e) {
+            System.out.println("Exception occured: " + e.getMessage());
+            sender.sendMessage(ChatColor.RED + "Please read console for an error message");
+            return true;
         }
 
-        String message = "";
-
-        for (int i = 0; i < args.length; i++) {
-            if (i > 0) message += " ";
-            message += args[i];
-        }
-
-        if (!(sender instanceof ConsoleCommandSender)) {
-            Bukkit.getLogger().info("[" + sender.getName() + "] " + message);
-        }
-        
-        Bukkit.broadcastMessage("[Server] " + message);
-
-        return true;
     }
 
     @Override

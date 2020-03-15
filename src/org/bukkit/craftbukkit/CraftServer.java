@@ -766,18 +766,25 @@ public final class CraftServer implements Server {
     }
 
     public int broadcast(String message, String permission) {
-        int count = 0;
-        Set<Permissible> permissibles = getPluginManager().getPermissionSubscriptions(permission);
+//        int count = 0;
+//        Set<Permissible> permissibles = getPluginManager().getPermissionSubscriptions(permission);
+//
+//        for (Permissible permissible : permissibles) {
+//            if (permissible instanceof CommandSender) {
+//                CommandSender user = (CommandSender)permissible;
+//                user.sendMessage(message);
+//                count++;
+//            }
+//        }
+//
+//        return count;
+        Player[] players = getOnlinePlayers();
 
-        for (Permissible permissible : permissibles) {
-            if (permissible instanceof CommandSender) {
-                CommandSender user = (CommandSender)permissible;
-                user.sendMessage(message);
-                count++;
-            }
+        for (Player player : players) {
+            player.sendMessage(message);
         }
 
-        return count;
+        return players.length;
     }
 
     public OfflinePlayer getOfflinePlayer(String name) {
