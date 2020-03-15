@@ -27,21 +27,21 @@ public class SessionAPI
             return false;
         return true;
     }
-    
+
     public static void hasJoined(String username, String serverId, String ip, SessionRequestRunnable callback)
     {
-    	try
-    	{
-    	    HTTPResponse response = httpGetRequest(String.format("https://sessionserver.mojang.com/session/minecraft/hasJoined?username=%s&serverId=%s&ip=%s", username, serverId, ip));
-            JSONObject obj = (JSONObject)new JSONParser().parse(response.getResponse());
+        try
+        {
+            HTTPResponse response = httpGetRequest(String.format("https://sessionserver.mojang.com/session/minecraft/hasJoined?username=%s&serverId=%s&ip=%s", username, serverId, ip));
+            JSONObject obj = (JSONObject) new JSONParser().parse(response.getResponse());
             String res_username = (obj.containsKey("name") ? (String) obj.get("name") : "nousername");
             String res_uuid = (obj.containsKey("id") ? (String) obj.get("id") : "nouuid");
             String res_ip = (obj.containsKey("ip") ? (String) obj.get("ip") : "noip");
             callback.callback(response.getResponseCode(), res_username, res_uuid, res_ip);
-    	} catch (Exception ex) {
-    	    System.out.println(String.format("Failed to authenticate session for '%s': %s", username, ex.getMessage()));
-    	    //TODO: if debug, print the stack trace
-    	}
+        } catch (Exception ex) {
+            System.out.println(String.format("Failed to authenticate session for '%s': %s", username, ex.getMessage()));
+            // TODO: if debug, print the stack trace
+        }
     }
 
     private static HTTPResponse httpGetRequest(String url)
