@@ -129,7 +129,7 @@ public class ServerConfigurationManager {
     }
 
     public String disconnect(EntityPlayer entityplayer) { // CraftBukkit - changed return type
-        if(entityplayer.netServerHandler.disconnected) return null; // CraftBukkit - exploitsies fix https://github.com/OvercastNetwork/CraftBukkit/commit/6f79ca5c54d30d04803143975757713a01bf4e35
+        //if(entityplayer.netServerHandler.disconnected) return null; // CraftBukkit - exploits fix https://github.com/OvercastNetwork/CraftBukkit/commit/6f79ca5c54d30d04803143975757713a01bf4e35
 
 
         // CraftBukkit start
