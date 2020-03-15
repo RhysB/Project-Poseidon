@@ -569,6 +569,12 @@ public abstract class Event implements Serializable {
          */
 
         /**
+         * Called when an item despawns
+         *
+         * @see org.bukkit.event.entity.ItemDespawnEvent
+         */
+        ITEM_DESPAWN(Category.ENTITY),
+        /**
          * Called when a painting is placed by player
          *
          * @see org.bukkit.event.painting.PaintingPlaceEvent

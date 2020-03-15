@@ -265,4 +265,16 @@ public class CraftEventFactory {
         Bukkit.getPluginManager().callEvent(event);
         return event;
     }
+
+    /**
+     * ItemDespawnEvent
+     */
+    public static ItemDespawnEvent callItemDespawnEvent(EntityItem entityitem) {
+        org.bukkit.entity.Entity entity = entityitem.getBukkitEntity();
+
+        ItemDespawnEvent event = new ItemDespawnEvent(entity, entity.getLocation());
+
+        ((CraftServer) entity.getServer()).getPluginManager().callEvent(event);
+        return event;
+    }
 }

@@ -258,7 +258,14 @@ public class JavaPluginLoader implements PluginLoader {
                     ((PlayerListener) listener).onPlayerRespawn((PlayerRespawnEvent) event);
                 }
             };
-
+            //Project Poseidon Start
+            case ITEM_DESPAWN:
+                return new EventExecutor() {
+                    public void execute(Listener listener, Event event) {
+                        ((EntityListener) listener).onItemDespawn((ItemDespawnEvent) event);
+                    }
+                };
+                //Project Poseidon End
         case PLAYER_KICK:
             return new EventExecutor() {
                 public void execute(Listener listener, Event event) {

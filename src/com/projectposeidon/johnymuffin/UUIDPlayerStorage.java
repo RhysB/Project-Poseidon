@@ -14,7 +14,6 @@ public class UUIDPlayerStorage {
 
     public UUID getUUIDGraceful(String username) {
         //return UUID.fromString("ca5c33ce-5825-45e3-ab92-0127c05c2016");
-
         if (playerUUIDs.containsKey(username)) {
             return playerUUIDs.get(username);
         }
@@ -23,6 +22,7 @@ public class UUIDPlayerStorage {
 
 
     public static UUID generateOfflineUUID(String username) {
+        //TODO we should look at using the modern system: UUID offlineUUID = UUID.nameUUIDFromBytes(("OfflinePlayer:" + <playerName>).getBytes(Charsets.UTF_8));
         return UUID.nameUUIDFromBytes(username.getBytes());
     }
 

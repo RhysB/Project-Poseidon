@@ -190,6 +190,11 @@ public final class CraftServer implements Server {
         return getGameVersion();
     }
 
+    @Override
+    public String getName() {
+        return serverName;
+    }
+
     public String getServerEnvironment() {
         return serverEnvironment;
     }
