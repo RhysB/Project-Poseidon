@@ -1,6 +1,5 @@
 package net.minecraft.server;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -17,7 +16,7 @@ import java.util.logging.Logger;
 import java.io.PrintStream;
 import java.net.UnknownHostException;
 
-import com.projectposeidon.johnymuffin.PoseidonConfig;
+import com.projectposeidon.PoseidonConfig;
 import jline.ConsoleReader;
 import joptsimple.OptionSet;
 import org.bukkit.World.Environment;

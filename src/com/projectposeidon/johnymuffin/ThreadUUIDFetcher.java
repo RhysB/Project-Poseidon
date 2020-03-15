@@ -1,5 +1,6 @@
 package com.projectposeidon.johnymuffin;
 
+import com.projectposeidon.PoseidonConfig;
 import net.minecraft.server.Packet1Login;
 import org.bukkit.ChatColor;
 

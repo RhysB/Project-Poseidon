@@ -1,9 +1,8 @@
-package com.projectposeidon.johnymuffin;
+package com.projectposeidon;
 
 import org.bukkit.util.config.Configuration;
 
 import java.io.File;
-import java.io.IOException;
 
 public class PoseidonConfig extends Configuration {
     private static PoseidonConfig singleton;
