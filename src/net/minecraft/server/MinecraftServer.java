@@ -17,6 +17,7 @@ import java.io.PrintStream;
 import java.net.UnknownHostException;
 
 import com.projectposeidon.PoseidonConfig;
+import com.projectposeidon.johnymuffin.UUIDCacheFile;
 import jline.ConsoleReader;
 import joptsimple.OptionSet;
 import org.bukkit.World.Environment;
@@ -150,6 +151,10 @@ public class MinecraftServer implements Runnable, ICommandListener {
 
         log.info("Preparing level \"" + s1 + "\"");
         this.a(new WorldLoaderServer(new File(".")), s1, k);
+
+        //Project Poseidon Start
+        log.info("Removed " + UUIDCacheFile.getInstance().removeExpiredCaches() + " expired UUIDs from the cache");
+        //Project Poseidon End
 
         // CraftBukkit start
         long elapsed = System.nanoTime() - j;
@@ -312,6 +317,11 @@ public class MinecraftServer implements Runnable, ICommandListener {
 
     public void stop() { // CraftBukkit - private -> public
         log.info("Stopping server");
+        //Project Poseidon Start
+        log.info("Saving UUID Cache");
+        UUIDCacheFile.getInstance().saveConfig();
+        //Project Poseidon End
+
         // CraftBukkit start
         if (this.server != null) {
             this.server.disablePlugins();

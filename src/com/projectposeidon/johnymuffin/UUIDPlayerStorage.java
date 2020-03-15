@@ -42,12 +42,17 @@ public class UUIDPlayerStorage {
         }
         removeDuplicateUUIDs(uuid);
         playerUUIDs.put(playerName, uuid);
+        UUIDCacheFile.getInstance().addPlayerDetails(playerName, uuid, true);
     }
 
     public synchronized UUID getPlayerUUID(String playerName) {
         if (playerUUIDs.containsKey(playerName)) {
             return playerUUIDs.get(playerName);
         }
+        if(UUIDCacheFile.getInstance().isPlayerKnown(playerName, true)) {
+            return UUIDCacheFile.getInstance().getPlayerUUID(playerName, true);
+        }
+
         return null;
     }
 
