@@ -16,7 +16,7 @@ public class NetLoginHandler extends NetHandler {
     private int f = 0;
     private String g = null;
     private Packet1Login h = null;
-    private String i = "";
+    private String serverId = "";
 
     public NetLoginHandler(MinecraftServer minecraftserver, Socket socket, String s) {
         this.server = minecraftserver;
@@ -56,8 +56,8 @@ public class NetLoginHandler extends NetHandler {
 
     public void a(Packet2Handshake packet2handshake) {
         if (this.server.onlineMode) {
-            this.i = Long.toHexString(d.nextLong());
-            this.networkManager.queue(new Packet2Handshake(this.i));
+            this.serverId = Long.toHexString(d.nextLong());
+            this.networkManager.queue(new Packet2Handshake(this.serverId));
         } else {
             this.networkManager.queue(new Packet2Handshake("-"));
         }
@@ -123,9 +123,18 @@ public class NetLoginHandler extends NetHandler {
     public boolean c() {
         return true;
     }
-
+    
+    /**
+     * @author moderator_man
+     * @returns the session id for this player
+     */
+    public String getServerID()
+    {
+        return serverId;
+    }
+    
     static String a(NetLoginHandler netloginhandler) {
-        return netloginhandler.i;
+        return netloginhandler.serverId;
     }
 
     public static Packet1Login a(NetLoginHandler netloginhandler, Packet1Login packet1login) {

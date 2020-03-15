@@ -35,7 +35,7 @@ public class ThreadLoginVerifier extends Thread {
 
     public void run() {
         try {
-            SessionAPI.hasJoined(loginPacket.name, netLoginHandler.b(), getIP(), (int responseCode, String username, String uuid, String ip) ->
+            SessionAPI.hasJoined(loginPacket.name, netLoginHandler.getServerID(), getIP(), (int responseCode, String username, String uuid, String ip) ->
             {
                 // make sure the request didn't fail (-1), and the response wasn't empty (204)
                 if (responseCode != -1 && responseCode != 204)
