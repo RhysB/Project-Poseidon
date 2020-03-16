@@ -61,32 +61,41 @@ public class EntityTrackerEntry {
 
         ++this.t;
         if (++this.l % this.c == 0) {
-            int i = MathHelper.floor(this.tracker.locX * 32.0D);
-            int j = MathHelper.floor(this.tracker.locY * 32.0D);
-            int k = MathHelper.floor(this.tracker.locZ * 32.0D);
-            int l = MathHelper.d(this.tracker.yaw * 256.0F / 360.0F);
-            int i1 = MathHelper.d(this.tracker.pitch * 256.0F / 360.0F);
-            int j1 = i - this.d;
-            int k1 = j - this.e;
-            int l1 = k - this.f;
-            Object object = null;
-            boolean flag = Math.abs(i) >= 8 || Math.abs(j) >= 8 || Math.abs(k) >= 8;
-            boolean flag1 = Math.abs(l - this.g) >= 8 || Math.abs(i1 - this.h) >= 8;
+        	// encoded means multiplied by 32
+        	// this is required to send it to the client, as the relative position is sent as the float multiplied by 32
+            int newEncodedPosX = MathHelper.floor(this.tracker.locX * 32.0D);
+            int newEncodedPosY = MathHelper.floor(this.tracker.locY * 32.0D);
+            int newEncodedPosZ = MathHelper.floor(this.tracker.locZ * 32.0D);
+            int newEncodedRotationYaw = MathHelper.d(this.tracker.yaw * 256.0F / 360.0F);
+            int newEncodedRotationPitch = MathHelper.d(this.tracker.pitch * 256.0F / 360.0F);
+            int encodedDiffX = newEncodedPosX - this.d;
+            int encodedDiffY = newEncodedPosY - this.e;
+            int encodedDiffZ = newEncodedPosZ - this.f;
+            Object packet = null;
+            // mob movement fix, credit to Oldmana#7086 from the Modification Station discord server
+            // https://discordapp.com/channels/397834523028488203/397839387465089054/684637208199823377
+            int movementUpdateTreshold = 1;
+            int rotationUpdateTreshold = 1;
+            boolean needsPositionUpdate = Math.abs(newEncodedPosX) >= movementUpdateTreshold || Math.abs(newEncodedPosY) >= movementUpdateTreshold || Math.abs(newEncodedPosZ) >= movementUpdateTreshold;
+            boolean needsRotationUpdate = Math.abs(newEncodedRotationYaw - this.g) >= rotationUpdateTreshold || Math.abs(newEncodedRotationPitch - this.h) >= rotationUpdateTreshold;
 
-            if (j1 >= -128 && j1 < 128 && k1 >= -128 && k1 < 128 && l1 >= -128 && l1 < 128 && this.t <= 400) {
-                if (flag && flag1) {
-                    object = new Packet33RelEntityMoveLook(this.tracker.id, (byte) j1, (byte) k1, (byte) l1, (byte) l, (byte) i1);
-                } else if (flag) {
-                    object = new Packet31RelEntityMove(this.tracker.id, (byte) j1, (byte) k1, (byte) l1);
-                } else if (flag1) {
-                    object = new Packet32EntityLook(this.tracker.id, (byte) l, (byte) i1);
+            if (encodedDiffX >= -128 && encodedDiffX < 128 && encodedDiffY >= -128 && encodedDiffY < 128 && encodedDiffZ >= -128 && encodedDiffZ < 128 && this.t <= 400) {
+            	// entity has moved less than 4 blocks
+                if (needsPositionUpdate && needsRotationUpdate) {
+                	packet = new Packet33RelEntityMoveLook(this.tracker.id, (byte) encodedDiffX, (byte) encodedDiffY, (byte) encodedDiffZ, (byte) newEncodedRotationYaw, (byte) newEncodedRotationPitch);
+                } else if (needsPositionUpdate) {
+                    packet = new Packet31RelEntityMove(this.tracker.id, (byte) encodedDiffX, (byte) encodedDiffY, (byte) encodedDiffZ);
+                } else if (needsRotationUpdate) {
+                    packet = new Packet32EntityLook(this.tracker.id, (byte) newEncodedRotationYaw, (byte) newEncodedRotationPitch);
                 }
             } else {
                 this.t = 0;
-                this.tracker.locX = (double) i / 32.0D;
-                this.tracker.locY = (double) j / 32.0D;
-                this.tracker.locZ = (double) k / 32.0D;
-                object = new Packet34EntityTeleport(this.tracker.id, i, j, k, (byte) l, (byte) i1);
+                // minecart clipping fix
+                //this.tracker.locX = (double) i / 32.0D;
+                //this.tracker.locY = (double) j / 32.0D;
+                //this.tracker.locZ = (double) k / 32.0D;
+                // entity has moved more than 4 blocks, send teleport
+                packet = new Packet34EntityTeleport(this.tracker.id, newEncodedPosX, newEncodedPosY, newEncodedPosZ, (byte) newEncodedRotationYaw, (byte) newEncodedRotationPitch);
             }
 
             if (this.isMoving) {
@@ -104,8 +113,8 @@ public class EntityTrackerEntry {
                 }
             }
 
-            if (object != null) {
-                this.a((Packet) object);
+            if (packet != null) {
+                this.a((Packet) packet);
             }
 
             DataWatcher datawatcher = this.tracker.aa();
@@ -114,15 +123,15 @@ public class EntityTrackerEntry {
                 this.b((Packet) (new Packet40EntityMetadata(this.tracker.id, datawatcher)));
             }
 
-            if (flag) {
-                this.d = i;
-                this.e = j;
-                this.f = k;
+            if (needsPositionUpdate) {
+                this.d = newEncodedPosX;
+                this.e = newEncodedPosY;
+                this.f = newEncodedPosZ;
             }
 
-            if (flag1) {
-                this.g = l;
-                this.h = i1;
+            if (needsRotationUpdate) {
+                this.g = newEncodedRotationYaw;
+                this.h = newEncodedRotationPitch;
             }
         }
 
