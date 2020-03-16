@@ -429,22 +429,27 @@ public class Chunk {
         int j = tileentity.y;
         int k = tileentity.z - this.z * 16;
 
-        this.a(i, j, k, tileentity);
+        this.placeTileEntity(i, j, k, tileentity);
         if (this.c) {
             this.world.c.add(tileentity);
         }
     }
 
-    public void a(int i, int j, int k, TileEntity tileentity) {
+    public void placeTileEntity(int i, int j, int k, TileEntity tileentity) {
         ChunkPosition chunkposition = new ChunkPosition(i, j, k);
 
         tileentity.world = this.world;
         tileentity.x = this.x * 16 + i;
         tileentity.y = j;
         tileentity.z = this.z * 16 + k;
+        System.out.println("Tile entity at X: " + i + " Y: " + j + " Z: " + k);
         if (this.getTypeId(i, j, k) != 0 && Block.byId[this.getTypeId(i, j, k)] instanceof BlockContainer) {
             tileentity.j();
             this.tileEntities.put(chunkposition, tileentity);
+            // Poseidon start - Backport of 0021-Remove-invalid-mob-spawner-tile-entities.patch from PaperSpigot
+        } else if (tileentity instanceof TileEntityMobSpawner && !(Block.byId[this.getTypeId(i, j, k)] instanceof BlockMobSpawner)) {
+            this.tileEntities.remove(chunkposition);
+            // Poseidon end
         } else {
             System.out.println("Attempted to place a tile entity where there was no entity tile!");
         }

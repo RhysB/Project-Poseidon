@@ -74,7 +74,7 @@ public class EmptyChunk extends Chunk {
 
     public void a(TileEntity tileentity) {}
 
-    public void a(int i, int j, int k, TileEntity tileentity) {}
+    public void placeTileEntity(int i, int j, int k, TileEntity tileentity) {}
 
     public void e(int i, int j, int k) {}
 

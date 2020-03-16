@@ -1166,7 +1166,7 @@ public class World implements IBlockAccess {
                     Chunk chunk1 = this.getChunkAt(tileentity1.x >> 4, tileentity1.z >> 4);
 
                     if (chunk1 != null) {
-                        chunk1.a(tileentity1.x & 15, tileentity1.y, tileentity1.z & 15, tileentity1);
+                        chunk1.placeTileEntity(tileentity1.x & 15, tileentity1.y, tileentity1.z & 15, tileentity1);
                         // CraftBukkit start - moved in from above
                         if (!this.c.contains(tileentity1)) {
                             this.c.add(tileentity1);
@@ -1558,7 +1558,7 @@ public class World implements IBlockAccess {
                 Chunk chunk = this.getChunkAt(i >> 4, k >> 4);
 
                 if (chunk != null) {
-                    chunk.a(i & 15, j, k & 15, tileentity);
+                    chunk.placeTileEntity(i & 15, j, k & 15, tileentity);
                     this.c.add(tileentity); // CraftBukkit - moved in from above
                 }
             }
