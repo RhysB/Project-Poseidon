@@ -32,7 +32,16 @@ public class SessionAPI
     {
         try
         {
-            HTTPResponse response = httpGetRequest(String.format("https://sessionserver.mojang.com/session/minecraft/hasJoined?username=%s&serverId=%s&ip=%s", username, serverId, ip));
+            boolean checkIP = ip == "127.0.0.1" || ip == "localhost";
+            StringBuilder sb = new StringBuilder();
+            sb.append("https://sessionserver.mojang.com/session/minecraft/hasJoined");
+            sb.append("?username=" + username);
+            sb.append("&serverId=" + serverId);
+            if (checkIP)
+                sb.append("&ip=" + ip);
+            String requestUrl = sb.toString();
+            
+            HTTPResponse response = httpGetRequest(requestUrl);
             JSONObject obj = (JSONObject) new JSONParser().parse(response.getResponse());
             String res_username = (obj.containsKey("name") ? (String) obj.get("name") : "nousername");
             String res_uuid = (obj.containsKey("id") ? (String) obj.get("id") : "nouuid");

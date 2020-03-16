@@ -37,11 +37,13 @@ public class ThreadLoginVerifier extends Thread {
         try {
             SessionAPI.hasJoined(loginPacket.name, netLoginHandler.getServerID(), getIP(), (int responseCode, String username, String uuid, String ip) ->
             {
+                boolean checkIP = ip == "127.0.0.1" || ip == "localhost";
+                
                 // make sure the request didn't fail (-1), and the response wasn't empty (204)
                 if (responseCode != -1 && responseCode != 204)
                 {
                     // make sure username and ip match up (docs say username is case insensitive https://wiki.vg/Protocol_Encryption#Server)
-                    if (username.equalsIgnoreCase(loginPacket.name) && ip == getIP())
+                    if (checkIP && username.equalsIgnoreCase(loginPacket.name) && ip == getIP())
                     {
                         loginProcessHandler.userMojangSessionVerified();
                     } else {
