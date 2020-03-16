@@ -221,3 +221,8 @@ hs_err_pid*
 
 # End of https://www.gitignore.io/api/java,intellij,intellij+all,intellij+iml
 /bin/
+
+# Eclipse project files (Hopefully I don't mess everything up now -Saghetti)
+.project
+.classpath
+.settings/
