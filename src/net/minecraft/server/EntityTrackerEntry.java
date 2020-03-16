@@ -238,9 +238,10 @@ public class EntityTrackerEntry {
             EntityItem entityitem = (EntityItem) this.tracker;
             Packet21PickupSpawn packet21pickupspawn = new Packet21PickupSpawn(entityitem);
 
-            entityitem.locX = (double) packet21pickupspawn.b / 32.0D;
-            entityitem.locY = (double) packet21pickupspawn.c / 32.0D;
-            entityitem.locZ = (double) packet21pickupspawn.d / 32.0D;
+            // There's no reason to set the item's position to the compressed position
+            //entityitem.locX = (double) packet21pickupspawn.b / 32.0D;
+            //entityitem.locY = (double) packet21pickupspawn.c / 32.0D;
+            //entityitem.locZ = (double) packet21pickupspawn.d / 32.0D;
             return packet21pickupspawn;
         } else if (this.tracker instanceof EntityPlayer) {
             // CraftBukkit start - limit name length to 16 characters
