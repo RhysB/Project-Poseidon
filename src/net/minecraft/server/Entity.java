@@ -5,7 +5,6 @@ import java.util.Random;
 
 // CraftBukkit start
 import java.util.UUID;
-import java.util.logging.LogManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.block.BlockFace;
