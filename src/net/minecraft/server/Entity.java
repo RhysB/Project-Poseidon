@@ -5,6 +5,8 @@ import java.util.Random;
 
 // CraftBukkit start
 import java.util.UUID;
+import java.util.logging.LogManager;
+
 import org.bukkit.Bukkit;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.LivingEntity;
@@ -22,6 +24,21 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 
 public abstract class Entity {
 
+	// Poseidon start - Backport of 0070-Use-a-Shared-Random-for-Entities.patch from PaperSpigot
+    public static Random SHARED_RANDOM = new Random() {
+        private boolean locked = false;
+        @Override
+        public synchronized void setSeed(long seed) {
+            if (locked) {
+                // Ignoring setSeed on Entity.SHARED_RANDOM
+            } else {
+                super.setSeed(seed);
+                locked = true;
+            }
+        }
+    };
+    // Poseidon end
+	
     private static int entityCount = 0;
     public int id;
     public double aH;
@@ -107,7 +124,7 @@ public abstract class Entity {
         this.bs = 0.0F;
         this.bt = false;
         this.bu = 0.0F;
-        this.random = new Random();
+        this.random = SHARED_RANDOM;
         this.ticksLived = 0;
         this.maxFireTicks = 1;
         this.fireTicks = 0;
