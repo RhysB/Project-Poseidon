@@ -43,9 +43,17 @@ public class ThreadLoginVerifier extends Thread {
                 if (responseCode != -1 && responseCode != 204)
                 {
                     // make sure username and ip match up (docs say username is case insensitive https://wiki.vg/Protocol_Encryption#Server)
-                    if (checkIP && username.equalsIgnoreCase(loginPacket.name) && ip == getIP())
+                    if (username.equalsIgnoreCase(loginPacket.name))
                     {
-                        loginProcessHandler.userMojangSessionVerified();
+                        if (checkIP)
+                        {
+                            if (ip == getIP())
+                            {
+                                loginProcessHandler.userMojangSessionVerified();
+                            }
+                        } else {
+                            loginProcessHandler.userMojangSessionVerified();
+                        }
                     } else {
                         loginProcessHandler.cancelLoginProcess("Failed to verify username!");
                     }
