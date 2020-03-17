@@ -87,7 +87,12 @@ public abstract class Event implements Serializable {
      * Represents a category used by Type
      */
     public enum Category {
-
+        
+        /**
+         * POSEIDON CATEGORIES
+         */
+        PACKET,
+        
         /**
          * Represents Player-based events
          *
@@ -138,7 +143,13 @@ public abstract class Event implements Serializable {
      * @see org.bukkit.event.
      */
     public enum Type {
-
+        
+        /**
+         * POSEIDON EVENTS
+         */
+        
+        PACKET_RECEIVED (Category.PACKET),
+        
         /**
          * PLAYER EVENTS
          */

@@ -7,19 +7,19 @@ import java.util.logging.Logger;
 
 // CraftBukkit start
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.ChunkCompressionThread;
-import org.bukkit.craftbukkit.command.ColouredConsoleSender;
 import org.bukkit.Location;
 import org.bukkit.command.CommandException;
+import org.bukkit.craftbukkit.ChunkCompressionThread;
+import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.craftbukkit.TextWrapper;
 import org.bukkit.craftbukkit.block.CraftBlock;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
-import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.TextWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.packet.PacketReceivedEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -123,10 +123,22 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet27 packet27) {
+        // poseidon
+        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet27);
+        server.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        
         this.player.a(packet27.c(), packet27.e(), packet27.g(), packet27.h(), packet27.d(), packet27.f());
     }
 
     public void a(Packet10Flying packet10flying) {
+        // poseidon
+        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet10flying);
+        server.getPluginManager().callEvent(pevent);
+        if (pevent.isCancelled())
+            return;
+        
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
 
         this.i = true;
@@ -414,6 +426,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet14BlockDig packet14blockdig) {
+        // poseidon
+        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet14blockdig);
+        server.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        
         if (this.player.dead) return; // CraftBukkit
 
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
@@ -498,6 +516,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet15Place packet15place) {
+        // poseidon
+        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet15place);
+        server.getPluginManager().callEvent(pevent);
+        if (pevent.isCancelled())
+            return;
+        
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
 
         // CraftBukkit start
@@ -661,6 +685,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet16BlockItemSwitch packet16blockitemswitch) {
+        // poseidon
+        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet16blockitemswitch);
+        server.getPluginManager().callEvent(pevent);
+        if (pevent.isCancelled())
+            return;
+        
         if (this.player.dead) return; // CraftBukkit
 
         if (packet16blockitemswitch.itemInHandIndex >= 0 && packet16blockitemswitch.itemInHandIndex <= InventoryPlayer.e()) {
@@ -676,6 +706,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet3Chat packet3chat) {
+        // poseidon
+        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet3chat);
+        server.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        
         String s = packet3chat.message;
 
         if (s.length() > 100) {
@@ -778,6 +814,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet18ArmAnimation packet18armanimation) {
+        // poseidon
+        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet18armanimation);
+        server.getPluginManager().callEvent(pevent);
+        if (pevent.isCancelled())
+            return;
+        
         if (this.player.dead) return; // CraftBukkit
 
         if (packet18armanimation.b == 1) {
@@ -816,6 +858,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet19EntityAction packet19entityaction) {
+        // poseidon
+        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet19entityaction);
+        server.getPluginManager().callEvent(pevent);
+        if (pevent.isCancelled())
+            return;
+        
         // CraftBukkit start
         if (this.player.dead) return;
 
@@ -840,6 +888,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet255KickDisconnect packet255kickdisconnect) {
+        // poseidon
+        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet255kickdisconnect);
+        server.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        
         this.networkManager.a("disconnect.quitting", new Object[0]);
     }
 
@@ -856,6 +910,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet7UseEntity packet7useentity) {
+        // poseidon
+        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet7useentity);
+        server.getPluginManager().callEvent(pevent);
+        if (pevent.isCancelled())
+            return;
+        
         if (this.player.dead) return; // CraftBukkit
 
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
@@ -890,6 +950,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet9Respawn packet9respawn) {
+        // poseidon
+        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet9respawn);
+        server.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        
         if (this.player.health <= 0) {
             this.player = this.minecraftServer.serverConfigurationManager.moveToWorld(this.player, 0);
 
@@ -904,6 +970,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet102WindowClick packet102windowclick) {
+        // poseidon
+        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet102windowclick);
+        server.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        
         if (this.player.dead) return; // CraftBukkit
 
         if (this.player.activeContainer.windowId == packet102windowclick.a && this.player.activeContainer.c(this.player)) {
@@ -931,6 +1003,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet106Transaction packet106transaction) {
+        // poseidon
+        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet106transaction);
+        server.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        
         if (this.player.dead) return; // CraftBukkit
 
         Short oshort = (Short) this.n.get(Integer.valueOf(this.player.activeContainer.windowId));
@@ -941,6 +1019,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet130UpdateSign packet130updatesign) {
+        // poseidon
+        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet130updatesign);
+        server.getPluginManager().callEvent(pevent);
+        if (pevent.isCancelled())
+            return;
+        
         if (this.player.dead) return; // CraftBukkit
 
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
