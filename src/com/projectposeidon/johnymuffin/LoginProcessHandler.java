@@ -1,9 +1,12 @@
 package com.projectposeidon.johnymuffin;
 
+import com.projectposeidon.api.PoseidonUUID;
 import net.minecraft.server.NetLoginHandler;
 import net.minecraft.server.Packet1Login;
 import net.minecraft.server.ThreadLoginVerifier;
+import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerPreLoginEvent;
 import org.bukkit.plugin.Plugin;
 
@@ -90,6 +93,19 @@ public class LoginProcessHandler {
     }
 
     private void connectPlayer() {
+        String username = packet1Login.name;
+        UUID uuid = PoseidonUUID.getPlayerGracefulUUID(username);
+        //Check if a player with the same UUID or Username is already online which is mainly an issue in Offline Mode servers.
+        for(Player p: server.getOnlinePlayers()) {
+            if(p.getUniqueId().equals(uuid) || p.getName().equalsIgnoreCase(username)) {
+                cancelLoginProcess(ChatColor.RED + "A player with your username is already online");
+                System.out.println("User " + username + " has been blocked from connecting as they share a username or UUID with a user who is already online called " + p.getName() +
+                        "\nMost likely the user has changed their UUID or the server is running in offline mode and someone has attempted to connect with their name");
+            }
+        }
+
+
+
         if (!loginSuccessful && !loginCancelled) {
 
             //Bukkit Login Event Start
