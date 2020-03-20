@@ -2,10 +2,13 @@ package org.bukkit.craftbukkit.inventory;
 
 import java.util.HashMap;
 
-import net.minecraft.server.IInventory;
-
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryTransactionEvent;
+import org.bukkit.event.inventory.InventoryTransactionType;
+import org.bukkit.inventory.ItemStack;
+
+import net.minecraft.server.IInventory;
 
 public class CraftInventory implements org.bukkit.inventory.Inventory {
     protected IInventory inventory;
@@ -222,6 +225,13 @@ public class CraftInventory implements org.bukkit.inventory.Inventory {
 
         for (int i = 0; i < items.length; i++) {
             ItemStack item = items[i];
+            
+            // Poseidon
+            InventoryTransactionEvent event = new InventoryTransactionEvent(InventoryTransactionType.ITEM_ADDED, this, item);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+            if (event.isCancelled())
+                continue;
+            
             while (true) {
                 // Do we already have a stack of it?
                 int firstPartial = firstPartial(item);
@@ -276,6 +286,13 @@ public class CraftInventory implements org.bukkit.inventory.Inventory {
 
         for (int i = 0; i < items.length; i++) {
             ItemStack item = items[i];
+            
+            // Poseidon
+            InventoryTransactionEvent event = new InventoryTransactionEvent(InventoryTransactionType.ITEM_REMOVED, this, item);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+            if (event.isCancelled())
+                continue;
+            
             int toDelete = item.getAmount();
 
             while (true) {

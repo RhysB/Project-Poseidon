@@ -57,6 +57,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.event.inventory.FurnaceSmeltEvent;
 import org.bukkit.event.inventory.InventoryListener;
+import org.bukkit.event.inventory.InventoryTransactionEvent;
 import org.bukkit.event.packet.PacketListener;
 import org.bukkit.event.packet.PacketReceivedEvent;
 import org.bukkit.event.painting.PaintingBreakEvent;
@@ -366,6 +367,15 @@ public class JavaPluginLoader implements PluginLoader
                     public void execute(Listener listener, Event event)
                     {
                         ((PacketListener) listener).onPacketReceived((PacketReceivedEvent) event);
+                    }
+                };
+                
+            case INVENTORY_TRANSACTION:
+                return new EventExecutor()
+                {
+                    public void execute(Listener listener, Event event)
+                    {
+                        ((InventoryListener) listener).onInventoryTransaction((InventoryTransactionEvent) event);
                     }
                 };
             

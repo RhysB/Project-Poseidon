@@ -20,4 +20,9 @@ public class InventoryListener implements Listener {
      * @param event Relevant event details
      */
     public void onFurnaceBurn(FurnaceBurnEvent event) {}
+    
+    /**
+     * @author moderator_man
+     */
+    public void onInventoryTransaction(InventoryTransactionEvent event) {}
 }
