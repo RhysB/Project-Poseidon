@@ -232,7 +232,7 @@ public abstract class Entity {
                 }
 
                 this.world.makeSound(this, "random.splash", f, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.4F);
-                float f1 = (float) MathHelper.floor(this.boundingBox.b);
+                float f1 = (float) MathHelper.floor(this.boundingBox.minY);
 
                 int i;
                 float f2;
@@ -354,9 +354,9 @@ public abstract class Entity {
     public void move(double d0, double d1, double d2) {
         if (this.bt) {
             this.boundingBox.d(d0, d1, d2);
-            this.locX = (this.boundingBox.a + this.boundingBox.d) / 2.0D;
-            this.locY = this.boundingBox.b + (double) this.height - (double) this.br;
-            this.locZ = (this.boundingBox.c + this.boundingBox.f) / 2.0D;
+            this.locX = (this.boundingBox.minX + this.boundingBox.maxX) / 2.0D;
+            this.locY = this.boundingBox.minY + (double) this.height - (double) this.br;
+            this.locZ = (this.boundingBox.minZ + this.boundingBox.maxZ) / 2.0D;
         } else {
             this.br *= 0.4F;
             double d3 = this.locX;
@@ -511,7 +511,7 @@ public abstract class Entity {
                     d2 = d11;
                     this.boundingBox.b(axisalignedbb1);
                 } else {
-                    double d12 = this.boundingBox.b - (double) ((int) this.boundingBox.b);
+                    double d12 = this.boundingBox.minY - (double) ((int) this.boundingBox.minY);
 
                     if (d12 > 0.0D) {
                         this.br = (float) ((double) this.br + d12 + 0.01D);
@@ -519,9 +519,9 @@ public abstract class Entity {
                 }
             }
 
-            this.locX = (this.boundingBox.a + this.boundingBox.d) / 2.0D;
-            this.locY = this.boundingBox.b + (double) this.height - (double) this.br;
-            this.locZ = (this.boundingBox.c + this.boundingBox.f) / 2.0D;
+            this.locX = (this.boundingBox.minX + this.boundingBox.maxX) / 2.0D;
+            this.locY = this.boundingBox.minY + (double) this.height - (double) this.br;
+            this.locZ = (this.boundingBox.minZ + this.boundingBox.maxZ) / 2.0D;
             this.positionChanged = d5 != d0 || d7 != d2;
             this.bc = d6 != d1;
             this.onGround = d6 != d1 && d6 < 0.0D;
@@ -590,12 +590,12 @@ public abstract class Entity {
                 }
             }
 
-            l = MathHelper.floor(this.boundingBox.a + 0.0010D);
-            i1 = MathHelper.floor(this.boundingBox.b + 0.0010D);
-            j1 = MathHelper.floor(this.boundingBox.c + 0.0010D);
-            k = MathHelper.floor(this.boundingBox.d - 0.0010D);
-            int k1 = MathHelper.floor(this.boundingBox.e - 0.0010D);
-            int l1 = MathHelper.floor(this.boundingBox.f - 0.0010D);
+            l = MathHelper.floor(this.boundingBox.minX + 0.0010D);
+            i1 = MathHelper.floor(this.boundingBox.minY + 0.0010D);
+            j1 = MathHelper.floor(this.boundingBox.minZ + 0.0010D);
+            k = MathHelper.floor(this.boundingBox.maxX - 0.0010D);
+            int k1 = MathHelper.floor(this.boundingBox.maxY - 0.0010D);
+            int l1 = MathHelper.floor(this.boundingBox.maxZ - 0.0010D);
 
             if (this.world.a(l, i1, j1, k, k1, l1)) {
                 for (int i2 = l; i2 <= k; ++i2) {
@@ -742,11 +742,11 @@ public abstract class Entity {
 
     public float c(float f) {
         int i = MathHelper.floor(this.locX);
-        double d0 = (this.boundingBox.e - this.boundingBox.b) * 0.66D;
+        double d0 = (this.boundingBox.maxY - this.boundingBox.minY) * 0.66D;
         int j = MathHelper.floor(this.locY - (double) this.height + d0);
         int k = MathHelper.floor(this.locZ);
 
-        if (this.world.a(MathHelper.floor(this.boundingBox.a), MathHelper.floor(this.boundingBox.b), MathHelper.floor(this.boundingBox.c), MathHelper.floor(this.boundingBox.d), MathHelper.floor(this.boundingBox.e), MathHelper.floor(this.boundingBox.f))) {
+        if (this.world.a(MathHelper.floor(this.boundingBox.minX), MathHelper.floor(this.boundingBox.minY), MathHelper.floor(this.boundingBox.minZ), MathHelper.floor(this.boundingBox.maxX), MathHelper.floor(this.boundingBox.maxY), MathHelper.floor(this.boundingBox.maxZ))) {
             float f1 = this.world.n(i, j, k);
 
             if (f1 < this.bF) {
@@ -1192,7 +1192,7 @@ public abstract class Entity {
                 }
                 // CraftBukkit end
 
-                this.setPositionRotation(this.vehicle.locX, this.vehicle.boundingBox.b + (double) this.vehicle.width, this.vehicle.locZ, this.yaw, this.pitch);
+                this.setPositionRotation(this.vehicle.locX, this.vehicle.boundingBox.minY + (double) this.vehicle.width, this.vehicle.locZ, this.yaw, this.pitch);
                 this.vehicle.passenger = null;
             }
 
@@ -1207,7 +1207,7 @@ public abstract class Entity {
 
             this.vehicle.passenger = null;
             this.vehicle = null;
-            this.setPositionRotation(entity.locX, entity.boundingBox.b + (double) entity.width, entity.locZ, this.yaw, this.pitch);
+            this.setPositionRotation(entity.locX, entity.boundingBox.minY + (double) entity.width, entity.locZ, this.yaw, this.pitch);
         } else {
             if (this.vehicle != null) {
                 this.vehicle.passenger = null;

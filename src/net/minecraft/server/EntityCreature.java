@@ -73,7 +73,7 @@ public class EntityCreature extends EntityLiving {
             this.B();
         }
 
-        int i = MathHelper.floor(this.boundingBox.b + 0.5D);
+        int i = MathHelper.floor(this.boundingBox.minY + 0.5D);
         boolean flag = this.ad();
         boolean flag1 = this.ae();
 
@@ -192,7 +192,7 @@ public class EntityCreature extends EntityLiving {
 
     public boolean d() {
         int i = MathHelper.floor(this.locX);
-        int j = MathHelper.floor(this.boundingBox.b);
+        int j = MathHelper.floor(this.boundingBox.minY);
         int k = MathHelper.floor(this.locZ);
 
         return super.d() && this.a(i, j, k) >= 0.0F;

@@ -106,7 +106,7 @@ public class EntityGhast extends EntityFlying implements IMonster {
 
         if (this.target != null && this.target.g(this) < d4 * d4) {
             double d5 = this.target.locX - this.locX;
-            double d6 = this.target.boundingBox.b + (double) (this.target.width / 2.0F) - (this.locY + (double) (this.width / 2.0F));
+            double d6 = this.target.boundingBox.minY + (double) (this.target.width / 2.0F) - (this.locY + (double) (this.width / 2.0F));
             double d7 = this.target.locZ - this.locZ;
 
             this.K = this.yaw = -((float) Math.atan2(d5, d7)) * 180.0F / 3.1415927F;

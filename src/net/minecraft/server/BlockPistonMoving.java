@@ -125,12 +125,12 @@ public class BlockPistonMoving extends BlockContainer {
             if (axisalignedbb == null) {
                 return null;
             } else {
-                axisalignedbb.a -= (double) ((float) PistonBlockTextures.b[i1] * f);
-                axisalignedbb.d -= (double) ((float) PistonBlockTextures.b[i1] * f);
-                axisalignedbb.b -= (double) ((float) PistonBlockTextures.c[i1] * f);
-                axisalignedbb.e -= (double) ((float) PistonBlockTextures.c[i1] * f);
-                axisalignedbb.c -= (double) ((float) PistonBlockTextures.d[i1] * f);
-                axisalignedbb.f -= (double) ((float) PistonBlockTextures.d[i1] * f);
+                axisalignedbb.minX -= (double) ((float) PistonBlockTextures.b[i1] * f);
+                axisalignedbb.maxX -= (double) ((float) PistonBlockTextures.b[i1] * f);
+                axisalignedbb.minY -= (double) ((float) PistonBlockTextures.c[i1] * f);
+                axisalignedbb.maxY -= (double) ((float) PistonBlockTextures.c[i1] * f);
+                axisalignedbb.minZ -= (double) ((float) PistonBlockTextures.d[i1] * f);
+                axisalignedbb.maxZ -= (double) ((float) PistonBlockTextures.d[i1] * f);
                 return axisalignedbb;
             }
         } else {

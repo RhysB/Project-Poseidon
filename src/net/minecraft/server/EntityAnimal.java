@@ -20,7 +20,7 @@ public abstract class EntityAnimal extends EntityCreature implements IAnimal {
 
     public boolean d() {
         int i = MathHelper.floor(this.locX);
-        int j = MathHelper.floor(this.boundingBox.b);
+        int j = MathHelper.floor(this.boundingBox.minY);
         int k = MathHelper.floor(this.locZ);
 
         return this.world.getTypeId(i, j - 1, k) == Block.GRASS.id && this.world.k(i, j, k) > 8 && super.d();
