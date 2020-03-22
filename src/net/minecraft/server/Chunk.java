@@ -442,7 +442,6 @@ public class Chunk {
         tileentity.x = this.x * 16 + i;
         tileentity.y = j;
         tileentity.z = this.z * 16 + k;
-        System.out.println("Tile entity at X: " + i + " Y: " + j + " Z: " + k);
         if (this.getTypeId(i, j, k) != 0 && Block.byId[this.getTypeId(i, j, k)] instanceof BlockContainer) {
             tileentity.j();
             this.tileEntities.put(chunkposition, tileentity);
