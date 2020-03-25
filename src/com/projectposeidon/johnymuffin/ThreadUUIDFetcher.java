@@ -32,7 +32,7 @@ public class ThreadUUIDFetcher extends Thread {
                         System.out.println(loginPacket.name + " does not have a Mojang UUID associated with their name");
                         UUID offlineUUID = generateOfflineUUID(loginPacket.name);
                         System.out.println("Using Offline Based UUID for " + loginPacket.name + " - " + offlineUUID);
-                        UUIDCacheFile.getInstance().addPlayerDetails(loginPacket.name, offlineUUID, false);
+                        //UUIDCacheFile.getInstance().addPlayerDetails(loginPacket.name, offlineUUID, false);
                         loginProcessHandler.userUUIDReceived();
                     } else {
                         System.out.println(loginPacket.name + " does not have a UUID with Mojang. Player has been kicked as graceful UUID is disabled");
@@ -43,7 +43,7 @@ public class ThreadUUIDFetcher extends Thread {
                     System.out.println("Fetched UUID from Mojang for " + loginPacket.name + " - " + uuid.toString());
                     try {
                         UUIDPlayerStorage.getInstance().addPlayerOnlineUUID(loginPacket.name, uuid);
-                        UUIDCacheFile.getInstance().addPlayerDetails(loginPacket.name, uuid, true);
+                        //UUIDCacheFile.getInstance().addPlayerDetails(loginPacket.name, uuid, true);
                     } catch (Exception e) {
                         System.out.println(e);
                     }
