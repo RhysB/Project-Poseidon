@@ -36,7 +36,11 @@ public class UUIDManager {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
-            e.printStackTrace();
+            System.out.println("The UUIDCache is corrupt or unreadable, resetting");
+            UUIDJsonArray = new JSONArray();
+            saveJsonArray();
+
+            //e.printStackTrace();
         }
 
 
