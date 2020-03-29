@@ -40,7 +40,7 @@ public class UUIDPlayerStorage {
         if (playerUUIDs.containsKey(playerName)) {
             playerUUIDs.remove(playerName);
         }
-        removeDuplicateUUIDs(uuid);
+        //removeDuplicateUUIDs(uuid); - Removed Until Cache File Is Present
         playerUUIDs.put(playerName, uuid);
         //UUIDCacheFile.getInstance().addPlayerDetails(playerName, uuid, true);
     }
