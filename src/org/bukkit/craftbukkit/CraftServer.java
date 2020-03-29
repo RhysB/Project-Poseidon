@@ -95,7 +95,8 @@ public final class CraftServer implements Server {
     public CraftServer(MinecraftServer console, ServerConfigurationManager server) {
         this.console = console;
         this.server = server;
-        this.serverVersion = CraftServer.class.getPackage().getImplementationVersion();
+        //this.serverVersion = CraftServer.class.getPackage().getImplementationVersion(); //Poseidon Replace
+        this.serverVersion = "1.6";
 
         Bukkit.setServer(this);
 
