@@ -196,6 +196,10 @@ public final class CraftServer implements Server {
         return serverName;
     }
 
+    public String getPoseidonVersion() {
+        return serverVersion;
+    }
+
     public String getServerEnvironment() {
         return serverEnvironment;
     }

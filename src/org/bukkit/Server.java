@@ -59,6 +59,12 @@ public interface Server {
     public String getServerEnvironment();
 
     /**
+     * Gets the version string of Poseidon.
+     *
+     * @return version of Poseidon
+     */
+    public String getPoseidonVersion();
+    /**
      * Gets the version string of this server enviroment.
      *
      * @return version of this server implementation
