@@ -101,10 +101,12 @@ public class LoginProcessHandler {
         UUID uuid = PoseidonUUID.getPlayerGracefulUUID(username);
         //Check if a player with the same UUID or Username is already online which is mainly an issue in Offline Mode servers.
         for (Player p : server.getOnlinePlayers()) {
-            if (p.getUniqueId().equals(uuid) || p.getName().equalsIgnoreCase(username)) {
-                cancelLoginProcess(ChatColor.RED + "A player with your username is already online");
-                System.out.println("User " + username + " has been blocked from connecting as they share a username or UUID with a user who is already online called " + p.getName() +
-                        "\nMost likely the user has changed their UUID or the server is running in offline mode and someone has attempted to connect with their name");
+            if (!(p.getUniqueId() == null || uuid == null || p.getName() == null || username == null)) {
+                if (p.getUniqueId().equals(uuid) || p.getName().equalsIgnoreCase(username)) {
+                    cancelLoginProcess(ChatColor.RED + "A player with your username is already online");
+                    System.out.println("User " + username + " has been blocked from connecting as they share a username or UUID with a user who is already online called " + p.getName() +
+                            "\nMost likely the user has changed their UUID or the server is running in offline mode and someone has attempted to connect with their name");
+                }
             }
         }
 
