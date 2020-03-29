@@ -1,23 +1,7 @@
 package net.minecraft.server;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-// CraftBukkit start
-import java.io.PrintStream;
-import java.net.UnknownHostException;
-
 import com.projectposeidon.PoseidonConfig;
-//import com.projectposeidon.johnymuffin.UUIDCacheFile;
+import com.projectposeidon.johnymuffin.UUIDManager;
 import jline.ConsoleReader;
 import joptsimple.OptionSet;
 import org.bukkit.World.Environment;
@@ -32,6 +16,18 @@ import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginLoadOrder;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+// CraftBukkit start
+//import com.projectposeidon.johnymuffin.UUIDCacheFile;
 // CraftBukkit end
 
 public class MinecraftServer implements Runnable, ICommandListener {
@@ -131,8 +127,10 @@ public class MinecraftServer implements Runnable, ICommandListener {
             log.warning("While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.");
             log.warning("To change this, set \"online-mode\" to \"true\" in the server.settings file.");
         }
-
+        //Project Poseidon Start
         PoseidonConfig.getInstance();
+        UUIDManager.getInstance();
+        //Project Poseidon End
 
         this.serverConfigurationManager = new ServerConfigurationManager(this);
         // CraftBukkit - removed trackers
@@ -318,7 +316,8 @@ public class MinecraftServer implements Runnable, ICommandListener {
     public void stop() { // CraftBukkit - private -> public
         log.info("Stopping server");
         //Project Poseidon Start
-        log.info("Saving UUID Cache");
+        UUIDManager.getInstance().saveJsonArray();
+
         //UUIDCacheFile.getInstance().saveConfig();
         //Project Poseidon End
 
@@ -442,25 +441,25 @@ public class MinecraftServer implements Runnable, ICommandListener {
 
         for (j = 0; j < this.worlds.size(); ++j) { // CraftBukkit
             // if (j == 0 || this.propertyManager.getBoolean("allow-nether", true)) { // CraftBukkit
-                WorldServer worldserver = this.worlds.get(j); // CraftBukkit
+            WorldServer worldserver = this.worlds.get(j); // CraftBukkit
 
-                if (this.ticks % 20 == 0) {
-                    // CraftBukkit start - only send timeupdates to the people in that world
-                    for (int i = 0; i < this.serverConfigurationManager.players.size(); ++i) {
-                        EntityPlayer entityplayer = (EntityPlayer) this.serverConfigurationManager.players.get(i);
-                        entityplayer.netServerHandler.sendPacket(new Packet4UpdateTime(entityplayer.getPlayerTime())); // Add support for per player time
-                    }
-                    // CraftBukkit end
+            if (this.ticks % 20 == 0) {
+                // CraftBukkit start - only send timeupdates to the people in that world
+                for (int i = 0; i < this.serverConfigurationManager.players.size(); ++i) {
+                    EntityPlayer entityplayer = (EntityPlayer) this.serverConfigurationManager.players.get(i);
+                    entityplayer.netServerHandler.sendPacket(new Packet4UpdateTime(entityplayer.getPlayerTime())); // Add support for per player time
                 }
-
-                worldserver.doTick();
-
-                while (worldserver.doLighting()) {
-                    ;
-                }
-
-                worldserver.cleanUp();
+                // CraftBukkit end
             }
+
+            worldserver.doTick();
+
+            while (worldserver.doLighting()) {
+                ;
+            }
+
+            worldserver.cleanUp();
+        }
         // } // CraftBukkit
 
         this.networkListenThread.a();
