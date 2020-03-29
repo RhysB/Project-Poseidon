@@ -166,9 +166,10 @@ public class LoginProcessHandler {
                 int difference = (int) (endTime - startTime);
                 System.out.println("Player " + loginProcessHandler.packet1Login.name + " was allowed to join after being on hold for " + difference + " seconds by the following plugins: " + pluginPauseNames.toString());
                 loginProcessHandler.setLoginSuccessful(true);
-                NetLoginHandler.a(netLoginHandler, packet1Login);
+                if (!loginSuccessful && !loginCancelled) {
+                    NetLoginHandler.a(netLoginHandler, packet1Login);
+                }
             }
-
         }
     }
 
