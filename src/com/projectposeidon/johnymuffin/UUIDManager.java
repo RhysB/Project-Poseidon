@@ -84,10 +84,21 @@ public class UUIDManager {
         UUIDJsonArray.add(tmp);
     }
 
+    public UUID getUUIDFromUsername(String username) {
+        for (int i = 0; i < UUIDJsonArray.size(); i++) {
+            JSONObject tmp = (JSONObject) UUIDJsonArray.get(i);
+            if (tmp.get("name").equals(username)) {
+                return UUID.fromString((String) tmp.get("uuid"));
+            }
+        }
+        return null;
+    }
+
+
     public UUID getUUIDFromUsername(String username, boolean online) {
         for (int i = 0; i < UUIDJsonArray.size(); i++) {
             JSONObject tmp = (JSONObject) UUIDJsonArray.get(i);
-            if (tmp.get("name").equals(username) && tmp.get("onlineUUID").equals(true)) {
+            if (tmp.get("name").equals(username) && tmp.get("onlineUUID").equals(online)) {
                 return UUID.fromString((String) tmp.get("uuid"));
             }
         }
@@ -98,7 +109,7 @@ public class UUIDManager {
         for (int i = 0; i < UUIDJsonArray.size(); i++) {
             JSONObject tmp = (JSONObject) UUIDJsonArray.get(i);
             Long expire = (Long) tmp.get("expiresOn");
-            if (tmp.get("name").equals(username) && tmp.get("onlineUUID").equals(true) && expire > afterUnix) {
+            if (tmp.get("name").equals(username) && tmp.get("onlineUUID").equals(online) && expire > afterUnix) {
                 return UUID.fromString((String) tmp.get("uuid"));
             }
         }
