@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.projectposeidon.PoseidonConfig;
 import com.projectposeidon.johnymuffin.UUIDManager;
 
 import java.io.DataInputStream;
@@ -175,22 +176,41 @@ public class PlayerNBTManager implements PlayerFileData, IDataManager {
     }
 
     public void a(EntityHuman entityhuman) {
-        try {
-            NBTTagCompound nbttagcompound = new NBTTagCompound();
+        if(PoseidonConfig.getInstance().isUUIDPlayerDataEnabled()) {
+            try {
+                NBTTagCompound nbttagcompound = new NBTTagCompound();
 
-            entityhuman.d(nbttagcompound);
-            File file1 = new File(this.c, "_tmp_.dat");
-            //File file2 = new File(this.c, entityhuman.name + ".dat");
-            //UUIDPlayerStorage.getInstance().getUUIDGraceful(entityhuman.name)
-            File file2 = new File(this.c, UUIDManager.getInstance().getUUIDGraceful(entityhuman.name) + ".dat");
-            CompressedStreamTools.a(nbttagcompound, (OutputStream) (new FileOutputStream(file1)));
-            if (file2.exists()) {
-                file2.delete();
+                entityhuman.d(nbttagcompound);
+                File file1 = new File(this.c, "_tmp_.dat");
+                //File file2 = new File(this.c, entityhuman.name + ".dat");
+                //UUIDPlayerStorage.getInstance().getUUIDGraceful(entityhuman.name)
+                File file2 = new File(this.c, UUIDManager.getInstance().getUUIDGraceful(entityhuman.name) + ".dat");
+                CompressedStreamTools.a(nbttagcompound, (OutputStream) (new FileOutputStream(file1)));
+                if (file2.exists()) {
+                    file2.delete();
+                }
+
+                file1.renameTo(file2);
+            } catch (Exception exception) {
+                a.warning("Failed to save player data for " + entityhuman.name);
             }
+        } else {
+            try {
+                NBTTagCompound nbttagcompound = new NBTTagCompound();
 
-            file1.renameTo(file2);
-        } catch (Exception exception) {
-            a.warning("Failed to save player data for " + entityhuman.name);
+                entityhuman.d(nbttagcompound);
+                File file1 = new File(this.c, "_tmp_.dat");
+                File file2 = new File(this.c, entityhuman.name + ".dat");
+
+                CompressedStreamTools.a(nbttagcompound, (OutputStream) (new FileOutputStream(file1)));
+                if (file2.exists()) {
+                    file2.delete();
+                }
+
+                file1.renameTo(file2);
+            } catch (Exception exception) {
+                a.warning("Failed to save player data for " + entityhuman.name);
+            }
         }
     }
 
@@ -220,28 +240,43 @@ public class PlayerNBTManager implements PlayerFileData, IDataManager {
     }
 
     public NBTTagCompound a(String s) {
-        try {
-            File file1 = new File(this.c, UUIDManager.getInstance().getUUIDGraceful(s) + ".dat");
-            File file2 = new File(this.c, s + ".dat");
-            if(!file1.exists()) {
-                if(file2.exists()) {
-                    //Convert player data
-                    copyFileUsingStream(file2, file1);
-                    File file3 = new File(this.c, s + ".datbackup");
-                    file2.renameTo(file3);
-                    System.out.println("Converting playerdata for " + s + " to a UUID");
+        if(PoseidonConfig.getInstance().isUUIDPlayerDataEnabled()) {
+            try {
+                File file1 = new File(this.c, UUIDManager.getInstance().getUUIDGraceful(s) + ".dat");
+                File file2 = new File(this.c, s + ".dat");
+                if(!file1.exists()) {
+                    if(file2.exists()) {
+                        //Convert player data
+                        copyFileUsingStream(file2, file1);
+                        File file3 = new File(this.c, s + ".datbackup");
+                        file2.renameTo(file3);
+                        System.out.println("Converting playerdata for " + s + " to a UUID");
+                    }
                 }
-            }
 
 
-            if (file1.exists()) {
-                return CompressedStreamTools.a((InputStream) (new FileInputStream(file1)));
+                if (file1.exists()) {
+                    return CompressedStreamTools.a((InputStream) (new FileInputStream(file1)));
+                }
+            } catch (Exception exception) {
+                a.warning("Failed to load player data for " + s);
             }
-        } catch (Exception exception) {
-            a.warning("Failed to load player data for " + s);
+
+            return null;
+        } else {
+            try {
+                File file1 = new File(this.c, s + ".dat");
+
+                if (file1.exists()) {
+                    return CompressedStreamTools.a((InputStream) (new FileInputStream(file1)));
+                }
+            } catch (Exception exception) {
+                a.warning("Failed to load player data for " + s);
+            }
+
+            return null;
         }
 
-        return null;
     }
 
     public PlayerFileData d() {

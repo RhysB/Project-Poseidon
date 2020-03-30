@@ -21,11 +21,23 @@ public class PoseidonConfig extends Configuration {
 
     private void write() {
         isAllowGracefulUUIDEnabled();
-
+        isUUIDPlayerDataEnabled();
     }
 
     public synchronized Boolean isAllowGracefulUUIDEnabled() {
         String key = "allowGracefulUUID";
+        if (this.getString(key) == null) {
+            this.setProperty(key, true);
+        }
+        final Boolean setting = this.getBoolean(key, true);
+        this.removeProperty(key);
+        this.setProperty(key, setting);
+        return setting;
+
+    }
+
+    public synchronized Boolean isUUIDPlayerDataEnabled() {
+        String key = "savePlayerdataByUUID";
         if (this.getString(key) == null) {
             this.setProperty(key, true);
         }
