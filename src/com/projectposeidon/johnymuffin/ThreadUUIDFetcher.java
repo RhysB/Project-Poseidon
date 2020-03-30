@@ -7,7 +7,7 @@ import org.bukkit.ChatColor;
 import java.util.UUID;
 
 import static com.projectposeidon.evilmidget38.UUIDFetcher.getUUIDOf;
-import static com.projectposeidon.johnymuffin.UUIDPlayerStorage.generateOfflineUUID;
+import static com.projectposeidon.johnymuffin.UUIDManager.generateOfflineUUID;
 
 public class ThreadUUIDFetcher extends Thread {
 
@@ -23,46 +23,26 @@ public class ThreadUUIDFetcher extends Thread {
     }
 
     public void run() {
-        UUID uuid = UUIDPlayerStorage.getInstance().getPlayerUUID(loginPacket.name);
-        if (uuid == null) {
-            try {
-                uuid = getUUIDOf(loginPacket.name);
-                if (uuid == null) {
-                    if (PoseidonConfig.getInstance().isAllowGracefulUUIDEnabled()) {
-                        System.out.println(loginPacket.name + " does not have a Mojang UUID associated with their name");
-                        UUID offlineUUID = generateOfflineUUID(loginPacket.name);
-                        System.out.println("Using Offline Based UUID for " + loginPacket.name + " - " + offlineUUID);
-                        //UUIDCacheFile.getInstance().addPlayerDetails(loginPacket.name, offlineUUID, false);
-                        loginProcessHandler.userUUIDReceived();
-                    } else {
-                        System.out.println(loginPacket.name + " does not have a UUID with Mojang. Player has been kicked as graceful UUID is disabled");
-                        loginProcessHandler.cancelLoginProcess(ChatColor.RED + "Sorry, we only support premium accounts");
-                    }
-
+        UUID uuid;
+        try {
+            uuid = getUUIDOf(loginPacket.name);
+            if (uuid == null) {
+                if (PoseidonConfig.getInstance().isAllowGracefulUUIDEnabled()) {
+                    System.out.println(loginPacket.name + " does not have a Mojang UUID associated with their name");
+                    UUID offlineUUID = generateOfflineUUID(loginPacket.name);
+                    loginProcessHandler.userUUIDReceived(offlineUUID, false);
+                    System.out.println("Using Offline Based UUID for " + loginPacket.name + " - " + offlineUUID);
                 } else {
-                    System.out.println("Fetched UUID from Mojang for " + loginPacket.name + " - " + uuid.toString());
-                    try {
-                        UUIDPlayerStorage.getInstance().addPlayerOnlineUUID(loginPacket.name, uuid);
-                        //UUIDCacheFile.getInstance().addPlayerDetails(loginPacket.name, uuid, true);
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
-
-                    loginProcessHandler.userUUIDReceived();
+                    System.out.println(loginPacket.name + " does not have a UUID with Mojang. Player has been kicked as graceful UUID is disabled");
+                    loginProcessHandler.cancelLoginProcess(ChatColor.RED + "Sorry, we only support premium accounts");
                 }
-                //netLoginHandler.authenticatePlayer(loginPacket);
-                //netLoginHandler.playerUUIDFetched(loginPacket);
-
-
-            } catch (Exception e) {
-                //this.netLoginHandler.disconnect(ChatColor.RED + "Sorry, we can't connect to Mojang currently, please try again later");
-                System.out.println("Mojang failed contact for user " + loginPacket.name + ": " + e.getMessage());
-                loginProcessHandler.cancelLoginProcess(ChatColor.RED + "Sorry, we can't connect to Mojang currently, please try again later");
+            } else {
+                System.out.println("Fetched UUID from Mojang for " + loginPacket.name + " - " + uuid.toString());
+                loginProcessHandler.userUUIDReceived(uuid, true);
             }
-        } else {
-            System.out.println("Fetched UUID from Cache for " + loginPacket.name + " - " + uuid.toString());
-            //netLoginHandler.authenticatePlayer(loginPacket);
-            loginProcessHandler.userUUIDReceived();
+        } catch (Exception e) {
+            System.out.println("Mojang failed contact for user " + loginPacket.name + ": " + e.getMessage());
+            loginProcessHandler.cancelLoginProcess(ChatColor.RED + "Sorry, we can't connect to Mojang currently, please try again later");
         }
 
 

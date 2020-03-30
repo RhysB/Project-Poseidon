@@ -1,6 +1,6 @@
 package com.projectposeidon.api;
 
-import com.projectposeidon.johnymuffin.UUIDPlayerStorage;
+import com.projectposeidon.johnymuffin.UUIDManager;
 
 import java.util.UUID;
 
@@ -15,7 +15,7 @@ public final class PoseidonUUID {
      * @return A Mojang UUID if known, otherwise null
      */
     public static UUID getPlayerMojangUUID(String username) {
-        return UUIDPlayerStorage.getInstance().getPlayerUUID(username);
+        return UUIDManager.getInstance().getUUIDFromUsername(username, true);
     }
 
     /**
@@ -23,7 +23,7 @@ public final class PoseidonUUID {
      * @return A Mojang UUID if known, otherwise a offline uuid
      */
     public static UUID getPlayerGracefulUUID(String username) {
-        return UUIDPlayerStorage.getInstance().getUUIDGraceful(username);
+        return UUIDManager.getInstance().getUUIDGraceful(username);
     }
 
     /**
@@ -31,7 +31,7 @@ public final class PoseidonUUID {
      * @return A offline UUID for a player
      */
     public static UUID getPlayerOfflineUUID(String username) {
-        return UUIDPlayerStorage.generateOfflineUUID(username);
+        return UUIDManager.generateOfflineUUID(username);
     }
 
 

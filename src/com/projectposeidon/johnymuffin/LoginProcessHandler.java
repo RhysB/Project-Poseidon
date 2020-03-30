@@ -1,6 +1,5 @@
 package com.projectposeidon.johnymuffin;
 
-import com.projectposeidon.api.PoseidonUUID;
 import net.minecraft.server.NetLoginHandler;
 import net.minecraft.server.Packet1Login;
 import net.minecraft.server.ThreadLoginVerifier;
@@ -67,21 +66,24 @@ public class LoginProcessHandler {
     }
 
     private void getUserUUID() {
-        UUID uuid = UUIDPlayerStorage.getInstance().getPlayerUUID(packet1Login.name);
+        //UUID uuid = UUIDManager.getInstance().getUUIDFromUsername(packet1Login.name, true);
+        long unixTime = (System.currentTimeMillis() / 1000L);
+        UUID uuid = UUIDManager.getInstance().getUUIDFromUsername(packet1Login.name, true, unixTime);
         if (uuid == null) {
             (new ThreadUUIDFetcher(packet1Login, this)).start();
         } else {
             System.out.println("Fetched UUID from Cache for " + packet1Login.name + " - " + uuid.toString());
-            connectPlayer();
+            connectPlayer(uuid);
         }
 
 
     }
 
-    public synchronized void userUUIDReceived() {
-        if (!loginSuccessful & !loginCancelled) {
-            connectPlayer();
-        }
+    public synchronized void userUUIDReceived(UUID uuid, boolean onlineMode) {
+        long unixTime = (System.currentTimeMillis() / 1000L) + 1382400;
+        UUIDManager.getInstance().addUser(packet1Login.name, uuid, unixTime, onlineMode);
+        connectPlayer(uuid);
+
     }
 
     private void verifyMojangSession() {
@@ -96,17 +98,14 @@ public class LoginProcessHandler {
         }
     }
 
-    private void connectPlayer() {
+    private void connectPlayer(UUID uuid) {
         String username = packet1Login.name;
-        UUID uuid = PoseidonUUID.getPlayerGracefulUUID(username);
         //Check if a player with the same UUID or Username is already online which is mainly an issue in Offline Mode servers.
         for (Player p : server.getOnlinePlayers()) {
-            if (!(p.getUniqueId() == null || uuid == null || p.getName() == null || username == null)) {
-                if (p.getUniqueId().equals(uuid) || p.getName().equalsIgnoreCase(username)) {
-                    cancelLoginProcess(ChatColor.RED + "A player with your username is already online");
-                    System.out.println("User " + username + " has been blocked from connecting as they share a username or UUID with a user who is already online called " + p.getName() +
-                            "\nMost likely the user has changed their UUID or the server is running in offline mode and someone has attempted to connect with their name");
-                }
+            if (p.getName().equalsIgnoreCase(username) && p.getUniqueId().equals(uuid)) {
+                cancelLoginProcess(ChatColor.RED + "A player with your username is already online");
+                System.out.println("User " + username + " has been blocked from connecting as they share a username or UUID with a user who is already online called " + p.getName() +
+                        "\nMost likely the user has changed their UUID or the server is running in offline mode and someone has attempted to connect with their name");
             }
         }
 
@@ -117,6 +116,8 @@ public class LoginProcessHandler {
             if (this.netLoginHandler.getSocket() == null) {
                 return;
             }
+
+
             PlayerPreLoginEvent event = new PlayerPreLoginEvent(this.packet1Login.name, this.netLoginHandler.getSocket().getInetAddress(), loginProcessHandler);
             this.server.getPluginManager().callEvent(event);
             if (event.getResult() != PlayerPreLoginEvent.Result.ALLOWED) {

@@ -46,6 +46,22 @@ public class UUIDManager {
 
     }
 
+    public UUID getUUIDGraceful(String username) {
+        UUID uuid = getUUIDFromUsername(username, true);
+        if(uuid == null) {
+            uuid = generateOfflineUUID(username);
+        }
+        return uuid;
+    }
+
+
+    public static UUID generateOfflineUUID(String username) {
+        //TODO we should look at using the modern system: UUID offlineUUID = UUID.nameUUIDFromBytes(("OfflinePlayer:" + <playerName>).getBytes(Charsets.UTF_8));
+        return UUID.nameUUIDFromBytes(username.getBytes());
+    }
+
+
+
     public void saveJsonArray() {
         try (FileWriter file = new FileWriter("uuidcache.json")) {
             System.out.println("Saving uuidcache.json for Project Poseidon");
@@ -59,7 +75,7 @@ public class UUIDManager {
 
     public void addUser(String username, UUID uuid, Long expiry, boolean online) {
         removeInstancesOfUsername(username);
-        removeInstancesOfUUID(uuid);
+        //removeInstancesOfUUID(uuid);
         JSONObject tmp = new JSONObject();
         tmp.put("name", username);
         tmp.put("uuid", uuid.toString());
@@ -72,6 +88,17 @@ public class UUIDManager {
         for (int i = 0; i < UUIDJsonArray.size(); i++) {
             JSONObject tmp = (JSONObject) UUIDJsonArray.get(i);
             if (tmp.get("name").equals(username) && tmp.get("onlineUUID").equals(true)) {
+                return UUID.fromString((String) tmp.get("uuid"));
+            }
+        }
+        return null;
+    }
+
+    public UUID getUUIDFromUsername(String username, boolean online, Long afterUnix) {
+        for (int i = 0; i < UUIDJsonArray.size(); i++) {
+            JSONObject tmp = (JSONObject) UUIDJsonArray.get(i);
+            Long expire = (Long) tmp.get("expiresOn");
+            if (tmp.get("name").equals(username) && tmp.get("onlineUUID").equals(true) && expire > afterUnix) {
                 return UUID.fromString((String) tmp.get("uuid"));
             }
         }
@@ -107,7 +134,7 @@ public class UUIDManager {
     }
 
 
-    public synchronized static UUIDManager getInstance() {
+    public static UUIDManager getInstance() {
         if (UUIDManager.singleton == null) {
             UUIDManager.singleton = new UUIDManager();
         }

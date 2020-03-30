@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import com.projectposeidon.johnymuffin.UUIDManager;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -10,8 +12,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.logging.Logger;
-
-import com.projectposeidon.johnymuffin.UUIDPlayerStorage;
 
 import java.util.UUID; // CraftBukkit
 
@@ -181,7 +181,8 @@ public class PlayerNBTManager implements PlayerFileData, IDataManager {
             entityhuman.d(nbttagcompound);
             File file1 = new File(this.c, "_tmp_.dat");
             //File file2 = new File(this.c, entityhuman.name + ".dat");
-            File file2 = new File(this.c, UUIDPlayerStorage.getInstance().getUUIDGraceful(entityhuman.name) + ".dat");
+            //UUIDPlayerStorage.getInstance().getUUIDGraceful(entityhuman.name)
+            File file2 = new File(this.c, UUIDManager.getInstance().getUUIDGraceful(entityhuman.name) + ".dat");
             CompressedStreamTools.a(nbttagcompound, (OutputStream) (new FileOutputStream(file1)));
             if (file2.exists()) {
                 file2.delete();
@@ -220,7 +221,7 @@ public class PlayerNBTManager implements PlayerFileData, IDataManager {
 
     public NBTTagCompound a(String s) {
         try {
-            File file1 = new File(this.c, UUIDPlayerStorage.getInstance().getUUIDGraceful(s) + ".dat");
+            File file1 = new File(this.c, UUIDManager.getInstance().getUUIDGraceful(s) + ".dat");
             File file2 = new File(this.c, s + ".dat");
             if(!file1.exists()) {
                 if(file2.exists()) {
