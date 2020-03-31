@@ -22,6 +22,7 @@ public class PoseidonConfig extends Configuration {
     private void write() {
         isAllowGracefulUUIDEnabled();
         isUUIDPlayerDataEnabled();
+        isExplosionsOptimized();
     }
 
     public synchronized Boolean isAllowGracefulUUIDEnabled() {
@@ -48,7 +49,17 @@ public class PoseidonConfig extends Configuration {
 
     }
 
+    public synchronized Boolean isExplosionsOptimized() {
+        String key = "optimizedExplosions";
+        if (this.getString(key) == null) {
+            this.setProperty(key, false);
+        }
+        final Boolean setting = this.getBoolean(key, false);
+        this.removeProperty(key);
+        this.setProperty(key, setting);
+        return setting;
 
+    }
 
     public synchronized static PoseidonConfig getInstance() {
         if (PoseidonConfig.singleton == null) {

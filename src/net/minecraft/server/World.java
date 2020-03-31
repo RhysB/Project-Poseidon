@@ -2,9 +2,11 @@ package net.minecraft.server;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
@@ -75,6 +77,7 @@ public class World implements IBlockAccess {
     private int Q;
     private List R;
     public boolean isStatic;
+    public final Map<Explosion.CacheKey, Float> explosionDensityCache = new HashMap<>(); // Paper - Optimize explosions
 
     public WorldChunkManager getWorldChunkManager() {
         return this.worldProvider.b;
