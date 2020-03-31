@@ -134,6 +134,9 @@ public class LoginProcessHandler {
         }
     }
 
+    /**
+     * Cancel a players login before join or login events
+     */
     public synchronized void cancelLoginProcess(String s) {
         if (!loginCancelled && !loginSuccessful) {
             loginCancelled = true;
@@ -143,6 +146,7 @@ public class LoginProcessHandler {
 
     /**
      * Set a pause for your plugin
+     * Connection pauses are for fetching data for a player before they MIGHT be allowed to join
      */
     public void addConnectionPause(Plugin plugin) throws Exception {
         if (pluginPauses.contains(plugin)) {
