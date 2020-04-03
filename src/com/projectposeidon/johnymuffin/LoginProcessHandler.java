@@ -24,6 +24,7 @@ public class LoginProcessHandler {
     private boolean loginSuccessful = false;
     private long startTime;
     private ArrayList<Plugin> pluginPauses = new ArrayList<Plugin>();
+    private ArrayList<ConnectionPause> pluginPauseObjects = new ArrayList<ConnectionPause>();
     private ArrayList<String> pluginPauseNames = new ArrayList<String>();
 
     public LoginProcessHandler(NetLoginHandler netloginhandler, Packet1Login packet1login, CraftServer server, boolean onlineMode) {
@@ -45,7 +46,6 @@ public class LoginProcessHandler {
                             cancelLoginProcess("Login Process Handler Timeout");
                             System.out.println("LoginProcessHandler for user " + packet1login.name + " has failed to respond after 20 seconds. And future calls to this class will result in error");
                             System.out.println("Plugin Pauses: " + pluginPauseNames.toString());
-                            loginProcessHandler = null;
 
                         }
                     }
@@ -144,10 +144,51 @@ public class LoginProcessHandler {
         }
     }
 
+
+    /**
+     * Set a pause for your plugin
+     * Connection pauses are for fetching data for a player before they MIGHT be allowed to join
+     *
+     * @param plugin Instance of plugin
+     * @param connectionPauseName Name of connection pause (Ensure no duplicates)
+     * @return ConnectionPause Object, used to remove a connection pause
+     */
+    public ConnectionPause addConnectionInterrupt(Plugin plugin, String connectionPauseName) {
+        //Log to console a pause has started on first pause
+        if (pluginPauseNames.size() == 0) {
+            System.out.println("One or more plugins has paused the incomming connection for player " + packet1Login.name);
+        }
+        //Add plugin pause names and pauses for respective plugins
+        final ConnectionPause connectionPause = new ConnectionPause(plugin.getDescription().getName(), connectionPauseName, loginProcessHandler);
+        pluginPauseNames.add(plugin.getDescription().getName() + ":" + connectionPauseName);
+        pluginPauseObjects.add(connectionPause);
+        return connectionPause;
+    }
+
+    /**
+     * Remove a pause for your plugin by the returned ConnectionPause object
+     */
+    public void removeConnectionPause(ConnectionPause connectionPause) {
+        if (pluginPauseObjects.contains(connectionPause)) {
+            pluginPauseObjects.remove(connectionPause);
+            if (!loginProcessHandler.isPlayerConnectionPaused()) {
+                long endTime = System.currentTimeMillis() / 1000L;
+                int difference = (int) (endTime - startTime);
+                System.out.println("Player " + loginProcessHandler.packet1Login.name + " was allowed to join after being on hold for " + difference + " seconds by the following plugins: " + pluginPauseNames.toString());
+                loginProcessHandler.setLoginSuccessful(true);
+                if (!loginCancelled) {
+                    NetLoginHandler.a(netLoginHandler, packet1Login);
+                }
+            }
+        }
+    }
+
+
     /**
      * Set a pause for your plugin
      * Connection pauses are for fetching data for a player before they MIGHT be allowed to join
      */
+    @Deprecated
     public void addConnectionPause(Plugin plugin) throws Exception {
         if (pluginPauses.contains(plugin)) {
             throw new Exception("Plugin " + plugin.getDescription().getName() + " has tried to pause player login multiple times");
@@ -164,6 +205,7 @@ public class LoginProcessHandler {
     /**
      * Remove a pause for your plugin
      */
+    @Deprecated
     public void removeConnectionPause(Plugin plugin) {
         if (pluginPauses.contains(plugin)) {
             pluginPauses.remove(plugin);
@@ -184,7 +226,7 @@ public class LoginProcessHandler {
      * See if the players connection currently paused
      */
     public boolean isPlayerConnectionPaused() {
-        if (pluginPauses.size() == 0) {
+        if (pluginPauses.size() == 0 && pluginPauseObjects.size() == 0) {
             return false;
         }
         return true;
