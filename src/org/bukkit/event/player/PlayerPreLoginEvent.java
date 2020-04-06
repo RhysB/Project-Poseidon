@@ -1,8 +1,9 @@
 package org.bukkit.event.player;
 
-import org.bukkit.event.Event;
-
+import com.projectposeidon.johnymuffin.ConnectionPause;
 import com.projectposeidon.johnymuffin.LoginProcessHandler;
+import org.bukkit.event.Event;
+import org.bukkit.plugin.Plugin;
 
 import java.net.InetAddress;
 
@@ -24,14 +25,53 @@ public class PlayerPreLoginEvent extends Event {
         this.name = name;
         this.ipAddress = ipAddress;
     }
+    //Project Poseidon Start
+
+    /**
+     * Set a pause for your plugin
+     * Connection pauses are for fetching data for a player before they MIGHT be allowed to join
+     *
+     * @param plugin              Instance of plugin
+     * @param connectionPauseName Name of connection pause (Ensure no duplicates)
+     * @return ConnectionPause Object, used to remove a connection pause
+     */
+    public ConnectionPause addConnectionPause(Plugin plugin, String connectionPauseName) {
+        return loginProcessHandler.addConnectionInterrupt(plugin, connectionPauseName);
+    }
+
+    /**
+     * Remove a pause for your plugin by the returned ConnectionPause object
+     */
+    public void removeConnectionPause(ConnectionPause connectionPause) {
+        loginProcessHandler.removeConnectionPause(connectionPause);
+    }
+
+    /**
+     * Cancel a players login before join or login events if a connection pause is still active
+     */
+    public void cancelPlayerLogin(String kickMessage) {
+        loginProcessHandler.cancelLoginProcess(kickMessage);
+    }
+
+    /**
+     * See if the players connection currently paused
+     */
+    public boolean isPlayerConnectionPaused() {
+        return loginProcessHandler.isPlayerConnectionPaused();
+    }
+
     /**
      * Gets the LoginProcessHandler instance for the connection
      *
      * @return Gets the LoginProcessHandler
      */
+    @Deprecated
     public LoginProcessHandler getLoginProcessHandler() {
         return loginProcessHandler;
     }
+
+    //Project Poseidon End
+
 
     /**
      * Gets the current result of the login, as an enum
