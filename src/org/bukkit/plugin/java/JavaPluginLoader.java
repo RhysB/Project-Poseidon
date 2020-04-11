@@ -5,20 +5,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
+import com.sun.istack.internal.NotNull;
 import org.bukkit.Server;
-import org.bukkit.event.CustomEventListener;
-import org.bukkit.event.Event;
-import org.bukkit.event.Listener;
+import org.bukkit.event.*;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockCanBuildEvent;
@@ -118,14 +116,7 @@ import org.bukkit.event.world.WorldListener;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
-import org.bukkit.plugin.EventExecutor;
-import org.bukkit.plugin.InvalidDescriptionException;
-import org.bukkit.plugin.InvalidPluginException;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginLoader;
-import org.bukkit.plugin.UnknownDependencyException;
-import org.bukkit.plugin.UnknownSoftDependencyException;
+import org.bukkit.plugin.*;
 import org.yaml.snakeyaml.error.YAMLException;
 
 /**
@@ -289,6 +280,75 @@ public class JavaPluginLoader implements PluginLoader
 
         return (Plugin) result;
     }
+
+    // Project Poseidon Start
+    private void notNull(Object object, String message) {
+        if (object == null)
+            throw new IllegalArgumentException(message);
+    }
+    @Override
+    @NotNull
+    public Map<Class<? extends Event>, Set<RegisteredListener>> createRegisteredListeners(@NotNull Listener listener, @NotNull final Plugin plugin) {
+        notNull(plugin, "Plugin can not be null");
+        notNull(listener, "Listener can not be null");
+
+        Map<Class<? extends Event>, Set<RegisteredListener>> ret = new HashMap<>();
+        Set<Method> methods;
+        try {
+            Method[] publicMethods = listener.getClass().getMethods();
+            Method[] privateMethods = listener.getClass().getDeclaredMethods();
+            methods = new HashSet<Method>(publicMethods.length + privateMethods.length, 1.0f);
+            Collections.addAll(methods, publicMethods);
+            Collections.addAll(methods, privateMethods);
+        } catch (NoClassDefFoundError e) {
+            plugin.getServer().getLogger().severe("Plugin " + plugin.getDescription().getFullName() + " has failed to register events for " + listener.getClass() + " because " + e.getMessage() + " does not exist.");
+            return ret;
+        }
+
+        for (final Method method : methods) {
+            final EventHandler eh = method.getAnnotation(EventHandler.class);
+            if (eh == null)
+                continue;
+            if (method.isBridge() || method.isSynthetic())
+                continue;
+            final Class<?> checkClass;
+            if (method.getParameterTypes().length != 1 || !Event.class.isAssignableFrom(checkClass = method.getParameterTypes()[0])) {
+                plugin.getServer().getLogger().severe(plugin.getDescription().getFullName() + " attempted to register an invalid EventHandler method signature \"" + method.toGenericString() + "\" in " + listener.getClass());
+                continue;
+            }
+            final Class<? extends Event> eventClass = checkClass.asSubclass(Event.class);
+            method.setAccessible(true);
+            Set<RegisteredListener> eventSet = ret.computeIfAbsent(eventClass, k -> new HashSet<>());
+
+            for (Class<?> clazz = eventClass; Event.class.isAssignableFrom(clazz); clazz = clazz.getSuperclass()) {
+                if (clazz.getAnnotation(Deprecated.class) != null) {
+                    plugin.getServer().getLogger().log(
+                            Level.WARNING,
+                            String.format(
+                                    "\"%s\" has registered a listener for %s on method \"%s\", but the event is Deprecated." +
+                                            " \"%s\"; please notify the authors %s.",
+                                    plugin.getDescription().getFullName(),
+                                    clazz.getName(),
+                                    method.toGenericString(),
+                                    "Server performance will be affected",
+                                    Arrays.toString(plugin.getDescription().getAuthors().toArray())),
+                            new AuthorNagException(null));
+                    break;
+                }
+            }
+
+            final EventExecutor executor = (listener1, event) -> {
+                try {
+                    method.invoke(listener1, event);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            };
+            eventSet.add(new RegisteredListener(listener, executor, eh.priority(), plugin));
+        }
+        return ret;
+    }
+    // Project Poseidon End
 
     protected File getDataFolder(File file)
     {

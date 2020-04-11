@@ -4,22 +4,10 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.MapMaker;
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
+
 import org.bukkit.Server;
 import java.util.regex.Pattern;
 import org.bukkit.command.Command;
@@ -69,6 +57,23 @@ public final class SimplePluginManager implements PluginManager {
         defaultPerms.put(true, new HashSet<Permission>());
         defaultPerms.put(false, new HashSet<Permission>());
     }
+
+    // Project Poseidon Start
+    @Override
+    public void registerEvents(Listener listener, Plugin plugin) {
+        if (!plugin.isEnabled()) {
+            throw new IllegalPluginAccessException("Plugin attempted to register " + listener + " while not enabled");
+        } else {
+            for (Map.Entry<Class<? extends Event>, Set<RegisteredListener>> entry : plugin.getPluginLoader().createRegisteredListeners(listener, plugin).entrySet()) {
+                Class<? extends Event> clazz = entry.getKey();
+                Event.Type type = Event.Type.getTypeByName(clazz.getSimpleName().substring(0, clazz.getSimpleName().indexOf("Event")));
+                if (type != null)
+                    listeners.get(type).addAll(entry.getValue());
+            }
+
+        }
+    }
+    // Project Poseidon End
 
     /**
      * Registers the specified plugin loader
@@ -326,7 +331,6 @@ public final class SimplePluginManager implements PluginManager {
     /**
      * Calls a player related event with the given details
      *
-     * @param type Type of player related event to call
      * @param event Event details
      */
     public synchronized void callEvent(Event event) {

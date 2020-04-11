@@ -26,6 +26,10 @@ public class RegisteredListener {
         executor = registeredPlugin.getPluginLoader().createExecutor(type, pluginListener);
     }
 
+    public void registerAll() {
+
+    }
+
     /**
      * Gets the listener for this registration
      * @return Registered Listener
