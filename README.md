@@ -35,7 +35,7 @@ The Bukkit and Craft Bukkit commits that Project Poseidon is based on are before
 
 If you where a contributor before these commits please feel free to contact me, or open a issue asking for this repository to be taken down.
 
-# MC-DEV
+## MC-DEV
 We include files from the mc-dev Github repository
 * MC-DEV: 1a792ed860ebe2c6d4c40c52f3bc7b9e0789ca23 (https://github.com/Bukkit/mc-dev/commit/1a792ed860ebe2c6d4c40c52f3bc7b9e0789ca23)
 
