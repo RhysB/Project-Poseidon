@@ -139,9 +139,10 @@ public class Explosion {
 
                 if (damagee == null) {
                     // nothing was hurt
-                } else if (this.source == null) { // Block explosion
+                } else if (this.source == null || this.source instanceof EntityTNTPrimed) { // Block explosion
+                    //This event gets fired by tnt, exploding beds, and explosions created by plugins
+                    // TODO: add custom DamageCause for explosions created by plugins
                     // TODO: get the x/y/z of the tnt block?
-                    // does this even get called ever? @see EntityTNTPrimed - not BlockTNT or whatever
                     EntityDamageByBlockEvent event = new EntityDamageByBlockEvent(null, damagee, EntityDamageEvent.DamageCause.BLOCK_EXPLOSION, damageDone);
                     server.getPluginManager().callEvent(event);
 
