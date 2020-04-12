@@ -41,6 +41,10 @@ public class EntityListener implements Listener {
      * @param event Relevant event details
      */
     public void onEntityDamage(EntityDamageEvent event) {}
+    // Project Poseidon Start
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {}
+    public void onEntityDamageByBlock(EntityDamageByBlockEvent event) {}
+    // Project Poseidon End
 
     /**
      * Called when an entity explodes

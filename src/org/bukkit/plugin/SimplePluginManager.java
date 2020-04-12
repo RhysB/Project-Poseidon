@@ -1,5 +1,6 @@
 package org.bukkit.plugin;
 
+import com.avaje.ebean.LogLevel;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.MapMaker;
 import java.io.File;
@@ -64,13 +65,21 @@ public final class SimplePluginManager implements PluginManager {
         if (!plugin.isEnabled()) {
             throw new IllegalPluginAccessException("Plugin attempted to register " + listener + " while not enabled");
         } else {
-            for (Map.Entry<Class<? extends Event>, Set<RegisteredListener>> entry : plugin.getPluginLoader().createRegisteredListeners(listener, plugin).entrySet()) {
+            for (   Map.Entry<Class<? extends Event>, Set<RegisteredListener>> entry :
+                    plugin.getPluginLoader().createRegisteredListeners(listener, plugin).entrySet()) {
                 Class<? extends Event> clazz = entry.getKey();
                 Event.Type type = Event.Type.getTypeByName(clazz.getSimpleName().substring(0, clazz.getSimpleName().indexOf("Event")));
-                if (type != null)
+                if (type != null) {
+                    if(!listeners.containsKey(type)) {
+                        TreeSet<RegisteredListener> eventListeners = new TreeSet<>(comparer);
+                        listeners.put(type, eventListeners);
+                    }
                     listeners.get(type).addAll(entry.getValue());
+                } else {
+                    String cName = clazz.getName();
+                    server.getLogger().log(Level.SEVERE, String.format("Class %s failed to get Event.Type on @EventHandler", cName));
+                }
             }
-
         }
     }
     // Project Poseidon End

@@ -622,6 +622,10 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.entity.EntityDamageEvent
          */
         ENTITY_DAMAGE (Category.LIVING_ENTITY),
+        // Project Poseidon Start
+        ENTITY_DAMAGE_BY_ENTITY (Category.LIVING_ENTITY),
+        ENTITY_DAMAGE_BY_BLOCK (Category.LIVING_ENTITY),
+        // Project Poseidon End
         /**
          * Called when a LivingEntity dies
          *
