@@ -9,6 +9,7 @@ Any future commits to this repository will remain under the same GNU General Pub
 
 Libraries in the compiled .jar files distrusted may contain their own licenses
 
+This project contains decompiled code that is copyrighted by Mojang AB typically under the package net.minecraft.server.
 ## How To Setup And Compile - IntelliJ IDEA
 1. Clone this project using Git Bash or a desktop client.
 2. Open IntelliJ and create a new project in the same directory as the Project Poseidon src folder.
@@ -36,7 +37,7 @@ The Bukkit and Craft Bukkit commits that Project Poseidon is based on are before
 If you where a contributor before these commits please feel free to contact me, or open a issue asking for this repository to be taken down.
 
 ## MC-DEV
-We include files from the mc-dev Github repository
+We include files from the mc-dev Github repository. This code is automatically generated using minecraft_server.jar and sourced from the Bukkit repositories.
 * MC-DEV: 1a792ed860ebe2c6d4c40c52f3bc7b9e0789ca23 (https://github.com/Bukkit/mc-dev/commit/1a792ed860ebe2c6d4c40c52f3bc7b9e0789ca23)
 
-If Mojang or a Mojang employee wants to have this respository removed due to including Minecraft source like bukkit/mc-dev, please contact me or make an issue.
+If Mojang or a Mojang employee wants to have this repository removed due to including Minecraft source like bukkit/mc-dev, please contact me or make an issue.
