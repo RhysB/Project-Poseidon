@@ -35,23 +35,7 @@ import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.CreeperPowerEvent;
-import org.bukkit.event.entity.EntityCombustEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
-import org.bukkit.event.entity.EntityListener;
-import org.bukkit.event.entity.EntityPortalEnterEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.EntityTameEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.entity.ExplosionPrimeEvent;
-import org.bukkit.event.entity.ItemDespawnEvent;
-import org.bukkit.event.entity.ItemSpawnEvent;
-import org.bukkit.event.entity.PigZapEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.event.inventory.FurnaceSmeltEvent;
 import org.bukkit.event.inventory.InventoryListener;
@@ -985,6 +969,22 @@ public class JavaPluginLoader implements PluginLoader
                         ((EntityListener) listener).onEntityDamage((EntityDamageEvent) event);
                     }
                 };
+            // Project Poseidon Start
+            case ENTITY_DAMAGE_BY_ENTITY:
+                return new EventExecutor() {
+                    @Override
+                    public void execute(Listener listener, Event event) {
+                        ((EntityListener) listener).onEntityDamageByEntity((EntityDamageByEntityEvent) event);
+                    }
+                };
+            case ENTITY_DAMAGE_BY_BLOCK:
+                return new EventExecutor() {
+                    @Override
+                    public void execute(Listener listener, Event event) {
+                        ((EntityListener) listener).onEntityDamageByBlock((EntityDamageByBlockEvent) event);
+                    }
+                };
+            // Project Poseidon End
 
             case ENTITY_DEATH:
                 return new EventExecutor()
