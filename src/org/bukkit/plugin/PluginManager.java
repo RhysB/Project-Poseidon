@@ -117,6 +117,15 @@ public interface PluginManager {
     public void registerEvent(Event.Type type, Listener listener, EventExecutor executor, Priority priority, Plugin plugin);
 
     /**
+     * Registers a listener with all events with @EventHandler
+     *
+     * @see org.bukkit.event.EventHandler
+     * @param listener Listener to register
+     * @param plugin Plugin to register
+     */
+    public void registerEvents(Listener listener, Plugin plugin);
+
+    /**
      * Enables the specified plugin
      *
      * Attempting to enable a plugin that is already enabled will have no effect

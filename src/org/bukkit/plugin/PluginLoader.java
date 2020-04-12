@@ -1,8 +1,11 @@
 package org.bukkit.plugin;
 
 import java.io.File;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
+import com.sun.istack.internal.NotNull;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 
@@ -21,6 +24,17 @@ public interface PluginLoader {
      * @throws InvalidPluginException Thrown when the specified file is not a plugin
      */
     public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException;
+
+    // Project Poseidon Start
+    /**
+     * Creates listener map for class
+     *
+     * @param listener listener class
+     * @param plugin plugin
+     * @return Map for all the events in the class
+     */
+    public Map<Class<? extends Event>, Set<RegisteredListener>> createRegisteredListeners(@NotNull Listener listener, @NotNull final Plugin plugin);
+    // Project Poseidon End
 
     /**
      * Loads the plugin contained in the specified file

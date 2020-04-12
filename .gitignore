@@ -226,3 +226,6 @@ hs_err_pid*
 .project
 .classpath
 .settings/
+
+# Remvoe server stuff from path
+/server/

@@ -1,6 +1,7 @@
 package org.bukkit.event;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import org.bukkit.entity.Projectile;
 
@@ -792,6 +793,20 @@ public abstract class Event implements Serializable {
         private Type(Category category) {
             this.category = category;
         }
+
+        // Project Poseidon Start
+        public static Type getTypeByName(String name) {
+            for(Type type : Type.values()) {
+                String typeName = type.name();
+                String typeName_ = typeName.replace("_", "");
+                if(name.equalsIgnoreCase(typeName))
+                    return type;
+                if(name.equalsIgnoreCase(typeName_))
+                    return type;
+            }
+            return null;
+        }
+        // Project Poseidon End
 
         /**
          * Gets the Category assigned to this event
