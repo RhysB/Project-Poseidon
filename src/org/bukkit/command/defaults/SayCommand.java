@@ -17,7 +17,7 @@ public class SayCommand extends VanillaCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         try {
             if (!testPermission(sender)) return true;
-            if (args.length == 0)  {
+            if (args.length == 0) {
                 sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
                 return false;
             }
@@ -33,7 +33,7 @@ public class SayCommand extends VanillaCommand {
                 Bukkit.getLogger().info("[" + sender.getName() + "] " + message);
             }
 
-            Bukkit.broadcastMessage("[Server] " + message);
+            Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "[Server] " + message);
 
             return true;
         } catch (Exception e) {
