@@ -109,7 +109,7 @@ public class Explosion {
          * Config option:
          * optimizedExplosions: false
          */
-        boolean optimizeExplosions = PoseidonConfig.getInstance().isExplosionsOptimized();
+        boolean optimizeExplosions = (boolean) PoseidonConfig.getInstance().getProperty("world-settings.optimized-explosions");
         
         for (int k2 = 0; k2 < list.size(); ++k2) {
             Entity entity = (Entity) list.get(k2);

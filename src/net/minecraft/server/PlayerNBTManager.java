@@ -3,18 +3,10 @@ package net.minecraft.server;
 import com.projectposeidon.PoseidonConfig;
 import com.projectposeidon.johnymuffin.UUIDManager;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
-
-import java.util.UUID; // CraftBukkit
 
 public class PlayerNBTManager implements PlayerFileData, IDataManager {
 
@@ -176,7 +168,7 @@ public class PlayerNBTManager implements PlayerFileData, IDataManager {
     }
 
     public void a(EntityHuman entityhuman) {
-        if(PoseidonConfig.getInstance().isUUIDPlayerDataEnabled()) {
+        if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.save-playerdata-by-uuid")) {
             try {
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
 
@@ -221,6 +213,7 @@ public class PlayerNBTManager implements PlayerFileData, IDataManager {
             entityhuman.e(nbttagcompound);
         }
     }
+
     //Credit https://www.journaldev.com/861/java-copy-file
     private static void copyFileUsingStream(File source, File dest) throws IOException {
         InputStream is = null;
@@ -240,12 +233,12 @@ public class PlayerNBTManager implements PlayerFileData, IDataManager {
     }
 
     public NBTTagCompound a(String s) {
-        if(PoseidonConfig.getInstance().isUUIDPlayerDataEnabled()) {
+        if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.save-playerdata-by-uuid")) {
             try {
                 File file1 = new File(this.c, UUIDManager.getInstance().getUUIDGraceful(s) + ".dat");
                 File file2 = new File(this.c, s + ".dat");
-                if(!file1.exists()) {
-                    if(file2.exists()) {
+                if (!file1.exists()) {
+                    if (file2.exists()) {
                         //Convert player data
                         copyFileUsingStream(file2, file1);
                         File file3 = new File(this.c, s + ".datbackup");
@@ -283,7 +276,8 @@ public class PlayerNBTManager implements PlayerFileData, IDataManager {
         return this;
     }
 
-    public void e() {}
+    public void e() {
+    }
 
     public File b(String s) {
         return new File(this.d, s + ".dat");
@@ -300,15 +294,13 @@ public class PlayerNBTManager implements PlayerFileData, IDataManager {
                 dos.writeLong(uuid.getMostSignificantBits());
                 dos.writeLong(uuid.getLeastSignificantBits());
                 dos.close();
-            }
-            else {
+            } else {
                 DataInputStream dis = new DataInputStream(new FileInputStream(file1));
                 uuid = new UUID(dis.readLong(), dis.readLong());
                 dis.close();
             }
             return uuid;
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             return null;
         }
     }

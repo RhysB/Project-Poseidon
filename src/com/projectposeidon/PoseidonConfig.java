@@ -10,7 +10,6 @@ public class PoseidonConfig extends Configuration {
     private PoseidonConfig() {
         super(new File("poseidon.yml"));
         this.reload();
-
     }
 
     public void reload() {
@@ -20,46 +19,58 @@ public class PoseidonConfig extends Configuration {
     }
 
     private void write() {
-        isAllowGracefulUUIDEnabled();
-        isUUIDPlayerDataEnabled();
-        isExplosionsOptimized();
-    }
-
-    public synchronized Boolean isAllowGracefulUUIDEnabled() {
-        String key = "allowGracefulUUID";
-        if (this.getString(key) == null) {
-            this.setProperty(key, true);
+        if (this.getString("config-version") == null) {
+            System.out.println("Converting to Config Version 1");
+            convertToNewConfig();
         }
-        final Boolean setting = this.getBoolean(key, true);
-        this.removeProperty(key);
-        this.setProperty(key, setting);
-        return setting;
+        //Main
+        generateConfigOption("config-version", 1);
+        //Setting
+        generateConfigOption("settings.allow-graceful-uuids", true);
+        generateConfigOption("settings.save-playerdata-by-uuid", true);
+        //Word Settings
+        generateConfigOption("world-settings.optimized-explosions", false);
+        generateConfigOption("world-setting.randomize-spawn", true);
+
 
     }
 
-    public synchronized Boolean isUUIDPlayerDataEnabled() {
-        String key = "savePlayerdataByUUID";
-        if (this.getString(key) == null) {
-            this.setProperty(key, true);
+
+    private void generateConfigOption(String key, Object defaultValue) {
+        if (this.getProperty(key) == null) {
+            this.setProperty(key, defaultValue);
         }
-        final Boolean setting = this.getBoolean(key, true);
+        final Object value = this.getProperty(key);
         this.removeProperty(key);
-        this.setProperty(key, setting);
-        return setting;
-
+        this.setProperty(key, value);
     }
 
-    public synchronized Boolean isExplosionsOptimized() {
-        String key = "optimizedExplosions";
-        if (this.getString(key) == null) {
-            this.setProperty(key, false);
+    public Object getConfigOption(String key) {
+        return this.getProperty(key);
+    }
+
+    private synchronized void convertToNewConfig() {
+        //Graceful UUIDS
+        convertToNewAddress("settings.allow-graceful-uuids", "allowGracefulUUID");
+        convertToNewAddress("settings.save-playerdata-by-uuid", "savePlayerdataByUUID");
+        convertToNewAddress("world-settings.optimized-explosions", "optimizedExplosions");
+    }
+
+    private boolean convertToNewAddress(String newKey, String oldKey) {
+        if (this.getString(newKey) != null) {
+            return false;
         }
-        final Boolean setting = this.getBoolean(key, false);
-        this.removeProperty(key);
-        this.setProperty(key, setting);
-        return setting;
+        if (this.getString(oldKey) == null) {
+            return false;
+        }
+        System.out.println("Converting Config: " + oldKey + " to " + newKey);
+        Object value = this.getProperty(oldKey);
+        this.setProperty(newKey, value);
+        this.removeProperty(oldKey);
+        return true;
 
     }
+
 
     public synchronized static PoseidonConfig getInstance() {
         if (PoseidonConfig.singleton == null) {

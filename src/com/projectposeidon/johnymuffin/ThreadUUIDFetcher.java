@@ -27,7 +27,7 @@ public class ThreadUUIDFetcher extends Thread {
         try {
             uuid = getUUIDOf(loginPacket.name);
             if (uuid == null) {
-                if (PoseidonConfig.getInstance().isAllowGracefulUUIDEnabled()) {
+                if ((boolean) PoseidonConfig.getInstance().getProperty("settings.allow-graceful-uuids")) {
                     System.out.println(loginPacket.name + " does not have a Mojang UUID associated with their name");
                     UUID offlineUUID = generateOfflineUUID(loginPacket.name);
                     loginProcessHandler.userUUIDReceived(offlineUUID, false);
