@@ -1,17 +1,19 @@
 package net.minecraft.server;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-
-// CraftBukkit start
+import com.projectposeidon.PoseidonConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.ChunkCompressionThread;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+// CraftBukkit start
 
 public class EntityPlayer extends EntityHuman implements ICrafting {
 
@@ -24,7 +26,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     public Set playerChunkCoordIntPairs = new HashSet();
     private int bL = -99999999;
     private int bM = 60;
-    private ItemStack[] bN = new ItemStack[] { null, null, null, null, null};
+    private ItemStack[] bN = new ItemStack[]{null, null, null, null, null};
     private int bO = 0;
     public boolean h;
 
@@ -38,11 +40,11 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         int k = chunkcoordinates.y;
 
         if (!world.worldProvider.e) {
-            //HA i found what is randomly teleporting players on first connection, i thought it was essentials
-            //TODO add option to disable this in Poseidon config file
-            i += this.random.nextInt(20) - 10;
-            k = world.f(i, j);
-            j += this.random.nextInt(20) - 10;
+            k = world.f(i, j); //Project Poseidon: This finds a solid block, this needs to be left outside of the setting
+            if ((boolean) PoseidonConfig.getInstance().getProperty("world-setting.randomize-spawn")) { //Project Poseidon: Moved randomizing X and Y axis into a config option
+                i += this.random.nextInt(20) - 10;
+                j += this.random.nextInt(20) - 10;
+            }
         }
 
         this.setPositionRotation((double) i + 0.5D, (double) k, (double) j + 0.5D, 0.0F, 0.0F);
@@ -151,7 +153,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
             this.inventory.armor[i] = null;
         }
 
-        for (org.bukkit.inventory.ItemStack stack: event.getDrops()) {
+        for (org.bukkit.inventory.ItemStack stack : event.getDrops()) {
             bworld.dropItemNaturally(bukkitEntity.getLocation(), stack);
         }
 
@@ -231,22 +233,22 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
         if (this.E) {
             //if (this.b.propertyManager.getBoolean("allow-nether", true)) { // CraftBukkit
-                if (this.activeContainer != this.defaultContainer) {
-                    this.y();
-                }
+            if (this.activeContainer != this.defaultContainer) {
+                this.y();
+            }
 
-                if (this.vehicle != null) {
-                    this.mount(this.vehicle);
-                } else {
-                    this.F += 0.0125F;
-                    if (this.F >= 1.0F) {
-                        this.F = 1.0F;
-                        this.D = 10;
-                        this.b.serverConfigurationManager.f(this);
-                    }
+            if (this.vehicle != null) {
+                this.mount(this.vehicle);
+            } else {
+                this.F += 0.0125F;
+                if (this.F >= 1.0F) {
+                    this.F = 1.0F;
+                    this.D = 10;
+                    this.b.serverConfigurationManager.f(this);
                 }
+            }
 
-                this.E = false;
+            this.E = false;
             //} // CraftBukkit
         } else {
             if (this.F > 0.0F) {
@@ -309,7 +311,8 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         }
     }
 
-    public void x() {}
+    public void x() {
+    }
 
     public EnumBedError a(int i, int j, int k) {
         EnumBedError enumbederror = super.a(i, j, k);
@@ -355,7 +358,8 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.netServerHandler.a(this.locX, this.locY, this.locZ, this.yaw, this.pitch);
     }
 
-    protected void a(double d0, boolean flag) {}
+    protected void a(double d0, boolean flag) {
+    }
 
     public void b(double d0, boolean flag) {
         super.a(d0, flag);
@@ -375,7 +379,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
     public void a(IInventory iinventory) {
         this.ai();
-        
+
         this.netServerHandler.sendPacket(new Packet100OpenWindow(this.bO, 0, iinventory.getName(), iinventory.getSize()));
         this.activeContainer = new ContainerChest(this.inventory, iinventory);
         this.activeContainer.windowId = this.bO;
@@ -419,7 +423,8 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.netServerHandler.sendPacket(new Packet105CraftProgressBar(container.windowId, i, j));
     }
 
-    public void a(ItemStack itemstack) {}
+    public void a(ItemStack itemstack) {
+    }
 
     public void y() {
         this.netServerHandler.sendPacket(new Packet101CloseWindow(this.activeContainer.windowId));
