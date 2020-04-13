@@ -31,6 +31,7 @@ public class PoseidonConfig extends Configuration {
         //Word Settings
         generateConfigOption("world-settings.optimized-explosions", false);
         generateConfigOption("world-setting.randomize-spawn", true);
+        generateConfigOption("world-setting.teleport-to-highest-safe-block", true);
 
 
     }

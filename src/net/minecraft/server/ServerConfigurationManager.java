@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.projectposeidon.PoseidonConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
@@ -105,8 +106,10 @@ public class ServerConfigurationManager {
 
         worldserver.chunkProviderServer.getChunkAt((int) entityplayer.locX >> 4, (int) entityplayer.locZ >> 4);
 
-        while (worldserver.getEntities(entityplayer, entityplayer.boundingBox).size() != 0) {
-            entityplayer.setPosition(entityplayer.locX, entityplayer.locY + 1.0D, entityplayer.locZ);
+        if((boolean) PoseidonConfig.getInstance().getConfigOption("world-setting.teleport-to-highest-safe-block")) {
+            while (worldserver.getEntities(entityplayer, entityplayer.boundingBox).size() != 0) {
+                entityplayer.setPosition(entityplayer.locX, entityplayer.locY + 1.0D, entityplayer.locZ);
+            }
         }
 
         // CraftBukkit start
