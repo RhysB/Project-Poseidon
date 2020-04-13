@@ -41,7 +41,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
         if (!world.worldProvider.e) {
             k = world.f(i, j); //Project Poseidon: This finds a solid block, this needs to be left outside of the setting
-            if ((boolean) PoseidonConfig.getInstance().getProperty("world-setting.randomize-spawn")) { //Project Poseidon: Moved randomizing X and Y axis into a config option
+            if ((boolean) PoseidonConfig.getInstance().getProperty("world-settings.randomize-spawn")) { //Project Poseidon: Moved randomizing X and Y axis into a config option
                 i += this.random.nextInt(20) - 10;
                 j += this.random.nextInt(20) - 10;
             }

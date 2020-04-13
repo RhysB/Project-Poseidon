@@ -106,7 +106,7 @@ public class ServerConfigurationManager {
 
         worldserver.chunkProviderServer.getChunkAt((int) entityplayer.locX >> 4, (int) entityplayer.locZ >> 4);
 
-        if((boolean) PoseidonConfig.getInstance().getConfigOption("world-setting.teleport-to-highest-safe-block")) {
+        if((boolean) PoseidonConfig.getInstance().getConfigOption("world-settings.teleport-to-highest-safe-block")) {
             while (worldserver.getEntities(entityplayer, entityplayer.boundingBox).size() != 0) {
                 entityplayer.setPosition(entityplayer.locX, entityplayer.locY + 1.0D, entityplayer.locZ);
             }

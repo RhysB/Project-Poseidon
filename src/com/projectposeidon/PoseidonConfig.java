@@ -30,8 +30,8 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.save-playerdata-by-uuid", true);
         //Word Settings
         generateConfigOption("world-settings.optimized-explosions", false);
-        generateConfigOption("world-setting.randomize-spawn", true);
-        generateConfigOption("world-setting.teleport-to-highest-safe-block", true);
+        generateConfigOption("world-settings.randomize-spawn", true);
+        generateConfigOption("world-settings.teleport-to-highest-safe-block", true);
 
 
     }
