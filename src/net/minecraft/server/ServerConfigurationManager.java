@@ -173,7 +173,7 @@ public class ServerConfigurationManager {
         // depending on the outcome. Also change any reference to this.e.c to entity.world
         EntityPlayer entity = new EntityPlayer(this.server, this.server.getWorldServer(0), s, new ItemInWorldManager(this.server.getWorldServer(0)));
         Player player = (entity == null) ? null : (Player) entity.getBukkitEntity();
-        PlayerLoginEvent event = new PlayerLoginEvent(player);
+        PlayerLoginEvent event = new PlayerLoginEvent(player, netloginhandler.networkManager.socket.getInetAddress()); //Project Poseidon - pass player IP through
 
         String s1 = netloginhandler.networkManager.getSocketAddress().toString();
 

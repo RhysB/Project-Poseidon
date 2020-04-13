@@ -2,15 +2,19 @@ package org.bukkit.event.player;
 
 import org.bukkit.entity.Player;
 
+import java.net.InetAddress;
+
 /**
  * Stores details for players attempting to log in
  */
 public class PlayerLoginEvent extends PlayerEvent {
     private Result result;
     private String message;
+    private InetAddress playerAddress; //Project Poseidon
 
-    public PlayerLoginEvent(final Player player) {
+    public PlayerLoginEvent(final Player player, final InetAddress playerIP) {
         super(Type.PLAYER_LOGIN, player);
+        this.playerAddress = playerIP;
         this.result = Result.ALLOWED;
         this.message = "";
     }
@@ -20,6 +24,12 @@ public class PlayerLoginEvent extends PlayerEvent {
         this.result = result;
         this.message = message;
     }
+
+    //TODO: JavaDoc
+    public InetAddress getAddress() {
+        return playerAddress;
+    }
+
 
     /**
      * Gets the current result of the login, as an enum
