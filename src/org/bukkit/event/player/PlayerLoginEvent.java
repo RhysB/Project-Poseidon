@@ -1,5 +1,6 @@
 package org.bukkit.event.player;
 
+import net.minecraft.server.NetLoginHandler;
 import org.bukkit.entity.Player;
 
 import java.net.InetAddress;
@@ -11,10 +12,12 @@ public class PlayerLoginEvent extends PlayerEvent {
     private Result result;
     private String message;
     private InetAddress playerAddress; //Project Poseidon
+    private InetAddress localAddress;
 
-    public PlayerLoginEvent(final Player player, final InetAddress playerIP) {
+    public PlayerLoginEvent(final Player player, final NetLoginHandler netLoginHandler) {
         super(Type.PLAYER_LOGIN, player);
-        this.playerAddress = playerIP;
+        this.playerAddress = netLoginHandler.networkManager.socket.getInetAddress();
+        this.localAddress = netLoginHandler.networkManager.socket.getLocalAddress();
         this.result = Result.ALLOWED;
         this.message = "";
     }
@@ -28,6 +31,10 @@ public class PlayerLoginEvent extends PlayerEvent {
     //TODO: JavaDoc
     public InetAddress getAddress() {
         return playerAddress;
+    }
+
+    public InetAddress getLocalAddress() {
+        return localAddress;
     }
 
 

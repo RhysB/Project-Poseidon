@@ -40,8 +40,6 @@ public class LoginProcessHandler {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        // your code here
-                        // close the thread
                         if (!loginSuccessful && !loginCancelled) {
                             cancelLoginProcess("Login Process Handler Timeout");
                             System.out.println("LoginProcessHandler for user " + packet1login.name + " has failed to respond after 20 seconds. And future calls to this class will result in error");
