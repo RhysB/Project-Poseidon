@@ -924,8 +924,15 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
         if (entity != null && this.player.e(entity) && this.player.g(entity) < 36.0D) {
             if (packet7useentity.c == 0) {
+                Player player = (Player) this.getPlayer();
+                org.bukkit.entity.Entity bukkitEntity = entity.getBukkitEntity();
                 // CraftBukkit start
-                PlayerInteractEntityEvent event = new PlayerInteractEntityEvent((Player) this.getPlayer(), entity.getBukkitEntity());
+                //Project Poseidon Start - Fixes a Minecart dupe glitch
+                if (player.isInsideVehicle() && bukkitEntity instanceof StorageMinecart) {
+                    return;
+                }
+                //Project Poseidon End
+                PlayerInteractEntityEvent event = new PlayerInteractEntityEvent(player, bukkitEntity);
                 this.server.getPluginManager().callEvent(event);
 
                 if (event.isCancelled()) {
