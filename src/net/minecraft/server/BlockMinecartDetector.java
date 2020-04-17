@@ -1,9 +1,9 @@
 package net.minecraft.server;
 
+import org.bukkit.event.block.BlockRedstoneEvent;
+
 import java.util.List;
 import java.util.Random;
-
-import org.bukkit.event.block.BlockRedstoneEvent; // CraftBukkit
 
 public class BlockMinecartDetector extends BlockMinecartTrack {
 

@@ -1,34 +1,24 @@
 package net.minecraft.server;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.TreeSet;
-
-// CraftBukkit start
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.event.block.BlockCanBuildEvent;
-import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockFormEvent;
+import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.ItemSpawnEvent;
-import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.event.weather.ThunderChangeEvent;
-import org.bukkit.block.BlockState;
+import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.generator.ChunkGenerator;
+
+import java.util.*;
+
+// CraftBukkit start
 // CraftBukkit end
 
 public class World implements IBlockAccess {

@@ -1,11 +1,11 @@
 package org.bukkit.craftbukkit.entity;
 
 import net.minecraft.server.EntityWolf;
+import net.minecraft.server.PathEntity;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
-import net.minecraft.server.PathEntity;
 
 public class CraftWolf extends CraftAnimals implements Wolf {
     private AnimalTamer owner;

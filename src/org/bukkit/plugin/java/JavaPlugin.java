@@ -6,9 +6,6 @@ import com.avaje.ebean.config.DataSourceConfig;
 import com.avaje.ebean.config.ServerConfig;
 import com.avaje.ebeaninternal.api.SpiEbeanServer;
 import com.avaje.ebeaninternal.server.ddl.DdlGenerator;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -18,6 +15,10 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
 import org.bukkit.util.config.Configuration;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a Java plugin

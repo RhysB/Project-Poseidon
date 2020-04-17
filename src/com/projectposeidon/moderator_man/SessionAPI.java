@@ -1,13 +1,12 @@
 package com.projectposeidon.moderator_man;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 /**
  * A wrapper class for the Minecraft session API

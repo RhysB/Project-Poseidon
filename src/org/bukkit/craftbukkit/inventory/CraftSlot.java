@@ -1,8 +1,8 @@
 package org.bukkit.craftbukkit.inventory;
 
+import net.minecraft.server.Slot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import net.minecraft.server.Slot;
 
 public class CraftSlot implements org.bukkit.inventory.Slot {
     private final Slot slot;

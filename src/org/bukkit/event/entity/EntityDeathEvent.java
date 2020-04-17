@@ -1,8 +1,9 @@
 package org.bukkit.event.entity;
 
-import java.util.List;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 /**
  * Thrown whenever a LivingEntity dies

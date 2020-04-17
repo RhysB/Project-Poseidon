@@ -1,6 +1,5 @@
 package org.bukkit.craftbukkit.block;
 
-import java.util.Random;
 import net.minecraft.server.BlockDispenser;
 import net.minecraft.server.TileEntityDispenser;
 import org.bukkit.Material;
@@ -9,6 +8,8 @@ import org.bukkit.block.Dispenser;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.inventory.CraftInventory;
 import org.bukkit.inventory.Inventory;
+
+import java.util.Random;
 
 public class CraftDispenser extends CraftBlockState implements Dispenser {
     private final CraftWorld world;

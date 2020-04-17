@@ -1,7 +1,5 @@
 package org.bukkit.craftbukkit.scheduler;
 
-import java.lang.Comparable;
-
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 

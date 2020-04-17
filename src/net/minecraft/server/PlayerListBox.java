@@ -1,7 +1,7 @@
 package net.minecraft.server;
 
+import javax.swing.*;
 import java.util.Vector;
-import javax.swing.JList;
 
 public class PlayerListBox extends JList implements IUpdatePlayerListBox {
 

@@ -1,8 +1,8 @@
 package net.minecraft.server;
 
-import java.util.Random;
+import org.bukkit.event.block.BlockIgniteEvent;
 
-import org.bukkit.event.block.BlockIgniteEvent; // CraftBukkit
+import java.util.Random;
 
 public class BlockStationary extends BlockFluids {
 

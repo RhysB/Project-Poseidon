@@ -1,10 +1,10 @@
 package org.bukkit.entity;
 
-import java.util.HashSet;
-import java.util.List;
-
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Represents a living entity, such as a monster or player

@@ -1,28 +1,11 @@
 package org.bukkit.craftbukkit.entity;
 
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.util.UUID;
-
 import com.projectposeidon.johnymuffin.UUIDManager;
-import net.minecraft.server.EntityHuman;
-import net.minecraft.server.EntityPlayer;
-import net.minecraft.server.Packet131;
-import net.minecraft.server.Packet200Statistic;
-import net.minecraft.server.Packet3Chat;
-import net.minecraft.server.Packet51MapChunk;
-import net.minecraft.server.Packet53BlockChange;
-import net.minecraft.server.Packet54PlayNoteBlock;
-import net.minecraft.server.Packet61;
-import net.minecraft.server.Packet6SpawnPosition;
-import net.minecraft.server.WorldServer;
+import net.minecraft.server.*;
 import org.bukkit.Achievement;
-import org.bukkit.Effect;
-import org.bukkit.Instrument;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Note;
 import org.bukkit.Statistic;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.map.CraftMapView;
@@ -30,6 +13,10 @@ import org.bukkit.craftbukkit.map.RenderData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.map.MapView;
+
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.util.UUID;
 
 public class CraftPlayer extends CraftHumanEntity implements Player {
     public CraftPlayer(CraftServer server, EntityPlayer entity) {

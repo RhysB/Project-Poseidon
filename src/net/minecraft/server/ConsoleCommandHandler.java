@@ -1,12 +1,13 @@
 package net.minecraft.server;
 
+import org.bukkit.craftbukkit.command.ServerCommandListener;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
+
 import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Logger;
 
 // CraftBukkit start
-import org.bukkit.craftbukkit.command.ServerCommandListener;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
 // CraftBukkit end
 
 public class ConsoleCommandHandler {

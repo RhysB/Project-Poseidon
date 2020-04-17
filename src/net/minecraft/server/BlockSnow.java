@@ -1,7 +1,8 @@
 package net.minecraft.server;
 
-import java.util.Random;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
+
+import java.util.Random;
 
 public class BlockSnow extends Block {
 

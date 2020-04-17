@@ -1,24 +1,22 @@
 package net.minecraft.server;
 
-import java.util.List;
-import java.util.Random;
-
-// CraftBukkit start
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Vehicle;
-import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
-import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Vehicle;
 import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
+import org.bukkit.event.vehicle.VehicleExitEvent;
+
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+
+// CraftBukkit start
 // CraftBukkit end
 
 public abstract class Entity {

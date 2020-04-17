@@ -1,6 +1,5 @@
 package org.bukkit.command;
 
-import java.util.Set;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.permissions.PermissibleBase;
@@ -8,6 +7,8 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
+
+import java.util.Set;
 
 /**
  * Represents CLI input from a console

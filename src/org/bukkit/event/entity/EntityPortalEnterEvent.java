@@ -1,9 +1,8 @@
 package org.bukkit.event.entity;
 
 
-import org.bukkit.entity.Entity;
 import org.bukkit.Location;
-import org.bukkit.event.Cancellable;
+import org.bukkit.entity.Entity;
 
 /**
  * Stores data for entities standing inside a portal block

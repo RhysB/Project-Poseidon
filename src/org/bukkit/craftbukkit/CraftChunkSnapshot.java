@@ -1,10 +1,9 @@
 package org.bukkit.craftbukkit;
 
+import net.minecraft.server.BiomeBase;
 import org.bukkit.ChunkSnapshot;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.block.CraftBlock;
-
-import net.minecraft.server.BiomeBase;
 /**
  * Represents a static, thread-safe snapshot of chunk of blocks
  * Purpose is to allow clean, efficient copy of a chunk data to be made, and then handed off for processing in another thread (e.g. map rendering)

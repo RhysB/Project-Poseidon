@@ -1,11 +1,13 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-// CraftBukkit end
 
 import java.util.Random;
+
+// CraftBukkit end
 
 public class BlockCactus extends Block {
 

@@ -2,8 +2,7 @@ package net.minecraft.server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-
-import java.io.IOException; // CraftBukkit
+import java.io.IOException;
 
 public class Packet3Chat extends Packet {
 

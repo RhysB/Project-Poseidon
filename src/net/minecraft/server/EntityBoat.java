@@ -1,17 +1,12 @@
 package net.minecraft.server;
 
+import org.bukkit.Location;
+import org.bukkit.entity.Vehicle;
+import org.bukkit.event.vehicle.*;
+
 import java.util.List;
 
 // CraftBukkit start
-import org.bukkit.Location;
-import org.bukkit.entity.Vehicle;
-import org.bukkit.event.vehicle.VehicleCreateEvent;
-import org.bukkit.event.vehicle.VehicleDamageEvent;
-import org.bukkit.event.vehicle.VehicleDestroyEvent;
-import org.bukkit.event.vehicle.VehicleEnterEvent;
-import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
-import org.bukkit.event.vehicle.VehicleMoveEvent;
-import org.bukkit.event.vehicle.VehicleUpdateEvent;
 // CraftBukkit end
 
 public class EntityBoat extends Entity {

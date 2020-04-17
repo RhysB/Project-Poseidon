@@ -1,15 +1,16 @@
 package net.minecraft.server;
 
-import java.util.List;
-
-// CraftBukkit start
-import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.craftbukkit.TrigMath;
+import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
+
+import java.util.List;
+
+// CraftBukkit start
 // CraftBukkit end
 
 public abstract class EntityLiving extends Entity {

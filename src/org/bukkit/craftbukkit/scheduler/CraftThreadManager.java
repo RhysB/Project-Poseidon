@@ -1,9 +1,9 @@
 package org.bukkit.craftbukkit.scheduler;
 
+import org.bukkit.plugin.Plugin;
+
 import java.util.HashSet;
 import java.util.Iterator;
-
-import org.bukkit.plugin.Plugin;
 
 public class CraftThreadManager {
 

@@ -1,15 +1,11 @@
 package org.bukkit.craftbukkit.util;
 
 import com.google.common.collect.MapMaker;
-import java.util.Map;
-import java.util.LinkedList;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.Set;
-import java.util.Collection;
-import java.util.Iterator;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Creates a map that uses soft reference.  This indicates to the garbage collector

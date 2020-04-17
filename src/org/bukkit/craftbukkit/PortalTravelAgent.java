@@ -1,14 +1,13 @@
 package org.bukkit.craftbukkit;
 
-import java.util.Random;
-
 import net.minecraft.server.Block;
 import net.minecraft.server.WorldServer;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.TravelAgent;
 import org.bukkit.event.world.PortalCreateEvent;
+
+import java.util.Random;
 
 public class PortalTravelAgent implements TravelAgent {
 

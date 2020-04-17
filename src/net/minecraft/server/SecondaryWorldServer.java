@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import org.bukkit.generator.ChunkGenerator; // CraftBukkit
+import org.bukkit.generator.ChunkGenerator;
 
 public class SecondaryWorldServer extends WorldServer {
     // CraftBukkit start

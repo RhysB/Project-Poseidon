@@ -1,11 +1,12 @@
 
 package org.bukkit.permissions;
 
+import org.bukkit.Bukkit;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import org.bukkit.Bukkit;
 
 /**
  * Represents a unique permission that may be attached to a {@link Permissible}

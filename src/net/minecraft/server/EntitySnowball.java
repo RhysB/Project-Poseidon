@@ -1,13 +1,14 @@
 package net.minecraft.server;
 
-import java.util.List;
-
-// CraftBukkit start
 import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+
+import java.util.List;
+
+// CraftBukkit start
 // CraftBukkit end
 
 public class EntitySnowball extends Entity {

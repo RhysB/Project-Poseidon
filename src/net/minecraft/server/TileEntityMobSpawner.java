@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason; // CraftBukkit
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 public class TileEntityMobSpawner extends TileEntity {
 

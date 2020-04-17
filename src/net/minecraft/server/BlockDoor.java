@@ -1,8 +1,8 @@
 package net.minecraft.server;
 
-import java.util.Random;
+import org.bukkit.event.block.BlockRedstoneEvent;
 
-import org.bukkit.event.block.BlockRedstoneEvent; // CraftBukkit
+import java.util.Random;
 
 public class BlockDoor extends Block {
 

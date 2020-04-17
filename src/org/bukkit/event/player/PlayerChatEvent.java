@@ -1,11 +1,11 @@
 package org.bukkit.event.player;
 
+import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 
 /**
  * Holds information for player chat and commands

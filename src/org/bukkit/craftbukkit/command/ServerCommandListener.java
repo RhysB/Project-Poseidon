@@ -1,10 +1,9 @@
 package org.bukkit.craftbukkit.command;
 
-import java.lang.reflect.Method;
-
 import net.minecraft.server.ICommandListener;
-
 import org.bukkit.command.CommandSender;
+
+import java.lang.reflect.Method;
 
 public class ServerCommandListener implements ICommandListener {
     private final CommandSender commandSender;

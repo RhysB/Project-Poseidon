@@ -1,8 +1,8 @@
 package net.minecraft.server;
 
-import java.util.Random;
+import org.bukkit.event.block.BlockSpreadEvent;
 
-import org.bukkit.event.block.BlockSpreadEvent; // CraftBukkit
+import java.util.Random;
 
 public class BlockMushroom extends BlockFlower {
 

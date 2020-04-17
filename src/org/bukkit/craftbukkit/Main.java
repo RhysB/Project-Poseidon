@@ -1,5 +1,9 @@
 package org.bukkit.craftbukkit;
 
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+import net.minecraft.server.MinecraftServer;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -7,9 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import joptsimple.OptionParser;
-import joptsimple.OptionSet;
-import net.minecraft.server.MinecraftServer;
 
 public class Main {
     public static boolean useJline = true;

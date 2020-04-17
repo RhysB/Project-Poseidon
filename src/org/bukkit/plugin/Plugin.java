@@ -1,11 +1,12 @@
 package org.bukkit.plugin;
 
 import com.avaje.ebean.EbeanServer;
-import java.io.File;
 import org.bukkit.Server;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.config.Configuration;
+
+import java.io.File;
 
 /**
  * Represents a Plugin

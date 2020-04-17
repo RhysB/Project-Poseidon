@@ -1,13 +1,13 @@
 package org.bukkit.craftbukkit;
 
+import net.minecraft.server.EntityPlayer;
+import net.minecraft.server.Packet;
+import net.minecraft.server.Packet51MapChunk;
+
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.zip.Deflater;
-
-import net.minecraft.server.EntityPlayer;
-import net.minecraft.server.Packet;
-import net.minecraft.server.Packet51MapChunk;
 
 public final class ChunkCompressionThread implements Runnable {
 

@@ -1,10 +1,10 @@
 package org.bukkit.event.block;
 
+import org.bukkit.block.Block;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.bukkit.block.Block;
 
 public class BlockPistonExtendEvent extends BlockPistonEvent {
     private int length;

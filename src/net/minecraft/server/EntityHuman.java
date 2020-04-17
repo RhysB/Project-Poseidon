@@ -1,20 +1,21 @@
 package net.minecraft.server;
 
-import java.util.Iterator;
-import java.util.List;
-
-// CraftBukkit start
-import org.bukkit.craftbukkit.entity.CraftItem;
 import org.bukkit.craftbukkit.TrigMath;
+import org.bukkit.craftbukkit.entity.CraftItem;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
+
+import java.util.Iterator;
+import java.util.List;
+
+// CraftBukkit start
 // CraftBukkit end
 
 public abstract class EntityHuman extends EntityLiving {

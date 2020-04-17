@@ -1,7 +1,8 @@
 package org.bukkit.command.defaults;
 
-import java.util.List;
 import org.bukkit.command.Command;
+
+import java.util.List;
 
 public abstract class VanillaCommand extends Command {
     protected VanillaCommand(String name) {

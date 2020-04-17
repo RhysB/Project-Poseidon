@@ -1,8 +1,8 @@
 package net.minecraft.server;
 
-import java.util.Random;
+import org.bukkit.BlockChangeDelegate;
 
-import org.bukkit.BlockChangeDelegate; // CraftBukkit
+import java.util.Random;
 
 public class WorldGenForest extends WorldGenerator {
 

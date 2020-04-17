@@ -1,11 +1,12 @@
 package net.minecraft.server;
 
-import java.util.Random;
-
-// CraftBukkit start
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.util.Vector;
+
+import java.util.Random;
+
+// CraftBukkit start
 // CraftBukkit end
 
 public class BlockDispenser extends BlockContainer {

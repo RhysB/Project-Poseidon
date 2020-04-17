@@ -1,7 +1,7 @@
 package org.bukkit.event.world;
 
-import org.bukkit.World;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 /**
  * An event that is called when a world's spawn changes. The

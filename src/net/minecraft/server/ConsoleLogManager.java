@@ -1,14 +1,11 @@
 package net.minecraft.server;
 
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-// CraftBukkit start
-import java.util.logging.Handler;
 import org.bukkit.craftbukkit.util.ShortConsoleLogFormatter;
 import org.bukkit.craftbukkit.util.TerminalConsoleHandler;
+
+import java.util.logging.*;
+
+// CraftBukkit start
 // CraftBukkit end
 
 public class ConsoleLogManager {

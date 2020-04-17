@@ -1,12 +1,13 @@
 package net.minecraft.server;
 
-import java.util.List;
-
-// CraftBukkit start
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerFishEvent;
+
+import java.util.List;
+
+// CraftBukkit start
 // CraftBukkit end
 
 public class EntityFish extends Entity {

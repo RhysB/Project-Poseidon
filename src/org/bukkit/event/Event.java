@@ -1,9 +1,8 @@
 package org.bukkit.event;
 
-import java.io.Serializable;
-import java.util.Map;
-
 import org.bukkit.entity.Projectile;
+
+import java.io.Serializable;
 
 /**
  * Represents an event

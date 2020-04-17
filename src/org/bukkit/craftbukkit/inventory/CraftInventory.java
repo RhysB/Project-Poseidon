@@ -1,14 +1,13 @@
 package org.bukkit.craftbukkit.inventory;
 
-import java.util.HashMap;
-
+import net.minecraft.server.IInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryTransactionEvent;
 import org.bukkit.event.inventory.InventoryTransactionType;
 import org.bukkit.inventory.ItemStack;
 
-import net.minecraft.server.IInventory;
+import java.util.HashMap;
 
 public class CraftInventory implements org.bukkit.inventory.Inventory {
     protected IInventory inventory;

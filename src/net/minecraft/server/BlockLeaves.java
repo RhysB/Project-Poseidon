@@ -1,8 +1,8 @@
 package net.minecraft.server;
 
-import java.util.Random;
+import org.bukkit.event.block.LeavesDecayEvent;
 
-import org.bukkit.event.block.LeavesDecayEvent; // CraftBukkit
+import java.util.Random;
 
 public class BlockLeaves extends BlockLeavesBase {
 

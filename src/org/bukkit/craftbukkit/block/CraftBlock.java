@@ -1,14 +1,12 @@
 package org.bukkit.craftbukkit.block;
 
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Biome;
-import org.bukkit.block.Block;
-import org.bukkit.block.PistonMoveReaction;
-
 import net.minecraft.server.BiomeBase;
 import net.minecraft.server.BlockRedstoneWire;
-import org.bukkit.*;
-import org.bukkit.block.BlockState;
+import org.bukkit.Chunk;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.*;
 import org.bukkit.craftbukkit.CraftChunk;
 import org.bukkit.util.BlockVector;
 

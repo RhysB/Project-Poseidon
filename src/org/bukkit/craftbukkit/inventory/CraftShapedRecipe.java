@@ -1,12 +1,11 @@
 package org.bukkit.craftbukkit.inventory;
 
-import java.util.HashMap;
-
 import net.minecraft.server.CraftingManager;
-
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.material.MaterialData;
+
+import java.util.HashMap;
 
 public class CraftShapedRecipe extends ShapedRecipe implements CraftRecipe {
     public CraftShapedRecipe(ItemStack result) {

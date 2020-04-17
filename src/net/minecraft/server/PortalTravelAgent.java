@@ -1,10 +1,11 @@
 package net.minecraft.server;
 
+import org.bukkit.Bukkit;
+import org.bukkit.event.world.PortalCreateEvent;
+
 import java.util.Random;
 
 // CraftBukkit start
-import org.bukkit.event.world.PortalCreateEvent;
-import org.bukkit.Bukkit;
 // CraftBukkit end
 
 public class PortalTravelAgent {

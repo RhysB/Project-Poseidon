@@ -1,12 +1,13 @@
 package org.bukkit.command;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.permissions.Permissible;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Represents a Command, which executes various tasks upon user input

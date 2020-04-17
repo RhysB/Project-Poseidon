@@ -1,11 +1,12 @@
 package org.bukkit.craftbukkit.util;
 
+import jline.ConsoleReader;
+import org.bukkit.craftbukkit.Main;
+
 import java.io.IOException;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jline.ConsoleReader;
-import org.bukkit.craftbukkit.Main;
 
 public class TerminalConsoleHandler extends ConsoleHandler {
     private final ConsoleReader reader;

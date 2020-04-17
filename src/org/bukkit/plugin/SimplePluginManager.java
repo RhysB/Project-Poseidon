@@ -1,28 +1,25 @@
 package org.bukkit.plugin;
 
-import com.avaje.ebean.LogLevel;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.MapMaker;
-import java.io.File;
-import java.lang.reflect.Constructor;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.regex.Matcher;
-
 import org.bukkit.Server;
-import java.util.regex.Pattern;
 import org.bukkit.command.Command;
 import org.bukkit.command.PluginCommandYamlParser;
 import org.bukkit.command.SimpleCommandMap;
-
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
-
 import org.bukkit.util.FileUtil;
+
+import java.io.File;
+import java.lang.reflect.Constructor;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Handles all plugin management from the Server

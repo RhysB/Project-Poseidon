@@ -1,9 +1,8 @@
 package net.minecraft.server;
 
-import org.bukkit.craftbukkit.CraftServer;
-
 import com.projectposeidon.johnymuffin.LoginProcessHandler;
 import com.projectposeidon.moderator_man.SessionAPI;
+import org.bukkit.craftbukkit.CraftServer;
 
 // CraftBukkit start
 // CraftBukkit end

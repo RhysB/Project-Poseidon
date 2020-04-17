@@ -1,8 +1,9 @@
 package net.minecraft.server;
 
 // CraftBukkit start
-import org.bukkit.craftbukkit.entity.CraftEntity;
+
 import org.bukkit.craftbukkit.TrigMath;
+import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.event.entity.EntityTargetEvent;
 // CraftBukkit end
 

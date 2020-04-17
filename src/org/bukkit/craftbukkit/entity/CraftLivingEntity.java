@@ -1,28 +1,18 @@
 package org.bukkit.craftbukkit.entity;
 
 import net.minecraft.server.Entity;
-import net.minecraft.server.EntityArrow;
-import net.minecraft.server.EntityEgg;
-import net.minecraft.server.EntityLiving;
-import net.minecraft.server.EntitySnowball;
-import net.minecraft.server.EntityPlayer;
-
+import net.minecraft.server.*;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.CraftWorld;
-
-import org.bukkit.block.Block;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Egg;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Snowball;
-import org.bukkit.entity.Vehicle;
+import org.bukkit.entity.*;
 import org.bukkit.util.BlockIterator;
 
-import java.util.List;
-import java.util.HashSet;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 public class CraftLivingEntity extends CraftEntity implements LivingEntity {
     public CraftLivingEntity(final CraftServer server, final EntityLiving entity) {

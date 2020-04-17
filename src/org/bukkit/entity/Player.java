@@ -1,18 +1,11 @@
 package org.bukkit.entity;
 
-import java.net.InetSocketAddress;
-import java.util.UUID;
-
-import org.bukkit.Achievement;
-import org.bukkit.Effect;
-import org.bukkit.Instrument;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Note;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Statistic;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.map.MapView;
+
+import java.net.InetSocketAddress;
+import java.util.UUID;
 
 /**
  * Represents a player, connected or not

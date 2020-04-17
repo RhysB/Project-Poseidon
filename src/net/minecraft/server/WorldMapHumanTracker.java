@@ -1,9 +1,10 @@
 package net.minecraft.server;
 
 // CraftBukkit start
-import org.bukkit.map.MapCursor;
+
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.map.RenderData;
+import org.bukkit.map.MapCursor;
 // CraftBukkit end
 
 public class WorldMapHumanTracker {

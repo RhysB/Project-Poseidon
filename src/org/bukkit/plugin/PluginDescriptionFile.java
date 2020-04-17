@@ -1,5 +1,10 @@
 package org.bukkit.plugin;
 
+import org.bukkit.Bukkit;
+import org.bukkit.permissions.Permission;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.SafeConstructor;
+
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.Writer;
@@ -8,10 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
-import org.bukkit.Bukkit;
-import org.bukkit.permissions.Permission;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 /**
  * Provides access to a Plugins description file, plugin.yaml

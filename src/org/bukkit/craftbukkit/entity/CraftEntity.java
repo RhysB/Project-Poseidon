@@ -2,7 +2,6 @@ package org.bukkit.craftbukkit.entity;
 
 import com.google.common.collect.MapMaker;
 import net.minecraft.server.*;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Server;

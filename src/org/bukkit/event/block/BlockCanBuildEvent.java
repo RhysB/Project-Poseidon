@@ -1,7 +1,7 @@
 package org.bukkit.event.block;
 
-import org.bukkit.block.Block;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 
 /**
  * Called when we try to place a block, to see if we can build it here or not.

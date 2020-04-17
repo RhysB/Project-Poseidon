@@ -1,14 +1,13 @@
 package org.bukkit.util;
 
-import org.bukkit.World;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.LivingEntity;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.lang.IllegalStateException;
 
 /**
  * This class performs ray tracing and iterates along blocks on a line

@@ -1,12 +1,13 @@
 package org.bukkit;
 
+import org.bukkit.material.*;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bukkit.material.*;
 
 /**
  * An enum of all material ids accepted by the official server + client

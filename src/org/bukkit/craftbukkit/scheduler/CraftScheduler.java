@@ -1,26 +1,18 @@
 package org.bukkit.craftbukkit.scheduler;
 
-import java.util.LinkedList;
-import java.util.TreeMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
+import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scheduler.BukkitWorker;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitWorker;
-import org.bukkit.scheduler.BukkitTask;
-
-import org.bukkit.plugin.Plugin;
-
-import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.scheduler.CraftTask;
 
 public class CraftScheduler implements BukkitScheduler, Runnable {
 

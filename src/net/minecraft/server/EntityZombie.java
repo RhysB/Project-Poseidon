@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import org.bukkit.event.entity.EntityCombustEvent; // CraftBukkit
+import org.bukkit.event.entity.EntityCombustEvent;
 
 public class EntityZombie extends EntityMonster {
 

@@ -1,10 +1,11 @@
 package net.minecraft.server;
 
+import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
+
 import java.util.ArrayList;
 
 // CraftBukkit start
-import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.block.BlockPistonExtendEvent;
 // CraftBukkit end
 
 public class BlockPiston extends Block {

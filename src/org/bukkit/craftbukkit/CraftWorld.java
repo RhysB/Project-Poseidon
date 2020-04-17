@@ -1,38 +1,29 @@
 package org.bukkit.craftbukkit;
 
 import com.google.common.collect.MapMaker;
+import net.minecraft.server.*;
+import org.bukkit.Chunk;
+import org.bukkit.World;
+import org.bukkit.*;
+import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.entity.*;
-import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.*;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.event.weather.ThunderChangeEvent;
+import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.event.world.SpawnChangeEvent;
+import org.bukkit.generator.BlockPopulator;
+import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentMap;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-
-import net.minecraft.server.*;
-
-import org.bukkit.entity.Arrow;
-import org.bukkit.Effect;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
-import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.event.weather.ThunderChangeEvent;
-import org.bukkit.event.world.SpawnChangeEvent;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Boat;
-import org.bukkit.Chunk;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
-import org.bukkit.BlockChangeDelegate;
-import org.bukkit.Bukkit;
-import org.bukkit.generator.ChunkGenerator;
-import org.bukkit.ChunkSnapshot;
-import org.bukkit.Location;
-import org.bukkit.TreeType;
-import org.bukkit.World;
-import org.bukkit.block.Biome;
-import org.bukkit.generator.BlockPopulator;
+import java.util.concurrent.ConcurrentMap;
 
 public class CraftWorld implements World {
     private final WorldServer world;

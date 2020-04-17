@@ -1,10 +1,10 @@
 package org.bukkit.craftbukkit.entity;
 
 import net.minecraft.server.EntityItem;
+import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.craftbukkit.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.CraftServer;
 
 public class CraftItem extends CraftEntity implements Item {
     private EntityItem item;

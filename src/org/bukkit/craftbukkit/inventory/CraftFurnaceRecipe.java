@@ -1,7 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
 import net.minecraft.server.FurnaceRecipes;
-
 import org.bukkit.Material;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;

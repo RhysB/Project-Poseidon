@@ -1,9 +1,9 @@
 package org.bukkit.inventory;
 
-import java.util.ArrayList;
-
 import org.bukkit.Material;
 import org.bukkit.material.MaterialData;
+
+import java.util.ArrayList;
 
 /**
  * Represents a shapeless recipe, where the arrangement of the ingredients on the crafting grid

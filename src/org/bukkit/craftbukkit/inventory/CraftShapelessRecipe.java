@@ -1,12 +1,11 @@
 package org.bukkit.craftbukkit.inventory;
 
-import java.util.ArrayList;
-
 import net.minecraft.server.CraftingManager;
-
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.material.MaterialData;
+
+import java.util.ArrayList;
 
 public class CraftShapelessRecipe extends ShapelessRecipe implements CraftRecipe {
     public CraftShapelessRecipe(ItemStack result) {

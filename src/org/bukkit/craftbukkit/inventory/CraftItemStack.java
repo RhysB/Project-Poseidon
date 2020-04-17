@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.inventory;
 
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public class CraftItemStack extends ItemStack {
     protected net.minecraft.server.ItemStack item;

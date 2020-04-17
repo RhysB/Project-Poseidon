@@ -1,9 +1,9 @@
 package net.minecraft.server;
 
+import javax.swing.*;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
-import javax.swing.JTextArea;
 
 public class GuiLogOutputHandler extends Handler {
 

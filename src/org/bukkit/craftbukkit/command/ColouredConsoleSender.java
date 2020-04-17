@@ -1,13 +1,14 @@
 package org.bukkit.craftbukkit.command;
 
-import java.util.EnumMap;
-import java.util.Map;
 import jline.ANSIBuffer.ANSICodes;
 import jline.ConsoleReader;
 import jline.Terminal;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.craftbukkit.CraftServer;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class ColouredConsoleSender extends ConsoleCommandSender {
     private final ConsoleReader reader;

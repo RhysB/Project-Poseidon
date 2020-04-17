@@ -1,13 +1,14 @@
 package net.minecraft.server;
 
+import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
+import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
+import org.bukkit.event.block.BlockSpreadEvent;
+import org.bukkit.material.MaterialData;
+
 import java.util.Random;
 
 // CraftBukkit start
-import org.bukkit.event.block.BlockIgniteEvent;
-import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
-import org.bukkit.event.block.BlockBurnEvent;
-import org.bukkit.event.block.BlockSpreadEvent;
-import org.bukkit.material.MaterialData;
 // CraftBukkit end
 
 public class BlockFire extends Block {

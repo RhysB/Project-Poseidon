@@ -1,9 +1,8 @@
 package org.bukkit.event.packet;
 
+import net.minecraft.server.Packet;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-
-import net.minecraft.server.Packet;
 
 /**
  * @author moderator_man

@@ -1,8 +1,8 @@
 package org.bukkit.material;
 
-import java.util.HashSet;
-
 import org.bukkit.Material;
+
+import java.util.HashSet;
 
 public class Jukebox extends MaterialData {
     private static HashSet<Material> recordTypes = new HashSet<Material>();

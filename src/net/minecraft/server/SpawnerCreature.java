@@ -1,12 +1,13 @@
 package net.minecraft.server;
 
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 // CraftBukkit
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 public final class SpawnerCreature {
 

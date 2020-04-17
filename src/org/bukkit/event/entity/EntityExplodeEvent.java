@@ -1,10 +1,11 @@
 package org.bukkit.event.entity;
 
-import java.util.List;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
-import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
+
+import java.util.List;
 
 /**
  * Called when an entity explodes

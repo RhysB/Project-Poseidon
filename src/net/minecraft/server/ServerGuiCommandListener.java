@@ -1,8 +1,8 @@
 package net.minecraft.server;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JTextField;
 
 class ServerGuiCommandListener implements ActionListener {
 

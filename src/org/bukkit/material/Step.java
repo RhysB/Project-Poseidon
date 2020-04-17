@@ -1,8 +1,8 @@
 package org.bukkit.material;
 
-import java.util.HashSet;
-
 import org.bukkit.Material;
+
+import java.util.HashSet;
 
 /**
  * Represents the different types of steps.

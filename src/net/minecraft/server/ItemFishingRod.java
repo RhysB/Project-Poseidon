@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import org.bukkit.event.player.PlayerFishEvent; // CraftBukkit
+import org.bukkit.event.player.PlayerFishEvent;
 
 public class ItemFishingRod extends Item {
 

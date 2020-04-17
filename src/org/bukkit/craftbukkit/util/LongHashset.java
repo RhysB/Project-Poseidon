@@ -1,9 +1,10 @@
 package org.bukkit.craftbukkit.util;
 
-import static org.bukkit.craftbukkit.util.Java15Compat.Arrays_copyOf;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
+
+import static org.bukkit.craftbukkit.util.Java15Compat.Arrays_copyOf;
 
 public class LongHashset extends LongHash {
     long[][][] values = new long[256][][];

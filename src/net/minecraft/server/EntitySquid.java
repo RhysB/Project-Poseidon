@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import org.bukkit.event.entity.EntityDeathEvent; // CraftBukkit
+import org.bukkit.event.entity.EntityDeathEvent;
 
 public class EntitySquid extends EntityWaterAnimal {
 

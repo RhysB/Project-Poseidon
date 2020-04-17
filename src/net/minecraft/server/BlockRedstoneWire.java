@@ -1,11 +1,11 @@
 package net.minecraft.server;
 
+import org.bukkit.event.block.BlockRedstoneEvent;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-
-import org.bukkit.event.block.BlockRedstoneEvent; // CraftBukkit
 
 public class BlockRedstoneWire extends Block {
 

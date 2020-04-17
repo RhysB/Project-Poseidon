@@ -2,7 +2,7 @@ package net.minecraft.server;
 
 import java.io.File;
 import java.util.List;
-import java.util.UUID; // CraftBukkit
+import java.util.UUID;
 
 public interface IDataManager {
 

@@ -1,21 +1,20 @@
 package org.bukkit.craftbukkit;
 
 import com.google.common.collect.MapMaker;
-import java.lang.ref.WeakReference;
-import java.util.concurrent.ConcurrentMap;
+import net.minecraft.server.BiomeBase;
 import net.minecraft.server.ChunkPosition;
-
+import net.minecraft.server.WorldChunkManager;
 import net.minecraft.server.WorldServer;
-
 import org.bukkit.Chunk;
+import org.bukkit.ChunkSnapshot;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.block.CraftBlock;
 import org.bukkit.entity.Entity;
-import org.bukkit.ChunkSnapshot;
-import net.minecraft.server.BiomeBase;
-import net.minecraft.server.WorldChunkManager;
+
+import java.lang.ref.WeakReference;
+import java.util.concurrent.ConcurrentMap;
 
 public class CraftChunk implements Chunk {
     private WeakReference<net.minecraft.server.Chunk> weakChunk;

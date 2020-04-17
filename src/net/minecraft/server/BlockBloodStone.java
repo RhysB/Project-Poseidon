@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import org.bukkit.event.block.BlockRedstoneEvent; // CraftBukkit
+import org.bukkit.event.block.BlockRedstoneEvent;
 
 public class BlockBloodStone extends Block {
 

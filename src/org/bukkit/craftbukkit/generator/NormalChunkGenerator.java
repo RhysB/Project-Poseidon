@@ -1,14 +1,15 @@
 package org.bukkit.craftbukkit.generator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.server.Chunk;
 import net.minecraft.server.IChunkProvider;
 import net.minecraft.server.IProgressUpdate;
 import net.minecraft.server.World;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.generator.BlockPopulator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class NormalChunkGenerator extends InternalChunkGenerator {
     private final IChunkProvider provider;

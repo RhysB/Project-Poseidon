@@ -1,12 +1,13 @@
 package net.minecraft.server;
 
+import org.bukkit.craftbukkit.event.CraftEventFactory;
+import org.bukkit.event.block.BlockRedstoneEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
+
 import java.util.List;
 import java.util.Random;
 
 // CraftBukkit start
-import org.bukkit.craftbukkit.event.CraftEventFactory;
-import org.bukkit.event.block.BlockRedstoneEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
 // CraftBukkit end
 
 public class BlockPressurePlate extends Block {
