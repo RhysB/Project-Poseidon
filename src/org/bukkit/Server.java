@@ -181,6 +181,9 @@ public interface Server {
      */
     public Player getPlayer(String name);
 
+    //TODO: Javadoc
+    public Player getPlayer(UUID uuid);
+
     /**
      * Gets the player with the exact given name, case insensitive
      *

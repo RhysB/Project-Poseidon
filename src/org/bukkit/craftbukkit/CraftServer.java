@@ -214,6 +214,20 @@ public final class CraftServer implements Server {
         return found;
     }
 
+    //Project Poseidon Start
+    @Override
+    public Player getPlayer(final UUID uuid) {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if(p.getUniqueId().equals(uuid)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    //Project Poseidon End
+
+
     public Player getPlayerExact(String name) {
         String lname = name.toLowerCase();
 
