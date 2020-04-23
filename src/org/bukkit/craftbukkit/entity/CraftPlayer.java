@@ -141,11 +141,13 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         // Do not directly assign here, from the packethandler we'll assign it.
         getHandle().netServerHandler.sendPacket(new Packet6SpawnPosition(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
     }
-
+    
+    //Project Poseidon Start
     public UUID getUniqueId() {
         //return UUIDPlayerStorage.getInstance().getPlayerUUID(getName());
-        return UUIDManager.getInstance().getUUIDGraceful(getName());
+        return getHandle().playerUUID;
     }
+    //Project Poseidon End
 
     public UUID getPlayerUUID() {
         return getUniqueId();

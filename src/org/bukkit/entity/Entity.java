@@ -166,10 +166,4 @@ public interface Entity {
      * @return the last known {@link EntityDamageEvent} or null if hitherto unharmed
      */
     public EntityDamageEvent getLastDamageCause();
-
-    /**
-     * Returns a unique and persistent id for this entity
-     * @return unique id
-     */
-    public UUID getUniqueId();
 }

@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import com.projectposeidon.PoseidonConfig;
+import com.projectposeidon.api.PoseidonUUID;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.ChunkCompressionThread;
 import org.bukkit.craftbukkit.CraftWorld;
@@ -8,10 +9,7 @@ import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 // CraftBukkit start
 
@@ -55,9 +53,11 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
         // CraftBukkit start
         this.displayName = this.name;
+        this.playerUUID = PoseidonUUID.getPlayerGracefulUUID(this.name); //Project Poseidon
     }
 
     public String displayName;
+    public UUID playerUUID; //Project Poseidon
     public org.bukkit.Location compassTarget;
     // CraftBukkit end
 
