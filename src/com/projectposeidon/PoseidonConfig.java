@@ -29,6 +29,7 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.allow-graceful-uuids", true);
         generateConfigOption("settings.delete-duplicate-uuids", false);
         generateConfigOption("settings.save-playerdata-by-uuid", true);
+        generateConfigOption("settings.per-day-logfile", false);
         //Word Settings
         generateConfigOption("world-settings.optimized-explosions", false);
         generateConfigOption("world-settings.randomize-spawn", true);

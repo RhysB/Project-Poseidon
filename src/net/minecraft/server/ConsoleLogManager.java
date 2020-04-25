@@ -1,8 +1,12 @@
 package net.minecraft.server;
 
+import com.projectposeidon.PoseidonConfig;
 import org.bukkit.craftbukkit.util.ShortConsoleLogFormatter;
 import org.bukkit.craftbukkit.util.TerminalConsoleHandler;
 
+import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.*;
 
 // CraftBukkit start
@@ -13,7 +17,8 @@ public class ConsoleLogManager {
     public static Logger a = Logger.getLogger("Minecraft");
     public static Logger global = Logger.getLogger(""); // CraftBukkit
 
-    public ConsoleLogManager() {}
+    public ConsoleLogManager() {
+    }
 
     // CraftBukkit - change of method signature!
     public static void init(MinecraftServer server) {
@@ -23,7 +28,7 @@ public class ConsoleLogManager {
         // CraftBukkit start
         ConsoleHandler consolehandler = new TerminalConsoleHandler(server.reader);
 
-        for (Handler handler: global.getHandlers()) {
+        for (Handler handler : global.getHandlers()) {
             global.removeHandler(handler);
         }
 
@@ -34,13 +39,26 @@ public class ConsoleLogManager {
         a.addHandler(consolehandler);
 
         try {
-            // CraftBukkit start
-            String pattern = (String)server.options.valueOf("log-pattern");
-            int limit = ((Integer)server.options.valueOf("log-limit")).intValue();
-            int count = ((Integer)server.options.valueOf("log-count")).intValue();
-            boolean append = ((Boolean)server.options.valueOf("log-append")).booleanValue();
-            FileHandler filehandler = new FileHandler(pattern, limit, count, append);
-            // CraftBukkit start
+            //Project Poseidon Start
+            FileHandler filehandler;
+            if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.per-day-logfile")) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String logfile = LocalDate.now().format(formatter);
+                File log = new File("." + File.separator + "logs" + File.separator);
+                log.getParentFile().mkdirs();
+                log.mkdirs();
+                filehandler = new FileHandler("." + File.separator + "logs" + File.separator + logfile + ".log", true);
+            } else {
+                // CraftBukkit start
+                String pattern = (String) server.options.valueOf("log-pattern");
+                int limit = ((Integer) server.options.valueOf("log-limit")).intValue();
+                int count = ((Integer) server.options.valueOf("log-count")).intValue();
+                boolean append = ((Boolean) server.options.valueOf("log-append")).booleanValue();
+                filehandler = new FileHandler(pattern, limit, count, append);
+                // CraftBukkit start
+            }
+            //Project Poseidon End
+
 
             filehandler.setFormatter(consolelogformatter);
             a.addHandler(filehandler);
