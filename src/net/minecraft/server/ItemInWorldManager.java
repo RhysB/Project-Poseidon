@@ -154,6 +154,7 @@ public class ItemInWorldManager {
         if (this.player instanceof EntityPlayer) {
             org.bukkit.block.Block block = this.world.getWorld().getBlockAt(i, j, k);
 
+            //Project Poseidon Start - Craft Bukkit backport
             // Tell client the block is gone immediately then process events
             if (world.getTileEntity(i, j, k) == null) {
                 int id = block.getTypeId();
@@ -163,7 +164,7 @@ public class ItemInWorldManager {
                 ((EntityPlayer) this.player).netServerHandler.sendPacket(new Packet53BlockChange(i, j, k, this.world));
                 block.setTypeIdAndData(id, data, false);
             }
-
+            //Project Poseidon End
             BlockBreakEvent event = new BlockBreakEvent(block, (org.bukkit.entity.Player) this.player.getBukkitEntity());
             this.world.getServer().getPluginManager().callEvent(event);
 
