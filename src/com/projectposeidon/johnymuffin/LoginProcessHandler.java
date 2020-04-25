@@ -1,5 +1,6 @@
 package com.projectposeidon.johnymuffin;
 
+import com.projectposeidon.api.PoseidonUUID;
 import net.minecraft.server.NetLoginHandler;
 import net.minecraft.server.Packet1Login;
 import net.minecraft.server.ThreadLoginVerifier;
@@ -79,7 +80,7 @@ public class LoginProcessHandler {
 
     public synchronized void userUUIDReceived(UUID uuid, boolean onlineMode) {
         long unixTime = (System.currentTimeMillis() / 1000L) + 1382400;
-        UUIDManager.getInstance().addUser(packet1Login.name, uuid, unixTime, onlineMode);
+        UUIDManager.getInstance().receivedUUID(packet1Login.name, uuid, unixTime, onlineMode);
         connectPlayer(uuid);
 
     }

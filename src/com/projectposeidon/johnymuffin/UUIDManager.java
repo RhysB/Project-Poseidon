@@ -1,5 +1,6 @@
 package com.projectposeidon.johnymuffin;
 
+import com.projectposeidon.PoseidonConfig;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,7 +19,7 @@ public class UUIDManager {
     private UUIDManager() {
         File configFile = new File("uuidcache.json");
         //Check if uuidcache.json exists
-        if(!configFile.exists()) {
+        if (!configFile.exists()) {
             try (FileWriter file = new FileWriter("uuidcache.json")) {
                 System.out.println("Generating uuidcache.json for Project Poseidon");
                 UUIDJsonArray = new JSONArray();
@@ -41,6 +42,9 @@ public class UUIDManager {
             saveJsonArray();
 
             //e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Error reading uuidcache.json, changing to memory only cache: " + e + ": " + e.getMessage());
+            UUIDJsonArray = new JSONArray();
         }
 
 
@@ -48,7 +52,7 @@ public class UUIDManager {
 
     public UUID getUUIDGraceful(String username) {
         UUID uuid = getUUIDFromUsername(username, true);
-        if(uuid == null) {
+        if (uuid == null) {
             uuid = generateOfflineUUID(username);
         }
         return uuid;
@@ -61,7 +65,6 @@ public class UUIDManager {
     }
 
 
-
     public void saveJsonArray() {
         try (FileWriter file = new FileWriter("uuidcache.json")) {
             System.out.println("Saving uuidcache.json for Project Poseidon");
@@ -72,10 +75,25 @@ public class UUIDManager {
         }
     }
 
-
-    public void addUser(String username, UUID uuid, Long expiry, boolean online) {
+    public void receivedUUID(String username, UUID uuid, Long expiry, boolean online) {
+        //Check if the UUID is already in the cache, if so update the expiry
+        for (int i = 0; i < UUIDJsonArray.size(); i++) {
+            JSONObject tmp = (JSONObject) UUIDJsonArray.get(i);
+            if (tmp.get("name").equals(username) && UUID.fromString((String) tmp.get("uuid")).equals(uuid) && tmp.get("onlineUUID").equals(online)) {
+                tmp.replace("expiresOn", expiry);
+                UUIDJsonArray.set(i, tmp);
+                return;
+            }
+        }
         removeInstancesOfUsername(username);
-        //removeInstancesOfUUID(uuid);
+        removeInstancesOfUUID(uuid);
+        addUser(username, uuid, expiry, online);
+
+
+    }
+
+
+    private void addUser(String username, UUID uuid, Long expiry, boolean online) {
         JSONObject tmp = new JSONObject();
         tmp.put("name", username);
         tmp.put("uuid", uuid.toString());
@@ -139,7 +157,13 @@ public class UUIDManager {
         for (int i = 0; i < UUIDJsonArray.size(); i++) {
             JSONObject tmp = (JSONObject) UUIDJsonArray.get(i);
             if (UUID.fromString((String) tmp.get("uuid")).equals(uuid)) {
-                UUIDJsonArray.remove(i);
+                if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.delete-duplicate-uuids")) {
+                    UUIDJsonArray.remove(i);
+                } else {
+                    //This allows for plugins to use a old username and find UUID.
+                    tmp.replace("expiresOn", 1);
+                    UUIDJsonArray.set(i, tmp);
+                }
             }
         }
     }
