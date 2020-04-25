@@ -52,6 +52,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         // CraftBukkit start
         this.server = minecraftserver.server;
     }
+
     private final CraftServer server;
     private int lastTick = MinecraftServer.currentTick;
     private int lastDropTick = MinecraftServer.currentTick;
@@ -121,7 +122,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        
+
         this.player.a(packet27.c(), packet27.e(), packet27.g(), packet27.h(), packet27.d(), packet27.f());
     }
 
@@ -131,7 +132,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;
-        
+
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
 
         this.i = true;
@@ -424,7 +425,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        
+
         if (this.player.dead) return; // CraftBukkit
 
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
@@ -514,7 +515,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;
-        
+
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
 
         // CraftBukkit start
@@ -662,7 +663,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
             this.player.compassTarget = new Location(this.getPlayer().getWorld(), packet6.x, packet6.y, packet6.z);
         } else if (packet instanceof Packet3Chat) {
             String message = ((Packet3Chat) packet).message;
-            for (final String line: TextWrapper.wrapText(message)) {
+            for (final String line : TextWrapper.wrapText(message)) {
                 this.networkManager.queue(new Packet3Chat(line));
             }
             packet = null;
@@ -683,7 +684,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;
-        
+
         if (this.player.dead) return; // CraftBukkit
 
         if (packet16blockitemswitch.itemInHandIndex >= 0 && packet16blockitemswitch.itemInHandIndex <= InventoryPlayer.e()) {
@@ -704,7 +705,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        
+
         String s = packet3chat.message;
 
         if (s.length() > 100) {
@@ -763,6 +764,15 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
         try {
             if (this.server.dispatchCommand(player, s.substring(1))) {
+                //Project Poseidon Start
+                //Basic XAuth & Authme Firewall
+                if (s.toLowerCase().startsWith("/register") || s.toLowerCase().startsWith("/login") || s.toLowerCase().startsWith("/changepw") || s.toLowerCase().startsWith("/changepassword") || s.toLowerCase().startsWith("/unregister")) {
+                    a.info(player.getName() + " issued server command: COMMAND REDACTED");
+                } else {
+                    a.info(player.getName() + " issued server command: " + s);
+                }
+
+                //Project Poseidon End
                 return;
             }
         } catch (CommandException ex) {
@@ -812,7 +822,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;
-        
+
         if (this.player.dead) return; // CraftBukkit
 
         if (packet18armanimation.b == 1) {
@@ -856,7 +866,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;
-        
+
         // CraftBukkit start
         if (this.player.dead) return;
 
@@ -886,7 +896,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        
+
         this.networkManager.a("disconnect.quitting", new Object[0]);
     }
 
@@ -908,7 +918,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;
-        
+
         if (this.player.dead) return; // CraftBukkit
 
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
@@ -955,7 +965,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        
+
         if (this.player.health <= 0) {
             this.player = this.minecraftServer.serverConfigurationManager.moveToWorld(this.player, 0);
 
@@ -975,7 +985,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        
+
         if (this.player.dead) return; // CraftBukkit
 
         if (this.player.activeContainer.windowId == packet102windowclick.a && this.player.activeContainer.c(this.player)) {
@@ -1008,7 +1018,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
-        
+
         if (this.player.dead) return; // CraftBukkit
 
         Short oshort = (Short) this.n.get(Integer.valueOf(this.player.activeContainer.windowId));
@@ -1024,7 +1034,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;
-        
+
         if (this.player.dead) return; // CraftBukkit
 
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
