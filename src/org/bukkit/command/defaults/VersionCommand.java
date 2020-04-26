@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class VersionCommand extends Command {
     public VersionCommand(String name) {
         super(name);
-        
+
         this.description = "Gets the version of this server including any plugins in use";
         this.usageMessage = "/version [plugin name]";
         this.setPermission("bukkit.command.version");
@@ -23,10 +23,10 @@ public class VersionCommand extends Command {
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
-        
+
         if (args.length == 0) {
-            sender.sendMessage("This server is running " + ChatColor.GREEN + Bukkit.getName() + ChatColor.WHITE + " version " + ChatColor.GREEN + Bukkit.getVersion());
-            sender.sendMessage("This server is also sporting some funky dev build of Bukkit!");
+            sender.sendMessage(ChatColor.GRAY + "This server is running " + ChatColor.AQUA + Bukkit.getName());
+            sender.sendMessage(ChatColor.GRAY + "Version: " + ChatColor.RED + Bukkit.getVersion());
         } else {
             StringBuilder name = new StringBuilder();
 
@@ -34,7 +34,7 @@ public class VersionCommand extends Command {
                 if (name.length() > 0) {
                     name.append(' ');
                 }
-                
+
                 name.append(arg);
             }
 
@@ -85,7 +85,7 @@ public class VersionCommand extends Command {
             result.append(ChatColor.GREEN);
             result.append(authors.get(i));
         }
-        
+
         return result.toString();
     }
 }
