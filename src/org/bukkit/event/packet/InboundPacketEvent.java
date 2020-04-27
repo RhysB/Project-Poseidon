@@ -7,20 +7,22 @@ import org.bukkit.event.Event;
 /**
  * @author moderator_man
  */
-public class PacketReceivedEvent extends Event
+public class InboundPacketEvent extends Event
 {
     private static final long serialVersionUID = 1L;
     
     private Player player;
     private Packet packet;
+    private PacketType type;
     private boolean cancelled;
     
-    public PacketReceivedEvent(Player player, Packet packet)
+    public InboundPacketEvent(Player player, Packet packet, PacketType type)
     {
-        super(Type.PACKET_RECEIVED);
+        super(Type.PACKET_INBOUND);
         
         this.player = player;
         this.packet = packet;
+        this.type = type;
     }
     
     /**
@@ -34,6 +36,11 @@ public class PacketReceivedEvent extends Event
     public Packet getPacket()
     {
         return packet;
+    }
+    
+    public PacketType getPacketType()
+    {
+    	return type;
     }
     
     public boolean isCancelled()

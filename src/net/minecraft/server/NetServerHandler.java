@@ -1,5 +1,25 @@
 package net.minecraft.server;
 
+import static org.bukkit.event.packet.PacketType.ARM_ANIMATION;
+import static org.bukkit.event.packet.PacketType.BLOCK_DIG;
+import static org.bukkit.event.packet.PacketType.BLOCK_ITEM_SWITCH;
+import static org.bukkit.event.packet.PacketType.CHAT;
+import static org.bukkit.event.packet.PacketType.ENTITY_ACTION;
+import static org.bukkit.event.packet.PacketType.FLYING;
+import static org.bukkit.event.packet.PacketType.KICK_DISCONNECT;
+import static org.bukkit.event.packet.PacketType.PLACE;
+import static org.bukkit.event.packet.PacketType.RESPAWN;
+import static org.bukkit.event.packet.PacketType.TRANSACTION;
+import static org.bukkit.event.packet.PacketType.UPDATE_SIGN;
+import static org.bukkit.event.packet.PacketType.USE_ENTITY;
+import static org.bukkit.event.packet.PacketType.WINDOW_CLICK;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandException;
@@ -14,13 +34,18 @@ import org.bukkit.entity.StorageMinecart;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.packet.PacketReceivedEvent;
-import org.bukkit.event.player.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Logger;
+import org.bukkit.event.packet.InboundPacketEvent;
+import org.bukkit.event.packet.OutboundPacketEvent;
+import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 // CraftBukkit start
 // CraftBukkit end
@@ -117,18 +142,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet27 packet27) {
-        // poseidon
-        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet27);
-        server.getPluginManager().callEvent(event);
-        if (event.isCancelled())
-            return;
-
         this.player.a(packet27.c(), packet27.e(), packet27.g(), packet27.h(), packet27.d(), packet27.f());
     }
 
     public void a(Packet10Flying packet10flying) {
         // poseidon
-        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet10flying);
+        InboundPacketEvent pevent = new InboundPacketEvent(server.getPlayer(player), packet10flying, FLYING);
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;
@@ -421,7 +440,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void a(Packet14BlockDig packet14blockdig) {
         // poseidon
-        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet14blockdig);
+        InboundPacketEvent event = new InboundPacketEvent(server.getPlayer(player), packet14blockdig, BLOCK_DIG);
         server.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
@@ -511,7 +530,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void a(Packet15Place packet15place) {
         // poseidon
-        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet15place);
+        InboundPacketEvent pevent = new InboundPacketEvent(server.getPlayer(player), packet15place, PLACE);
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;
@@ -657,6 +676,11 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void sendPacket(Packet packet) {
+    	// poseidon
+    	OutboundPacketEvent event = new OutboundPacketEvent(Bukkit.getPlayer(player.name), packet);
+    	if (event.isCancelled())
+    		return;
+    	
         // CraftBukkit start
         if (packet instanceof Packet6SpawnPosition) {
             Packet6SpawnPosition packet6 = (Packet6SpawnPosition) packet;
@@ -680,7 +704,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void a(Packet16BlockItemSwitch packet16blockitemswitch) {
         // poseidon
-        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet16blockitemswitch);
+        InboundPacketEvent pevent = new InboundPacketEvent(server.getPlayer(player), packet16blockitemswitch, BLOCK_ITEM_SWITCH);
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;
@@ -701,7 +725,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void a(Packet3Chat packet3chat) {
         // poseidon
-        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet3chat);
+        InboundPacketEvent event = new InboundPacketEvent(server.getPlayer(player), packet3chat, CHAT);
         server.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
@@ -818,7 +842,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void a(Packet18ArmAnimation packet18armanimation) {
         // poseidon
-        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet18armanimation);
+        InboundPacketEvent pevent = new InboundPacketEvent(server.getPlayer(player), packet18armanimation, ARM_ANIMATION);
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;
@@ -862,7 +886,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void a(Packet19EntityAction packet19entityaction) {
         // poseidon
-        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet19entityaction);
+        InboundPacketEvent pevent = new InboundPacketEvent(server.getPlayer(player), packet19entityaction, ENTITY_ACTION);
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;
@@ -892,7 +916,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void a(Packet255KickDisconnect packet255kickdisconnect) {
         // poseidon
-        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet255kickdisconnect);
+        InboundPacketEvent event = new InboundPacketEvent(server.getPlayer(player), packet255kickdisconnect, KICK_DISCONNECT);
         server.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
@@ -914,7 +938,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void a(Packet7UseEntity packet7useentity) {
         // poseidon
-        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet7useentity);
+        InboundPacketEvent pevent = new InboundPacketEvent(server.getPlayer(player), packet7useentity, USE_ENTITY);
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;
@@ -961,7 +985,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void a(Packet9Respawn packet9respawn) {
         // poseidon
-        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet9respawn);
+        InboundPacketEvent event = new InboundPacketEvent(server.getPlayer(player), packet9respawn, RESPAWN);
         server.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
@@ -981,7 +1005,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void a(Packet102WindowClick packet102windowclick) {
         // poseidon
-        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet102windowclick);
+        InboundPacketEvent event = new InboundPacketEvent(server.getPlayer(player), packet102windowclick, WINDOW_CLICK);
         server.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
@@ -1014,7 +1038,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void a(Packet106Transaction packet106transaction) {
         // poseidon
-        PacketReceivedEvent event = new PacketReceivedEvent(server.getPlayer(player), packet106transaction);
+        InboundPacketEvent event = new InboundPacketEvent(server.getPlayer(player), packet106transaction, TRANSACTION);
         server.getPluginManager().callEvent(event);
         if (event.isCancelled())
             return;
@@ -1030,7 +1054,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void a(Packet130UpdateSign packet130updatesign) {
         // poseidon
-        PacketReceivedEvent pevent = new PacketReceivedEvent(server.getPlayer(player), packet130updatesign);
+        InboundPacketEvent pevent = new InboundPacketEvent(server.getPlayer(player), packet130updatesign, UPDATE_SIGN);
         server.getPluginManager().callEvent(pevent);
         if (pevent.isCancelled())
             return;

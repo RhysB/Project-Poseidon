@@ -7,5 +7,6 @@ import org.bukkit.event.Listener;
  */
 public class PacketListener implements Listener
 {
-    public void onPacketReceived(PacketReceivedEvent event) {}
+    public void onPacketReceived(InboundPacketEvent event) {}
+    public void onPacketDispatched(OutboundPacketEvent event) {}
 }

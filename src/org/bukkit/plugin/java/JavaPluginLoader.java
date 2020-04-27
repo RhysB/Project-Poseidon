@@ -1,32 +1,5 @@
 package org.bukkit.plugin.java;
 
-import com.sun.istack.internal.NotNull;
-import org.bukkit.Server;
-import org.bukkit.event.CustomEventListener;
-import org.bukkit.event.Event;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.inventory.FurnaceBurnEvent;
-import org.bukkit.event.inventory.FurnaceSmeltEvent;
-import org.bukkit.event.inventory.InventoryListener;
-import org.bukkit.event.inventory.InventoryTransactionEvent;
-import org.bukkit.event.packet.PacketListener;
-import org.bukkit.event.packet.PacketReceivedEvent;
-import org.bukkit.event.painting.PaintingBreakEvent;
-import org.bukkit.event.painting.PaintingPlaceEvent;
-import org.bukkit.event.player.*;
-import org.bukkit.event.server.*;
-import org.bukkit.event.vehicle.*;
-import org.bukkit.event.weather.LightningStrikeEvent;
-import org.bukkit.event.weather.ThunderChangeEvent;
-import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.event.weather.WeatherListener;
-import org.bukkit.event.world.*;
-import org.bukkit.plugin.*;
-import org.yaml.snakeyaml.error.YAMLException;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -35,11 +8,138 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
+
+import org.bukkit.Server;
+import org.bukkit.event.CustomEventListener;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockCanBuildEvent;
+import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockDispenseEvent;
+import org.bukkit.event.block.BlockFadeEvent;
+import org.bukkit.event.block.BlockFormEvent;
+import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
+import org.bukkit.event.block.BlockListener;
+import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockRedstoneEvent;
+import org.bukkit.event.block.BlockSpreadEvent;
+import org.bukkit.event.block.LeavesDecayEvent;
+import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreeperPowerEvent;
+import org.bukkit.event.entity.EntityCombustEvent;
+import org.bukkit.event.entity.EntityDamageByBlockEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
+import org.bukkit.event.entity.EntityListener;
+import org.bukkit.event.entity.EntityPortalEnterEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.entity.EntityTameEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.ExplosionPrimeEvent;
+import org.bukkit.event.entity.ItemDespawnEvent;
+import org.bukkit.event.entity.ItemSpawnEvent;
+import org.bukkit.event.entity.PigZapEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.inventory.FurnaceBurnEvent;
+import org.bukkit.event.inventory.FurnaceSmeltEvent;
+import org.bukkit.event.inventory.InventoryListener;
+import org.bukkit.event.inventory.InventoryTransactionEvent;
+import org.bukkit.event.packet.InboundPacketEvent;
+import org.bukkit.event.packet.OutboundPacketEvent;
+import org.bukkit.event.packet.PacketListener;
+import org.bukkit.event.painting.PaintingBreakEvent;
+import org.bukkit.event.painting.PaintingPlaceEvent;
+import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.player.PlayerBedEnterEvent;
+import org.bukkit.event.player.PlayerBedLeaveEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
+import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerEggThrowEvent;
+import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerInventoryEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
+import org.bukkit.event.player.PlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.PlayerVelocityEvent;
+import org.bukkit.event.server.MapInitializeEvent;
+import org.bukkit.event.server.PluginDisableEvent;
+import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.event.server.ServerCommandEvent;
+import org.bukkit.event.server.ServerListener;
+import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
+import org.bukkit.event.vehicle.VehicleCreateEvent;
+import org.bukkit.event.vehicle.VehicleDamageEvent;
+import org.bukkit.event.vehicle.VehicleDestroyEvent;
+import org.bukkit.event.vehicle.VehicleEnterEvent;
+import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
+import org.bukkit.event.vehicle.VehicleExitEvent;
+import org.bukkit.event.vehicle.VehicleListener;
+import org.bukkit.event.vehicle.VehicleMoveEvent;
+import org.bukkit.event.vehicle.VehicleUpdateEvent;
+import org.bukkit.event.weather.LightningStrikeEvent;
+import org.bukkit.event.weather.ThunderChangeEvent;
+import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.event.weather.WeatherListener;
+import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.event.world.ChunkPopulateEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
+import org.bukkit.event.world.PortalCreateEvent;
+import org.bukkit.event.world.SpawnChangeEvent;
+import org.bukkit.event.world.WorldInitEvent;
+import org.bukkit.event.world.WorldListener;
+import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldSaveEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
+import org.bukkit.plugin.AuthorNagException;
+import org.bukkit.plugin.EventExecutor;
+import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.InvalidPluginException;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginLoader;
+import org.bukkit.plugin.RegisteredListener;
+import org.bukkit.plugin.UnknownDependencyException;
+import org.bukkit.plugin.UnknownSoftDependencyException;
+import org.yaml.snakeyaml.error.YAMLException;
+
+import com.sun.istack.internal.NotNull;
 
 /**
  * Represents a Java plugin loader, allowing plugins in the form of .jar
@@ -343,12 +443,21 @@ public class JavaPluginLoader implements PluginLoader
         switch (type)
         {
             // Poseidon events
-            case PACKET_RECEIVED:
+            case PACKET_INBOUND:
                 return new EventExecutor()
                 {
                     public void execute(Listener listener, Event event)
                     {
-                        ((PacketListener) listener).onPacketReceived((PacketReceivedEvent) event);
+                        ((PacketListener) listener).onPacketReceived((InboundPacketEvent) event);
+                    }
+                };
+                
+            case PACKET_OUTBOUND:
+                return new EventExecutor()
+                {
+                    public void execute(Listener listener, Event event)
+                    {
+                        ((PacketListener) listener).onPacketDispatched((OutboundPacketEvent) event);
                     }
                 };
                 
