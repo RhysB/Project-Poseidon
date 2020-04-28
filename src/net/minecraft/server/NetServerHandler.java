@@ -35,6 +35,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.packet.InboundPacketEvent;
 import org.bukkit.event.packet.OutboundPacketEvent;
+import org.bukkit.event.packet.PacketType;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -676,7 +677,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void sendPacket(Packet packet) {
     	// poseidon
-    	OutboundPacketEvent event = new OutboundPacketEvent(player.name, packet);
+    	OutboundPacketEvent event = new OutboundPacketEvent(player.name, packet, PacketType.valueOf(packet.getClass()));
     	if (event.isCancelled())
     		return;
     	

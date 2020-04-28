@@ -13,14 +13,16 @@ public class OutboundPacketEvent extends Event
     
     private String username;
     private Packet packet;
+    private PacketType type;
     private boolean cancelled;
     
-    public OutboundPacketEvent(String username, Packet packet)
+    public OutboundPacketEvent(String username, Packet packet, PacketType type)
     {
         super(Type.PACKET_INBOUND);
         
         this.username = username;
         this.packet = packet;
+        this.type = type;
     }
     
     /**
@@ -34,6 +36,11 @@ public class OutboundPacketEvent extends Event
     public Packet getPacket()
     {
         return packet;
+    }
+    
+    public PacketType getPacketType()
+    {
+    	return type;
     }
     
     public boolean isCancelled()
