@@ -94,7 +94,9 @@ public abstract class Packet {
             }
 
             if (flag && !serverPacketIdList.contains(Integer.valueOf(i)) || !flag && !clientPacketIdList.contains(Integer.valueOf(i))) {
-                throw new IOException("Bad packet id " + i);
+                System.out.println("Bad packet id: " + i); //Project Poseidon
+                return null; //Project Poseidon
+                //throw new IOException("Bad packet id " + i); //Project Poseidon - Comment Out
             }
 
             packet = a(i);
