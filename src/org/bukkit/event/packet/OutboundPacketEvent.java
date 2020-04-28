@@ -1,8 +1,8 @@
 package org.bukkit.event.packet;
 
-import net.minecraft.server.Packet;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+
+import net.minecraft.server.Packet;
 
 /**
  * @author moderator_man
@@ -11,24 +11,24 @@ public class OutboundPacketEvent extends Event
 {
     private static final long serialVersionUID = 1L;
     
-    private Player player;
+    private String username;
     private Packet packet;
     private boolean cancelled;
     
-    public OutboundPacketEvent(Player player, Packet packet)
+    public OutboundPacketEvent(String username, Packet packet)
     {
         super(Type.PACKET_INBOUND);
         
-        this.player = player;
+        this.username = username;
         this.packet = packet;
     }
     
     /**
      * THIS CAN RETURN NULL
      */
-    public Player getPlayer()
+    public String getPlayer()
     {
-        return player;
+        return username;
     }
     
     public Packet getPacket()
