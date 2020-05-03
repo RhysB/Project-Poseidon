@@ -148,7 +148,8 @@ public abstract class Event implements Serializable {
          * POSEIDON EVENTS
          */
         
-        PACKET_RECEIVED (Category.PACKET),
+        PACKET_INBOUND (Category.PACKET),
+        PACKET_OUTBOUND (Category.PACKET),
         
         /**
          * PLAYER EVENTS
