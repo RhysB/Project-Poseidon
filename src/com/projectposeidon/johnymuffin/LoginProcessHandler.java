@@ -1,12 +1,12 @@
 package com.projectposeidon.johnymuffin;
 
-import com.projectposeidon.api.PoseidonUUID;
 import net.minecraft.server.NetLoginHandler;
 import net.minecraft.server.Packet1Login;
 import net.minecraft.server.ThreadLoginVerifier;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerConnectionInitializationEvent;
 import org.bukkit.event.player.PlayerPreLoginEvent;
 import org.bukkit.plugin.Plugin;
 
@@ -55,6 +55,12 @@ public class LoginProcessHandler {
     }
 
     private void processAuthentication() {
+        PlayerConnectionInitializationEvent event = new PlayerConnectionInitializationEvent(this.packet1Login.name, this.netLoginHandler.getSocket().getInetAddress(), loginProcessHandler);
+        this.server.getPluginManager().callEvent(event);
+        if (loginCancelled) {
+            return;
+        }
+
         if (onlineMode) {
             //Server is running online mode
             verifyMojangSession();
@@ -148,7 +154,7 @@ public class LoginProcessHandler {
      * Set a pause for your plugin
      * Connection pauses are for fetching data for a player before they MIGHT be allowed to join
      *
-     * @param plugin Instance of plugin
+     * @param plugin              Instance of plugin
      * @param connectionPauseName Name of connection pause (Ensure no duplicates)
      * @return ConnectionPause Object, used to remove a connection pause
      */

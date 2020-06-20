@@ -149,7 +149,16 @@ public abstract class Event implements Serializable {
          */
         
         PACKET_RECEIVED (Category.PACKET),
-        
+
+
+        /**
+         * Called when a player first starts their connection. Called before UUID is known.
+         *
+         * @see org.bukkit.event.player.PlayerConnectionInitializationEvent
+         */
+        Player_Connection_Initialization(Category.PLAYER),
+
+
         /**
          * PLAYER EVENTS
          */
