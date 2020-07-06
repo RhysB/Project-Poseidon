@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class PluginsCommand extends Command {
     public PluginsCommand(String name) {
@@ -21,14 +22,17 @@ public class PluginsCommand extends Command {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
         
-        sender.sendMessage("Plugins: " + getPluginList());
+        sender.sendMessage("Plugins" + getPluginList());
         return true;
     }
 
     private String getPluginList() {
         StringBuilder pluginList = new StringBuilder();
         Plugin[] plugins = Bukkit.getPluginManager().getPlugins();
-        
+        int enabled = 0;
+
+        Arrays.sort(plugins, Comparator.comparing(o -> o.getDescription().getFullName()));
+
         for (Plugin plugin : plugins) {
             if (pluginList.length() > 0) {
                 pluginList.append(ChatColor.WHITE);
@@ -36,9 +40,11 @@ public class PluginsCommand extends Command {
             }
             
             pluginList.append(plugin.isEnabled() ? ChatColor.GREEN : ChatColor.RED);
+            if(plugin.isEnabled())
+                enabled++;
             pluginList.append(plugin.getDescription().getName());
         }
 
-        return pluginList.toString();
+        return " (" + enabled + "/" + plugins.length + "): " + pluginList.toString();
     }
 }
