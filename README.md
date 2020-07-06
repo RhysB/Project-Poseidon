@@ -2,6 +2,8 @@
 ## What is Project Poseidon
 A CraftBukkit CB1060 fork for Beta 1.7.3 fixing bugs and adding basic features.
 
+Discord: https://discord.gg/FwKg676
+
 ## Licensing
 Craft Bukkit and Bukkit are licensed under GNU General Public License v3.0
 
