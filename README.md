@@ -4,6 +4,9 @@ A CraftBukkit CB1060 fork for Beta 1.7.3 fixing bugs and adding basic features.
 
 Discord: https://discord.gg/FwKg676
 
+## Want to use Project Poseidon on your server?
+Please read the following article before changing over to Project Poseidon: https://github.com/RhysB/Project-Poseidon/wiki/Implementing-Project-Poseidon-In-Production
+
 ## Licensing
 Craft Bukkit and Bukkit are licensed under GNU General Public License v3.0
 
