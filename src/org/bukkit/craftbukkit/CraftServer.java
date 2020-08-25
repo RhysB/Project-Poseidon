@@ -71,7 +71,7 @@ public final class CraftServer implements Server {
         this.console = console;
         this.server = server;
         //this.serverVersion = CraftServer.class.getPackage().getImplementationVersion(); //Poseidon Replace
-        this.serverVersion = "1.1.3";
+        this.serverVersion = "1.1.4";
 
         Bukkit.setServer(this);
 

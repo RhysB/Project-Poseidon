@@ -2,6 +2,7 @@ package net.minecraft.server;
 
 import com.projectposeidon.PoseidonConfig;
 import com.projectposeidon.johnymuffin.UUIDManager;
+import com.projectposeidon.johnymuffin.WatchDogThread;
 import jline.ConsoleReader;
 import joptsimple.OptionSet;
 import org.bukkit.World.Environment;
@@ -60,6 +61,10 @@ public class MinecraftServer implements Runnable, ICommandListener {
     public ConsoleReader reader;
     public static int currentTick;
     // CraftBukkit end
+
+    //Poseidon Start
+    private WatchDogThread watchDogThread;
+    //Poseidon End
 
     public MinecraftServer(OptionSet options) { // CraftBukkit - adds argument OptionSet
         new ThreadSleepForever(this);
@@ -151,7 +156,10 @@ public class MinecraftServer implements Runnable, ICommandListener {
         this.a(new WorldLoaderServer(new File(".")), s1, k);
 
         //Project Poseidon Start
-        //log.info("Removed " + UUIDCacheFile.getInstance().removeExpiredCaches() + " expired UUIDs from the cache");
+        log.info("Starting Watchdog to detect any server hangs!");
+        watchDogThread = new WatchDogThread(Thread.currentThread());
+        watchDogThread.start();
+        watchDogThread.tickUpdate();
         //Project Poseidon End
 
         // CraftBukkit start
@@ -315,10 +323,13 @@ public class MinecraftServer implements Runnable, ICommandListener {
 
     public void stop() { // CraftBukkit - private -> public
         log.info("Stopping server");
+        
         //Project Poseidon Start
         UUIDManager.getInstance().saveJsonArray();
-
-        //UUIDCacheFile.getInstance().saveConfig();
+        if (watchDogThread != null) {
+            log.info("Stopping Poseidon Watchdog");
+            watchDogThread.interrupt();
+        }
         //Project Poseidon End
 
         // CraftBukkit start
@@ -371,6 +382,7 @@ public class MinecraftServer implements Runnable, ICommandListener {
                     } else {
                         while (j > 50L) {
                             MinecraftServer.currentTick = (int) (System.currentTimeMillis() / 50); // CraftBukkit
+                            watchDogThread.tickUpdate(); // Project Poseidon
                             j -= 50L;
                             this.h();
                         }
