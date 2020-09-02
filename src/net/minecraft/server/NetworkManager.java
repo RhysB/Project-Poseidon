@@ -3,9 +3,7 @@ package net.minecraft.server;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.SocketException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +15,7 @@ public class NetworkManager {
     public static int c;
     private Object g = new Object();
     public Socket socket; // CraftBukkit - private -> public
-    private final SocketAddress i;
+    private SocketAddress i; //Project Poseidon - remove final statement
     private DataInputStream input;
     private DataOutputStream output;
     private boolean l = true;
@@ -46,7 +44,8 @@ public class NetworkManager {
         // CraftBukkit start - IPv6 stack in Java on BSD/OSX doesn't support setTrafficClass
         try {
             socket.setTrafficClass(24);
-        } catch (SocketException e) {}
+        } catch (SocketException e) {
+        }
         // CraftBukkit end
 
         try {
@@ -68,6 +67,17 @@ public class NetworkManager {
         this.s.start();
         this.r.start();
     }
+
+    //Project Poseidon Start
+    public void setSocketAddress(SocketAddress socketAddress) {
+        this.i = socketAddress;
+    }
+
+    public SocketAddress generateSocketAddress(String hostname, int port) {
+        return new InetSocketAddress(hostname, port);
+    }
+
+    //Project Poseidon End
 
     public void a(NetHandler nethandler) {
         this.p = nethandler;
@@ -171,7 +181,7 @@ public class NetworkManager {
 
     private void a(Exception exception) {
         exception.printStackTrace();
-        this.a("disconnect.genericReason", new Object[] { "Internal exception: " + exception.toString()});
+        this.a("disconnect.genericReason", new Object[]{"Internal exception: " + exception.toString()});
     }
 
     public void a(String s, Object... aobject) {
