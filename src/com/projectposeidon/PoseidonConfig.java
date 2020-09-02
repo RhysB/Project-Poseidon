@@ -34,6 +34,9 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("world-settings.optimized-explosions", false);
         generateConfigOption("world-settings.randomize-spawn", true);
         generateConfigOption("world-settings.teleport-to-highest-safe-block", true);
+        //Release2Beta Settings
+        generateConfigOption("settings.release2beta.enable-ip-pass-through", false);
+        generateConfigOption("settings.release2beta.proxy-ip", "127.0.0.1");
 
 
     }
@@ -50,6 +53,15 @@ public class PoseidonConfig extends Configuration {
 
     public Object getConfigOption(String key) {
         return this.getProperty(key);
+    }
+
+    public Object getConfigOption(String key, Object defaultValue) {
+        Object value = getConfigOption(key);
+        if (value == null) {
+            value = defaultValue;
+        }
+        return value;
+
     }
 
     private synchronized void convertToNewConfig() {

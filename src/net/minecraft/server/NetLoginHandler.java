@@ -1,10 +1,15 @@
 package net.minecraft.server;
 
+import com.projectposeidon.PoseidonConfig;
 import com.projectposeidon.johnymuffin.LoginProcessHandler;
+import org.bukkit.ChatColor;
 
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Random;
 import java.util.logging.Logger;
+
+import static com.projectposeidon.MarcinDevelopment.Release2Beta.deserializeAddress;
 
 public class NetLoginHandler extends NetHandler {
 
@@ -75,6 +80,24 @@ public class NetLoginHandler extends NetHandler {
 //            if (!this.server.onlineMode) {
 //                this.b(packet1login);
 //            } else {
+
+            //Project Poseidon - Start (Release2Beta)
+            if ((Boolean) PoseidonConfig.getInstance().getConfigOption("settings.release2beta.enable-ip-pass-through")) {
+                if (packet1login.d == (byte) -999) {
+                    //Player is connecting using Release2Beta
+                    if (this.getSocket().getInetAddress().getHostAddress().equalsIgnoreCase(String.valueOf(PoseidonConfig.getInstance().getConfigOption("settings.release2beta.proxy-ip", "127.0.0.1")))) {
+                        InetSocketAddress address = deserializeAddress(packet1login.c);
+                        a.info(packet1login.name + " has been detected using Release2Beta, using the IP passed through: " + address.getAddress().getHostAddress());
+                        this.networkManager.setSocketAddress(address);
+                    } else {
+                        a.info(packet1login.name + " is attempting to use a unauthorized Release2Beta server, kicking the player.");
+                        this.disconnect(ChatColor.RED + "The Release2Beta server you are connecting through is unauthorized.");
+                        return;
+                    }
+                }
+            }
+            //Project Poseidon - End (Release2Beta
+
             new LoginProcessHandler(this, packet1login, this.server.server, this.server.onlineMode);
             // (new ThreadLoginVerifier(this, packet1login, this.server.server)).start(); // CraftBukkit
 //            }
@@ -123,16 +146,15 @@ public class NetLoginHandler extends NetHandler {
     public boolean c() {
         return true;
     }
-    
+
     /**
      * @author moderator_man
      * @returns the session id for this player
      */
-    public String getServerID()
-    {
+    public String getServerID() {
         return serverId;
     }
-    
+
     static String a(NetLoginHandler netloginhandler) {
         return netloginhandler.serverId;
     }
