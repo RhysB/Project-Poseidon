@@ -298,6 +298,14 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      */
     public boolean isPlayerTimeRelative();
 
+
+    /**
+     * Returns whether the player is using a Release2Beta proxy
+     *
+     * @return true if the player is using a Release2Beta proxy
+     */
+    public boolean isUsingReleaseToBeta();
+
     /**
      * Restores the normal condition where the player's time is synchronized with the server time.
      * Equivalent to calling setPlayerTime(0, true).
