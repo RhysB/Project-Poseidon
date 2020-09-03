@@ -1,9 +1,13 @@
 package net.minecraft.server;
 
+import com.projectposeidon.PoseidonConfig;
+
 public class BlockFence extends Block {
+    private boolean modernFencingBounding = false;
 
     public BlockFence(int i, int j) {
         super(i, j, Material.WOOD);
+        modernFencingBounding = (boolean) PoseidonConfig.getInstance().getConfigOption("world-settings.use-modern-fence-bounding-boxes", false);
     }
 
     public boolean canPlace(World world, int i, int j, int k) {
@@ -11,6 +15,10 @@ public class BlockFence extends Block {
     }
 
     public AxisAlignedBB e(World world, int i, int j, int k) {
+        if(!modernFencingBounding) {
+            return AxisAlignedBB.b((double) i, (double) j, (double) k, (double) (i + 1), (double) ((float) j + 1.5F), (double) (k + 1));
+        }
+
         boolean flag = this.b(world, i, j, k - 1);
         boolean flag1 = this.b(world, i, j, k + 1);
         boolean flag2 = this.b(world, i - 1, j, k);
@@ -38,6 +46,7 @@ public class BlockFence extends Block {
 
         return AxisAlignedBB.b((double) ((float) i + f), (double) j, (double) ((float) k + f2), (double) ((float) i + f1), (double) ((float) j + 1.5F), (double) ((float) k + f3));
     }
+
     public boolean b(IBlockAccess iblockaccess, int i, int j, int k) {
         int l = iblockaccess.getTypeId(i, j, k);
 
