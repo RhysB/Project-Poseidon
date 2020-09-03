@@ -4,6 +4,7 @@ import net.minecraft.server.NetLoginHandler;
 import org.bukkit.entity.Player;
 
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 /**
  * Stores details for players attempting to log in
@@ -16,7 +17,7 @@ public class PlayerLoginEvent extends PlayerEvent {
 
     public PlayerLoginEvent(final Player player, final NetLoginHandler netLoginHandler) {
         super(Type.PLAYER_LOGIN, player);
-        this.playerAddress = netLoginHandler.networkManager.socket.getInetAddress();
+        this.playerAddress = ((InetSocketAddress) netLoginHandler.networkManager.getSocketAddress()).getAddress();
         this.localAddress = netLoginHandler.networkManager.socket.getLocalAddress();
         this.result = Result.ALLOWED;
         this.message = "";
