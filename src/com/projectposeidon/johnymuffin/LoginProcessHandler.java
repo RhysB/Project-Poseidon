@@ -173,7 +173,7 @@ public class LoginProcessHandler {
     /**
      * Remove a pause for your plugin by the returned ConnectionPause object
      */
-    public void removeConnectionPause(ConnectionPause connectionPause) {
+    public synchronized void removeConnectionPause(ConnectionPause connectionPause) {
         if (pluginPauseObjects.contains(connectionPause)) {
             pluginPauseObjects.remove(connectionPause);
             if (!loginProcessHandler.isPlayerConnectionPaused()) {
