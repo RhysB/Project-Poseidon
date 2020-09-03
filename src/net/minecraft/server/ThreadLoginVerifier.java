@@ -4,6 +4,8 @@ import com.projectposeidon.johnymuffin.LoginProcessHandler;
 import com.projectposeidon.moderator_man.SessionAPI;
 import org.bukkit.craftbukkit.CraftServer;
 
+import java.net.InetSocketAddress;
+
 // CraftBukkit start
 // CraftBukkit end
 
@@ -26,10 +28,9 @@ public class ThreadLoginVerifier extends Thread {
         this.netLoginHandler = netloginhandler;
         this.loginPacket = packet1login;
     }
-    
-    private String getIP()
-    {
-        return netLoginHandler.networkManager.socket.getInetAddress().getHostAddress();
+
+    private String getIP() {
+        return ((InetSocketAddress) netLoginHandler.networkManager.getSocketAddress()).getAddress().getHostAddress();
     }
 
     public void run() {
