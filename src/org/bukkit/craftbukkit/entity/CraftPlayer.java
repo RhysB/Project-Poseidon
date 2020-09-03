@@ -1,6 +1,5 @@
 package org.bukkit.craftbukkit.entity;
 
-import com.projectposeidon.johnymuffin.UUIDManager;
 import net.minecraft.server.*;
 import org.bukkit.Achievement;
 import org.bukkit.Material;
@@ -349,6 +348,11 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
     public boolean isPlayerTimeRelative() {
         return getHandle().relativeTime;
+    }
+
+    @Override
+    public boolean isUsingReleaseToBeta() {
+        return getHandle().netServerHandler.isUsingReleaseToBeta();
     }
 
     public void resetPlayerTime() {

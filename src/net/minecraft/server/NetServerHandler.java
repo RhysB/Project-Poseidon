@@ -41,6 +41,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     private double z;
     private boolean checkMovement = true;
     private Map n = new HashMap();
+    private boolean usingReleaseToBeta = false; //Project Poseidon - Create Variable
 
     public NetServerHandler(MinecraftServer minecraftserver, NetworkManager networkmanager, EntityPlayer entityplayer) {
         this.minecraftServer = minecraftserver;
@@ -52,6 +53,16 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         // CraftBukkit start
         this.server = minecraftserver.server;
     }
+
+    //Project Poseidon - Start
+    public boolean isUsingReleaseToBeta() {
+        return usingReleaseToBeta;
+    }
+
+    public void setUsingReleaseToBeta(boolean usingReleaseToBeta) {
+        this.usingReleaseToBeta = usingReleaseToBeta;
+    }
+    //Project Poseidon - End
 
     private final CraftServer server;
     private int lastTick = MinecraftServer.currentTick;

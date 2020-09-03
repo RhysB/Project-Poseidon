@@ -22,6 +22,7 @@ public class NetLoginHandler extends NetHandler {
     private String g = null;
     private Packet1Login h = null;
     private String serverId = "";
+    private boolean usingReleaseToBeta = false;
 
     public NetLoginHandler(MinecraftServer minecraftserver, Socket socket, String s) {
         this.server = minecraftserver;
@@ -89,6 +90,7 @@ public class NetLoginHandler extends NetHandler {
                         InetSocketAddress address = deserializeAddress(packet1login.c);
                         a.info(packet1login.name + " has been detected using Release2Beta, using the IP passed through: " + address.getAddress().getHostAddress());
                         this.networkManager.setSocketAddress(address);
+                        this.usingReleaseToBeta = true;
                     } else {
                         a.info(packet1login.name + " is attempting to use a unauthorized Release2Beta server, kicking the player.");
                         this.disconnect(ChatColor.RED + "The Release2Beta server you are connecting through is unauthorized.");
@@ -115,6 +117,7 @@ public class NetLoginHandler extends NetHandler {
             WorldServer worldserver = (WorldServer) entityplayer.world; // CraftBukkit
             ChunkCoordinates chunkcoordinates = worldserver.getSpawn();
             NetServerHandler netserverhandler = new NetServerHandler(this.server, this.networkManager, entityplayer);
+            netserverhandler.setUsingReleaseToBeta(usingReleaseToBeta);
 
             netserverhandler.sendPacket(new Packet1Login("", entityplayer.id, worldserver.getSeed(), (byte) worldserver.worldProvider.dimension));
             netserverhandler.sendPacket(new Packet6SpawnPosition(chunkcoordinates.x, chunkcoordinates.y, chunkcoordinates.z));
