@@ -1,4 +1,4 @@
-package com.projectposeidon.MarcinDevelopment;
+package com.projectposeidon.marcindevelopment;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;

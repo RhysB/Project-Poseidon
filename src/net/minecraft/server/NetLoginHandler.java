@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import static com.projectposeidon.MarcinDevelopment.Release2Beta.deserializeAddress;
+import static com.projectposeidon.marcindevelopment.Release2Beta.deserializeAddress;
 
 public class NetLoginHandler extends NetHandler {
 
