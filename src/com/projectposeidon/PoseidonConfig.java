@@ -34,6 +34,7 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("world-settings.optimized-explosions", false);
         generateConfigOption("world-settings.randomize-spawn", true);
         generateConfigOption("world-settings.teleport-to-highest-safe-block", true);
+        generateConfigOption("world-settings.use-modern-fence-bounding-boxes", false);
         //Release2Beta Settings
         generateConfigOption("settings.release2beta.enable-ip-pass-through", false);
         generateConfigOption("settings.release2beta.proxy-ip", "127.0.0.1");
