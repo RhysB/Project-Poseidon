@@ -35,7 +35,7 @@ public class PluginsCommand extends Command {
         Arrays.sort(plugins, Comparator.comparing(o -> o.getDescription().getFullName()));
 
         for (Plugin plugin : plugins) {
-            if (!plugin.getDescription().isVisible()) {
+            if (!plugin.getDescription().isVisible() && plugin.isEnabled()) {
                 continue;
             }
             pluginCount = pluginCount + 1;
