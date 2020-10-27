@@ -1,5 +1,6 @@
 package com.projectposeidon.johnymuffin;
 
+import com.projectposeidon.uuid.ThreadUUIDFetcher;
 import net.minecraft.server.NetLoginHandler;
 import net.minecraft.server.Packet1Login;
 import net.minecraft.server.ThreadLoginVerifier;

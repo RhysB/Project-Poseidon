@@ -2,7 +2,7 @@ package net.minecraft.server;
 
 import com.projectposeidon.PoseidonConfig;
 import com.projectposeidon.johnymuffin.UUIDManager;
-import com.projectposeidon.johnymuffin.WatchDogThread;
+import com.projectposeidon.watchdog.WatchDogThread;
 import jline.ConsoleReader;
 import joptsimple.OptionSet;
 import org.bukkit.World.Environment;

@@ -30,21 +30,27 @@ public class PluginsCommand extends Command {
         StringBuilder pluginList = new StringBuilder();
         Plugin[] plugins = Bukkit.getPluginManager().getPlugins();
         int enabled = 0;
+        int pluginCount = 0;
 
         Arrays.sort(plugins, Comparator.comparing(o -> o.getDescription().getFullName()));
 
         for (Plugin plugin : plugins) {
+            if (!plugin.getDescription().isVisible() && plugin.isEnabled()) {
+                continue;
+            }
+            pluginCount = pluginCount + 1;
+
             if (pluginList.length() > 0) {
                 pluginList.append(ChatColor.WHITE);
                 pluginList.append(", ");
             }
-            
+
             pluginList.append(plugin.isEnabled() ? ChatColor.GREEN : ChatColor.RED);
-            if(plugin.isEnabled())
+            if (plugin.isEnabled())
                 enabled++;
             pluginList.append(plugin.getDescription().getName());
         }
 
-        return " (" + enabled + "/" + plugins.length + "): " + pluginList.toString();
+        return " (" + enabled + "/" + pluginCount + "): " + pluginList.toString();
     }
 }
