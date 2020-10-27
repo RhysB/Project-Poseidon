@@ -1,4 +1,4 @@
-package com.projectposeidon.johnymuffin;
+package com.projectposeidon.watchdog;
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
