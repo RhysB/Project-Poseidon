@@ -1,5 +1,6 @@
 package org.bukkit.plugin.java;
 
+import com.projectposeidon.event.PoseidonCustomListener;
 import com.sun.istack.internal.NotNull;
 import org.bukkit.Server;
 import org.bukkit.event.CustomEventListener;
@@ -223,7 +224,12 @@ public class JavaPluginLoader implements PluginLoader
             Collections.addAll(methods, publicMethods);
             Collections.addAll(methods, privateMethods);
         } catch (NoClassDefFoundError e) {
-            plugin.getServer().getLogger().severe("Plugin " + plugin.getDescription().getFullName() + " has failed to register events for " + listener.getClass() + " because " + e.getMessage() + " does not exist.");
+            if (listener instanceof PoseidonCustomListener) {
+                plugin.getServer().getLogger().log(Level.WARNING, "The plugin " + plugin.getDescription().getName() + " has tried to register an unknown event. Please ensure the plugin containing the event is loaded before any plugins that listen.");
+            } else {
+                plugin.getServer().getLogger().severe("Plugin " + plugin.getDescription().getFullName() + " has failed to register events for " + listener.getClass() + " because " + e.getMessage() + " does not exist.");
+
+            }
             return ret;
         }
 

@@ -2,6 +2,7 @@ package org.bukkit.plugin;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.MapMaker;
+import com.projectposeidon.event.PoseidonCustomListener;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.PluginCommandYamlParser;
@@ -57,26 +58,30 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     // Project Poseidon Start
+
     @Override
     public void registerEvents(Listener listener, Plugin plugin) {
         if (!plugin.isEnabled()) {
             throw new IllegalPluginAccessException("Plugin attempted to register " + listener + " while not enabled");
         } else {
-            for (   Map.Entry<Class<? extends Event>, Set<RegisteredListener>> entry :
-                    plugin.getPluginLoader().createRegisteredListeners(listener, plugin).entrySet()) {
+            for (Map.Entry<Class<? extends Event>, Set<RegisteredListener>> entry : plugin.getPluginLoader().createRegisteredListeners(listener, plugin).entrySet()) {
                 Class<? extends Event> clazz = entry.getKey();
                 Event.Type type = Event.Type.getTypeByName(clazz.getSimpleName().substring(0, clazz.getSimpleName().indexOf("Event")));
                 if (type != null) {
-                    if(!listeners.containsKey(type)) {
-                        TreeSet<RegisteredListener> eventListeners = new TreeSet<>(comparer);
-                        listeners.put(type, eventListeners);
-                    }
-                    listeners.get(type).addAll(entry.getValue());
+                    getEventListeners(type).addAll(entry.getValue());
                 } else {
-                    String cName = clazz.getName();
-                    server.getLogger().log(Level.SEVERE, String.format("Class %s failed to get Event.Type on @EventHandler", cName));
+                    //If listener implements PoseidonCustomListener, we can be sure it is probably a custom event.
+                    if (listener instanceof PoseidonCustomListener) {
+                        server.getLogger().log(Level.INFO, plugin.getDescription().getName() + " is utilizing event handlers to receive the custom event " + clazz.getSimpleName() + ". Please be aware this is a hacky beta feature.");
+                        getEventListeners(Event.Type.CUSTOM_EVENT).addAll(entry.getValue());
+                    } else {
+                        String cName = clazz.getName();
+                        server.getLogger().log(Level.SEVERE, String.format("Class %s failed to get Event.Type on @EventHandler", cName));
+                    }
                 }
+
             }
+
         }
     }
     // Project Poseidon End
