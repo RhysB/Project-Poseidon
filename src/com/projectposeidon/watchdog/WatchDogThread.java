@@ -33,7 +33,8 @@ public class WatchDogThread extends Thread {
                 }
                 Thread.sleep(3000L);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("[Poseidon-Watchdog] The watchdog has been interrupted.");
+//                e.printStackTrace();
             }
         }
     }
@@ -41,6 +42,7 @@ public class WatchDogThread extends Thread {
     public void tickUpdate() {
         tickOccurred.set(true);
     }
+
     public boolean isHangDetected() {
         return tickOccurred.get();
     }

@@ -30,6 +30,7 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.delete-duplicate-uuids", false);
         generateConfigOption("settings.save-playerdata-by-uuid", true);
         generateConfigOption("settings.per-day-logfile", false);
+        generateConfigOption("settings.fetch-uuids-from", "https://api.mojang.com/profiles/minecraft");
         //Word Settings
         generateConfigOption("world-settings.optimized-explosions", false);
         generateConfigOption("world-settings.randomize-spawn", true);
@@ -65,7 +66,7 @@ public class PoseidonConfig extends Configuration {
 
     }
 
-    private synchronized void convertToNewConfig() {
+    private void convertToNewConfig() {
         //Graceful UUIDS
         convertToNewAddress("settings.allow-graceful-uuids", "allowGracefulUUID");
         convertToNewAddress("settings.save-playerdata-by-uuid", "savePlayerdataByUUID");
