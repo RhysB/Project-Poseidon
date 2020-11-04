@@ -132,10 +132,6 @@ public class MinecraftServer implements Runnable, ICommandListener {
             log.warning("While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.");
             log.warning("To change this, set \"online-mode\" to \"true\" in the server.settings file.");
         }
-        //Project Poseidon Start
-        PoseidonConfig.getInstance();
-        UUIDManager.getInstance();
-        //Project Poseidon End
 
         this.serverConfigurationManager = new ServerConfigurationManager(this);
         // CraftBukkit - removed trackers
@@ -156,10 +152,24 @@ public class MinecraftServer implements Runnable, ICommandListener {
         this.a(new WorldLoaderServer(new File(".")), s1, k);
 
         //Project Poseidon Start
-        log.info("Starting Watchdog to detect any server hangs!");
+        log.info("Starting Project Poseidon Modules!");
+
+        PoseidonConfig.getInstance();
+        UUIDManager.getInstance();
+
+        //Start Watchdog
         watchDogThread = new WatchDogThread(Thread.currentThread());
-        watchDogThread.start();
-        watchDogThread.tickUpdate();
+        if (PoseidonConfig.getInstance().getBoolean("settings.enable-watchdog", true)) {
+            log.info("Starting Watchdog to detect any server hangs!");
+            watchDogThread.start();
+            watchDogThread.tickUpdate();
+        }
+        //Start Poseidon Statistics
+        if (PoseidonConfig.getInstance().getBoolean("settings.enable-statistics", true)) {
+            log.info("Enabling statistics. This allows for us to tell how many people are running Project Poseidon alongside what version.");
+        }
+
+        log.info("Finished loading Project Poseidon Modules!");
         //Project Poseidon End
 
         // CraftBukkit start
@@ -323,7 +333,7 @@ public class MinecraftServer implements Runnable, ICommandListener {
 
     public void stop() { // CraftBukkit - private -> public
         log.info("Stopping server");
-        
+
         //Project Poseidon Start
         UUIDManager.getInstance().saveJsonArray();
         if (watchDogThread != null) {
