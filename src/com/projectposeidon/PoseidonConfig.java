@@ -31,6 +31,8 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.save-playerdata-by-uuid", true);
         generateConfigOption("settings.per-day-logfile", false);
         generateConfigOption("settings.fetch-uuids-from", "https://api.mojang.com/profiles/minecraft");
+        generateConfigOption("settings.enable-watchdog", true);
+        generateConfigOption("settings.enable-statistics", true);
         //Word Settings
         generateConfigOption("world-settings.optimized-explosions", false);
         generateConfigOption("world-settings.randomize-spawn", true);
