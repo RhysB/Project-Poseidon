@@ -16,23 +16,20 @@ Libraries in the compiled .jar files distrusted may contain their own licenses.
 
 This project contains decompiled code that is copyrighted by Mojang AB typically under the package net.minecraft.server.
 
-## How To Setup And Compile - IntelliJ IDEA
+## How To Setup - IntelliJ IDEA
 
 1. Clone this project using Git or a desktop client.
-2. Open IntelliJ and create a new project in the same directory as the Project Poseidon src folder.
-3. Download or create a libraries jar as shown in the section [How to get a libraries jar](#how-to-get-a-libraries-jar)
-4. Add the downloaded libraries jar as a library
-5. Create a artifact in Project Structure including the dependency
-6. Click Include in project build
-7. Build > Build Project. 
+2. Open IntelliJ and create a new project in the same directory as the Project Poseidon folder.
+   
+## How to Compile
 
-You should now have a runnable JAR!
+Compiling is done via maven. To compile a JAR, cd into the Project Poseidon directory and run the following command:
 
-## How to get a libraries jar
-You can either download the libraries jar or extract it manually from a CB1060-CB1092 jar.
+```
+mvn clean package
+```
 
-* You can download the libraries jar from the following method: https://www.dropbox.com/s/qs110g2juivinp8/CraftBukkit-b1.7.3-libs.jar?dl=1
-* You can remove Bukkit, CraftBukkit and MC-DEV files from an existing CB1060-CB1092 jar. This jar should then only contain the libraries of CraftBukkit
+You should now have a runnable JAR inside the /target folder!
 
 ## Regarding the DMCA of CraftBukkit in 2014
 The contributor Wolverness who first contributed on CraftBukkit in February 2012 issued a DMCA against CraftBukkit and other major forks of CraftBukkit. 
@@ -49,4 +46,4 @@ If you were a contributor before these commits please feel free to contact me or
 We include files from the mc-dev Github repository. This code is automatically generated using minecraft_server.jar and sourced from the Bukkit repositories.
 * MC-DEV: 1a792ed860ebe2c6d4c40c52f3bc7b9e0789ca23 (https://github.com/Bukkit/mc-dev/commit/1a792ed860ebe2c6d4c40c52f3bc7b9e0789ca23)
 
-If Mojang or a Mojang employee wants to have this repository removed due to including Minecraft source like bukkit/mc-dev, please contact me or make an issue.
+If Mojang Studios or someone on their behalf wants to have this repository removed due to including copyrighted Minecraft sources like bukkit/mc-dev, please contact me or make an issue.

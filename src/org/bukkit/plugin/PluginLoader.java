@@ -1,8 +1,8 @@
 package org.bukkit.plugin;
 
-import com.sun.istack.internal.NotNull;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.Map;

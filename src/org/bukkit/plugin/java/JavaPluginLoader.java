@@ -1,6 +1,5 @@
 package org.bukkit.plugin.java;
 
-import com.sun.istack.internal.NotNull;
 import org.bukkit.Server;
 import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
@@ -25,6 +24,7 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.event.weather.WeatherListener;
 import org.bukkit.event.world.*;
 import org.bukkit.plugin.*;
+import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.File;
