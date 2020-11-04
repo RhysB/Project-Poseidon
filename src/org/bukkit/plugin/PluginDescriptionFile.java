@@ -29,6 +29,7 @@ public final class PluginDescriptionFile {
     private ArrayList<String> authors = new ArrayList<String>();
     private String website = null;
     private boolean database = false;
+    private boolean visible = true;
     private PluginLoadOrder order = PluginLoadOrder.POSTWORLD;
     private ArrayList<Permission> permissions = new ArrayList<Permission>();
 
@@ -138,6 +139,10 @@ public final class PluginDescriptionFile {
 
     public boolean isDatabaseEnabled() {
         return database;
+    }
+
+    public boolean isVisible() {
+        return visible;
     }
 
     public void setDatabaseEnabled(boolean database) {
@@ -260,11 +265,19 @@ public final class PluginDescriptionFile {
 
         if (map.containsKey("permissions")) {
             try {
-                 Map<String, Map<String, Object>> perms = (Map<String, Map<String, Object>>) map.get("permissions");
+                Map<String, Map<String, Object>> perms = (Map<String, Map<String, Object>>) map.get("permissions");
 
-                 loadPermissions(perms);
+                loadPermissions(perms);
             } catch (ClassCastException ex) {
                 throw new InvalidDescriptionException(ex, "permissions are of wrong type");
+            }
+        }
+
+        if (map.containsKey("visible")) {
+            try {
+                visible = (Boolean) map.get("visible");
+            } catch (ClassCastException ex) {
+                throw new InvalidDescriptionException(ex, "visible is of wrong type");
             }
         }
     }
@@ -277,6 +290,7 @@ public final class PluginDescriptionFile {
         map.put("version", version);
         map.put("database", database);
         map.put("order", order.toString());
+        map.put("visible", visible);
 
         if (commands != null) {
             map.put("command", commands);

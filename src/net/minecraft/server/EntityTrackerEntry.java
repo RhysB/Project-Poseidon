@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import org.bukkit.entity.Player;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -198,6 +200,14 @@ public class EntityTrackerEntry {
 
             if (d0 >= (double) (-this.b) && d0 <= (double) this.b && d1 >= (double) (-this.b) && d1 <= (double) this.b) {
                 if (!this.trackedPlayers.contains(entityplayer)) {
+                    // CraftBukkit start
+                    if (tracker instanceof EntityPlayer) {
+                        org.bukkit.entity.Player player = (Player) ((EntityPlayer) tracker).getBukkitEntity();
+                        if (!((Player) entityplayer.getBukkitEntity()).canSee(player)) {
+                            return;
+                        }
+                    }
+                    // CraftBukkit end
                     this.trackedPlayers.add(entityplayer);
                     entityplayer.netServerHandler.sendPacket(this.b());
                     if (this.isMoving) {

@@ -15,9 +15,13 @@ import org.bukkit.map.MapView;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class CraftPlayer extends CraftHumanEntity implements Player {
+    private Set<UUID> hiddenPlayers = new HashSet<UUID>();
+
     public CraftPlayer(CraftServer server, EntityPlayer entity) {
         super(server, entity);
     }
@@ -382,4 +386,35 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             server.getHandle().l(getName().toLowerCase());
         }
     }
+
+    public void hidePlayer(Player player) {
+
+        hiddenPlayers.add(player.getUniqueId());
+
+        //remove this player from the hidden player's EntityTrackerEntry
+        EntityTracker tracker = ((WorldServer) entity.world).tracker;
+        EntityPlayer other = ((CraftPlayer) player).getHandle();
+        EntityTrackerEntry entry = (EntityTrackerEntry) tracker.b.a(other.id);
+        if (entry != null) {
+            entry.c(getHandle());
+        }
+
+    }
+
+    public void showPlayer(Player player) {
+        hiddenPlayers.remove(player.getUniqueId());
+
+        EntityTracker tracker = ((WorldServer) entity.world).tracker;
+        EntityPlayer other = ((CraftPlayer) player).getHandle();
+        EntityTrackerEntry entry = (EntityTrackerEntry) tracker.b.a(other.id);
+        if (entry != null && !entry.trackedPlayers.contains(getHandle())) {
+            entry.b(getHandle());
+        }
+
+    }
+
+    public boolean canSee(Player player) {
+        return !hiddenPlayers.contains(player.getUniqueId());
+    }
+
 }

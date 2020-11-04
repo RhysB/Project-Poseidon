@@ -1,6 +1,7 @@
-package com.projectposeidon.evilmidget38;
+package com.projectposeidon.util;
 
 import com.google.common.collect.ImmutableList;
+import com.projectposeidon.PoseidonConfig;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,7 +16,7 @@ import java.util.concurrent.Callable;
 
 public class UUIDFetcher implements Callable<Map<String, UUID>> {
     private static final double PROFILES_PER_REQUEST = 100;
-    private static final String PROFILE_URL = "https://api.mojang.com/profiles/minecraft";
+    private static final String PROFILE_URL = PoseidonConfig.getInstance().getString("settings.fetch-uuids-from", "https://api.mojang.com/profiles/minecraft");
     private final JSONParser jsonParser = new JSONParser();
     private final List<String> names;
     private final boolean rateLimiting;
