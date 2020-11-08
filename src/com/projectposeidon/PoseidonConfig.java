@@ -44,6 +44,9 @@ public class PoseidonConfig extends Configuration {
         //Release2Beta Settings
         generateConfigOption("settings.release2beta.enable-ip-pass-through", false);
         generateConfigOption("settings.release2beta.proxy-ip", "127.0.0.1");
+        //Modded Jar Support
+        generateConfigOption("settings.support.modloader.enable", false);
+        generateConfigOption("settings.support.modloader.info", "EXPERIMENTAL support for ModloaderMP.");
 
 
     }
