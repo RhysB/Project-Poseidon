@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.projectposeidon.ConnectionType;
 import com.projectposeidon.PoseidonConfig;
 import com.projectposeidon.johnymuffin.LoginProcessHandler;
 import org.bukkit.ChatColor;
@@ -22,6 +23,7 @@ public class NetLoginHandler extends NetHandler {
     private String g = null;
     private Packet1Login h = null;
     private String serverId = "";
+    private ConnectionType connectionType;
     private boolean usingReleaseToBeta = false;
 
     public NetLoginHandler(MinecraftServer minecraftserver, Socket socket, String s) {
@@ -83,19 +85,39 @@ public class NetLoginHandler extends NetHandler {
 //            } else {
 
             //Project Poseidon - Start (Release2Beta)
-            if ((Boolean) PoseidonConfig.getInstance().getConfigOption("settings.release2beta.enable-ip-pass-through")) {
-                if (packet1login.d == (byte) -999) {
-                    //Player is connecting using Release2Beta
+            switch (packet1login.d) {
+                case 25:
+                    connectionType = ConnectionType.RELEASE2BETA_OFFLINE_MODE_IP_FORWARDING;
+                case 26:
+                    connectionType = ConnectionType.RELEASE2BETA_ONLINE_MODE_IP_FORWARDING;
+                case 1:
+                    connectionType = ConnectionType.RELEASE2BETA;
+                default:
+                    connectionType = ConnectionType.NORMAL;
+
+            }
+
+            if (connectionType.equals(ConnectionType.RELEASE2BETA_OFFLINE_MODE_IP_FORWARDING) || connectionType.equals(ConnectionType.RELEASE2BETA_ONLINE_MODE_IP_FORWARDING)) {
+                //Proxy has IP Forwarding enabled
+                if ((Boolean) PoseidonConfig.getInstance().getConfigOption("settings.release2beta.enable-ip-pass-through")) {
+                    //IP Forwarding is enabled server side
                     if (this.getSocket().getInetAddress().getHostAddress().equalsIgnoreCase(String.valueOf(PoseidonConfig.getInstance().getConfigOption("settings.release2beta.proxy-ip", "127.0.0.1")))) {
+                        //Release2Beta server is authorized - Override IP address
                         InetSocketAddress address = deserializeAddress(packet1login.c);
                         a.info(packet1login.name + " has been detected using Release2Beta, using the IP passed through: " + address.getAddress().getHostAddress());
                         this.networkManager.setSocketAddress(address);
                         this.usingReleaseToBeta = true;
                     } else {
+                        //Release2Beta server isn't authorized
                         a.info(packet1login.name + " is attempting to use a unauthorized Release2Beta server, kicking the player.");
                         this.disconnect(ChatColor.RED + "The Release2Beta server you are connecting through is unauthorized.");
                         return;
                     }
+                } else {
+                    //Poseidon doesn't support IP Forwarding
+                    a.info(packet1login.name + " is trying to connect through R2B with IP Forwarding enabled, however, it is disabled in Poseidon. Kicking player!");
+                    this.disconnect(ChatColor.RED + "IP Forwarding is disabled in Poseidon. Please disable in Release2Beta.");
+                    return;
                 }
             }
             //Project Poseidon - End (Release2Beta
@@ -118,6 +140,7 @@ public class NetLoginHandler extends NetHandler {
             ChunkCoordinates chunkcoordinates = worldserver.getSpawn();
             NetServerHandler netserverhandler = new NetServerHandler(this.server, this.networkManager, entityplayer);
             netserverhandler.setUsingReleaseToBeta(usingReleaseToBeta);
+            netserverhandler.setConnectionType(connectionType);
 
             netserverhandler.sendPacket(new Packet1Login("", entityplayer.id, worldserver.getSeed(), (byte) worldserver.worldProvider.dimension));
             netserverhandler.sendPacket(new Packet6SpawnPosition(chunkcoordinates.x, chunkcoordinates.y, chunkcoordinates.z));

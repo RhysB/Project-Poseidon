@@ -3,6 +3,7 @@ package com.projectposeidon;
 import org.bukkit.util.config.Configuration;
 
 import java.io.File;
+import java.util.UUID;
 
 public class PoseidonConfig extends Configuration {
     private static PoseidonConfig singleton;
@@ -31,7 +32,9 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.save-playerdata-by-uuid", true);
         generateConfigOption("settings.per-day-logfile", false);
         generateConfigOption("settings.fetch-uuids-from", "https://api.mojang.com/profiles/minecraft");
-        generateConfigOption("settings.enable-watchdog", true);
+        generateConfigOption("settings.statistics.enable-watchdog", true);
+        //Statistics
+        generateConfigOption("settings.statistics.key", UUID.randomUUID().toString());
         generateConfigOption("settings.enable-statistics", true);
         //Word Settings
         generateConfigOption("world-settings.optimized-explosions", false);
