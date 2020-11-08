@@ -191,7 +191,7 @@ public class EntityWolf extends EntityAnimal {
             }
 
             if (this.h > 0.4F) {
-                float f = (float) this.boundingBox.minY;
+                float f = (float) this.boundingBox.b;
                 int i = (int) (MathHelper.sin((this.h - 0.4F) * 3.1415927F) * 7.0F);
 
                 for (int j = 0; j < i; ++j) {
@@ -218,7 +218,7 @@ public class EntityWolf extends EntityAnimal {
         if (pathentity == null && f > 12.0F) {
             int i = MathHelper.floor(entity.locX) - 2;
             int j = MathHelper.floor(entity.locZ) - 2;
-            int k = MathHelper.floor(entity.boundingBox.minY);
+            int k = MathHelper.floor(entity.boundingBox.b);
 
             for (int l = 0; l <= 4; ++l) {
                 for (int i1 = 0; i1 <= 4; ++i1) {
@@ -325,7 +325,7 @@ public class EntityWolf extends EntityAnimal {
                 this.motZ = d1 / (double) f1 * 0.5D * 0.800000011920929D + this.motZ * 0.20000000298023224D;
                 this.motY = 0.4000000059604645D;
             }
-        } else if ((double) f < 1.5D && entity.boundingBox.maxY > this.boundingBox.minY && entity.boundingBox.minY < this.boundingBox.maxY) {
+        } else if ((double) f < 1.5D && entity.boundingBox.e > this.boundingBox.b && entity.boundingBox.b < this.boundingBox.e) {
             this.attackTicks = 20;
             byte b0 = 2;
 

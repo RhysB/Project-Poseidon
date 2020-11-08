@@ -927,12 +927,12 @@ public class World implements IBlockAccess {
 
     public List getEntities(Entity entity, AxisAlignedBB axisalignedbb) {
         this.K.clear();
-        int i = MathHelper.floor(axisalignedbb.minX);
-        int j = MathHelper.floor(axisalignedbb.maxX + 1.0D);
-        int k = MathHelper.floor(axisalignedbb.minY);
-        int l = MathHelper.floor(axisalignedbb.maxY + 1.0D);
-        int i1 = MathHelper.floor(axisalignedbb.minZ);
-        int j1 = MathHelper.floor(axisalignedbb.maxZ + 1.0D);
+        int i = MathHelper.floor(axisalignedbb.a);
+        int j = MathHelper.floor(axisalignedbb.d + 1.0D);
+        int k = MathHelper.floor(axisalignedbb.b);
+        int l = MathHelper.floor(axisalignedbb.e + 1.0D);
+        int i1 = MathHelper.floor(axisalignedbb.c);
+        int j1 = MathHelper.floor(axisalignedbb.f + 1.0D);
 
         for (int k1 = i; k1 < j; ++k1) {
             for (int l1 = i1; l1 < j1; ++l1) {
@@ -1269,22 +1269,22 @@ public class World implements IBlockAccess {
     }
 
     public boolean b(AxisAlignedBB axisalignedbb) {
-        int i = MathHelper.floor(axisalignedbb.minX);
-        int j = MathHelper.floor(axisalignedbb.maxX + 1.0D);
-        int k = MathHelper.floor(axisalignedbb.minY);
-        int l = MathHelper.floor(axisalignedbb.maxY + 1.0D);
-        int i1 = MathHelper.floor(axisalignedbb.minZ);
-        int j1 = MathHelper.floor(axisalignedbb.maxZ + 1.0D);
+        int i = MathHelper.floor(axisalignedbb.a);
+        int j = MathHelper.floor(axisalignedbb.d + 1.0D);
+        int k = MathHelper.floor(axisalignedbb.b);
+        int l = MathHelper.floor(axisalignedbb.e + 1.0D);
+        int i1 = MathHelper.floor(axisalignedbb.c);
+        int j1 = MathHelper.floor(axisalignedbb.f + 1.0D);
 
-        if (axisalignedbb.minX < 0.0D) {
+        if (axisalignedbb.a < 0.0D) {
             --i;
         }
 
-        if (axisalignedbb.minY < 0.0D) {
+        if (axisalignedbb.b < 0.0D) {
             --k;
         }
 
-        if (axisalignedbb.minZ < 0.0D) {
+        if (axisalignedbb.c < 0.0D) {
             --i1;
         }
 
@@ -1304,22 +1304,22 @@ public class World implements IBlockAccess {
     }
 
     public boolean c(AxisAlignedBB axisalignedbb) {
-        int i = MathHelper.floor(axisalignedbb.minX);
-        int j = MathHelper.floor(axisalignedbb.maxX + 1.0D);
-        int k = MathHelper.floor(axisalignedbb.minY);
-        int l = MathHelper.floor(axisalignedbb.maxY + 1.0D);
-        int i1 = MathHelper.floor(axisalignedbb.minZ);
-        int j1 = MathHelper.floor(axisalignedbb.maxZ + 1.0D);
+        int i = MathHelper.floor(axisalignedbb.a);
+        int j = MathHelper.floor(axisalignedbb.d + 1.0D);
+        int k = MathHelper.floor(axisalignedbb.b);
+        int l = MathHelper.floor(axisalignedbb.e + 1.0D);
+        int i1 = MathHelper.floor(axisalignedbb.c);
+        int j1 = MathHelper.floor(axisalignedbb.f + 1.0D);
 
-        if (axisalignedbb.minX < 0.0D) {
+        if (axisalignedbb.a < 0.0D) {
             --i;
         }
 
-        if (axisalignedbb.minY < 0.0D) {
+        if (axisalignedbb.b < 0.0D) {
             --k;
         }
 
-        if (axisalignedbb.minZ < 0.0D) {
+        if (axisalignedbb.c < 0.0D) {
             --i1;
         }
 
@@ -1339,12 +1339,12 @@ public class World implements IBlockAccess {
     }
 
     public boolean d(AxisAlignedBB axisalignedbb) {
-        int i = MathHelper.floor(axisalignedbb.minX);
-        int j = MathHelper.floor(axisalignedbb.maxX + 1.0D);
-        int k = MathHelper.floor(axisalignedbb.minY);
-        int l = MathHelper.floor(axisalignedbb.maxY + 1.0D);
-        int i1 = MathHelper.floor(axisalignedbb.minZ);
-        int j1 = MathHelper.floor(axisalignedbb.maxZ + 1.0D);
+        int i = MathHelper.floor(axisalignedbb.a);
+        int j = MathHelper.floor(axisalignedbb.d + 1.0D);
+        int k = MathHelper.floor(axisalignedbb.b);
+        int l = MathHelper.floor(axisalignedbb.e + 1.0D);
+        int i1 = MathHelper.floor(axisalignedbb.c);
+        int j1 = MathHelper.floor(axisalignedbb.f + 1.0D);
 
         if (this.a(i, k, i1, j, l, j1)) {
             for (int k1 = i; k1 < j; ++k1) {
@@ -1364,12 +1364,12 @@ public class World implements IBlockAccess {
     }
 
     public boolean a(AxisAlignedBB axisalignedbb, Material material, Entity entity) {
-        int i = MathHelper.floor(axisalignedbb.minX);
-        int j = MathHelper.floor(axisalignedbb.maxX + 1.0D);
-        int k = MathHelper.floor(axisalignedbb.minY);
-        int l = MathHelper.floor(axisalignedbb.maxY + 1.0D);
-        int i1 = MathHelper.floor(axisalignedbb.minZ);
-        int j1 = MathHelper.floor(axisalignedbb.maxZ + 1.0D);
+        int i = MathHelper.floor(axisalignedbb.a);
+        int j = MathHelper.floor(axisalignedbb.d + 1.0D);
+        int k = MathHelper.floor(axisalignedbb.b);
+        int l = MathHelper.floor(axisalignedbb.e + 1.0D);
+        int i1 = MathHelper.floor(axisalignedbb.c);
+        int j1 = MathHelper.floor(axisalignedbb.f + 1.0D);
 
         if (!this.a(i, k, i1, j, l, j1)) {
             return false;
@@ -1408,12 +1408,12 @@ public class World implements IBlockAccess {
     }
 
     public boolean a(AxisAlignedBB axisalignedbb, Material material) {
-        int i = MathHelper.floor(axisalignedbb.minX);
-        int j = MathHelper.floor(axisalignedbb.maxX + 1.0D);
-        int k = MathHelper.floor(axisalignedbb.minY);
-        int l = MathHelper.floor(axisalignedbb.maxY + 1.0D);
-        int i1 = MathHelper.floor(axisalignedbb.minZ);
-        int j1 = MathHelper.floor(axisalignedbb.maxZ + 1.0D);
+        int i = MathHelper.floor(axisalignedbb.a);
+        int j = MathHelper.floor(axisalignedbb.d + 1.0D);
+        int k = MathHelper.floor(axisalignedbb.b);
+        int l = MathHelper.floor(axisalignedbb.e + 1.0D);
+        int i1 = MathHelper.floor(axisalignedbb.c);
+        int j1 = MathHelper.floor(axisalignedbb.f + 1.0D);
 
         for (int k1 = i; k1 < j; ++k1) {
             for (int l1 = k; l1 < l; ++l1) {
@@ -1431,12 +1431,12 @@ public class World implements IBlockAccess {
     }
 
     public boolean b(AxisAlignedBB axisalignedbb, Material material) {
-        int i = MathHelper.floor(axisalignedbb.minX);
-        int j = MathHelper.floor(axisalignedbb.maxX + 1.0D);
-        int k = MathHelper.floor(axisalignedbb.minY);
-        int l = MathHelper.floor(axisalignedbb.maxY + 1.0D);
-        int i1 = MathHelper.floor(axisalignedbb.minZ);
-        int j1 = MathHelper.floor(axisalignedbb.maxZ + 1.0D);
+        int i = MathHelper.floor(axisalignedbb.a);
+        int j = MathHelper.floor(axisalignedbb.d + 1.0D);
+        int k = MathHelper.floor(axisalignedbb.b);
+        int l = MathHelper.floor(axisalignedbb.e + 1.0D);
+        int i1 = MathHelper.floor(axisalignedbb.c);
+        int j1 = MathHelper.floor(axisalignedbb.f + 1.0D);
 
         for (int k1 = i; k1 < j; ++k1) {
             for (int l1 = k; l1 < l; ++l1) {
@@ -1451,7 +1451,7 @@ public class World implements IBlockAccess {
                             d0 = (double) (l1 + 1) - (double) j2 / 8.0D;
                         }
 
-                        if (d0 >= axisalignedbb.minY) {
+                        if (d0 >= axisalignedbb.b) {
                             return true;
                         }
                     }
@@ -1476,18 +1476,18 @@ public class World implements IBlockAccess {
     }
 
     public float a(Vec3D vec3d, AxisAlignedBB axisalignedbb) {
-        double d0 = 1.0D / ((axisalignedbb.maxX - axisalignedbb.minX) * 2.0D + 1.0D);
-        double d1 = 1.0D / ((axisalignedbb.maxY - axisalignedbb.minY) * 2.0D + 1.0D);
-        double d2 = 1.0D / ((axisalignedbb.maxZ - axisalignedbb.minZ) * 2.0D + 1.0D);
+        double d0 = 1.0D / ((axisalignedbb.d - axisalignedbb.a) * 2.0D + 1.0D);
+        double d1 = 1.0D / ((axisalignedbb.e - axisalignedbb.b) * 2.0D + 1.0D);
+        double d2 = 1.0D / ((axisalignedbb.f - axisalignedbb.c) * 2.0D + 1.0D);
         int i = 0;
         int j = 0;
 
         for (float f = 0.0F; f <= 1.0F; f = (float) ((double) f + d0)) {
             for (float f1 = 0.0F; f1 <= 1.0F; f1 = (float) ((double) f1 + d1)) {
                 for (float f2 = 0.0F; f2 <= 1.0F; f2 = (float) ((double) f2 + d2)) {
-                    double d3 = axisalignedbb.minX + (axisalignedbb.maxX - axisalignedbb.minX) * (double) f;
-                    double d4 = axisalignedbb.minY + (axisalignedbb.maxY - axisalignedbb.minY) * (double) f1;
-                    double d5 = axisalignedbb.minZ + (axisalignedbb.maxZ - axisalignedbb.minZ) * (double) f2;
+                    double d3 = axisalignedbb.a + (axisalignedbb.d - axisalignedbb.a) * (double) f;
+                    double d4 = axisalignedbb.b + (axisalignedbb.e - axisalignedbb.b) * (double) f1;
+                    double d5 = axisalignedbb.c + (axisalignedbb.f - axisalignedbb.c) * (double) f2;
 
                     if (this.a(Vec3D.create(d3, d4, d5), vec3d) == null) {
                         ++i;
@@ -1998,10 +1998,10 @@ public class World implements IBlockAccess {
 
     public List b(Entity entity, AxisAlignedBB axisalignedbb) {
         this.R.clear();
-        int i = MathHelper.floor((axisalignedbb.minX - 2.0D) / 16.0D);
-        int j = MathHelper.floor((axisalignedbb.maxX + 2.0D) / 16.0D);
-        int k = MathHelper.floor((axisalignedbb.minZ - 2.0D) / 16.0D);
-        int l = MathHelper.floor((axisalignedbb.maxZ + 2.0D) / 16.0D);
+        int i = MathHelper.floor((axisalignedbb.a - 2.0D) / 16.0D);
+        int j = MathHelper.floor((axisalignedbb.d + 2.0D) / 16.0D);
+        int k = MathHelper.floor((axisalignedbb.c - 2.0D) / 16.0D);
+        int l = MathHelper.floor((axisalignedbb.f + 2.0D) / 16.0D);
 
         for (int i1 = i; i1 <= j; ++i1) {
             for (int j1 = k; j1 <= l; ++j1) {
@@ -2015,10 +2015,10 @@ public class World implements IBlockAccess {
     }
 
     public List a(Class oclass, AxisAlignedBB axisalignedbb) {
-        int i = MathHelper.floor((axisalignedbb.minX - 2.0D) / 16.0D);
-        int j = MathHelper.floor((axisalignedbb.maxX + 2.0D) / 16.0D);
-        int k = MathHelper.floor((axisalignedbb.minZ - 2.0D) / 16.0D);
-        int l = MathHelper.floor((axisalignedbb.maxZ + 2.0D) / 16.0D);
+        int i = MathHelper.floor((axisalignedbb.a - 2.0D) / 16.0D);
+        int j = MathHelper.floor((axisalignedbb.d + 2.0D) / 16.0D);
+        int k = MathHelper.floor((axisalignedbb.c - 2.0D) / 16.0D);
+        int l = MathHelper.floor((axisalignedbb.f + 2.0D) / 16.0D);
         ArrayList arraylist = new ArrayList();
 
         for (int i1 = i; i1 <= j; ++i1) {

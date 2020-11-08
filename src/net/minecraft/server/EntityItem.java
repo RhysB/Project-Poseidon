@@ -61,13 +61,13 @@ public class EntityItem extends Entity {
             this.world.makeSound(this, "random.fizz", 0.4F, 2.0F + this.random.nextFloat() * 0.4F);
         }
 
-        this.g(this.locX, (this.boundingBox.minY + this.boundingBox.maxY) / 2.0D, this.locZ);
+        this.g(this.locX, (this.boundingBox.b + this.boundingBox.e) / 2.0D, this.locZ);
         this.move(this.motX, this.motY, this.motZ);
         float f = 0.98F;
 
         if (this.onGround) {
             f = 0.58800006F;
-            int i = this.world.getTypeId(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.minY) - 1, MathHelper.floor(this.locZ));
+            int i = this.world.getTypeId(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.b) - 1, MathHelper.floor(this.locZ));
 
             if (i > 0) {
                 f = Block.byId[i].frictionFactor * 0.98F;

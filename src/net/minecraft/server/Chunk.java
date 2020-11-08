@@ -505,8 +505,8 @@ public class Chunk {
     }
 
     public void a(Entity entity, AxisAlignedBB axisalignedbb, List list) {
-        int i = MathHelper.floor((axisalignedbb.minY - 2.0D) / 16.0D);
-        int j = MathHelper.floor((axisalignedbb.maxY + 2.0D) / 16.0D);
+        int i = MathHelper.floor((axisalignedbb.b - 2.0D) / 16.0D);
+        int j = MathHelper.floor((axisalignedbb.e + 2.0D) / 16.0D);
 
         if (i < 0) {
             i = 0;
@@ -530,8 +530,8 @@ public class Chunk {
     }
 
     public void a(Class oclass, AxisAlignedBB axisalignedbb, List list) {
-        int i = MathHelper.floor((axisalignedbb.minY - 2.0D) / 16.0D);
-        int j = MathHelper.floor((axisalignedbb.maxY + 2.0D) / 16.0D);
+        int i = MathHelper.floor((axisalignedbb.b - 2.0D) / 16.0D);
+        int j = MathHelper.floor((axisalignedbb.e + 2.0D) / 16.0D);
 
         if (i < 0) {
             i = 0;

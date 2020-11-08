@@ -286,12 +286,12 @@ public class Explosion {
             this.posX = explosion.posX;
             this.posY = explosion.posY;
             this.posZ = explosion.posZ;
-            this.minX = aabb.minX;
-            this.minY = aabb.minY;
-            this.minZ = aabb.minZ;
-            this.maxX = aabb.maxX;
-            this.maxY = aabb.maxY;
-            this.maxZ = aabb.maxZ;
+            this.minX = aabb.a;
+            this.minY = aabb.b;
+            this.minZ = aabb.c;
+            this.maxX = aabb.d;
+            this.maxY = aabb.e;
+            this.maxZ = aabb.f;
         }
 
         @Override

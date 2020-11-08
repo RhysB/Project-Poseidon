@@ -56,7 +56,7 @@ public class EntitySlime extends EntityLiving implements IMonster {
                 float f2 = MathHelper.sin(f) * (float) i * 0.5F * f1;
                 float f3 = MathHelper.cos(f) * (float) i * 0.5F * f1;
 
-                this.world.a("slime", this.locX + (double) f2, this.boundingBox.minY, this.locZ + (double) f3, 0.0D, 0.0D, 0.0D);
+                this.world.a("slime", this.locX + (double) f2, this.boundingBox.b, this.locZ + (double) f3, 0.0D, 0.0D, 0.0D);
             }
 
             if (i > 2) {

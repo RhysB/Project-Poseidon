@@ -69,7 +69,7 @@ public class EntityMonster extends EntityCreature implements IMonster {
     }
 
     protected void a(Entity entity, float f) {
-        if (this.attackTicks <= 0 && f < 2.0F && entity.boundingBox.maxY > this.boundingBox.minY && entity.boundingBox.minY < this.boundingBox.maxY) {
+        if (this.attackTicks <= 0 && f < 2.0F && entity.boundingBox.e > this.boundingBox.b && entity.boundingBox.b < this.boundingBox.e) {
             this.attackTicks = 20;
             // CraftBukkit start - this is still duplicated here and EntityHuman because it's possible for lastDamage EntityMonster
             // to damage another EntityMonster, and we want to catch those events.
@@ -105,7 +105,7 @@ public class EntityMonster extends EntityCreature implements IMonster {
 
     public boolean d() {
         int i = MathHelper.floor(this.locX);
-        int j = MathHelper.floor(this.boundingBox.minY);
+        int j = MathHelper.floor(this.boundingBox.b);
         int k = MathHelper.floor(this.locZ);
 
         if (this.world.a(EnumSkyBlock.SKY, i, j, k) > this.random.nextInt(32)) {
