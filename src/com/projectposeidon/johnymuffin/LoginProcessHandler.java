@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerConnectionInitializationEvent;
 import org.bukkit.event.player.PlayerPreLoginEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.UUID;
@@ -124,7 +125,7 @@ public class LoginProcessHandler {
             }
 
 
-            PlayerPreLoginEvent event = new PlayerPreLoginEvent(this.packet1Login.name, this.netLoginHandler.getSocket().getInetAddress(), loginProcessHandler);
+            PlayerPreLoginEvent event = new PlayerPreLoginEvent(this.packet1Login.name, ((InetSocketAddress) netLoginHandler.networkManager.getSocketAddress()).getAddress(), loginProcessHandler);
             this.server.getPluginManager().callEvent(event);
             if (event.getResult() != PlayerPreLoginEvent.Result.ALLOWED) {
                 cancelLoginProcess(event.getKickMessage());
