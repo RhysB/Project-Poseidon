@@ -24,7 +24,8 @@ public class NetLoginHandler extends NetHandler {
     private Packet1Login h = null;
     private String serverId = "";
     private ConnectionType connectionType;
-    private boolean usingReleaseToBeta = false;
+    private boolean usingReleaseToBeta = false; //Poseidon -> Release2Beta support
+    private int rawConnectionType;
 
     public NetLoginHandler(MinecraftServer minecraftserver, Socket socket, String s) {
         this.server = minecraftserver;
@@ -80,10 +81,6 @@ public class NetLoginHandler extends NetHandler {
                 this.disconnect("Outdated client!");
             }
         } else {
-//            if (!this.server.onlineMode) {
-//                this.b(packet1login);
-//            } else {
-
             //Project Poseidon - Start (Release2Beta)
             switch (packet1login.d) {
                 case 25:
@@ -94,8 +91,9 @@ public class NetLoginHandler extends NetHandler {
                     connectionType = ConnectionType.RELEASE2BETA;
                 default:
                     connectionType = ConnectionType.NORMAL;
-
             }
+            rawConnectionType = packet1login.d;
+
 
             if (connectionType.equals(ConnectionType.RELEASE2BETA_OFFLINE_MODE_IP_FORWARDING) || connectionType.equals(ConnectionType.RELEASE2BETA_ONLINE_MODE_IP_FORWARDING)) {
                 //Proxy has IP Forwarding enabled
@@ -139,9 +137,11 @@ public class NetLoginHandler extends NetHandler {
             WorldServer worldserver = (WorldServer) entityplayer.world; // CraftBukkit
             ChunkCoordinates chunkcoordinates = worldserver.getSpawn();
             NetServerHandler netserverhandler = new NetServerHandler(this.server, this.networkManager, entityplayer);
+            //Poseidon Start
             netserverhandler.setUsingReleaseToBeta(usingReleaseToBeta);
             netserverhandler.setConnectionType(connectionType);
-
+            netserverhandler.setRawConnectionType(rawConnectionType);
+            //Poseidon End
             netserverhandler.sendPacket(new Packet1Login("", entityplayer.id, worldserver.getSeed(), (byte) worldserver.worldProvider.dimension));
             netserverhandler.sendPacket(new Packet6SpawnPosition(chunkcoordinates.x, chunkcoordinates.y, chunkcoordinates.z));
             this.server.serverConfigurationManager.a(entityplayer, worldserver);

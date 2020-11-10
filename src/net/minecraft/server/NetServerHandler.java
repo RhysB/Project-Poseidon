@@ -43,7 +43,8 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     private boolean checkMovement = true;
     private Map n = new HashMap();
     private boolean usingReleaseToBeta = false; //Project Poseidon - Create Variable
-    private ConnectionType connectionType = ConnectionType.NORMAL;
+    private ConnectionType connectionType = ConnectionType.NORMAL; //Project Poseidon - Create Variable
+    private int rawConnectionType = 0; //Project Poseidon - Create Variable
 
     public NetServerHandler(MinecraftServer minecraftserver, NetworkManager networkmanager, EntityPlayer entityplayer) {
         this.minecraftServer = minecraftserver;
@@ -71,6 +72,14 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void setConnectionType(ConnectionType connectionType) {
         this.connectionType = connectionType;
+    }
+
+    public void setRawConnectionType(int rawConnectionType) {
+        this.rawConnectionType = rawConnectionType;
+    }
+
+    public int getRawConnectionType() {
+        return this.rawConnectionType;
     }
 
     //Project Poseidon - End
