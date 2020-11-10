@@ -1,5 +1,6 @@
 package org.bukkit.entity;
 
+import com.projectposeidon.ConnectionType;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.map.MapView;
@@ -9,12 +10,11 @@ import java.util.UUID;
 
 /**
  * Represents a player, connected or not
- *
  */
 public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
     /**
      * Gets the "friendly" name to display of this player. This may include color.
-     *
+     * <p>
      * Note that this name will not be displayed in game, only in chat and places
      * defined by plugins
      *
@@ -24,7 +24,7 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
 
     /**
      * Sets the "friendly" name to display of this player. This may include color.
-     *
+     * <p>
      * Note that this name will not be displayed in game, only in chat and places
      * defined by plugins
      *
@@ -39,6 +39,7 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      */
     public void setCompassTarget(Location loc);
     //Project Poseidon Start
+
     /**
      * Get the players Mojang UUID.
      *
@@ -55,6 +56,7 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
     @Deprecated
     public UUID getPlayerUUID();
     //Project Poseidon End
+
     /**
      * Get the previously set compass target.
      *
@@ -64,6 +66,7 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
 
     /**
      * Gets the socket address of this player
+     *
      * @return the player's address
      */
     public InetSocketAddress getAddress();
@@ -99,12 +102,14 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
 
     /**
      * Returns if the player is in sneak mode
+     *
      * @return true if player is in sneak mode
      */
     public boolean isSneaking();
 
     /**
      * Sets the sneak mode the player
+     *
      * @param sneak true if player should appear sneaking
      */
     public void setSneaking(boolean sneak);
@@ -116,7 +121,7 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
 
     /**
      * Loads the players current location, health, inventory, motion, and other information from the username.dat file, in the world/player folder
-     *
+     * <p>
      * Note: This will overwrite the players current inventory, health, motion, etc, with the state from the saved dat file.
      */
     public void loadData();
@@ -163,9 +168,9 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
     /**
      * Plays an effect to just this player.
      *
-     * @param loc the player to play the effect for
+     * @param loc    the player to play the effect for
      * @param effect the {@link Effect}
-     * @param data a data bit needed for the RECORD_PLAY, SMOKE, and STEP_SOUND sounds
+     * @param data   a data bit needed for the RECORD_PLAY, SMOKE, and STEP_SOUND sounds
      */
     public void playEffect(Location loc, Effect effect, int data);
 
@@ -183,17 +188,16 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      * Send a chunk change. This fakes a chunk change packet for a user at
      * a certain location. The updated cuboid must be entirely within a single
      * chunk.  This will not actually change the world in any way.
-     *
+     * <p>
      * At least one of the dimensions of the cuboid must be even. The size of the
      * data buffer must be 2.5*sx*sy*sz and formatted in accordance with the Packet51
      * format.
      *
-     * @param loc The location of the cuboid
-     * @param sx The x size of the cuboid
-     * @param sy The y size of the cuboid
-     * @param sz The z size of the cuboid
+     * @param loc  The location of the cuboid
+     * @param sx   The x size of the cuboid
+     * @param sy   The y size of the cuboid
+     * @param sz   The z size of the cuboid
      * @param data The data to be sent
-     *
      * @return true if the chunk change packet was sent
      */
     public boolean sendChunkChange(Location loc, int sx, int sy, int sz, byte[] data);
@@ -207,11 +211,11 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      * @param data
      */
     public void sendBlockChange(Location loc, int material, byte data);
-    
+
     /**
      * Render a map and send it to the player in its entirety. This may be used
      * when streaming the map in the normal manner is not desirbale.
-     * 
+     *
      * @pram map The map to be sent
      */
     public void sendMap(MapView map);
@@ -242,7 +246,7 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      * Increments the given statistic for this player
      *
      * @param statistic Statistic to increment
-     * @param amount Amount to increment this statistic by
+     * @param amount    Amount to increment this statistic by
      */
     public void incrementStatistic(Statistic statistic, int amount);
 
@@ -250,7 +254,7 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      * Increments the given statistic for this player for the given material
      *
      * @param statistic Statistic to increment
-     * @param material Material to offset the statistic with
+     * @param material  Material to offset the statistic with
      */
     public void incrementStatistic(Statistic statistic, Material material);
 
@@ -258,19 +262,19 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      * Increments the given statistic for this player for the given material
      *
      * @param statistic Statistic to increment
-     * @param material Material to offset the statistic with
-     * @param amount Amount to increment this statistic by
+     * @param material  Material to offset the statistic with
+     * @param amount    Amount to increment this statistic by
      */
     public void incrementStatistic(Statistic statistic, Material material, int amount);
 
     /**
      * Sets the current time on the player's client. When relative is true the player's time
      * will be kept synchronized to its world time with the specified offset.
-     *
+     * <p>
      * When using non relative time the player's time will stay fixed at the specified time parameter. It's up to
      * the caller to continue updating the player's time. To restore player time to normal use resetPlayerTime().
      *
-     * @param time The current player's perceived time or the player's time offset from the server time.
+     * @param time     The current player's perceived time or the player's time offset from the server time.
      * @param relative When true the player time is kept relative to its world time.
      */
     public void setPlayerTime(long time, boolean relative);
@@ -298,12 +302,19 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      */
     public boolean isPlayerTimeRelative();
 
+    /**
+     * Returns connection type which allows for a plugin to know if a user is using a proxy, and if IP Forwarding is enabled.
+     *
+     * @return ConntionType enum
+     */
+    public ConnectionType getConnectionType();
 
     /**
      * Returns whether the player is using a Release2Beta proxy
      *
      * @return true if the player is using a Release2Beta proxy
      */
+    @Deprecated
     public boolean isUsingReleaseToBeta();
 
     /**

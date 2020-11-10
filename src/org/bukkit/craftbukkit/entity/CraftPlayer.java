@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import com.projectposeidon.ConnectionType;
 import net.minecraft.server.*;
 import org.bukkit.Achievement;
 import org.bukkit.Material;
@@ -49,7 +50,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     public boolean isOnline() {
-        for (Object obj: server.getHandle().players) {
+        for (Object obj : server.getHandle().players) {
             EntityPlayer player = (EntityPlayer) obj;
             if (player.name.equalsIgnoreCase(getName())) {
                 return true;
@@ -144,7 +145,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         // Do not directly assign here, from the packethandler we'll assign it.
         getHandle().netServerHandler.sendPacket(new Packet6SpawnPosition(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
     }
-    
+
     //Project Poseidon Start
     public UUID getUniqueId() {
         //return UUIDPlayerStorage.getInstance().getPlayerUUID(getName());
@@ -354,7 +355,10 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         return getHandle().relativeTime;
     }
 
-    @Override
+    public ConnectionType getConnectionType() {
+        return getHandle().netServerHandler.getConnectionType();
+    }
+
     public boolean isUsingReleaseToBeta() {
         return getHandle().netServerHandler.isUsingReleaseToBeta();
     }

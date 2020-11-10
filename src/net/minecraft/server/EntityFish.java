@@ -115,7 +115,7 @@ public class EntityFish extends Entity {
                 if (this.c != null) {
                     if (!this.c.dead) {
                         this.locX = this.c.locX;
-                        this.locY = this.c.boundingBox.minY + (double) this.c.width * 0.8D;
+                        this.locY = this.c.boundingBox.b + (double) this.c.width * 0.8D;
                         this.locZ = this.c.locZ;
                         return;
                     }
@@ -253,9 +253,9 @@ public class EntityFish extends Entity {
                 double d6 = 0.0D;
 
                 for (int k = 0; k < b0; ++k) {
-                    double d7 = this.boundingBox.minY + (this.boundingBox.maxY - this.boundingBox.minY) * (double) (k + 0) / (double) b0 - 0.125D + 0.125D;
-                    double d8 = this.boundingBox.minY + (this.boundingBox.maxY - this.boundingBox.minY) * (double) (k + 1) / (double) b0 - 0.125D + 0.125D;
-                    AxisAlignedBB axisalignedbb1 = AxisAlignedBB.b(this.boundingBox.minX, d7, this.boundingBox.minZ, this.boundingBox.maxX, d8, this.boundingBox.maxZ);
+                    double d7 = this.boundingBox.b + (this.boundingBox.e - this.boundingBox.b) * (double) (k + 0) / (double) b0 - 0.125D + 0.125D;
+                    double d8 = this.boundingBox.b + (this.boundingBox.e - this.boundingBox.b) * (double) (k + 1) / (double) b0 - 0.125D + 0.125D;
+                    AxisAlignedBB axisalignedbb1 = AxisAlignedBB.b(this.boundingBox.a, d7, this.boundingBox.c, this.boundingBox.d, d8, this.boundingBox.f);
 
                     if (this.world.b(axisalignedbb1, Material.WATER)) {
                         d6 += 1.0D / (double) b0;
@@ -276,7 +276,7 @@ public class EntityFish extends Entity {
                             this.k = this.random.nextInt(30) + 10;
                             this.motY -= 0.20000000298023224D;
                             this.world.makeSound(this, "random.splash", 0.25F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.4F);
-                            float f3 = (float) MathHelper.floor(this.boundingBox.minY);
+                            float f3 = (float) MathHelper.floor(this.boundingBox.b);
 
                             float f4;
                             int l;

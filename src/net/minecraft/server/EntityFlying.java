@@ -26,7 +26,7 @@ public class EntityFlying extends EntityLiving {
 
             if (this.onGround) {
                 f2 = 0.54600006F;
-                int i = this.world.getTypeId(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.minY) - 1, MathHelper.floor(this.locZ));
+                int i = this.world.getTypeId(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.b) - 1, MathHelper.floor(this.locZ));
 
                 if (i > 0) {
                     f2 = Block.byId[i].frictionFactor * 0.91F;
@@ -39,7 +39,7 @@ public class EntityFlying extends EntityLiving {
             f2 = 0.91F;
             if (this.onGround) {
                 f2 = 0.54600006F;
-                int j = this.world.getTypeId(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.minY) - 1, MathHelper.floor(this.locZ));
+                int j = this.world.getTypeId(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.b) - 1, MathHelper.floor(this.locZ));
 
                 if (j > 0) {
                     f2 = Block.byId[j].frictionFactor * 0.91F;

@@ -531,7 +531,7 @@ public abstract class EntityLiving extends Entity {
 
             if (this.onGround) {
                 f2 = 0.54600006F;
-                int i = this.world.getTypeId(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.minY) - 1, MathHelper.floor(this.locZ));
+                int i = this.world.getTypeId(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.b) - 1, MathHelper.floor(this.locZ));
 
                 if (i > 0) {
                     f2 = Block.byId[i].frictionFactor * 0.91F;
@@ -544,7 +544,7 @@ public abstract class EntityLiving extends Entity {
             f2 = 0.91F;
             if (this.onGround) {
                 f2 = 0.54600006F;
-                int j = this.world.getTypeId(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.minY) - 1, MathHelper.floor(this.locZ));
+                int j = this.world.getTypeId(MathHelper.floor(this.locX), MathHelper.floor(this.boundingBox.b) - 1, MathHelper.floor(this.locZ));
 
                 if (j > 0) {
                     f2 = Block.byId[j].frictionFactor * 0.91F;
@@ -606,7 +606,7 @@ public abstract class EntityLiving extends Entity {
 
     public boolean p() {
         int i = MathHelper.floor(this.locX);
-        int j = MathHelper.floor(this.boundingBox.minY);
+        int j = MathHelper.floor(this.boundingBox.b);
         int k = MathHelper.floor(this.locZ);
 
         return this.world.getTypeId(i, j, k) == Block.LADDER.id;
@@ -667,12 +667,12 @@ public abstract class EntityLiving extends Entity {
                 for (int i = 0; i < list.size(); ++i) {
                     AxisAlignedBB axisalignedbb = (AxisAlignedBB) list.get(i);
 
-                    if (axisalignedbb.maxY > d4) {
-                        d4 = axisalignedbb.maxY;
+                    if (axisalignedbb.e > d4) {
+                        d4 = axisalignedbb.e;
                     }
                 }
 
-                d1 += d4 - this.boundingBox.minY;
+                d1 += d4 - this.boundingBox.b;
                 this.setPosition(d0, d1, d2);
             }
         }
@@ -806,7 +806,7 @@ public abstract class EntityLiving extends Entity {
 
             d2 = this.locY + (double) this.t() - (entityliving.locY + (double) entityliving.t());
         } else {
-            d2 = (entity.boundingBox.minY + entity.boundingBox.maxY) / 2.0D - (this.locY + (double) this.t());
+            d2 = (entity.boundingBox.b + entity.boundingBox.e) / 2.0D - (this.locY + (double) this.t());
         }
 
         double d3 = (double) MathHelper.a(d0 * d0 + d1 * d1);

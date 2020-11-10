@@ -64,6 +64,7 @@ public class MinecraftServer implements Runnable, ICommandListener {
 
     //Poseidon Start
     private WatchDogThread watchDogThread;
+    private boolean modLoaderSupport = false;
     //Poseidon End
 
     public MinecraftServer(OptionSet options) { // CraftBukkit - adds argument OptionSet
@@ -92,6 +93,13 @@ public class MinecraftServer implements Runnable, ICommandListener {
         System.setOut(new PrintStream(new LoggerOutputStream(log, Level.INFO), true));
         System.setErr(new PrintStream(new LoggerOutputStream(log, Level.SEVERE), true));
         // CraftBukkit end
+
+        modLoaderSupport = PoseidonConfig.getInstance().getBoolean("settings.support.modloader.enable", false);
+
+        if (modLoaderSupport) {
+            log.info("EXPERIMENTAL MODLOADERMP SUPPORT ENABLED.");
+            net.minecraft.server.ModLoader.Init(this);
+        }
 
         log.info("Starting minecraft server version Beta 1.7.3");
         if (Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L) {
@@ -371,6 +379,10 @@ public class MinecraftServer implements Runnable, ICommandListener {
                 long i = System.currentTimeMillis();
 
                 for (long j = 0L; this.isRunning; Thread.sleep(1L)) {
+                    if(modLoaderSupport) {
+                        net.minecraft.server.ModLoader.OnTick(this);
+                    }
+
                     long k = System.currentTimeMillis();
                     long l = k - i;
 

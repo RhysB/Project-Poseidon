@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.projectposeidon.ConnectionType;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandException;
@@ -42,6 +43,8 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     private boolean checkMovement = true;
     private Map n = new HashMap();
     private boolean usingReleaseToBeta = false; //Project Poseidon - Create Variable
+    private ConnectionType connectionType = ConnectionType.NORMAL; //Project Poseidon - Create Variable
+    private int rawConnectionType = 0; //Project Poseidon - Create Variable
 
     public NetServerHandler(MinecraftServer minecraftserver, NetworkManager networkmanager, EntityPlayer entityplayer) {
         this.minecraftServer = minecraftserver;
@@ -62,6 +65,23 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     public void setUsingReleaseToBeta(boolean usingReleaseToBeta) {
         this.usingReleaseToBeta = usingReleaseToBeta;
     }
+
+    public ConnectionType getConnectionType() {
+        return this.connectionType;
+    }
+
+    public void setConnectionType(ConnectionType connectionType) {
+        this.connectionType = connectionType;
+    }
+
+    public void setRawConnectionType(int rawConnectionType) {
+        this.rawConnectionType = rawConnectionType;
+    }
+
+    public int getRawConnectionType() {
+        return this.rawConnectionType;
+    }
+
     //Project Poseidon - End
 
     private final CraftServer server;
