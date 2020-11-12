@@ -82,18 +82,16 @@ public class NetLoginHandler extends NetHandler {
             }
         } else {
             //Project Poseidon - Start (Release2Beta)
-            switch (packet1login.d) {
-                case 25:
-                    connectionType = ConnectionType.RELEASE2BETA_OFFLINE_MODE_IP_FORWARDING;
-                case 26:
-                    connectionType = ConnectionType.RELEASE2BETA_ONLINE_MODE_IP_FORWARDING;
-                case 1:
-                    connectionType = ConnectionType.RELEASE2BETA;
-                default:
-                    connectionType = ConnectionType.NORMAL;
+            if (packet1login.d == (byte) -999 || packet1login.d == (byte) 25) {
+                connectionType = ConnectionType.RELEASE2BETA_OFFLINE_MODE_IP_FORWARDING;
+            } else if (packet1login.d == (byte) 26) {
+                connectionType = ConnectionType.RELEASE2BETA_ONLINE_MODE_IP_FORWARDING;
+            } else if (packet1login.d == (byte) 1) {
+                connectionType = ConnectionType.RELEASE2BETA;
+            } else {
+                connectionType = ConnectionType.NORMAL;
             }
             rawConnectionType = packet1login.d;
-
 
             if (connectionType.equals(ConnectionType.RELEASE2BETA_OFFLINE_MODE_IP_FORWARDING) || connectionType.equals(ConnectionType.RELEASE2BETA_ONLINE_MODE_IP_FORWARDING)) {
                 //Proxy has IP Forwarding enabled
