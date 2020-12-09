@@ -64,6 +64,16 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>modloader</groupId>
+            <artifactId>ModLoaderMP-B1.7.3</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/ModLoaderMP.jar</systemPath>
+        </dependency>
+
+
         <dependency>
             <groupId>org.avaje</groupId>
             <artifactId>ebean</artifactId>
