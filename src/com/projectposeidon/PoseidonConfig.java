@@ -47,6 +47,12 @@ public class PoseidonConfig extends Configuration {
         //Modded Jar Support
         generateConfigOption("settings.support.modloader.enable", false);
         generateConfigOption("settings.support.modloader.info", "EXPERIMENTAL support for ModloaderMP.");
+        //Offline Username Check
+        generateConfigOption("settings.check-username-validity.enabled", true);
+        generateConfigOption("settings.check-username-validity.info", "If enabled, verifies the validity of a usernames of cracked players.");
+        generateConfigOption("settings.check-username-validity.regex", "[a-zA-Z0-9_?]*");
+        generateConfigOption("settings.check-username-validity.max-length", 16);
+        generateConfigOption("settings.check-username-validity.min-length", 3);
 
 
     }
