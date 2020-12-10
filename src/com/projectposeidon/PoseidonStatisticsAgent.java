@@ -14,8 +14,6 @@ public class PoseidonStatisticsAgent {
     //Default details
     private int protocolID = 1;
     public final String postTo = "https://poseidon.johnymuffin.com/statistics.php";
-    private CraftServer craftServer;
-    private MinecraftServer server;
     //Unique Details
     private String uniqueID;
     private final String sessionID;
@@ -25,8 +23,6 @@ public class PoseidonStatisticsAgent {
     private Object syncLock = new Object();
 
     public PoseidonStatisticsAgent(MinecraftServer server, CraftServer craftServer) {
-        this.craftServer = craftServer;
-        this.server = server;
         //This really shouldn't be needed, but it runs once, whats the harm?
         synchronized (syncLock) {
             this.startTime = (System.currentTimeMillis() / 1000L);
@@ -58,7 +54,7 @@ public class PoseidonStatisticsAgent {
     }
 
     public class PoseidonStatisticsSender extends Thread {
-
+        public volatile boolean errored = false;
 
         public void run() {
             while (true && !this.isInterrupted()) {
@@ -82,8 +78,12 @@ public class PoseidonStatisticsAgent {
                     //Get Response
                     String response = String.valueOf(new InputStreamReader(connection.getInputStream()));
                     connection.disconnect();
+                    errored = false;
                 } catch (Exception exception) {
-                    System.out.println("Failed to submit statistics for Project Poseidon. " + exception + " : " + exception.getMessage());
+                    if (!errored) {
+                        System.out.println("Failed to submit statistics for Project Poseidon. " + exception + " : " + exception.getMessage() + ".");
+                    }
+                    errored = true;
                 } finally {
                     if (connection != null) {
                         connection.disconnect();

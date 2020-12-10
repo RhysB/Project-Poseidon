@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import com.projectposeidon.PoseidonConfig;
+import com.projectposeidon.PoseidonStatisticsAgent;
 import com.projectposeidon.johnymuffin.UUIDManager;
 import com.projectposeidon.watchdog.WatchDogThread;
 import jline.ConsoleReader;
@@ -173,8 +174,10 @@ public class MinecraftServer implements Runnable, ICommandListener {
             watchDogThread.tickUpdate();
         }
         //Start Poseidon Statistics
-        if (PoseidonConfig.getInstance().getBoolean("settings.enable-statistics", true)) {
-            log.info("Enabling statistics. This allows for us to tell how many people are running Project Poseidon alongside what version.");
+        if (PoseidonConfig.getInstance().getBoolean("settings.settings.statistics.enabled", true)) {
+//            new PoseidonStatisticsAgent(this, this.server);
+        } else {
+            log.info("Please consider enabling statistics in Poseidon.yml. It helps us see how many servers are running Poseidon, and what versions.");
         }
 
         log.info("Finished loading Project Poseidon Modules!");
@@ -379,7 +382,7 @@ public class MinecraftServer implements Runnable, ICommandListener {
                 long i = System.currentTimeMillis();
 
                 for (long j = 0L; this.isRunning; Thread.sleep(1L)) {
-                    if(modLoaderSupport) {
+                    if (modLoaderSupport) {
                         net.minecraft.server.ModLoader.OnTick(this);
                     }
 

@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public class PoseidonConfig extends Configuration {
     private static PoseidonConfig singleton;
+    private final int configVersion = 2;
 
     private PoseidonConfig() {
         super(new File("poseidon.yml"));
@@ -20,12 +21,12 @@ public class PoseidonConfig extends Configuration {
     }
 
     private void write() {
-        if (this.getString("config-version") == null) {
-            System.out.println("Converting to Config Version 1");
+        if (this.getString("config-version") == null || Integer.valueOf(this.getString("config-version")) < configVersion) {
+            System.out.println("Converting to Config Version: " + configVersion);
             convertToNewConfig();
         }
         //Main
-        generateConfigOption("config-version", 1);
+        generateConfigOption("config-version", 2);
         //Setting
         generateConfigOption("settings.allow-graceful-uuids", true);
         generateConfigOption("settings.delete-duplicate-uuids", false);
@@ -36,7 +37,7 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.remove-join-leave-debug", true);
         //Statistics
         generateConfigOption("settings.statistics.key", UUID.randomUUID().toString());
-        generateConfigOption("settings.enable-statistics", true);
+        generateConfigOption("settings.statistics.enabled", true);
         //Word Settings
         generateConfigOption("world-settings.optimized-explosions", false);
         generateConfigOption("world-settings.randomize-spawn", true);
@@ -83,6 +84,7 @@ public class PoseidonConfig extends Configuration {
 
     private void convertToNewConfig() {
         //Graceful UUIDS
+        convertToNewAddress("settings.statistics.enabled","settings.enable-statistics");
         convertToNewAddress("settings.allow-graceful-uuids", "allowGracefulUUID");
         convertToNewAddress("settings.save-playerdata-by-uuid", "savePlayerdataByUUID");
         convertToNewAddress("world-settings.optimized-explosions", "optimizedExplosions");
