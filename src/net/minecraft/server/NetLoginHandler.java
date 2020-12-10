@@ -88,12 +88,14 @@ public class NetLoginHandler extends NetHandler {
                 connectionType = ConnectionType.RELEASE2BETA_ONLINE_MODE_IP_FORWARDING;
             } else if (packet1login.d == (byte) 1) {
                 connectionType = ConnectionType.RELEASE2BETA;
+            } else if (packet1login.d == (byte) 2) {
+                connectionType = ConnectionType.BUNGEECORD_OFFLINE_MODE_IP_FORWARDING;
             } else {
                 connectionType = ConnectionType.NORMAL;
             }
             rawConnectionType = packet1login.d;
-
-            if (connectionType.equals(ConnectionType.RELEASE2BETA_OFFLINE_MODE_IP_FORWARDING) || connectionType.equals(ConnectionType.RELEASE2BETA_ONLINE_MODE_IP_FORWARDING)) {
+            //TODO: We need to find a better and cleaner way to support these different Beta proxies, Maybe a handler class???
+            if (connectionType.equals(ConnectionType.RELEASE2BETA_OFFLINE_MODE_IP_FORWARDING) || connectionType.equals(ConnectionType.RELEASE2BETA_ONLINE_MODE_IP_FORWARDING) || connectionType.equals(ConnectionType.BUNGEECORD_OFFLINE_MODE_IP_FORWARDING) || connectionType.equals(ConnectionType.BUNGEECORD_ONLINE_MODE_IP_FORWARDING)) {
                 //Proxy has IP Forwarding enabled
                 if ((Boolean) PoseidonConfig.getInstance().getConfigOption("settings.release2beta.enable-ip-pass-through")) {
                     //IP Forwarding is enabled server side
