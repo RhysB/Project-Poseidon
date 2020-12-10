@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import com.projectposeidon.ConnectionType;
+import com.projectposeidon.PoseidonConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandException;
@@ -672,7 +673,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     public void a(String s, Object[] aobject) {
         if (this.disconnected) return; // CraftBukkit - rarely it would send a disconnect line twice
 
-        a.info(this.player.name + " lost connection: " + s);
+
+        if (!(boolean) PoseidonConfig.getInstance().getConfigOption("settings.remove-join-leave-debug", true) || !s.equals("disconnect.quitting")) {
+            a.info(this.player.name + " lost connection: " + s);
+        }
+
+        a.info(this.player.name + " has left the game.");
         // CraftBukkit start - we need to handle custom quit messages
         String quitMessage = this.minecraftServer.serverConfigurationManager.disconnect(this.player);
         if (quitMessage != null) {

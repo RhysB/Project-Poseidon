@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import com.projectposeidon.PoseidonConfig;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
@@ -115,7 +117,9 @@ public abstract class Packet {
             System.out.println("Read timed out");
             return null;
         } catch (java.net.SocketException exception) {
-            System.out.println("Connection reset");
+            if (!(boolean) PoseidonConfig.getInstance().getConfigOption("settings.remove-join-leave-debug", true)) {
+                System.out.println("Connection reset");
+            }
             return null;
         }
         // CraftBukkit end

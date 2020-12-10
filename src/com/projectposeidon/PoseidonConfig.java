@@ -33,6 +33,7 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.per-day-logfile", false);
         generateConfigOption("settings.fetch-uuids-from", "https://api.mojang.com/profiles/minecraft");
         generateConfigOption("settings.enable-watchdog", true);
+        generateConfigOption("settings.remove-join-leave-debug", true);
         //Statistics
         generateConfigOption("settings.statistics.key", UUID.randomUUID().toString());
         generateConfigOption("settings.enable-statistics", true);
