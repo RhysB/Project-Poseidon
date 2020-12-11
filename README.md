@@ -7,6 +7,9 @@ Discord: https://discord.gg/FwKg676
 ## Want to use Project Poseidon on your server?
 Please read the following article before changing over to Project Poseidon: https://github.com/RhysB/Project-Poseidon/wiki/Implementing-Project-Poseidon-In-Production
 
+## How to setup ModLoaderMP support
+Please read the following: https://github.com/RhysB/Project-Poseidon/wiki/Adding-ModLoaderMP
+
 ## Licensing
 Craft Bukkit and Bukkit are licensed under GNU General Public License v3.0
 

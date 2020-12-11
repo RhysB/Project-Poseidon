@@ -1,7 +1,6 @@
 package net.minecraft.server;
 
 import com.projectposeidon.PoseidonConfig;
-import com.projectposeidon.PoseidonStatisticsAgent;
 import com.projectposeidon.johnymuffin.UUIDManager;
 import com.projectposeidon.watchdog.WatchDogThread;
 import jline.ConsoleReader;
@@ -99,6 +98,10 @@ public class MinecraftServer implements Runnable, ICommandListener {
 
         if (modLoaderSupport) {
             log.info("EXPERIMENTAL MODLOADERMP SUPPORT ENABLED.");
+            if (!isModloaderPresent()) {
+                log.severe("ModLoaderMP support is enabled, however, it isn't present. Please install it before enabling this setting");
+                return false;
+            }
             net.minecraft.server.ModLoader.Init(this);
         }
 
@@ -195,6 +198,15 @@ public class MinecraftServer implements Runnable, ICommandListener {
             this.propertyManager.savePropertiesFile();
         }
         return true;
+    }
+
+    public boolean isModloaderPresent() {
+        try {
+            Class.forName("net.minecraft.server.ModLoader");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
     }
 
     private void a(Convertable convertable, String s, long i) {
