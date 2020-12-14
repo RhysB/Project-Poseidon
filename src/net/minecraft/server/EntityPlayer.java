@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import com.projectposeidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import com.projectposeidon.api.PoseidonUUID;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.ChunkCompressionThread;

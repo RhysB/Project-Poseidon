@@ -2,7 +2,7 @@ package org.bukkit.plugin;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.MapMaker;
-import com.projectposeidon.event.PoseidonCustomListener;
+import com.legacyminecraft.poseidon.event.PoseidonCustomListener;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.PluginCommandYamlParser;

@@ -1,8 +1,8 @@
 package net.minecraft.server;
 
-import com.projectposeidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import com.projectposeidon.johnymuffin.UUIDManager;
-import com.projectposeidon.watchdog.WatchDogThread;
+import com.legacyminecraft.poseidon.watchdog.WatchDogThread;
 import jline.ConsoleReader;
 import joptsimple.OptionSet;
 import org.bukkit.World.Environment;

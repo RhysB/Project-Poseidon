@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import com.projectposeidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.bukkit.craftbukkit.util.ShortConsoleLogFormatter;
 import org.bukkit.craftbukkit.util.TerminalConsoleHandler;
 

@@ -1,4 +1,4 @@
-package com.projectposeidon;
+package com.legacyminecraft.poseidon;
 
 import net.minecraft.server.MinecraftServer;
 import org.bukkit.craftbukkit.CraftServer;

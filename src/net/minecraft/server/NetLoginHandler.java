@@ -1,7 +1,7 @@
 package net.minecraft.server;
 
 import com.projectposeidon.ConnectionType;
-import com.projectposeidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import com.projectposeidon.johnymuffin.LoginProcessHandler;
 import org.bukkit.ChatColor;
 
@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import static com.projectposeidon.util.Release2Beta.deserializeAddress;
+import static com.legacyminecraft.poseidon.util.Release2Beta.deserializeAddress;
 
 public class NetLoginHandler extends NetHandler {
 

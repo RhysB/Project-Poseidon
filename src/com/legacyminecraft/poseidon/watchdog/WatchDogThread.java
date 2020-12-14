@@ -1,4 +1,4 @@
-package com.projectposeidon.watchdog;
+package com.legacyminecraft.poseidon.watchdog;
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;

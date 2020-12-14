@@ -1,4 +1,4 @@
-package com.projectposeidon.util;
+package com.legacyminecraft.poseidon.util;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

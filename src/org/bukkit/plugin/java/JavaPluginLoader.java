@@ -1,6 +1,6 @@
 package org.bukkit.plugin.java;
 
-import com.projectposeidon.event.PoseidonCustomListener;
+import com.legacyminecraft.poseidon.event.PoseidonCustomListener;
 import org.bukkit.Server;
 import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;

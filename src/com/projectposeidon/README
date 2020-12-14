@@ -1,1 +1,2 @@
 We will no longer store classes under the name of the developer who created it. Current legacy stuff may stay in its current position tho.
+All new classes must be created under com.legacyminecraft.poseidon

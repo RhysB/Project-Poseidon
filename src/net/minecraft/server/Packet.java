@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import com.projectposeidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.PoseidonConfig;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

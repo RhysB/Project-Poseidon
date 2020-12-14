@@ -1,4 +1,4 @@
-package com.projectposeidon;
+package com.legacyminecraft.poseidon;
 
 import org.bukkit.util.config.Configuration;
 

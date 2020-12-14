@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import com.projectposeidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.PoseidonConfig;
 
 public class BlockFence extends Block {
     private boolean modernFencingBounding = false;

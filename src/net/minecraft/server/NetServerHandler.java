@@ -1,7 +1,7 @@
 package net.minecraft.server;
 
 import com.projectposeidon.ConnectionType;
-import com.projectposeidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandException;

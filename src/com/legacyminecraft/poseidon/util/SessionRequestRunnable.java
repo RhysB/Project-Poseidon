@@ -1,4 +1,4 @@
-package com.projectposeidon.util;
+package com.legacyminecraft.poseidon.util;
 
 public interface SessionRequestRunnable
 {

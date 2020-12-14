@@ -1,13 +1,13 @@
-package com.projectposeidon.uuid;
+package com.legacyminecraft.poseidon.uuid;
 
-import com.projectposeidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import com.projectposeidon.johnymuffin.LoginProcessHandler;
 import net.minecraft.server.Packet1Login;
 import org.bukkit.ChatColor;
 
 import java.util.UUID;
 
-import static com.projectposeidon.util.UUIDFetcher.getUUIDOf;
+import static com.legacyminecraft.poseidon.util.UUIDFetcher.getUUIDOf;
 import static com.projectposeidon.johnymuffin.UUIDManager.generateOfflineUUID;
 
 public class ThreadUUIDFetcher extends Thread {

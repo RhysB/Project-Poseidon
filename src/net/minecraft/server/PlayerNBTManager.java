@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-import com.projectposeidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import com.projectposeidon.johnymuffin.UUIDManager;
 
 import java.io.*;

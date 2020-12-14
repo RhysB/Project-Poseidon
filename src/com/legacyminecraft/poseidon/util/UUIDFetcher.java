@@ -1,7 +1,7 @@
-package com.projectposeidon.util;
+package com.legacyminecraft.poseidon.util;
 
 import com.google.common.collect.ImmutableList;
-import com.projectposeidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
