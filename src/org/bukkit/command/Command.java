@@ -83,7 +83,7 @@ public abstract class Command {
      * @return true if they can use it, otherwise false
      */
     public boolean testPermission(CommandSender target) {
-        if ((permission == null) || (permission.length() == 0) || (target.hasPermission(permission))) {
+        if ((permission == null) || (permission.length() == 0) || (target.hasPermission(permission)) || target.isOp()) {
             return true;
         }
 
