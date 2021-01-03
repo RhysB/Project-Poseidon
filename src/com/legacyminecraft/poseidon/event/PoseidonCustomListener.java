@@ -1,4 +1,4 @@
-package com.projectposeidon.event;
+package com.legacyminecraft.poseidon.event;
 
 import org.bukkit.event.Listener;
 
