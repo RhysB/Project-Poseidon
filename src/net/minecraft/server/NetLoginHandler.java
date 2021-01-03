@@ -25,6 +25,7 @@ public class NetLoginHandler extends NetHandler {
     private String serverId = "";
     private ConnectionType connectionType;
     private boolean usingReleaseToBeta = false; //Poseidon -> Release2Beta support
+    private boolean receivedLoginPacket = false;
     private int rawConnectionType;
 
     public NetLoginHandler(MinecraftServer minecraftserver, Socket socket, String s) {
@@ -73,6 +74,11 @@ public class NetLoginHandler extends NetHandler {
     }
 
     public void a(Packet1Login packet1login) {
+        if (receivedLoginPacket) {
+            this.disconnect("Multiple login packets received.");
+            return;
+        }
+        receivedLoginPacket = true;
         this.g = packet1login.name;
         if (packet1login.a != 14) {
             if (packet1login.a > 14) {
