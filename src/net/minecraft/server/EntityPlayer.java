@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import com.legacyminecraft.poseidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.event.PlayerDeathEvent;
 import com.projectposeidon.api.PoseidonUUID;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.ChunkCompressionThread;
@@ -141,16 +142,24 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         org.bukkit.entity.Entity bukkitEntity = this.getBukkitEntity();
         CraftWorld bworld = this.world.getWorld();
 
-        EntityDeathEvent event = new EntityDeathEvent(bukkitEntity, loot);
+        PlayerDeathEvent event = new PlayerDeathEvent(bukkitEntity, loot);
         this.world.getServer().getPluginManager().callEvent(event);
 
-        // CraftBukkit - we clean the player's inventory after the EntityDeathEvent is called so plugins can get the exact state of the inventory.
-        for (int i = 0; i < this.inventory.items.length; ++i) {
-            this.inventory.items[i] = null;
+        if(event.getDeathMessage() != null && !event.getDeathMessage().trim().isEmpty()) {
+            this.b.serverConfigurationManager.sendAll(new Packet3Chat(event.getDeathMessage()));
         }
 
-        for (int i = 0; i < this.inventory.armor.length; ++i) {
-            this.inventory.armor[i] = null;
+        // CraftBukkit - we clean the player's inventory after the EntityDeathEvent is called so plugins can get the exact state of the inventory.
+
+        //Poseidon - Only clear inventory if keep inventory is false
+        if(!event.getKeepInventory()) {
+            for (int i = 0; i < this.inventory.items.length; ++i) {
+                this.inventory.items[i] = null;
+            }
+
+            for (int i = 0; i < this.inventory.armor.length; ++i) {
+                this.inventory.armor[i] = null;
+            }
         }
 
         for (org.bukkit.inventory.ItemStack stack : event.getDrops()) {
