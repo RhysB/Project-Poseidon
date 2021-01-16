@@ -495,8 +495,11 @@ public class MinecraftServer implements Runnable, ICommandListener {
             if (this.ticks % 20 == 0) {
                 // CraftBukkit start - only send timeupdates to the people in that world
                 for (int i = 0; i < worldserver.players.size(); ++i) { // Project Poseidon: serverConfigurationManager -> worldserver.players
-                    EntityPlayer entityplayer = (EntityPlayer) this.serverConfigurationManager.players.get(i);
-                    entityplayer.netServerHandler.sendPacket(new Packet4UpdateTime(entityplayer.getPlayerTime())); // Add support for per player time
+                    EntityPlayer entityPlayer = (EntityPlayer) worldserver.players.get(i);
+                    if(entityPlayer != null) {
+                        entityPlayer.netServerHandler.sendPacket(new Packet4UpdateTime(entityPlayer.getPlayerTime())); // Add support for per player time
+
+                    }
                 }
                 // CraftBukkit end
             }
