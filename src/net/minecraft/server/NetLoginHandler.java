@@ -27,6 +27,7 @@ public class NetLoginHandler extends NetHandler {
     private boolean usingReleaseToBeta = false; //Poseidon -> Release2Beta support
     private boolean receivedLoginPacket = false;
     private int rawConnectionType;
+    private boolean receivedKeepAlive = false;
 
     public NetLoginHandler(MinecraftServer minecraftserver, Socket socket, String s) {
         this.server = minecraftserver;
@@ -71,6 +72,10 @@ public class NetLoginHandler extends NetHandler {
         } else {
             this.networkManager.queue(new Packet2Handshake("-"));
         }
+    }
+
+    public void a(Packet0KeepAlive packet0KeepAlive) {
+        receivedKeepAlive = true;
     }
 
     public void a(Packet1Login packet1login) {
@@ -147,6 +152,7 @@ public class NetLoginHandler extends NetHandler {
             netserverhandler.setUsingReleaseToBeta(usingReleaseToBeta);
             netserverhandler.setConnectionType(connectionType);
             netserverhandler.setRawConnectionType(rawConnectionType);
+            netserverhandler.setReceivedKeepAlive(receivedKeepAlive);
             //Poseidon End
             netserverhandler.sendPacket(new Packet1Login("", entityplayer.id, worldserver.getSeed(), (byte) worldserver.worldProvider.dimension));
             netserverhandler.sendPacket(new Packet6SpawnPosition(chunkcoordinates.x, chunkcoordinates.y, chunkcoordinates.z));

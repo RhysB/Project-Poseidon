@@ -359,6 +359,10 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         return getHandle().netServerHandler.getConnectionType();
     }
 
+    public boolean hasReceivedPacket0() {
+        return getHandle().netServerHandler.isReceivedKeepAlive();
+    }
+
     public boolean isUsingReleaseToBeta() {
         return getHandle().netServerHandler.isUsingReleaseToBeta();
     }

@@ -12,6 +12,10 @@ public abstract class NetHandler {
 
     public void a(String s, Object[] aobject) {}
 
+    public void a(Packet0KeepAlive packet0KeepAlive) {
+        this.a((Packet) packet0KeepAlive);
+    }
+
     public void a(Packet255KickDisconnect packet255kickdisconnect) {
         this.a((Packet) packet255kickdisconnect);
     }

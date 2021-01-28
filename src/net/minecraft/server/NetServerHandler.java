@@ -46,6 +46,15 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     private boolean usingReleaseToBeta = false; //Project Poseidon - Create Variable
     private ConnectionType connectionType = ConnectionType.NORMAL; //Project Poseidon - Create Variable
     private int rawConnectionType = 0; //Project Poseidon - Create Variable
+    private boolean receivedKeepAlive = false;
+
+    public boolean isReceivedKeepAlive() {
+        return receivedKeepAlive;
+    }
+
+    public void setReceivedKeepAlive(boolean receivedKeepAlive) {
+        this.receivedKeepAlive = receivedKeepAlive;
+    }
 
     public NetServerHandler(MinecraftServer minecraftserver, NetworkManager networkmanager, EntityPlayer entityplayer) {
         this.minecraftServer = minecraftserver;
@@ -925,6 +934,10 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
             this.player.a(false, true, true);
             this.checkMovement = false;
         }
+    }
+
+    public void a(Packet0KeepAlive packet0KeepAlive) {
+        this.receivedKeepAlive = true;
     }
 
     public void a(Packet255KickDisconnect packet255kickdisconnect) {

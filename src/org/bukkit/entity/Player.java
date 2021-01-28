@@ -309,6 +309,8 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      */
     public ConnectionType getConnectionType();
 
+    public boolean hasReceivedPacket0();
+
     /**
      * Returns whether the player is using a Release2Beta proxy
      *
