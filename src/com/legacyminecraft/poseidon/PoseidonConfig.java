@@ -35,7 +35,7 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.fetch-uuids-from", "https://api.mojang.com/profiles/minecraft");
         generateConfigOption("settings.enable-watchdog", true);
         generateConfigOption("settings.remove-join-leave-debug", true);
-        generateConfigOption("settings.enable-tpc-nodelay", true);
+        generateConfigOption("settings.enable-tpc-nodelay", false);
         //Statistics
         generateConfigOption("settings.statistics.key", UUID.randomUUID().toString());
         generateConfigOption("settings.statistics.enabled", true);
