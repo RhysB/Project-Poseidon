@@ -20,7 +20,7 @@ public class WatchDogThread extends Thread {
                     lastTick = System.currentTimeMillis() / 1000L;
                     tickOccurred.set(false);
                 } else {
-                    if ((lastTick + 60) < (System.currentTimeMillis() / 1000L)) {
+                    if ((lastTick + 300) < (System.currentTimeMillis() / 1000L)) {
                         System.out.println("[Poseidon-Watchdog] Server has hanged, killing process.");
                         System.out.println("--------------------[Stacktrace For Developers]--------------------");
                         Arrays.asList(serverThread.getStackTrace()).forEach(System.out::println);
