@@ -78,7 +78,7 @@ public class LoginProcessHandler {
         long unixTime = (System.currentTimeMillis() / 1000L);
         UUID uuid = UUIDManager.getInstance().getUUIDFromUsername(packet1Login.name, true, unixTime);
         if (uuid == null) {
-            (new ThreadUUIDFetcher(packet1Login, this)).start();
+            (new ThreadUUIDFetcher(packet1Login, this, PoseidonConfig.getInstance().getBoolean("settings.use-get-for-uuids.enabled", false))).start();
         } else {
             System.out.println("Fetched UUID from Cache for " + packet1Login.name + " - " + uuid.toString());
             connectPlayer(uuid);
