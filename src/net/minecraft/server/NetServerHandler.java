@@ -1,7 +1,9 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.event.PlayerSendPacketEvent;
 import com.projectposeidon.ConnectionType;
 import com.legacyminecraft.poseidon.PoseidonConfig;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandException;
@@ -47,6 +49,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     private ConnectionType connectionType = ConnectionType.NORMAL; //Project Poseidon - Create Variable
     private int rawConnectionType = 0; //Project Poseidon - Create Variable
     private boolean receivedKeepAlive = false;
+    private boolean firePacketEvents;
 
     public boolean isReceivedKeepAlive() {
         return receivedKeepAlive;
@@ -65,6 +68,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
         // CraftBukkit start
         this.server = minecraftserver.server;
+        this.firePacketEvents = PoseidonConfig.getInstance().getBoolean("settings.packet-events.enabled", false); //Poseidon
     }
 
     //Project Poseidon - Start
@@ -703,6 +707,18 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void sendPacket(Packet packet) {
+        //Poseidon Start - Send Packet Event
+        if (firePacketEvents) {
+            PlayerSendPacketEvent event = new PlayerSendPacketEvent(this.player.name, packet);
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled()) {
+                return;
+            }
+            packet = event.getPacket(); //In case a plugin replaces the entire packet
+        }
+        //Poseidon End
+
+
         // CraftBukkit start
         if (packet instanceof Packet6SpawnPosition) {
             Packet6SpawnPosition packet6 = (Packet6SpawnPosition) packet;

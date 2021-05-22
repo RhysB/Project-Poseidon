@@ -1,6 +1,8 @@
 package net.minecraft.server;
 
 import com.legacyminecraft.poseidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.event.PlayerReceivePacketEvent;
+import org.bukkit.Bukkit;
 
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
@@ -37,11 +39,13 @@ public class NetworkManager {
     public static int[] e = new int[256];
     public int f = 0;
     private int lowPriorityQueueDelay = 50;
+    private boolean firePacketEvents;
 
     public NetworkManager(Socket socket, String s, NetHandler nethandler) {
         this.socket = socket;
         this.i = socket.getRemoteSocketAddress();
         this.p = nethandler;
+        this.firePacketEvents = PoseidonConfig.getInstance().getBoolean("settings.packet-events.enabled", false);
 
         // CraftBukkit start - IPv6 stack in Java on BSD/OSX doesn't support setTrafficClass
         try {
@@ -238,7 +242,22 @@ public class NetworkManager {
         while (!this.m.isEmpty() && i-- >= 0) {
             Packet packet = (Packet) this.m.remove(0);
 
-            packet.a(this.p);
+            //Poseidon Start - Packet Receive Event
+            if (firePacketEvents && this.p instanceof NetServerHandler) {
+                PlayerReceivePacketEvent event = new PlayerReceivePacketEvent(((NetServerHandler) this.p).player.name, packet);
+                Bukkit.getPluginManager().callEvent(event);
+                packet = event.getPacket();
+                if (!event.isCancelled()) {
+                    packet.a(this.p);
+                }
+
+            } else {
+                packet.a(this.p);
+            }
+
+            //Poseidon End
+
+//            packet.a(this.p);
         }
 
         this.a();

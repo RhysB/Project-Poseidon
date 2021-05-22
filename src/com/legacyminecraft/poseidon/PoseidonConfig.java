@@ -38,6 +38,9 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.enable-tpc-nodelay", false);
         generateConfigOption("settings.use-get-for-uuids.enabled", false);
         generateConfigOption("settings.use-get-for-uuids.info", "This setting causes the server to use the GET method for Username to UUID conversion. This is useful incase the POST method goes offline.");
+        //Packet Events
+        generateConfigOption("settings.packet-events.enabled", false);
+        generateConfigOption("settings.packet-events.info", "This setting causes the server to fire a Bukkit event for each packet received and sent to a player once they have finished the initial login process. This only needs to be enabled if you have a plugin that uses this specific feature.");
         //Statistics
         generateConfigOption("settings.statistics.key", UUID.randomUUID().toString());
         generateConfigOption("settings.statistics.enabled", true);
@@ -91,7 +94,7 @@ public class PoseidonConfig extends Configuration {
 
     private void convertToNewConfig() {
         //Graceful UUIDS
-        convertToNewAddress("settings.statistics.enabled","settings.enable-statistics");
+        convertToNewAddress("settings.statistics.enabled", "settings.enable-statistics");
         convertToNewAddress("settings.allow-graceful-uuids", "allowGracefulUUID");
         convertToNewAddress("settings.save-playerdata-by-uuid", "savePlayerdataByUUID");
         convertToNewAddress("world-settings.optimized-explosions", "optimizedExplosions");

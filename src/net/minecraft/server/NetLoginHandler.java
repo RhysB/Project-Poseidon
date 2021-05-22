@@ -184,6 +184,11 @@ public class NetLoginHandler extends NetHandler {
         return this.g != null ? this.g + " [" + this.networkManager.getSocketAddress().toString() + "]" : this.networkManager.getSocketAddress().toString();
     }
 
+    //This can and will return null for multiple packets.
+    public String getUsername() {
+        return this.g;
+    }
+
     public boolean c() {
         return true;
     }
