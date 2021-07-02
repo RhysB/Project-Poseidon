@@ -3,11 +3,18 @@ package com.legacyminecraft.poseidon;
 import org.bukkit.util.config.Configuration;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class PoseidonConfig extends Configuration {
     private static PoseidonConfig singleton;
     private final int configVersion = 2;
+    private Integer[] treeBlacklistIDs;
+
+    public Integer[] getTreeBlacklistIDs() {
+        return treeBlacklistIDs;
+    }
 
     private PoseidonConfig() {
         super(new File("poseidon.yml"));
@@ -66,6 +73,36 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.check-username-validity.max-length", 16);
         generateConfigOption("settings.check-username-validity.min-length", 3);
 
+
+        //Tree Leave Destroy Blacklist
+
+        if (Boolean.valueOf(String.valueOf(getConfigOption("world.settings.block-tree-growth.enabled", true)))) {
+            if (String.valueOf(this.getConfigOption("world.settings.block-tree-growth.list", "")).trim().isEmpty()) {
+                //Empty Blacklist
+            } else {
+                String[] rawBlacklist = String.valueOf(this.getConfigOption("world.settings.block-tree-growth.list", "")).trim().split(",");
+                int blackListCount = 0;
+                for (String stringID : rawBlacklist) {
+                    if (Pattern.compile("-?[0-9]+").matcher(stringID).matches()) {
+                        blackListCount = blackListCount + 1;
+                    } else {
+                        System.out.println("The ID " + stringID + " for leaf decay blocker has been detected as invalid, and won't be used.");
+                    }
+                }
+                //Loop a second time to get correct array length. I know this is horrible code, but it works and only runs on server startup.
+                treeBlacklistIDs = new Integer[blackListCount];
+                int i = 0;
+                for (String stringID : rawBlacklist) {
+                    if (Pattern.compile("-?[0-9]+").matcher(stringID).matches()) {
+                        treeBlacklistIDs[i] = Integer.valueOf(stringID);
+                        i = i + 1;
+                    }
+                }
+                System.out.println("Leaf blocks can't replace the following block IDs: " + Arrays.toString(treeBlacklistIDs));
+            }
+        } else {
+            treeBlacklistIDs = new Integer[0];
+        }
 
     }
 

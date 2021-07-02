@@ -72,7 +72,7 @@ public class WorldGenTrees extends WorldGenerator {
                             for (int k2 = k - k1; k2 <= k + k1; ++k2) {
                                 int l2 = k2 - k;
 
-                                if ((Math.abs(j2) != k1 || Math.abs(l2) != k1 || random.nextInt(2) != 0 && j1 != 0) && !Block.o[world.getTypeId(l1, i2, k2)]) {
+                                if ((Math.abs(j2) != k1 || Math.abs(l2) != k1 || random.nextInt(2) != 0 && j1 != 0) && !Block.o[world.getTypeId(l1, i2, k2)] && !Block.leafDecayBlacklist.contains(world.getTypeId(l1, i2, k2))) {
                                     world.setRawTypeId(l1, i2, k2, Block.LEAVES.id);
                                 }
                             }

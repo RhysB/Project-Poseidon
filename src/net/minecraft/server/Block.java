@@ -1,6 +1,10 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.PoseidonConfig;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Block {
@@ -118,6 +122,7 @@ public class Block {
     public static final Block DIODE_ON = (new BlockDiode(94, true)).c(0.0F).a(0.625F).a(e).a("diode").n().g();
     public static final Block LOCKED_CHEST = (new BlockLockedChest(95)).c(0.0F).a(1.0F).a(e).a("lockedchest").a(true).g();
     public static final Block TRAP_DOOR = (new BlockTrapdoor(96, Material.WOOD)).c(3.0F).a(e).a("trapdoor").n().g();
+    public static final List<Integer> leafDecayBlacklist = Arrays.asList(PoseidonConfig.getInstance().getTreeBlacklistIDs());
     public int textureId;
     public final int id;
     protected float strength;
@@ -161,7 +166,8 @@ public class Block {
         return this;
     }
 
-    protected void h() {}
+    protected void h() {
+    }
 
     protected Block(int i, int j, Material material) {
         this(i, material);
@@ -260,19 +266,24 @@ public class Block {
         return true;
     }
 
-    public void a(World world, int i, int j, int k, Random random) {}
+    public void a(World world, int i, int j, int k, Random random) {
+    }
 
-    public void postBreak(World world, int i, int j, int k, int l) {}
+    public void postBreak(World world, int i, int j, int k, int l) {
+    }
 
-    public void doPhysics(World world, int i, int j, int k, int l) {}
+    public void doPhysics(World world, int i, int j, int k, int l) {
+    }
 
     public int c() {
         return 10;
     }
 
-    public void c(World world, int i, int j, int k) {}
+    public void c(World world, int i, int j, int k) {
+    }
 
-    public void remove(World world, int i, int j, int k) {}
+    public void remove(World world, int i, int j, int k) {
+    }
 
     public int a(Random random) {
         return 1;
@@ -434,7 +445,8 @@ public class Block {
         return vec3d == null ? false : vec3d.a >= this.minX && vec3d.a <= this.maxX && vec3d.b >= this.minY && vec3d.b <= this.maxY;
     }
 
-    public void d(World world, int i, int j, int k) {}
+    public void d(World world, int i, int j, int k) {
+    }
 
     public boolean canPlace(World world, int i, int j, int k, int l) {
         return this.canPlace(world, i, j, k);
@@ -450,15 +462,20 @@ public class Block {
         return false;
     }
 
-    public void b(World world, int i, int j, int k, Entity entity) {}
+    public void b(World world, int i, int j, int k, Entity entity) {
+    }
 
-    public void postPlace(World world, int i, int j, int k, int l) {}
+    public void postPlace(World world, int i, int j, int k, int l) {
+    }
 
-    public void b(World world, int i, int j, int k, EntityHuman entityhuman) {}
+    public void b(World world, int i, int j, int k, EntityHuman entityhuman) {
+    }
 
-    public void a(World world, int i, int j, int k, Entity entity, Vec3D vec3d) {}
+    public void a(World world, int i, int j, int k, Entity entity, Vec3D vec3d) {
+    }
 
-    public void a(IBlockAccess iblockaccess, int i, int j, int k) {}
+    public void a(IBlockAccess iblockaccess, int i, int j, int k) {
+    }
 
     public boolean a(IBlockAccess iblockaccess, int i, int j, int k, int l) {
         return false;
@@ -468,7 +485,8 @@ public class Block {
         return false;
     }
 
-    public void a(World world, int i, int j, int k, Entity entity) {}
+    public void a(World world, int i, int j, int k, Entity entity) {
+    }
 
     public boolean d(World world, int i, int j, int k, int l) {
         return false;
@@ -483,7 +501,8 @@ public class Block {
         return true;
     }
 
-    public void postPlace(World world, int i, int j, int k, EntityLiving entityliving) {}
+    public void postPlace(World world, int i, int j, int k, EntityLiving entityliving) {
+    }
 
     public Block a(String s) {
         this.name = "tile." + s;
@@ -498,7 +517,8 @@ public class Block {
         return this.name;
     }
 
-    public void a(World world, int i, int j, int k, int l, int i1) {}
+    public void a(World world, int i, int j, int k, int l, int i1) {
+    }
 
     public boolean m() {
         return this.br;

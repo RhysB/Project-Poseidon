@@ -76,7 +76,7 @@ public class WorldGenTaiga2 extends WorldGenerator {
                             for (int l3 = k - k2; l3 <= k + k2; ++l3) {
                                 int i4 = l3 - k;
 
-                                if ((Math.abs(k3) != k2 || Math.abs(i4) != k2 || k2 <= 0) && !Block.o[world.getTypeId(i3, j3, l3)]) {
+                                if ((Math.abs(k3) != k2 || Math.abs(i4) != k2 || k2 <= 0) && !Block.o[world.getTypeId(i3, j3, l3)] && !Block.leafDecayBlacklist.contains(world.getTypeId(l1, i2, k2))) {
                                     world.setRawTypeIdAndData(i3, j3, l3, Block.LEAVES.id, 1);
                                 }
                             }

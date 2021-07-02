@@ -6,7 +6,8 @@ import java.util.Random;
 
 public class WorldGenTaiga1 extends WorldGenerator {
 
-    public WorldGenTaiga1() {}
+    public WorldGenTaiga1() {
+    }
 
     public boolean a(World world, Random random, int i, int j, int k) {
         // CraftBukkit start
@@ -70,7 +71,7 @@ public class WorldGenTaiga1 extends WorldGenerator {
                             for (int i3 = k - l2; i3 <= k + l2; ++i3) {
                                 int j3 = i3 - k;
 
-                                if ((Math.abs(k2) != l2 || Math.abs(j3) != l2 || l2 <= 0) && !Block.o[world.getTypeId(j2, i2, i3)]) {
+                                if ((Math.abs(k2) != l2 || Math.abs(j3) != l2 || l2 <= 0) && !Block.o[world.getTypeId(j2, i2, i3)] && !Block.leafDecayBlacklist.contains(world.getTypeId(l1, i2, k2))) {
                                     world.setRawTypeIdAndData(j2, i2, i3, Block.LEAVES.id, 1);
                                 }
                             }
