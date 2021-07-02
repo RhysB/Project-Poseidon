@@ -29,7 +29,7 @@ public class CraftWorld implements World {
     private final WorldServer world;
     private Environment environment;
     private final CraftServer server = (CraftServer)Bukkit.getServer();
-    private ConcurrentMap<Integer, CraftChunk> unloadedChunks = new MapMaker().weakValues().makeMap();
+//    private ConcurrentMap<Integer, CraftChunk> unloadedChunks = new MapMaker().weakValues().makeMap();
     private final ChunkGenerator generator;
     private final List<BlockPopulator> populators = new ArrayList<BlockPopulator>();
 
@@ -42,14 +42,14 @@ public class CraftWorld implements World {
         environment = env;
     }
 
-    public void preserveChunk(CraftChunk chunk) {
-        chunk.breakLink();
-        unloadedChunks.put((chunk.getX() << 16) + chunk.getZ(), chunk);
-    }
-
-    public Chunk popPreservedChunk(int x, int z) {
-        return unloadedChunks.remove((x << 16) + z);
-    }
+//    public void preserveChunk(CraftChunk chunk) {
+//        chunk.breakLink();
+//        unloadedChunks.put((chunk.getX() << 16) + chunk.getZ(), chunk);
+//    }
+//
+//    public Chunk popPreservedChunk(int x, int z) {
+//        return unloadedChunks.remove((x << 16) + z);
+//    }
 
     public Block getBlockAt(int x, int y, int z) {
         return getChunkAt(x >> 4, z >> 4).getBlock(x & 0xF, y & 0x7F, z & 0xF);
@@ -150,7 +150,7 @@ public class CraftWorld implements World {
             world.chunkProviderServer.saveChunkNOP(chunk);
         }
 
-        preserveChunk((CraftChunk) chunk.bukkitChunk);
+//        preserveChunk((CraftChunk) chunk.bukkitChunk);
         world.chunkProviderServer.unloadQueue.remove(x, z);
         world.chunkProviderServer.chunks.remove(x, z);
         world.chunkProviderServer.chunkList.remove(chunk);
