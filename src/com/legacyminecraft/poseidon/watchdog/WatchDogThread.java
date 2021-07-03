@@ -14,7 +14,8 @@ public class WatchDogThread extends Thread {
     }
 
     public void run() {
-        while (true && !this.isInterrupted()) {
+        boolean running = true;
+        while (true && !this.isInterrupted() && running) {
             try {
                 if (tickOccurred.get()) {
                     lastTick = System.currentTimeMillis() / 1000L;
@@ -35,6 +36,7 @@ public class WatchDogThread extends Thread {
             } catch (InterruptedException e) {
                 System.out.println("[Poseidon-Watchdog] The watchdog has been interrupted.");
 //                e.printStackTrace();
+                running = false;
             }
         }
     }
