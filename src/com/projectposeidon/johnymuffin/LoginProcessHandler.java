@@ -1,10 +1,12 @@
 package com.projectposeidon.johnymuffin;
 
 import com.legacyminecraft.poseidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.PoseidonPlugin;
 import com.legacyminecraft.poseidon.uuid.ThreadUUIDFetcher;
 import net.minecraft.server.NetLoginHandler;
 import net.minecraft.server.Packet1Login;
 import net.minecraft.server.ThreadLoginVerifier;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Player;
@@ -14,7 +16,6 @@ import org.bukkit.plugin.Plugin;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.Timer;
 import java.util.UUID;
 
 public class LoginProcessHandler {
@@ -38,22 +39,15 @@ public class LoginProcessHandler {
         this.server = server;
         this.onlineMode = onlineMode;
         processAuthentication();
+        
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(new PoseidonPlugin(), () -> {
+            if (!loginSuccessful && !loginCancelled) {
+                cancelLoginProcess("Login Process Handler Timeout");
+                System.out.println("LoginProcessHandler for user " + packet1login.name + " has failed to respond after 20 seconds. And future calls to this class will result in error");
+                System.out.println("Plugin Pauses: " + pluginPauseNames.toString());
 
-        Timer t = new java.util.Timer();
-        t.schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        if (!loginSuccessful && !loginCancelled) {
-                            cancelLoginProcess("Login Process Handler Timeout");
-                            System.out.println("LoginProcessHandler for user " + packet1login.name + " has failed to respond after 20 seconds. And future calls to this class will result in error");
-                            System.out.println("Plugin Pauses: " + pluginPauseNames.toString());
-
-                        }
-                    }
-                },
-                20000
-        );
+            }
+        }, 400);
 
     }
 
@@ -200,7 +194,7 @@ public class LoginProcessHandler {
     public ConnectionPause addConnectionInterrupt(Plugin plugin, String connectionPauseName) {
         //Log to console a pause has started on first pause
         if (pluginPauseNames.size() == 0) {
-            System.out.println("One or more plugins has paused the incomming connection for player " + packet1Login.name);
+            System.out.println("One or more plugins has paused the incoming connection for player " + packet1Login.name);
         }
         //Add plugin pause names and pauses for respective plugins
         final ConnectionPause connectionPause = new ConnectionPause(plugin.getDescription().getName(), connectionPauseName, loginProcessHandler);
@@ -234,6 +228,7 @@ public class LoginProcessHandler {
      */
     @Deprecated
     public void addConnectionPause(Plugin plugin) throws Exception {
+        System.out.println("[Poseidon] " + plugin.getDescription().getName() + " is using the deprecated connection pause system which will be removed in the future. Contact the plugin author to get an updated version.");
         if (pluginPauses.contains(plugin)) {
             throw new Exception("Plugin " + plugin.getDescription().getName() + " has tried to pause player login multiple times");
         }
