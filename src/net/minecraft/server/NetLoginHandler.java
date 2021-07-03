@@ -3,7 +3,9 @@ package net.minecraft.server;
 import com.projectposeidon.ConnectionType;
 import com.legacyminecraft.poseidon.PoseidonConfig;
 import com.projectposeidon.johnymuffin.LoginProcessHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.CraftServer;
 
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -130,6 +132,12 @@ public class NetLoginHandler extends NetHandler {
                 }
             }
             //Project Poseidon - End (Release2Beta
+
+            if (((CraftServer) Bukkit.getServer()).isShuttingdown()) {
+                this.disconnect(ChatColor.RED + "Server is shutting down, please rejoin later.");
+                return;
+            }
+
 
             new LoginProcessHandler(this, packet1login, this.server.server, this.server.onlineMode);
             // (new ThreadLoginVerifier(this, packet1login, this.server.server)).start(); // CraftBukkit

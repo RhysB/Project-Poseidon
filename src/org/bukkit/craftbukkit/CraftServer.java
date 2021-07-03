@@ -68,6 +68,7 @@ public final class CraftServer implements Server {
     private final Map<String, World> worlds = new LinkedHashMap<String, World>();
     private final Configuration configuration;
     private final Yaml yaml = new Yaml(new SafeConstructor());
+    private boolean shuttingdown = false;
 
     public CraftServer(MinecraftServer console, ServerConfigurationManager server) {
         this.console = console;
@@ -838,6 +839,14 @@ public final class CraftServer implements Server {
 
     public void reloadWhitelist() {
         server.f();
+    }
+
+    public boolean isShuttingdown() {
+        return shuttingdown;
+    }
+
+    public void setShuttingdown(boolean shuttingdown) {
+        this.shuttingdown = shuttingdown;
     }
 
 //    public GameMode getDefaultGameMode() {
