@@ -63,7 +63,13 @@ public class BlockPiston extends Block {
         if (l != 7) {
             if (flag && !d(l)) {
                 // CraftBukkit start
-                int length = h(world, i, j, k, i1);
+                int length;
+                try {
+                    length = h(world, i, j, k, i1);
+                } catch (RuntimeException exception) {
+                    System.out.println("[Poseidon] A piston crash attempt occurred at " + i + " " + j + " " + k + " in " + world.getWorld().getName());
+                    return;
+                }
                 if (length >= 0) {
                     org.bukkit.block.Block block = world.getWorld().getBlockAt(i, j, k);
 
