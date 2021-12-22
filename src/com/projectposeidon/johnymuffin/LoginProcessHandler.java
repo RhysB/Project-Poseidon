@@ -234,7 +234,7 @@ public class LoginProcessHandler {
         }
         //Log to console a pause has started on first pause
         if (pluginPauseNames.size() == 0) {
-            System.out.println("One or more plugins has paused the incomming connection for player " + packet1Login.name);
+            System.out.println("One or more plugins has paused the incoming connection for player " + packet1Login.name);
         }
         //Add plugin pause names and pauses for respective plugins
         pluginPauseNames.add(plugin.getDescription().getName());
