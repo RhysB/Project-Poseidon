@@ -244,7 +244,7 @@ public class BlockPiston extends Block {
         if (i == Block.OBSIDIAN.id) {
             return false;
         } else if ((i == Block.FURNACE.id || i == Block.BURNING_FURNACE.id) && PoseidonConfig.getInstance().getBoolean("world.settings.block-pistons-pushing-furnaces.enabled", true)) {
-            System.out.println("Blocking a piston from being pushed.");
+//            System.out.println("Blocking a piston from being pushed.");
             return false;
         } else {
             if (i != Block.PISTON.id && i != Block.PISTON_STICKY.id) {
