@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 
@@ -176,28 +177,28 @@ public class BlockPiston extends Block {
 
         if (d(l)) {
             switch (c(l)) {
-            case 0:
-                this.a(0.0F, 0.25F, 0.0F, 1.0F, 1.0F, 1.0F);
-                break;
+                case 0:
+                    this.a(0.0F, 0.25F, 0.0F, 1.0F, 1.0F, 1.0F);
+                    break;
 
-            case 1:
-                this.a(0.0F, 0.0F, 0.0F, 1.0F, 0.75F, 1.0F);
-                break;
+                case 1:
+                    this.a(0.0F, 0.0F, 0.0F, 1.0F, 0.75F, 1.0F);
+                    break;
 
-            case 2:
-                this.a(0.0F, 0.0F, 0.25F, 1.0F, 1.0F, 1.0F);
-                break;
+                case 2:
+                    this.a(0.0F, 0.0F, 0.25F, 1.0F, 1.0F, 1.0F);
+                    break;
 
-            case 3:
-                this.a(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.75F);
-                break;
+                case 3:
+                    this.a(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.75F);
+                    break;
 
-            case 4:
-                this.a(0.25F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-                break;
+                case 4:
+                    this.a(0.25F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+                    break;
 
-            case 5:
-                this.a(0.0F, 0.0F, 0.0F, 0.75F, 1.0F, 1.0F);
+                case 5:
+                    this.a(0.0F, 0.0F, 0.0F, 0.75F, 1.0F, 1.0F);
             }
         } else {
             this.a(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
@@ -241,6 +242,9 @@ public class BlockPiston extends Block {
 
     private static boolean a(int i, World world, int j, int k, int l, boolean flag) {
         if (i == Block.OBSIDIAN.id) {
+            return false;
+        } else if ((i == Block.FURNACE.id || i == Block.BURNING_FURNACE.id) && PoseidonConfig.getInstance().getBoolean("world.settings.block-pistons-pushing-furnaces.enabled", true)) {
+            System.out.println("Blocking a piston from being pushed.");
             return false;
         } else {
             if (i != Block.PISTON.id && i != Block.PISTON_STICKY.id) {
