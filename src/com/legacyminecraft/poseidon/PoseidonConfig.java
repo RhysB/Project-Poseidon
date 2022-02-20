@@ -62,7 +62,7 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("world.settings.block-tree-growth.info", "This setting allows for server owners to easily block trees growing from automatically destroying certain blocks. The list must be a string with numerical item ids separated by commas.");
         generateConfigOption("world.settings.block-pistons-pushing-furnaces.info", "This workaround prevents pistons from pushing furnaces which prevents a malicious server crash.");
         generateConfigOption("world.settings.block-pistons-pushing-furnaces.enabled", true);
-        generateConfigOption("world.settings.skeleton-shooting-sound-fix.info", "This fixes the sound when skeletons shoot an arrow not playing.");
+        generateConfigOption("world.settings.skeleton-shooting-sound-fix.info", "This setting fixes the sound of skeletons shooting not playing on clients.");
         generateConfigOption("world.settings.skeleton-shooting-sound-fix.enabled", true);
         //Release2Beta Settings
         generateConfigOption("settings.release2beta.enable-ip-pass-through", false);
