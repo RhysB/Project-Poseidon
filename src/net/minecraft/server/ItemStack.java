@@ -1,5 +1,9 @@
 package net.minecraft.server;
 
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerItemDamageEvent;
+
 public final class ItemStack {
 
     public int count;
@@ -119,8 +123,18 @@ public final class ItemStack {
         return Item.byId[this.id].e();
     }
 
+    @SuppressWarnings("deprecation")
     public void damage(int i, Entity entity) {
         if (this.d()) {
+            if (entity instanceof EntityPlayer) {
+                PlayerItemDamageEvent event = new PlayerItemDamageEvent((Player)entity.getBukkitEntity(), new CraftItemStack(this), i);
+                event.getPlayer().getServer().getPluginManager().callEvent(event);
+                if (i != event.getDamage() || event.isCancelled())
+                    event.getPlayer().updateInventory(); 
+                if (event.isCancelled())
+                    return; 
+                i = event.getDamage();
+            }
             this.damage += i;
             if (this.damage > this.i()) {
                 if (entity instanceof EntityHuman) {
