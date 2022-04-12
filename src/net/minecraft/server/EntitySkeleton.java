@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.PoseidonConfig;
 // CraftBukkit start
 import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -56,8 +57,12 @@ public class EntitySkeleton extends EntityMonster {
                 ++entityarrow.locY;
                 double d2 = entity.locY + (double) entity.t() - 0.20000000298023224D - entityarrow.locY;
                 float f1 = MathHelper.a(d0 * d0 + d1 * d1) * 0.2F;
-
-                this.world.makeSound(this, "random.bow", 1.0F, 1.0F / (this.random.nextFloat() * 0.4F + 0.8F));
+                
+                if ((boolean) PoseidonConfig.getInstance().getProperty("world.settings.skeleton-shooting-sound-fix.enabled")) {
+                    this.world.e(1002, MathHelper.floor(this.locX), MathHelper.floor(this.locY - (double)this.height), MathHelper.floor(this.locZ), 0); // Poseidon - fix skeleton bow sounds (Strultz)
+                } else {
+                    this.world.makeSound(this, "random.bow", 1.0F, 1.0F / (this.random.nextFloat() * 0.4F + 0.8F));
+                }
                 entityarrow.a(d0, d2 + (double) f1, d1, 0.6F, 12.0F);
                 this.world.addEntity(entityarrow);
                 this.attackTicks = 30;

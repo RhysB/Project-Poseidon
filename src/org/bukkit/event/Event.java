@@ -324,6 +324,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.player.PlayerFishEvent
          */
         PLAYER_FISH(Category.PLAYER),
+        /**
+         * Called when a player used item is damaged
+         *
+         * @see org.bukkit.event.player.PlayerItemDamageEvent
+         */
+        PLAYER_ITEM_DAMAGE(Category.PLAYER),
 
         /**
          * BLOCK EVENTS

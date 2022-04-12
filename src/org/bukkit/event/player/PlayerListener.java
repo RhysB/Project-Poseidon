@@ -191,4 +191,11 @@ public class PlayerListener implements Listener {
      * @param event Relevant event details
      */
     public void onPlayerFish(PlayerFishEvent event) {}
+    
+    /**
+     * Called when a player used item is damaged
+     *
+     * @param event Relevant event details
+     */
+    public void onPlayerItemDamage(PlayerItemDamageEvent event) {}
 }
