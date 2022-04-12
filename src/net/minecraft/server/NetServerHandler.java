@@ -824,6 +824,8 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
             return;
         }
 
+        s = event.getMessage(); //Poseidon: Override command with new command string.
+
         try {
             if (this.server.dispatchCommand(player, s.substring(1))) {
                 //Project Poseidon Start
