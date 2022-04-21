@@ -357,11 +357,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
             d4 = d1 - this.player.locX;
             double d6 = d2 - this.player.locY;
             double d7 = d3 - this.player.locZ;
+            double d14 = this.player.motX * this.player.motX + this.player.motY * this.player.motY + this.player.motZ * this.player.motZ;
             double d8 = d4 * d4 + d6 * d6 + d7 * d7;
 
-            if (d8 > 200.0D && this.checkMovement) { // CraftBukkit - Added this.checkMovement condition to solve this check being triggered by teleports
-                a.warning(this.player.name + " moved too quickly!");
-                this.disconnect("You moved too quickly :( (Hacking?)");
+            if (d8 - d14 > 100.0D && this.checkMovement) { // CraftBukkit - Added this.checkMovement condition to solve this check being triggered by teleports
+                a.warning(this.player.name + " moved too quickly! " + d4 + "," + d6 + "," + d7 + " (" + d4 + ", " + d6 + ", " + d7 + ")");
+                this.a(this.x, this.y, this.z, this.player.yaw, this.player.pitch);
                 return;
             }
 
