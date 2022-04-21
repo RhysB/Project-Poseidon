@@ -759,6 +759,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
             this.player.inventory.itemInHandIndex = packet16blockitemswitch.itemInHandIndex;
         } else {
             a.warning(this.player.name + " tried to set an invalid carried item");
+            this.disconnect("Invalid hotbar selection (Hacking?)");
         }
     }
 
