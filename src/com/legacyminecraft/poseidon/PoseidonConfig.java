@@ -67,7 +67,7 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("world.settings.speed-hack-check.enable", true);
         generateConfigOption("world.settings.speed-hack-check.teleport", true);
         generateConfigOption("world.settings.speed-hack-check.distance", 100.0D);
-        generateConfigOption("world.settings.speed-hack-check.info", "This setting allowes you to configure the automatic speedhack detection.");
+        generateConfigOption("world.settings.speed-hack-check.info", "This setting allows you to configure the automatic speedhack detection.");
         //Release2Beta Settings
         generateConfigOption("settings.release2beta.enable-ip-pass-through", false);
         generateConfigOption("settings.release2beta.proxy-ip", "127.0.0.1");
