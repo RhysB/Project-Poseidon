@@ -360,7 +360,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
             double d14 = this.player.motX * this.player.motX + this.player.motY * this.player.motY + this.player.motZ * this.player.motZ;
             double d8 = d4 * d4 + d6 * d6 + d7 * d7;
 
-            if ((boolean) PoseidonConfig.getInstance().getConfigOption("world.settings.speed-hack-check.teleport", true)) {
+            if ((boolean) PoseidonConfig.getInstance().getConfigOption("world.settings.speed-hack-check.enabled", true)) {
                 if (d8 - d14 > (double) PoseidonConfig.getInstance().getConfigOption("world.settings.speed-hack-check.distance", 100.0D) && this.checkMovement) { // CraftBukkit - Added this.checkMovement condition to solve this check being triggered by teleports
                     a.warning(this.player.name + " moved too quickly! " + d4 + "," + d6 + "," + d7 + " (" + d4 + ", " + d6 + ", " + d7 + ")");
                     if ((boolean) PoseidonConfig.getInstance().getConfigOption("world.settings.speed-hack-check.teleport", true)) {
