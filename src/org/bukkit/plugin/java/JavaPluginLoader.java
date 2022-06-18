@@ -619,6 +619,12 @@ public class JavaPluginLoader implements PluginLoader
                         ((PlayerListener) listener).onPlayerItemDamage((PlayerItemDamageEvent) event);
                     }
                 };
+            case PLAYER_CHANGED_WORLD:
+                return new EventExecutor() {
+                    public void execute(Listener listener, Event event) {
+                        ((PlayerListener) listener).onPlayerChangedWorld((PlayerChangedWorldEvent) event);
+                    }
+                };
 
             // Block Events
             case BLOCK_PHYSICS:
