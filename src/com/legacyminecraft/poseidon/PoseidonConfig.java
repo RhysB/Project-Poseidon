@@ -75,6 +75,10 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("world.settings.block-pistons-pushing-furnaces.enabled", true);
         generateConfigOption("world.settings.skeleton-shooting-sound-fix.info", "This setting fixes the sound of skeletons shooting not playing on clients.");
         generateConfigOption("world.settings.skeleton-shooting-sound-fix.enabled", true);
+        generateConfigOption("world.settings.speed-hack-check.enable", true);
+        generateConfigOption("world.settings.speed-hack-check.teleport", true);
+        generateConfigOption("world.settings.speed-hack-check.distance", 100.0D);
+        generateConfigOption("world.settings.speed-hack-check.info", "This setting allows you to configure the automatic speedhack detection.");
 
 
         //generateConfigOption("world-settings.eject-from-vehicle-on-teleport.enabled", true);
