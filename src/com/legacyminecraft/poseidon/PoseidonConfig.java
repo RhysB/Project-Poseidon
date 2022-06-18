@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class PoseidonConfig extends Configuration {
     private static PoseidonConfig singleton;
-    private final int configVersion = 2;
+    private final int configVersion = 3;
     private Integer[] treeBlacklistIDs;
 
     public Integer[] getTreeBlacklistIDs() {
@@ -33,18 +33,29 @@ public class PoseidonConfig extends Configuration {
             convertToNewConfig();
         }
         //Main
-        generateConfigOption("config-version", 2);
+        generateConfigOption("config-version", 3);
         //Setting
         generateConfigOption("settings.allow-graceful-uuids", true);
         generateConfigOption("settings.delete-duplicate-uuids", false);
         generateConfigOption("settings.save-playerdata-by-uuid", true);
         generateConfigOption("settings.per-day-logfile", false);
         generateConfigOption("settings.fetch-uuids-from", "https://api.mojang.com/profiles/minecraft");
-        generateConfigOption("settings.enable-watchdog", true);
         generateConfigOption("settings.remove-join-leave-debug", true);
         generateConfigOption("settings.enable-tpc-nodelay", false);
         generateConfigOption("settings.use-get-for-uuids.enabled", false);
         generateConfigOption("settings.use-get-for-uuids.info", "This setting causes the server to use the GET method for Username to UUID conversion. This is useful incase the POST method goes offline.");
+
+        //Watchdog
+        //generateConfigOption("settings.enable-watchdog", true);
+        generateConfigOption("settings.watchdog.info", "Watchdog is a automatic hang detection system which can print stacktraces and kill the server automatically after a predefined interval.");
+        generateConfigOption("settings.watchdog.enable", true);
+        generateConfigOption("settings.watchdog.timeout.value", 120);
+        generateConfigOption("settings.watchdog.timeout.info", "The number of seconds to kill the server process after no ticks occurring.");
+
+        generateConfigOption("settings.watchdog.debug-timeout.enabled", false);
+        generateConfigOption("settings.watchdog.debug-timeout.value", 30);
+        generateConfigOption("settings.watchdog.debug-timeout.info", "debug-timeout can be used to print a stack trace at a lower interval then the main timeout allowing admins to locate blocking tasks that cause hangs over a certain duration. Only enable this if you have experienced temporary hangs/server freezes.");
+
         //Packet Events
         generateConfigOption("settings.packet-events.enabled", false);
         generateConfigOption("settings.packet-events.info", "This setting causes the server to fire a Bukkit event for each packet received and sent to a player once they have finished the initial login process. This only needs to be enabled if you have a plugin that uses this specific feature.");
@@ -64,6 +75,10 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("world.settings.block-pistons-pushing-furnaces.enabled", true);
         generateConfigOption("world.settings.skeleton-shooting-sound-fix.info", "This setting fixes the sound of skeletons shooting not playing on clients.");
         generateConfigOption("world.settings.skeleton-shooting-sound-fix.enabled", true);
+
+
+        //generateConfigOption("world-settings.eject-from-vehicle-on-teleport.enabled", true);
+        //generateConfigOption("world-settings.eject-from-vehicle-on-teleport.info", "Eject the player from a boat or minecart before teleporting them preventing cross world coordinate exploits.");
         //Release2Beta Settings
         generateConfigOption("settings.release2beta.enable-ip-pass-through", false);
         generateConfigOption("settings.release2beta.proxy-ip", "127.0.0.1");
@@ -120,6 +135,7 @@ public class PoseidonConfig extends Configuration {
         this.setProperty(key, value);
     }
 
+    //Getters Start
     public Object getConfigOption(String key) {
         return this.getProperty(key);
     }
@@ -133,12 +149,35 @@ public class PoseidonConfig extends Configuration {
 
     }
 
+    public String getConfigString(String key) {
+        return String.valueOf(getConfigOption(key));
+    }
+
+    public Integer getConfigInteger(String key) {
+        return Integer.valueOf(getConfigString(key));
+    }
+
+    public Long getConfigLong(String key) {
+        return Long.valueOf(getConfigString(key));
+    }
+
+    public Double getConfigDouble(String key) {
+        return Double.valueOf(getConfigString(key));
+    }
+
+    public Boolean getConfigBoolean(String key) {
+        return Boolean.valueOf(getConfigString(key));
+    }
+
+    //Getters End
+
     private void convertToNewConfig() {
         //Graceful UUIDS
         convertToNewAddress("settings.statistics.enabled", "settings.enable-statistics");
         convertToNewAddress("settings.allow-graceful-uuids", "allowGracefulUUID");
         convertToNewAddress("settings.save-playerdata-by-uuid", "savePlayerdataByUUID");
-        convertToNewAddress("world-settings.optimized-explosions", "optimizedExplosions");
+
+        convertToNewAddress("settings.enable-watchdog", "settings.watchdog.enable");
     }
 
     private boolean convertToNewAddress(String newKey, String oldKey) {

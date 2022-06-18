@@ -55,7 +55,7 @@ public final class CraftServer implements Server {
     private final String serverName = "Project Poseidon Craftbukkit";
     //Poseidon Versions
     private final String serverEnvironment = "POSEIDON";
-    private final String serverVersion = "1.1.6";
+    private final String serverVersion = "1.1.7";
     private final String releaseType = "DEVELOPMENT";
     private final String protocolVersion = "1.7.3";
     private final String GameVersion = "b1.7.3";
