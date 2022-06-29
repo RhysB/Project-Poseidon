@@ -425,4 +425,10 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         return !hiddenPlayers.contains(player.getUniqueId());
     }
 
+    public void sendPacket(Player player, final Packet packet) {
+        if(player.isOnline()) {
+            NetServerHandler nsh = getHandle().netServerHandler;
+            nsh.sendPacket(packet);
+        }
+    }
 }
