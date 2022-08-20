@@ -89,9 +89,9 @@ public class NetLoginHandler extends NetHandler {
         this.g = packet1login.name;
         if (packet1login.a != 14) {
             if (packet1login.a > 14) {
-                this.disconnect("Outdated server!");
+                this.disconnect("Outdated server! I'm still on Beta 1.7.3");
             } else {
-                this.disconnect("Outdated client!");
+                this.disconnect("Outdated client! Please use Beta 1.7.3");
             }
         } else {
             //Project Poseidon - Start (Release2Beta)
