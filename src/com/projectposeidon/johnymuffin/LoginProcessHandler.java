@@ -198,7 +198,7 @@ public class LoginProcessHandler {
         }
         //Add plugin pause names and pauses for respective plugins
         final ConnectionPause connectionPause = new ConnectionPause(plugin.getDescription().getName(), connectionPauseName, loginProcessHandler);
-        pluginPauseNames.add(plugin.getDescription().getName() + ":" + connectionPauseName);
+        pluginPauseNames.add(plugin.getDescription().getName() + ":" + connectionPause.getConnectionPauseName());
         pluginPauseObjects.add(connectionPause);
         return connectionPause;
     }
@@ -209,6 +209,7 @@ public class LoginProcessHandler {
     public synchronized void removeConnectionPause(ConnectionPause connectionPause) {
         if (pluginPauseObjects.contains(connectionPause)) {
             pluginPauseObjects.remove(connectionPause);
+            pluginPauseNames.remove(connectionPause.getPluginName() + ":" + connectionPause.getConnectionPauseName());
             connectionPause.setActive(false);
             if (!loginProcessHandler.isPlayerConnectionPaused()) {
                 long endTime = System.currentTimeMillis() / 1000L;
@@ -252,6 +253,7 @@ public class LoginProcessHandler {
     public void removeConnectionPause(Plugin plugin) {
         if (pluginPauses.contains(plugin)) {
             pluginPauses.remove(plugin);
+            pluginPauseNames.remove(plugin.getDescription().getName());
             //Check if all pauses are removed
             if (!loginProcessHandler.isPlayerConnectionPaused()) {
                 long endTime = System.currentTimeMillis() / 1000L;

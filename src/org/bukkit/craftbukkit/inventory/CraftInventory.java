@@ -45,7 +45,7 @@ public class CraftInventory implements org.bukkit.inventory.Inventory {
 
     public void setContents(ItemStack[] items) {
         if (getInventory().getContents().length != items.length) {
-            throw new IllegalArgumentException("Invalid inventory size; expected " + getInventory().getContents().length);
+            throw new IllegalArgumentException("Invalid inventory size; expected " + getInventory().getContents().length + " and got " + items.length); // Poseidon
         }
 
         net.minecraft.server.ItemStack[] mcItems = getInventory().getContents();
