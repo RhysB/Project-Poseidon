@@ -95,6 +95,8 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.check-username-validity.regex", "[a-zA-Z0-9_?]*");
         generateConfigOption("settings.check-username-validity.max-length", 16);
         generateConfigOption("settings.check-username-validity.min-length", 3);
+        generateConfigOption("emergency.debug.regenerate-corrupt-chunks.enable", false);
+        generateConfigOption("emergency.debug.regenerate-corrupt-chunks.info", "This setting allows you to automatically regenerate corrupt chunks. This is useful after a ungraceful shutdown while a file is being written to or out of memory exception.");
 
 
         //Tree Leave Destroy Blacklist

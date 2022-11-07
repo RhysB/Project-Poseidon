@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.bukkit.craftbukkit.CraftChunk;
 import org.bukkit.craftbukkit.util.LongHashset;
 import org.bukkit.craftbukkit.util.LongHashtable;
@@ -111,7 +112,22 @@ public class ChunkProviderServer implements IChunkProvider {
         // CraftBukkit start
         Chunk chunk = (Chunk) this.chunks.get(i, j);
 
-        chunk = chunk == null ? (!this.world.isLoading && !this.forceChunkLoad ? this.emptyChunk : this.getChunkAt(i, j)) : chunk;
+        //Poseidon chunk regenerate
+        try {
+            chunk = chunk == null ? (!this.world.isLoading && !this.forceChunkLoad ? this.emptyChunk : this.getChunkAt(i, j)) : chunk;
+        } catch (Exception e) {
+            //Poseidon chunk regenerate
+            if (PoseidonConfig.getInstance().getConfigBoolean("emergency.debug.regenerate-corrupt-chunks.enable")) {
+                System.out.println("Poseidon ran into a critical error when attempting to load a chunk (" + i + "," + j + "+. Regenerating chunk...");
+                chunk = this.emptyChunk;
+            } else  {
+                System.out.println("Poseidon ran into a critical error when attempting to load a chunk (" + i + "," + j + "+. The server will now likely hang. Enabling \"emergency.debug.regenerate-corrupt-chunks.enable\" in the Poseidon.yml may help.");
+                e.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+
+
         if (chunk == this.emptyChunk) return chunk;
         if (i != chunk.x || j != chunk.z) {
             MinecraftServer.log.info("Chunk (" + chunk.x + ", " + chunk.z + ") stored at  (" + i + ", " + j + ")");
