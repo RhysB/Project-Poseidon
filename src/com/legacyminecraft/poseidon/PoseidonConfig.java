@@ -73,7 +73,7 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("world.settings.block-tree-growth.info", "This setting allows for server owners to easily block trees growing from automatically destroying certain blocks. The list must be a string with numerical item ids separated by commas.");
         generateConfigOption("world.settings.block-pistons-pushing-furnaces.info", "This workaround prevents pistons from pushing furnaces which prevents a malicious server crash.");
         generateConfigOption("world.settings.block-pistons-pushing-furnaces.enabled", true);
-        generateConfigOption("world.settings.skeleton-shooting-sound-fix.info", "This setting fixes the sound of skeletons shooting not playing on clients.");
+        generateConfigOption("world.settings.skeleton-shooting-sound-fix.info", "This setting fixes the sound of skeletons and players shooting not playing on clients.");
         generateConfigOption("world.settings.skeleton-shooting-sound-fix.enabled", true);
         generateConfigOption("world.settings.speed-hack-check.enable", true);
         generateConfigOption("world.settings.speed-hack-check.teleport", true);
@@ -86,6 +86,12 @@ public class PoseidonConfig extends Configuration {
         //Release2Beta Settings
         generateConfigOption("settings.release2beta.enable-ip-pass-through", false);
         generateConfigOption("settings.release2beta.proxy-ip", "127.0.0.1");
+		
+		//BungeeCord
+		generateConfigOption("settings.bungeecord.bungee-mode.enable", false);
+		generateConfigOption("settings.bungeecord.bungee-mode.kick-message", "You must connect through BungeeCord to join this server!");
+		generateConfigOption("settings.bungeecord.bungee-mode.info", "Only allows connections via BungeeCord to join. Includes optional custom kick message for players not using BungeeCord.");
+		
         //Modded Jar Support
         generateConfigOption("settings.support.modloader.enable", false);
         generateConfigOption("settings.support.modloader.info", "EXPERIMENTAL support for ModloaderMP.");
