@@ -21,7 +21,7 @@ public class UUIDManager {
         //Check if uuidcache.json exists
         if (!configFile.exists()) {
             try (FileWriter file = new FileWriter("uuidcache.json")) {
-                System.out.println("Generating uuidcache.json for Project Poseidon");
+                System.out.println("[Poseidon] Generating uuidcache.json for Project Poseidon");
                 UUIDJsonArray = new JSONArray();
                 file.write(UUIDJsonArray.toJSONString());
                 file.flush();
@@ -31,19 +31,19 @@ public class UUIDManager {
             }
         }
         try {
-            System.out.println("Reading uuidcache.json for Project Poseidon");
+            System.out.println("[Poseidon] Reading uuidcache.json for Project Poseidon");
             JSONParser parser = new JSONParser();
             UUIDJsonArray = (JSONArray) parser.parse(new FileReader("uuidcache.json"));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
-            System.out.println("The UUIDCache is corrupt or unreadable, resetting");
+            System.out.println("[Poseidon] The UUIDCache is corrupt or unreadable, resetting");
             UUIDJsonArray = new JSONArray();
             saveJsonArray();
 
             //e.printStackTrace();
         } catch (Exception e) {
-            System.out.println("Error reading uuidcache.json, changing to memory only cache: " + e + ": " + e.getMessage());
+            System.out.println("[Poseidon] Error reading uuidcache.json, changing to memory only cache: " + e + ": " + e.getMessage());
             UUIDJsonArray = new JSONArray();
         }
 
@@ -67,7 +67,7 @@ public class UUIDManager {
 
     public void saveJsonArray() {
         try (FileWriter file = new FileWriter("uuidcache.json")) {
-            System.out.println("Saving uuidcache.json for Project Poseidon");
+            System.out.println("[Poseidon] Saving UUID Cache");
             file.write(UUIDJsonArray.toJSONString());
             file.flush();
         } catch (IOException e) {
