@@ -1,5 +1,6 @@
 package org.bukkit;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,6 +119,20 @@ public enum ChatColor {
         return input.replaceAll("(?i)\u00A7[0-F]", "");
     }
 
+    public static String translateAlternateColorCodes(final char altColorChar, final String textToTranslate)
+    {
+        final char[] b = textToTranslate.toCharArray();
+        for (int i = 0; i < b.length - 1; ++i)
+        {
+            if (b[i] == altColorChar && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i + 1]) > -1)
+            {
+                b[i] = '§';
+                b[i + 1] = Character.toLowerCase(b[i + 1]);
+            }
+        }
+        return new String(b);
+    }
+    
     static {
         for (ChatColor color : ChatColor.values()) {
             colors.put(color.getCode(), color);
