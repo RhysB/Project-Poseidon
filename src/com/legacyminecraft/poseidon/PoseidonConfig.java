@@ -44,8 +44,7 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.enable-tpc-nodelay", false);
         generateConfigOption("settings.use-get-for-uuids.enabled", false);
         generateConfigOption("settings.use-get-for-uuids.info", "This setting causes the server to use the GET method for Username to UUID conversion. This is useful incase the POST method goes offline.");
-	generateConfigOption("settings.whitelist-kick-message", "&cServer currently whitelisted. Please try again later.");
-	    
+
         //Watchdog
         //generateConfigOption("settings.enable-watchdog", true);
         generateConfigOption("settings.watchdog.info", "Watchdog is a automatic hang detection system which can print stacktraces and kill the server automatically after a predefined interval.");
