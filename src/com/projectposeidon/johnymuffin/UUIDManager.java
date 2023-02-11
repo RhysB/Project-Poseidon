@@ -135,13 +135,19 @@ public class UUIDManager {
     }
 
     public String getUsernameFromUUID(UUID uuid) {
+        // Get most recent username from UUID
+        String username = null;
+        long expiry = -1;
         for (int i = 0; i < UUIDJsonArray.size(); i++) {
-            JSONObject tmp = (JSONObject) UUIDJsonArray.get(i);
-            if (UUID.fromString((String) tmp.get("uuid")).equals(uuid)) {
-                return (String) tmp.get("name");
+            JSONObject playerEntry = (JSONObject) UUIDJsonArray.get(i);
+            UUID entryUUID = UUID.fromString(String.valueOf(playerEntry.get("uuid")));
+            long expiresOn = Long.valueOf(String.valueOf(playerEntry.get("expiresOn")));
+            if (entryUUID.equals(uuid) && expiresOn >= expiry) {
+                expiry = expiresOn;
+                username = String.valueOf(playerEntry.get("name"));
             }
         }
-        return null;
+        return username;
     }
 
     private void removeInstancesOfUsername(String username) {
