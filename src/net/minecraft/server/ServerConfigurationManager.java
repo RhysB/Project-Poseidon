@@ -184,8 +184,7 @@ public class ServerConfigurationManager {
             event.disallow(PlayerLoginEvent.Result.KICK_BANNED, "You are banned from this server!");
             // return null // CraftBukkit
         } else if (!this.isWhitelisted(s)) {
-            String whitelistKickMessage = PoseidonConfig.getInstance().getString("settings.whitelist-kick-message", "&cServer currently whitelisted. Please try again later.");
-            event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', whitelistKickMessage));
+            event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, "You are not white-listed on this server!");
         } else if (this.banByIP.contains(s1)) {
             event.disallow(PlayerLoginEvent.Result.KICK_BANNED, "Your IP address is banned from this server!");
         } else if (this.players.size() >= this.maxPlayers) {
