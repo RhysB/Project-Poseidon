@@ -93,6 +93,8 @@ public class Main {
                         .defaultsTo(new File("bukkit.yml"))
                         .describedAs("Yml file");
 
+                acceptsAll(asList("debug-config"), "Don't load Poseidon.yml, but generate a new one with all the default values");
+
                 acceptsAll(asList("nojline"), "Disables jline and emulates the vanilla console");
 
                 acceptsAll(asList("nogui"), "Some modern panels like to pass this thru. Just ignore it");

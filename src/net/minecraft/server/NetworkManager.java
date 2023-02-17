@@ -3,6 +3,7 @@ package net.minecraft.server;
 import com.legacyminecraft.poseidon.PoseidonConfig;
 import com.legacyminecraft.poseidon.event.PlayerReceivePacketEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
@@ -39,13 +40,24 @@ public class NetworkManager {
     public static int[] e = new int[256];
     public int f = 0;
     private int lowPriorityQueueDelay = 50;
-    private boolean firePacketEvents;
+    private final boolean firePacketEvents;
+
+    private final boolean spamDetection;
+
+    private final int threshold;
 
     public NetworkManager(Socket socket, String s, NetHandler nethandler) {
         this.socket = socket;
         this.i = socket.getRemoteSocketAddress();
         this.p = nethandler;
+
+        //Poseidon
         this.firePacketEvents = PoseidonConfig.getInstance().getBoolean("settings.packet-events.enabled", false);
+        this.spamDetection = PoseidonConfig.getInstance().getBoolean("settings.packet-spam-detection.enabled", true);
+        this.threshold = PoseidonConfig.getInstance().getInt("settings.packet-spam-detection.threshold", 1000);
+
+        //Debug for packet spam detection
+//        System.out.println("[Poseidon] Packet spam detection is " + (this.spamDetection ? "enabled" : "disabled") + " with a threshold of " + this.threshold + " packets");
 
         // CraftBukkit start - IPv6 stack in Java on BSD/OSX doesn't support setTrafficClass
         try {
@@ -238,6 +250,28 @@ public class NetworkManager {
         }
 
         int i = 100;
+
+        //Poseidon - Packet spam detection
+        if (spamDetection) {
+            if (this.m.size() > threshold) {
+                String playerUsername = "Unknown";
+                if (this.p instanceof NetServerHandler) {
+                    playerUsername = ((NetServerHandler) this.p).player.name;
+                    ((NetServerHandler) this.p).disconnect(ChatColor.RED + "[Poseidon] You have been kicked for packet spamming.");
+                } else {
+                    this.a("disconnect.spam", new Object[0]);
+                }
+                System.out.println("[Poseidon] Player " + playerUsername + " has been kicked for packet spamming. The queue size was " + this.m.size() + " and the threshold was " + threshold + ".");
+            }
+        }
+
+//        if(this.m.size() > 1000) {
+//            String playerUsername = "Unknown";
+//            if (this.p instanceof NetServerHandler) {
+//                System.out.println("The packet queue size is " + this.m.size() + " for player " + ((NetServerHandler) this.p).player.name + ".");
+//            }
+//        }
+
 
         while (!this.m.isEmpty() && i-- >= 0) {
             Packet packet = (Packet) this.m.remove(0);

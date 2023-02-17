@@ -94,6 +94,12 @@ public class MinecraftServer implements Runnable, ICommandListener {
         System.setErr(new PrintStream(new LoggerOutputStream(log, Level.SEVERE), true));
         // CraftBukkit end
 
+        //If Poseidon Config DEBUG is enabled, enable debug mode
+        if(options.has("debug-config")) {
+            log.info("[Poseidon] Configuration debug mode has been enabled. This will cause the poseidon.yml to be reloaded every time the server starts.");
+            PoseidonConfig.getInstance().resetConfig();
+        }
+
         modLoaderSupport = PoseidonConfig.getInstance().getBoolean("settings.support.modloader.enable", false);
 
         if (modLoaderSupport) {
