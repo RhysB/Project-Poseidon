@@ -104,7 +104,7 @@ public class Explosion {
          * optimizedExplosions: false
          */
         boolean optimizeExplosions = (boolean) PoseidonConfig.getInstance().getProperty("world-settings.optimized-explosions");
-		boolean sendMotion = (boolean) PoseidonConfig.getInstance().getProperty("world-settings.send-explosion-velocity");
+        boolean sendMotion = (boolean) PoseidonConfig.getInstance().getProperty("world-settings.send-explosion-velocity");
         
         for (int k2 = 0; k2 < list.size(); ++k2) {
             Entity entity = (Entity) list.get(k2);
@@ -146,9 +146,9 @@ public class Explosion {
                         entity.motX += d0 * d10;
                         entity.motY += d1 * d10;
                         entity.motZ += d2 * d10;
-						if (sendMotion) { // Poseidon: fix explosion velocity
-							entity.velocityChanged = true;
-						}
+                        if (sendMotion) { // Poseidon: fix explosion velocity
+                            entity.velocityChanged = true;
+                        }
                     }
                 } else {
                     EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(this.source.getBukkitEntity(), damagee, EntityDamageEvent.DamageCause.ENTITY_EXPLOSION, damageDone);
@@ -159,9 +159,9 @@ public class Explosion {
                         entity.motX += d0 * d10;
                         entity.motY += d1 * d10;
                         entity.motZ += d2 * d10;
-						if (sendMotion) { // Poseidon: fix explosion velocity
-							entity.velocityChanged = true;
-						}
+                        if (sendMotion) { // Poseidon: fix explosion velocity
+                            entity.velocityChanged = true;
+                        }
                     }
                 }
                 // CraftBukkit end
