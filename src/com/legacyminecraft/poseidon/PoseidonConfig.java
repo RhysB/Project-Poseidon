@@ -82,6 +82,7 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.statistics.enabled", true);
         //Word Settings
         generateConfigOption("world-settings.optimized-explosions", false);
+        generateConfigOption("world-settings.send-explosion-velocity", true);
         generateConfigOption("world-settings.randomize-spawn", true);
         generateConfigOption("world-settings.teleport-to-highest-safe-block", true);
         generateConfigOption("world-settings.use-modern-fence-bounding-boxes", false);
