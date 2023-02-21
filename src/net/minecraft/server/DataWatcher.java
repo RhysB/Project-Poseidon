@@ -7,6 +7,7 @@ import java.util.*;
 
 public class DataWatcher {
 
+	private boolean d = true;
     private static final HashMap a = new HashMap();
     private final Map b = new HashMap();
     private boolean c;
@@ -26,6 +27,7 @@ public class DataWatcher {
             WatchableObject watchableobject = new WatchableObject(integer.intValue(), i, object);
 
             this.b.put(Integer.valueOf(i), watchableobject);
+            this.d = false;
         }
     }
 
@@ -200,6 +202,10 @@ public class DataWatcher {
         }
 
         return arraylist;
+    }
+    
+    public boolean getD() {
+        return this.d;
     }
 
     static {

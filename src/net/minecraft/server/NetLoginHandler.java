@@ -177,9 +177,11 @@ public class NetLoginHandler extends NetHandler {
             this.server.networkListenThread.a(netserverhandler);
             netserverhandler.sendPacket(new Packet4UpdateTime(entityplayer.getPlayerTime())); // CraftBukkit - add support for player specific time
             entityplayer.syncInventory();
+            // poseidon start
             if (PoseidonConfig.getInstance().getBoolean("settings.support.modloader.enable", false)) {
                 net.minecraft.server.ModLoaderMp.HandleAllLogins(entityplayer);
             }
+            // poseidon end
         }
 
         this.c = true;

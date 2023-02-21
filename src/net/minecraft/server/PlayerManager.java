@@ -170,6 +170,13 @@ public class PlayerManager {
             }
         }
     }
+    
+    // Poseidon
+    public boolean a(EntityPlayer entityplayer, int i, int j) {
+        PlayerInstance playerchunk = this.a(i, j, false);
+
+        return playerchunk == null ? false : PlayerInstance.b(playerchunk).contains(entityplayer) && !entityplayer.chunkCoordIntPairQueue.contains(PlayerInstance.a(playerchunk));
+    }
 
     public int getFurthestViewableBlock() {
         return this.f * 16 - 16;
