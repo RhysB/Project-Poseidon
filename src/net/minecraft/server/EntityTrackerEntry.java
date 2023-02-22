@@ -243,6 +243,7 @@ public class EntityTrackerEntry {
                     
                     entityplayer.removeQueue.remove(Integer.valueOf(this.tracker.id));
                     // CraftBukkit end
+                    
                     this.trackedPlayers.add(entityplayer);
                     Packet packet = this.b();
                     entityplayer.netServerHandler.sendPacket(packet);
