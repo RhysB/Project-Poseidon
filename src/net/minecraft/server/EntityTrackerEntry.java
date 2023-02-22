@@ -244,7 +244,8 @@ public class EntityTrackerEntry {
                     entityplayer.removeQueue.remove(Integer.valueOf(this.tracker.id));
                     // CraftBukkit end
                     this.trackedPlayers.add(entityplayer);
-                    entityplayer.netServerHandler.sendPacket(this.b());
+                    Packet packet = this.b();
+                    entityplayer.netServerHandler.sendPacket(packet);
                     // Poseidon Start
 					if (!this.tracker.datawatcher.getD()) {
                         entityplayer.netServerHandler.sendPacket(new Packet40EntityMetadata(this.tracker.id, this.tracker.datawatcher));
