@@ -161,4 +161,18 @@ public class EntityTracker {
             entitytrackerentry.c(entityplayer);
         }
     }
+    
+    // Poseidon
+    // CraftBukkit - synchronized
+    public synchronized void a(EntityPlayer entityplayer, Chunk chunk) {
+        Iterator iterator = this.a.iterator();
+
+        while (iterator.hasNext()) {
+            EntityTrackerEntry entitytrackerentry = (EntityTrackerEntry) iterator.next();
+
+            if (entitytrackerentry.tracker != entityplayer && entitytrackerentry.tracker.bH == chunk.x && entitytrackerentry.tracker.bJ == chunk.z) {
+                entitytrackerentry.b(entityplayer);
+            }
+        }
+    }
 }

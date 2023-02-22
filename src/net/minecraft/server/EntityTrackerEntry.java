@@ -61,8 +61,9 @@ public class EntityTrackerEntry {
             this.scanPlayers(list);
         }
 
-        ++this.t;
         if (++this.l % this.c == 0) {
+        	++this.t; // Poseidon - moved below
+            
         	// encoded means multiplied by 32
         	// this is required to send it to the client, as the relative position is sent as the float multiplied by 32
             int newEncodedPosX = MathHelper.floor(this.tracker.locX * 32.0D);
@@ -83,6 +84,19 @@ public class EntityTrackerEntry {
             
             boolean needsRotationUpdate = Math.abs(newEncodedRotationYaw - this.g) >= rotationUpdateTreshold || Math.abs(newEncodedRotationPitch - this.h) >= rotationUpdateTreshold;
 
+            // CraftBukkit start - Code moved from below
+            if (needsPositionUpdate) {
+                this.d = newEncodedPosX;
+                this.e = newEncodedPosY;
+                this.f = newEncodedPosZ;
+            }
+
+            if (needsRotationUpdate) {
+                this.g = newEncodedRotationYaw;
+                this.h = newEncodedRotationPitch;
+            }
+            // CraftBukkit end
+            
             if (encodedDiffX >= -128 && encodedDiffX < 128 && encodedDiffY >= -128 && encodedDiffY < 128 && encodedDiffZ >= -128 && encodedDiffZ < 128 && this.t <= 400) {
             	// entity has moved less than 4 blocks
                 if (needsPositionUpdate && needsRotationUpdate) {
@@ -99,6 +113,13 @@ public class EntityTrackerEntry {
                 //this.tracker.locY = (double) j / 32.0D;
                 //this.tracker.locZ = (double) k / 32.0D;
                 // entity has moved more than 4 blocks, send teleport
+                
+                // CraftBukkit start - Refresh list of who can see a player before sending teleport packet
+                if (this.tracker instanceof EntityPlayer) {
+                    this.scanPlayers(new java.util.ArrayList(this.trackedPlayers));
+                }
+                // CraftBukkit end
+                
                 packet = new Packet34EntityTeleport(this.tracker.id, newEncodedPosX, newEncodedPosY, newEncodedPosZ, (byte) newEncodedRotationYaw, (byte) newEncodedRotationPitch);
             }
 
@@ -127,6 +148,7 @@ public class EntityTrackerEntry {
                 this.b((Packet) (new Packet40EntityMetadata(this.tracker.id, datawatcher)));
             }
 
+            /* CraftBukkit start - Code moved up
             if (needsPositionUpdate) {
                 this.d = newEncodedPosX;
                 this.e = newEncodedPosY;
@@ -137,6 +159,7 @@ public class EntityTrackerEntry {
                 this.g = newEncodedRotationYaw;
                 this.h = newEncodedRotationPitch;
             }
+            // Craftbukkit end */
         }
 
         if (this.tracker.velocityChanged) {
@@ -184,11 +207,21 @@ public class EntityTrackerEntry {
     }
 
     public void a() {
-        this.a((Packet) (new Packet29DestroyEntity(this.tracker.id)));
+		// Poseidon start
+        //this.a((Packet) (new Packet29DestroyEntity(this.tracker.id)));
+		Iterator iterator = this.trackedPlayers.iterator();
+
+        while (iterator.hasNext()) {
+            EntityPlayer entityplayer = (EntityPlayer) iterator.next();
+
+            entityplayer.removeQueue.add(Integer.valueOf(this.tracker.id));
+        }
+		// Poseidon end
     }
 
     public void a(EntityPlayer entityplayer) {
         if (this.trackedPlayers.contains(entityplayer)) {
+			entityplayer.removeQueue.add(Integer.valueOf(this.tracker.id)); // Poseidon
             this.trackedPlayers.remove(entityplayer);
         }
     }
@@ -199,7 +232,7 @@ public class EntityTrackerEntry {
             double d1 = entityplayer.locZ - (double) (this.f / 32);
 
             if (d0 >= (double) (-this.b) && d0 <= (double) this.b && d1 >= (double) (-this.b) && d1 <= (double) this.b) {
-                if (!this.trackedPlayers.contains(entityplayer)) {
+                if (!this.trackedPlayers.contains(entityplayer) && this.d(entityplayer)) {
                     // CraftBukkit start
                     if (tracker instanceof EntityPlayer) {
                         org.bukkit.entity.Player player = (Player) ((EntityPlayer) tracker).getBukkitEntity();
@@ -207,12 +240,35 @@ public class EntityTrackerEntry {
                             return;
                         }
                     }
+                    
+                    entityplayer.removeQueue.remove(Integer.valueOf(this.tracker.id));
                     // CraftBukkit end
+                    
                     this.trackedPlayers.add(entityplayer);
-                    entityplayer.netServerHandler.sendPacket(this.b());
+                    Packet packet = this.b();
+                    entityplayer.netServerHandler.sendPacket(packet);
+                    // Poseidon Start
+					if (!this.tracker.datawatcher.getD()) {
+                        entityplayer.netServerHandler.sendPacket(new Packet40EntityMetadata(this.tracker.id, this.tracker.datawatcher));
+                    }
+					
+					this.i = this.tracker.motX;
+                    this.j = this.tracker.motY;
+                    this.k = this.tracker.motZ;
                     if (this.isMoving) {
                         entityplayer.netServerHandler.sendPacket(new Packet28EntityVelocity(this.tracker.id, this.tracker.motX, this.tracker.motY, this.tracker.motZ));
                     }
+
+					if (this.tracker.vehicle != null) {
+                        entityplayer.netServerHandler.sendPacket(new Packet39AttachEntity(this.tracker, this.tracker.vehicle));
+                    }
+					// Poseidon end
+					
+					// CraftBukkit start
+                    if (this.tracker.passenger != null) {
+                        entityplayer.netServerHandler.sendPacket(new Packet39AttachEntity(this.tracker.passenger, this.tracker));
+                    }
+                    // CraftBukkit end
 
                     ItemStack[] aitemstack = this.tracker.getEquipment();
 
@@ -232,9 +288,14 @@ public class EntityTrackerEntry {
                 }
             } else if (this.trackedPlayers.contains(entityplayer)) {
                 this.trackedPlayers.remove(entityplayer);
-                entityplayer.netServerHandler.sendPacket(new Packet29DestroyEntity(this.tracker.id));
+                entityplayer.removeQueue.add(Integer.valueOf(this.tracker.id)); // Poseidon
+                //entityplayer.netServerHandler.sendPacket(new Packet29DestroyEntity(this.tracker.id));
             }
         }
+    }
+    
+    private boolean d(EntityPlayer entityplayer) {
+        return entityplayer.getWorldServer().getPlayerManager().a(entityplayer, this.tracker.bH, this.tracker.bJ);
     }
 
     public void scanPlayers(List list) {
@@ -244,6 +305,13 @@ public class EntityTrackerEntry {
     }
 
     private Packet b() {
+    	if (this.tracker.dead) { // Poseidon
+    		// CraftBukkit start - Remove useless error spam, just return
+            // System.out.println("Fetching addPacket for removed entity");
+            return null;
+            // CraftBukkit end
+        }
+    	
         if (this.tracker instanceof EntityItem) {
             EntityItem entityitem = (EntityItem) this.tracker;
             Packet21PickupSpawn packet21pickupspawn = new Packet21PickupSpawn(entityitem);
@@ -329,7 +397,8 @@ public class EntityTrackerEntry {
     public void c(EntityPlayer entityplayer) {
         if (this.trackedPlayers.contains(entityplayer)) {
             this.trackedPlayers.remove(entityplayer);
-            entityplayer.netServerHandler.sendPacket(new Packet29DestroyEntity(this.tracker.id));
+            entityplayer.removeQueue.add(Integer.valueOf(this.tracker.id)); // Poseidon
+            //entityplayer.netServerHandler.sendPacket(new Packet29DestroyEntity(this.tracker.id));
         }
     }
 }

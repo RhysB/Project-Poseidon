@@ -23,6 +23,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     public double e;
     public List chunkCoordIntPairQueue = new LinkedList();
     public Set playerChunkCoordIntPairs = new HashSet();
+    public final List removeQueue = new LinkedList(); // poseidon
     private int bL = -99999999;
     private int bM = 60;
     private ItemStack[] bN = new ItemStack[]{null, null, null, null, null};
@@ -201,8 +202,30 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         super.b(i, RegainReason.EATING);
     }
 
+    public WorldServer getWorldServer() {
+        return (WorldServer) this.world;
+    }
+    
     public void a(boolean flag) {
         super.m_();
+        
+        // Poseidon start
+        while (!this.removeQueue.isEmpty()) {
+            int i = Math.min(this.removeQueue.size(), 127);
+            int[] aint = new int[i];
+            Iterator iterator = this.removeQueue.iterator();
+            int j = 0;
+
+            while (iterator.hasNext() && j < i) {
+                aint[j++] = ((Integer) iterator.next()).intValue();
+                iterator.remove();
+            }
+
+            for (int k = 0; k < aint.length; k++) { // cant use array since not supported in b1.7.3
+            	this.netServerHandler.sendPacket(new Packet29DestroyEntity(aint[k]));
+            }
+        }
+        // poseidon end
 
         for (int i = 0; i < this.inventory.getSize(); ++i) {
             ItemStack itemstack = this.inventory.getItem(i);
@@ -216,29 +239,73 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
             }
         }
 
+        // Poseidon start
         if (flag && !this.chunkCoordIntPairQueue.isEmpty()) {
-            ChunkCoordIntPair chunkcoordintpair = (ChunkCoordIntPair) this.chunkCoordIntPairQueue.get(0);
-
-            if (chunkcoordintpair != null) {
-                boolean flag1 = false;
-
-                if (this.netServerHandler.b() + ChunkCompressionThread.getPlayerQueueSize(this) < 4) { // CraftBukkit - Add check against Chunk Packets in the ChunkCompressionThread.
-                    flag1 = true;
-                }
-
-                if (flag1) {
-                    WorldServer worldserver = this.b.getWorldServer(this.dimension);
-
-                    this.chunkCoordIntPairQueue.remove(chunkcoordintpair);
-                    this.netServerHandler.sendPacket(new Packet51MapChunk(chunkcoordintpair.x * 16, 0, chunkcoordintpair.z * 16, 16, 128, 16, worldserver));
-                    List list = worldserver.getTileEntities(chunkcoordintpair.x * 16, 0, chunkcoordintpair.z * 16, chunkcoordintpair.x * 16 + 16, 128, chunkcoordintpair.z * 16 + 16);
-
-                    for (int j = 0; j < list.size(); ++j) {
-                        this.a((TileEntity) list.get(j));
-                    }
-                }
-            }
+        	if (PoseidonConfig.getInstance().getBoolean("settings.faster-chunk-sending.enabled", true)) {
+	        	ArrayList arraylist = new ArrayList();
+	            Iterator iterator1 = this.chunkCoordIntPairQueue.iterator();
+	            ArrayList arraylist1 = new ArrayList();
+	
+	            while (iterator1.hasNext() && arraylist.size() < 5) {
+	                ChunkCoordIntPair chunkcoordintpair = (ChunkCoordIntPair) iterator1.next();
+	
+	                iterator1.remove();
+	                if (chunkcoordintpair != null && this.world.isLoaded(chunkcoordintpair.x << 4, 0, chunkcoordintpair.z << 4)) {
+	                    // CraftBukkit start - Get tile entities directly from the chunk instead of the world
+	                    Chunk chunk = this.world.getChunkAt(chunkcoordintpair.x, chunkcoordintpair.z);
+	                    arraylist.add(chunk);
+	                    arraylist1.addAll(chunk.tileEntities.values());
+	                    // CraftBukkit end
+	                }
+	            }
+	
+	            if (!arraylist.isEmpty()) {
+	                Iterator iterator2 = arraylist.iterator();
+	
+	                while (iterator2.hasNext()) {
+	                    Chunk chunk = (Chunk) iterator2.next();
+	                    
+	                    this.netServerHandler.sendPacket(new Packet51MapChunk(chunk.x * 16, 0, chunk.z * 16, 16, 128, 16, this.getWorldServer()));
+	                    this.getWorldServer().tracker.a(this, chunk);
+	                }
+	                
+	                iterator2 = arraylist1.iterator();
+	
+	                while (iterator2.hasNext()) {
+	                    TileEntity tileentity = (TileEntity) iterator2.next();
+	
+	                    this.a(tileentity);
+	                }
+	            }
+	        } else {
+	        	ChunkCoordIntPair chunkcoordintpair = (ChunkCoordIntPair) this.chunkCoordIntPairQueue.get(0);
+	        	
+	            if (chunkcoordintpair != null) {
+	                boolean flag1 = false;
+	
+	                if (this.netServerHandler.b() + ChunkCompressionThread.getPlayerQueueSize(this) < 4) { // CraftBukkit - Add check against Chunk Packets in the ChunkCompressionThread.
+	                    flag1 = true;
+	                }
+	
+	                if (flag1) {
+	                    WorldServer worldserver = this.b.getWorldServer(this.dimension);
+	
+	                    this.chunkCoordIntPairQueue.remove(chunkcoordintpair);
+	                    this.netServerHandler.sendPacket(new Packet51MapChunk(chunkcoordintpair.x * 16, 0, chunkcoordintpair.z * 16, 16, 128, 16, worldserver));
+	                    
+	                    Chunk chunk = this.world.getChunkAt(chunkcoordintpair.x, chunkcoordintpair.z);
+	                    this.getWorldServer().tracker.a(this, chunk);
+	                    
+	                    List list = worldserver.getTileEntities(chunkcoordintpair.x * 16, 0, chunkcoordintpair.z * 16, chunkcoordintpair.x * 16 + 16, 128, chunkcoordintpair.z * 16 + 16);
+	
+	                    for (int j = 0; j < list.size(); ++j) {
+	                        this.a((TileEntity) list.get(j));
+	                    }
+	                }
+	            }
+	        }
         }
+        // Poseidon end
 
         if (this.E) {
             //if (this.b.propertyManager.getBoolean("allow-nether", true)) { // CraftBukkit

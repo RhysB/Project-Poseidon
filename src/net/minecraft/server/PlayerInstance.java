@@ -189,4 +189,13 @@ class PlayerInstance {
             }
         }
     }
+    
+    // Poseidon
+    static ChunkCoordIntPair a(PlayerInstance playerchunk) {
+        return playerchunk.location;
+    }
+
+    static List b(PlayerInstance playerchunk) {
+        return playerchunk.b;
+    }
 }
