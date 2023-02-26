@@ -27,8 +27,8 @@ class EntityListEntry {
             return false;
         } else {
             EntityListEntry entitylistentry = (EntityListEntry) object;
-            Integer integer = this.a();
-            Integer integer1 = entitylistentry.a();
+            Integer integer = Integer.valueOf(this.a());
+            Integer integer1 = Integer.valueOf(entitylistentry.a());
 
             if (integer == integer1 || integer != null && integer.equals(integer1)) {
                 Object object1 = this.b();

@@ -71,7 +71,7 @@ public abstract class EntityHuman extends EntityLiving {
 
     protected void b() {
         super.b();
-        this.datawatcher.a(16, (byte) 0);
+        this.datawatcher.a(16, Byte.valueOf((byte) 0));
     }
 
     public void m_() {

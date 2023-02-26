@@ -140,15 +140,20 @@ public abstract class Event implements Serializable {
     /**
      * Provides a lookup for all core events
      *
-     * @see org.bukkit.event.Event
+     * @see org.bukkit.event.
      */
     public enum Type {
+
         /**
          * POSEIDON EVENTS
          */
+
         PLAYER_RECEIVE_PACKET(Category.PACKET),
+
         PLAYER_SEND_PACKET(Category.PACKET),
+
         PACKET_RECEIVED(Category.PACKET),
+
 
         /**
          * Called when a player first starts their connection. Called before UUID is known.
@@ -156,6 +161,7 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.player.PlayerConnectionInitializationEvent
          */
         Player_Connection_Initialization(Category.PLAYER),
+
 
         /**
          * PLAYER EVENTS

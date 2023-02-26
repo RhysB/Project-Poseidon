@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.ChunkCompressionThread;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 
 import java.util.*;
@@ -14,6 +15,7 @@ import java.util.*;
 // CraftBukkit start
 
 public class EntityPlayer extends EntityHuman implements ICrafting {
+
     public NetServerHandler netServerHandler;
     public MinecraftServer b;
     public ItemInWorldManager itemInWorldManager;

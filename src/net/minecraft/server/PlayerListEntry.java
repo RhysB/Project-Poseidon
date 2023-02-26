@@ -27,8 +27,8 @@ class PlayerListEntry {
             return false;
         } else {
             PlayerListEntry playerlistentry = (PlayerListEntry) object;
-            Long olong = this.a();
-            Long olong1 = playerlistentry.a();
+            Long olong = Long.valueOf(this.a());
+            Long olong1 = Long.valueOf(playerlistentry.a());
 
             if (olong == olong1 || olong != null && olong.equals(olong1)) {
                 Object object1 = this.b();

@@ -214,14 +214,14 @@ public class EntityTrackerEntry {
         while (iterator.hasNext()) {
             EntityPlayer entityplayer = (EntityPlayer) iterator.next();
 
-            entityplayer.removeQueue.add(this.tracker.id);
+            entityplayer.removeQueue.add(Integer.valueOf(this.tracker.id));
         }
 		// Poseidon end
     }
 
     public void a(EntityPlayer entityplayer) {
         if (this.trackedPlayers.contains(entityplayer)) {
-			entityplayer.removeQueue.add(this.tracker.id); // Poseidon
+			entityplayer.removeQueue.add(Integer.valueOf(this.tracker.id)); // Poseidon
             this.trackedPlayers.remove(entityplayer);
         }
     }
@@ -288,7 +288,7 @@ public class EntityTrackerEntry {
                 }
             } else if (this.trackedPlayers.contains(entityplayer)) {
                 this.trackedPlayers.remove(entityplayer);
-                entityplayer.removeQueue.add(this.tracker.id); // Poseidon
+                entityplayer.removeQueue.add(Integer.valueOf(this.tracker.id)); // Poseidon
                 //entityplayer.netServerHandler.sendPacket(new Packet29DestroyEntity(this.tracker.id));
             }
         }
@@ -397,7 +397,7 @@ public class EntityTrackerEntry {
     public void c(EntityPlayer entityplayer) {
         if (this.trackedPlayers.contains(entityplayer)) {
             this.trackedPlayers.remove(entityplayer);
-            entityplayer.removeQueue.add(this.tracker.id); // Poseidon
+            entityplayer.removeQueue.add(Integer.valueOf(this.tracker.id)); // Poseidon
             //entityplayer.netServerHandler.sendPacket(new Packet29DestroyEntity(this.tracker.id));
         }
     }

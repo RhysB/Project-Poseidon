@@ -65,7 +65,7 @@ public class StatisticList {
             while (iterator.hasNext()) {
                 CraftingRecipe craftingrecipe = (CraftingRecipe) iterator.next();
 
-                hashset.add(craftingrecipe.b().id);
+                hashset.add(Integer.valueOf(craftingrecipe.b().id));
             }
 
             iterator = FurnaceRecipes.getInstance().b().values().iterator();
@@ -73,7 +73,7 @@ public class StatisticList {
             while (iterator.hasNext()) {
                 ItemStack itemstack = (ItemStack) iterator.next();
 
-                hashset.add(itemstack.id);
+                hashset.add(Integer.valueOf(itemstack.id));
             }
 
             D = new Statistic[32000];

@@ -34,11 +34,11 @@ public class Statistic {
     }
 
     public Statistic d() {
-        if (StatisticList.a.containsKey(this.e)) {
-            throw new RuntimeException("Duplicate stat id: \"" + ((Statistic) StatisticList.a.get(this.e)).f + "\" and \"" + this.f + "\" at id " + this.e);
+        if (StatisticList.a.containsKey(Integer.valueOf(this.e))) {
+            throw new RuntimeException("Duplicate stat id: \"" + ((Statistic) StatisticList.a.get(Integer.valueOf(this.e))).f + "\" and \"" + this.f + "\" at id " + this.e);
         } else {
             StatisticList.b.add(this);
-            StatisticList.a.put(this.e, this);
+            StatisticList.a.put(Integer.valueOf(this.e), this);
             this.h = AchievementMap.a(this.e);
             return this;
         }

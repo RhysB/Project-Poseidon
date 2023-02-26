@@ -20,14 +20,14 @@ public class ChunkProviderLoadOrGenerate implements IChunkProvider {
     }
 
     public boolean isChunkLoaded(int i, int j) {
-        return this.e.containsKey(ChunkCoordIntPair.a(i, j));
+        return this.e.containsKey(Integer.valueOf(ChunkCoordIntPair.a(i, j)));
     }
 
     public Chunk getChunkAt(int i, int j) {
         int k = ChunkCoordIntPair.a(i, j);
 
-        this.a.remove(k);
-        Chunk chunk = (Chunk) this.e.get(k);
+        this.a.remove(Integer.valueOf(k));
+        Chunk chunk = (Chunk) this.e.get(Integer.valueOf(k));
 
         if (chunk == null) {
             chunk = this.d(i, j);
@@ -39,7 +39,7 @@ public class ChunkProviderLoadOrGenerate implements IChunkProvider {
                 }
             }
 
-            this.e.put(k, chunk);
+            this.e.put(Integer.valueOf(k), chunk);
             this.f.add(chunk);
             if (chunk != null) {
                 chunk.loadNOP();
@@ -67,7 +67,7 @@ public class ChunkProviderLoadOrGenerate implements IChunkProvider {
     }
 
     public Chunk getOrCreateChunk(int i, int j) {
-        Chunk chunk = (Chunk) this.e.get(ChunkCoordIntPair.a(i, j));
+        Chunk chunk = (Chunk) this.e.get(Integer.valueOf(ChunkCoordIntPair.a(i, j)));
 
         return chunk == null ? this.getChunkAt(i, j) : chunk;
     }

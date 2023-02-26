@@ -18,11 +18,11 @@ public class EntitySlime extends EntityLiving implements IMonster {
 
     protected void b() {
         super.b();
-        this.datawatcher.a(16, (byte) 1);
+        this.datawatcher.a(16, new Byte((byte) 1));
     }
 
     public void setSize(int i) {
-        this.datawatcher.watch(16, (byte) i);
+        this.datawatcher.watch(16, new Byte((byte) i));
         this.b(0.6F * (float) i, 0.6F * (float) i);
         this.health = i * i;
         this.setPosition(this.locX, this.locY, this.locZ);

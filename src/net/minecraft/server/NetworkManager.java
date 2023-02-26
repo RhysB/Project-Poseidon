@@ -272,6 +272,7 @@ public class NetworkManager {
 //            }
 //        }
 
+
         while (!this.m.isEmpty() && i-- >= 0) {
             Packet packet = (Packet) this.m.remove(0);
 
@@ -280,12 +281,16 @@ public class NetworkManager {
                 PlayerReceivePacketEvent event = new PlayerReceivePacketEvent(((NetServerHandler) this.p).player.name, packet);
                 Bukkit.getPluginManager().callEvent(event);
                 packet = event.getPacket();
-                if (!event.isCancelled()) packet.a(this.p);
+                if (!event.isCancelled()) {
+                    packet.a(this.p);
+                }
+
             } else {
                 packet.a(this.p);
             }
 
             //Poseidon End
+
 //            packet.a(this.p);
         }
 

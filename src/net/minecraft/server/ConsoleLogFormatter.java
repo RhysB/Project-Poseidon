@@ -13,11 +13,11 @@ final class ConsoleLogFormatter extends Formatter {
 
     ConsoleLogFormatter() {}
 
-    public String format(LogRecord logRecord) {
+    public String format(LogRecord logrecord) {
         StringBuilder stringbuilder = new StringBuilder();
 
-        stringbuilder.append(this.a.format(logRecord.getMillis()));
-        Level level = logRecord.getLevel();
+        stringbuilder.append(this.a.format(Long.valueOf(logrecord.getMillis())));
+        Level level = logrecord.getLevel();
 
         if (level == Level.FINEST) {
             stringbuilder.append(" [FINEST] ");
@@ -35,9 +35,9 @@ final class ConsoleLogFormatter extends Formatter {
             stringbuilder.append(" [" + level.getLocalizedName() + "] ");
         }
 
-        stringbuilder.append(logRecord.getMessage());
+        stringbuilder.append(logrecord.getMessage());
         stringbuilder.append('\n');
-        Throwable throwable = logRecord.getThrown();
+        Throwable throwable = logrecord.getThrown();
 
         if (throwable != null) {
             StringWriter stringwriter = new StringWriter();
