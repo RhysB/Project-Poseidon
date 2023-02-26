@@ -5,9 +5,7 @@ import com.projectposeidon.johnymuffin.UUIDManager;
 import java.util.UUID;
 
 public final class PoseidonUUID {
-
     private PoseidonUUID() {
-
     }
 
     /**
@@ -69,6 +67,4 @@ public final class PoseidonUUID {
     public static String getPlayerUsernameFromUUID(UUID uuid) {
         return UUIDManager.getInstance().getUsernameFromUUID(uuid);
     }
-
-
 }

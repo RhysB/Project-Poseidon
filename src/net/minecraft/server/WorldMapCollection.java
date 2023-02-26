@@ -123,7 +123,7 @@ public class WorldMapCollection {
                         String s = nbttagshort.b();
                         short short1 = nbttagshort.a;
 
-                        this.d.put(s, Short.valueOf(short1));
+                        this.d.put(s, short1);
                     }
                 }
             }
@@ -136,9 +136,9 @@ public class WorldMapCollection {
         Short oshort = (Short) this.d.get(s);
 
         if (oshort == null) {
-            oshort = Short.valueOf((short) 0);
+            oshort = (short) 0;
         } else {
-            oshort = Short.valueOf((short) (oshort.shortValue() + 1));
+            oshort = (short) (oshort.shortValue() + 1);
         }
 
         this.d.put(s, oshort);

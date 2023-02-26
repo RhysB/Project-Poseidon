@@ -20,7 +20,7 @@ public class AchievementMap {
                 String[] astring = s.split(",");
                 int i = Integer.parseInt(astring[0]);
 
-                this.b.put(Integer.valueOf(i), astring[1]);
+                this.b.put(i, astring[1]);
             }
 
             bufferedreader.close();
@@ -30,6 +30,6 @@ public class AchievementMap {
     }
 
     public static String a(int i) {
-        return (String) a.b.get(Integer.valueOf(i));
+        return (String) a.b.get(i);
     }
 }

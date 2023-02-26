@@ -26,11 +26,11 @@ public class FurnaceRecipes {
     }
 
     public void registerRecipe(int i, ItemStack itemstack) {
-        this.b.put(Integer.valueOf(i), itemstack);
+        this.b.put(i, itemstack);
     }
 
     public ItemStack a(int i) {
-        return (ItemStack) this.b.get(Integer.valueOf(i));
+        return (ItemStack) this.b.get(i);
     }
 
     public Map b() {

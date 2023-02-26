@@ -14,7 +14,7 @@ public class EntitySheep extends EntityAnimal {
 
     protected void b() {
         super.b();
-        this.datawatcher.a(16, new Byte((byte) 0));
+        this.datawatcher.a(16, (byte) 0);
     }
 
     public boolean damageEntity(Entity entity, int i) {
@@ -99,7 +99,7 @@ public class EntitySheep extends EntityAnimal {
     public void setColor(int i) {
         byte b0 = this.datawatcher.a(16);
 
-        this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & 240 | i & 15)));
+        this.datawatcher.watch(16, (byte) (b0 & 240 | i & 15));
     }
 
     public boolean isSheared() {
@@ -110,9 +110,9 @@ public class EntitySheep extends EntityAnimal {
         byte b0 = this.datawatcher.a(16);
 
         if (flag) {
-            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 | 16)));
+            this.datawatcher.watch(16, (byte) (b0 | 16));
         } else {
-            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & -17)));
+            this.datawatcher.watch(16, (byte) (b0 & -17));
         }
     }
 

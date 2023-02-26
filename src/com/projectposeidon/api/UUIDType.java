@@ -5,5 +5,4 @@ public enum UUIDType {
     ONLINE,
     OFFLINE,
     UNKNOWN
-
 }

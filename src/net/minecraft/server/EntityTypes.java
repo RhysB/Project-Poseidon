@@ -15,8 +15,8 @@ public class EntityTypes {
     private static void a(Class oclass, String s, int i) {
         a.put(s, oclass);
         b.put(oclass, s);
-        c.put(Integer.valueOf(i), oclass);
-        d.put(oclass, Integer.valueOf(i));
+        c.put(i, oclass);
+        d.put(oclass, i);
     }
 
     public static Entity a(String s, World world) {

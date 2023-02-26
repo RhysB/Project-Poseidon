@@ -1,6 +1,5 @@
 package org.bukkit.craftbukkit;
 
-import com.google.common.collect.MapMaker;
 import net.minecraft.server.*;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentMap;
 
 public class CraftWorld implements World {
     private final WorldServer world;

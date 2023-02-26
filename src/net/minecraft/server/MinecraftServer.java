@@ -476,7 +476,7 @@ public class MinecraftServer implements Runnable, ICommandListener {
             int i = ((Integer) trackerList.get(s)).intValue();
 
             if (i > 0) {
-                trackerList.put(s, Integer.valueOf(i - 1));
+                trackerList.put(s, i - 1);
             } else {
                 arraylist.add(s);
             }

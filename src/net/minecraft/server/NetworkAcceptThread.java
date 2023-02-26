@@ -28,10 +28,10 @@ class NetworkAcceptThread extends Thread {
                     InetAddress inetaddress = socket.getInetAddress();
 
                     if (hashmap.containsKey(inetaddress) && !"127.0.0.1".equals(inetaddress.getHostAddress()) && System.currentTimeMillis() - ((Long) hashmap.get(inetaddress)).longValue() < 5000L) {
-                        hashmap.put(inetaddress, Long.valueOf(System.currentTimeMillis()));
+                        hashmap.put(inetaddress, System.currentTimeMillis());
                         socket.close();
                     } else {
-                        hashmap.put(inetaddress, Long.valueOf(System.currentTimeMillis()));
+                        hashmap.put(inetaddress, System.currentTimeMillis());
                         NetLoginHandler netloginhandler = new NetLoginHandler(this.a, socket, "Connection #" + NetworkListenThread.b(this.b));
 
                         NetworkListenThread.a(this.b, netloginhandler);

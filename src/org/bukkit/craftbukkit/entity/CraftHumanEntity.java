@@ -15,8 +15,6 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Set;
 
-//import org.bukkit.GameMode;
-
 public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
     private CraftInventoryPlayer inventory;
     protected final PermissibleBase perm = new PermissibleBase(this);
@@ -119,12 +117,4 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
     public Set<PermissionAttachmentInfo> getEffectivePermissions() {
         return perm.getEffectivePermissions();
     }
-
-//    public GameMode getGameMode() {
-//        return GameMode.SURVIVAL;
-//    }
-//
-//    public void setGameMode(GameMode mode) {
-//        throw new UnsupportedOperationException("Not supported yet.");
-//    }
 }

@@ -33,9 +33,9 @@ public class EntityWolf extends EntityAnimal {
 
     protected void b() {
         super.b();
-        this.datawatcher.a(16, Byte.valueOf((byte) 0));
+        this.datawatcher.a(16, (byte) 0);
         this.datawatcher.a(17, "");
-        this.datawatcher.a(18, new Integer(this.health));
+        this.datawatcher.a(18, this.health);
     }
 
     protected boolean n() {
@@ -126,7 +126,7 @@ public class EntityWolf extends EntityAnimal {
         }
 
         if (!this.world.isStatic) {
-            this.datawatcher.watch(18, Integer.valueOf(this.health));
+            this.datawatcher.watch(18, this.health);
         }
     }
 
@@ -442,9 +442,9 @@ public class EntityWolf extends EntityAnimal {
         byte b0 = this.datawatcher.a(16);
 
         if (flag) {
-            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 | 1)));
+            this.datawatcher.watch(16, (byte) (b0 | 1));
         } else {
-            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & -2)));
+            this.datawatcher.watch(16, (byte) (b0 & -2));
         }
     }
 
@@ -456,9 +456,9 @@ public class EntityWolf extends EntityAnimal {
         byte b0 = this.datawatcher.a(16);
 
         if (flag) {
-            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 | 2)));
+            this.datawatcher.watch(16, (byte) (b0 | 2));
         } else {
-            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & -3)));
+            this.datawatcher.watch(16, (byte) (b0 & -3));
         }
     }
 
@@ -470,9 +470,9 @@ public class EntityWolf extends EntityAnimal {
         byte b0 = this.datawatcher.a(16);
 
         if (flag) {
-            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 | 4)));
+            this.datawatcher.watch(16, (byte) (b0 | 4));
         } else {
-            this.datawatcher.watch(16, Byte.valueOf((byte) (b0 & -5)));
+            this.datawatcher.watch(16, (byte) (b0 & -5));
         }
     }
 }

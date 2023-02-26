@@ -768,18 +768,6 @@ public final class CraftServer implements Server {
     }
 
     public int broadcast(String message, String permission) {
-//        int count = 0;
-//        Set<Permissible> permissibles = getPluginManager().getPermissionSubscriptions(permission);
-//
-//        for (Permissible permissible : permissibles) {
-//            if (permissible instanceof CommandSender) {
-//                CommandSender user = (CommandSender)permissible;
-//                user.sendMessage(message);
-//                count++;
-//            }
-//        }
-//
-//        return count;
         Player[] players = getOnlinePlayers();
 
         for (Player player : players) {
@@ -848,12 +836,4 @@ public final class CraftServer implements Server {
     public void setShuttingdown(boolean shuttingdown) {
         this.shuttingdown = shuttingdown;
     }
-
-//    public GameMode getDefaultGameMode() {
-//        return GameMode.SURVIVAL;
-//    }
-//
-//    public void setDefaultGameMode(GameMode mode) {
-//        throw new UnsupportedOperationException("Not supported yet.");
-//    }
 }

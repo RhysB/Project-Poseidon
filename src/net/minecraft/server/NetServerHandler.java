@@ -1077,7 +1077,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
                 this.player.z();
                 this.player.h = false;
             } else {
-                this.n.put(Integer.valueOf(this.player.activeContainer.windowId), Short.valueOf(packet102windowclick.d));
+                this.n.put(this.player.activeContainer.windowId, packet102windowclick.d);
                 this.player.netServerHandler.sendPacket(new Packet106Transaction(packet102windowclick.a, packet102windowclick.d, false));
                 this.player.activeContainer.a(this.player, false);
                 ArrayList arraylist = new ArrayList();
@@ -1100,7 +1100,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
         if (this.player.dead) return; // CraftBukkit
 
-        Short oshort = (Short) this.n.get(Integer.valueOf(this.player.activeContainer.windowId));
+        Short oshort = (Short) this.n.get(this.player.activeContainer.windowId);
 
         if (oshort != null && packet106transaction.b == oshort.shortValue() && this.player.activeContainer.windowId == packet106transaction.a && !this.player.activeContainer.c(this.player)) {
             this.player.activeContainer.a(this.player, true);

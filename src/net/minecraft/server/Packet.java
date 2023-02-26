@@ -33,43 +33,42 @@ public abstract class Packet {
      * @param serverSide
      * @param oclass
      */
-    public static void registerPacket(int id, boolean clientSide, boolean serverSide, Class oclass)
-    {
-        if (packetIdToClassMap.containsKey(Integer.valueOf(id)))
+    public static void registerPacket(int id, boolean clientSide, boolean serverSide, Class oclass) {
+        if (packetIdToClassMap.containsKey(id))
             throw new IllegalArgumentException("Duplicate packet id:" + id);
         else if (packetClassToIdMap.containsKey(oclass))
             throw new IllegalArgumentException("Duplicate packet class:" + oclass);
         else {
-            packetIdToClassMap.put(Integer.valueOf(id), oclass);
-            packetClassToIdMap.put(oclass, Integer.valueOf(id));
+            packetIdToClassMap.put(id, oclass);
+            packetClassToIdMap.put(oclass, id);
             if (clientSide)
-                clientPacketIdList.add(Integer.valueOf(id));
+                clientPacketIdList.add(id);
             if (serverSide)
-                serverPacketIdList.add(Integer.valueOf(id));
+                serverPacketIdList.add(id);
         }
     }
     
     static void a(int i, boolean flag, boolean flag1, Class oclass) {
-        if (packetIdToClassMap.containsKey(Integer.valueOf(i))) {
+        if (packetIdToClassMap.containsKey(i)) {
             throw new IllegalArgumentException("Duplicate packet id:" + i);
         } else if (packetClassToIdMap.containsKey(oclass)) {
             throw new IllegalArgumentException("Duplicate packet class:" + oclass);
         } else {
-            packetIdToClassMap.put(Integer.valueOf(i), oclass);
-            packetClassToIdMap.put(oclass, Integer.valueOf(i));
+            packetIdToClassMap.put(i, oclass);
+            packetClassToIdMap.put(oclass, i);
             if (flag) {
-                clientPacketIdList.add(Integer.valueOf(i));
+                clientPacketIdList.add(i);
             }
 
             if (flag1) {
-                serverPacketIdList.add(Integer.valueOf(i));
+                serverPacketIdList.add(i);
             }
         }
     }
 
     public static Packet a(int i) {
         try {
-            Class oclass = (Class) packetIdToClassMap.get(Integer.valueOf(i));
+            Class oclass = (Class) packetIdToClassMap.get(i);
 
             return oclass == null ? null : (Packet) oclass.newInstance();
         } catch (Exception exception) {
@@ -80,7 +79,7 @@ public abstract class Packet {
     }
 
     public final int b() {
-        return ((Integer) packetClassToIdMap.get(this.getClass())).intValue();
+        return (Integer) packetClassToIdMap.get(this.getClass());
     }
 
     // CraftBukkit - throws IOException
@@ -96,7 +95,7 @@ public abstract class Packet {
                 return null;
             }
 
-            if (flag && !serverPacketIdList.contains(Integer.valueOf(i)) || !flag && !clientPacketIdList.contains(Integer.valueOf(i))) {
+            if (flag && !serverPacketIdList.contains(i) || !flag && !clientPacketIdList.contains(i)) {
                 System.out.println("Bad packet id: " + i); //Project Poseidon
                 return null; //Project Poseidon
                 //throw new IOException("Bad packet id " + i); //Project Poseidon - Comment Out
@@ -125,11 +124,11 @@ public abstract class Packet {
         }
         // CraftBukkit end
 
-        PacketCounter packetcounter = (PacketCounter) e.get(Integer.valueOf(i));
+        PacketCounter packetcounter = (PacketCounter) e.get(i);
 
         if (packetcounter == null) {
             packetcounter = new PacketCounter((EmptyClass1) null);
-            e.put(Integer.valueOf(i), packetcounter);
+            e.put(i, packetcounter);
         }
 
         packetcounter.a(packet.a());

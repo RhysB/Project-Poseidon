@@ -309,44 +309,52 @@ public class ConsoleCommandHandler {
         if (astring.length >= 2) {
             String s2 = astring[1].toLowerCase();
 
-            if ("on".equals(s2)) {
-                if (!checkPermission(listener, "whitelist.enable")) return; // Craftbukkit
-                this.print(s, "Turned on white-listing");
-                this.server.propertyManager.b("white-list", true);
-            } else if ("off".equals(s2)) {
-                if (!checkPermission(listener, "whitelist.disable")) return; // Craftbukkit
-                this.print(s, "Turned off white-listing");
-                this.server.propertyManager.b("white-list", false);
-            } else if ("list".equals(s2)) {
-                if (!checkPermission(listener, "whitelist.list")) return; // Craftbukkit
-                Set set = this.server.serverConfigurationManager.e();
-                String s3 = "";
+            switch (s2) {
+                case "on":
+                    if (!checkPermission(listener, "whitelist.enable")) return; // Craftbukkit
+                    this.print(s, "Turned on white-listing");
+                    this.server.propertyManager.b("white-list", true);
+                    break;
 
-                String s4;
+                case "off":
+                    if (!checkPermission(listener, "whitelist.disable")) return; // Craftbukkit
+                    this.print(s, "Turned off white-listing");
+                    this.server.propertyManager.b("white-list", false);
+                    break;
 
-                for (Iterator iterator = set.iterator(); iterator.hasNext(); s3 = s3 + s4 + " ") {
-                    s4 = (String) iterator.next();
-                }
+                case "list":
+                    if (!checkPermission(listener, "whitelist.list")) return; // Craftbukkit
+                    Set set = this.server.serverConfigurationManager.e();
+                    String s3 = "";
 
-                icommandlistener.sendMessage("White-listed players: " + s3);
-            } else {
-                String s5;
+                    String s4;
 
-                if ("add".equals(s2) && astring.length == 3) {
-                    if (!checkPermission(listener, "whitelist.add")) return; // Craftbukkit
-                    s5 = astring[2].toLowerCase();
-                    this.server.serverConfigurationManager.k(s5);
-                    this.print(s, "Added " + s5 + " to white-list");
-                } else if ("remove".equals(s2) && astring.length == 3) {
-                    if (!checkPermission(listener, "whitelist.remove")) return; // Craftbukkit
-                    s5 = astring[2].toLowerCase();
-                    this.server.serverConfigurationManager.l(s5);
-                    this.print(s, "Removed " + s5 + " from white-list");
-                } else if ("reload".equals(s2)) {
-                    if (!checkPermission(listener, "whitelist.reload")) return; // Craftbukkit
-                    this.server.serverConfigurationManager.f();
-                    this.print(s, "Reloaded white-list from file");
-                }
+                    for (Iterator iterator = set.iterator(); iterator.hasNext(); s3 = s3 + s4 + " ") {
+                        s4 = (String) iterator.next();
+                    }
+
+                    icommandlistener.sendMessage("White-listed players: " + s3);
+                    break;
+
+                default:
+                    String s5;
+
+                    if ("add".equals(s2) && astring.length == 3) {
+                        if (!checkPermission(listener, "whitelist.add")) return; // Craftbukkit
+                        s5 = astring[2].toLowerCase();
+                        this.server.serverConfigurationManager.k(s5);
+                        this.print(s, "Added " + s5 + " to white-list");
+                    } else if ("remove".equals(s2) && astring.length == 3) {
+                        if (!checkPermission(listener, "whitelist.remove")) return; // Craftbukkit
+                        s5 = astring[2].toLowerCase();
+                        this.server.serverConfigurationManager.l(s5);
+                        this.print(s, "Removed " + s5 + " from white-list");
+                    } else if ("reload".equals(s2)) {
+                        if (!checkPermission(listener, "whitelist.reload")) return; // Craftbukkit
+                        this.server.serverConfigurationManager.f();
+                        this.print(s, "Reloaded white-list from file");
+                    }
+                    break;
             }
         }
     }

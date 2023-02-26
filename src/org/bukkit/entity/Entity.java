@@ -7,7 +7,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.util.Vector;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Represents a base entity in the world

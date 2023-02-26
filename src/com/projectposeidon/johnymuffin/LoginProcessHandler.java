@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class LoginProcessHandler {
-
     private NetLoginHandler netLoginHandler;
     private final Packet1Login packet1Login;
     private CraftServer server;
@@ -28,9 +27,9 @@ public class LoginProcessHandler {
     private LoginProcessHandler loginProcessHandler;
     private boolean loginSuccessful = false;
     private long startTime;
-    private ArrayList<Plugin> pluginPauses = new ArrayList<Plugin>();
-    private ArrayList<ConnectionPause> pluginPauseObjects = new ArrayList<ConnectionPause>();
-    private ArrayList<String> pluginPauseNames = new ArrayList<String>();
+    private ArrayList<Plugin> pluginPauses = new ArrayList<>();
+    private ArrayList<ConnectionPause> pluginPauseObjects = new ArrayList<>();
+    private ArrayList<String> pluginPauseNames = new ArrayList<>();
 
     public LoginProcessHandler(NetLoginHandler netloginhandler, Packet1Login packet1login, CraftServer server, boolean onlineMode) {
         this.loginProcessHandler = this;
@@ -77,23 +76,19 @@ public class LoginProcessHandler {
             System.out.println("[Poseidon] Fetched UUID from Cache for " + packet1Login.name + " - " + uuid.toString());
             connectPlayer(uuid);
         }
-
-
     }
 
     public synchronized void userUUIDReceived(UUID uuid, boolean onlineMode) {
         if (!onlineMode) {
-            if (Boolean.valueOf(String.valueOf(PoseidonConfig.getInstance().getConfigOption("settings.check-username-validity.enabled", true))) && !isUsernameValid()) {
+            if (Boolean.parseBoolean(String.valueOf(PoseidonConfig.getInstance().getConfigOption("settings.check-username-validity.enabled", true))) && !isUsernameValid()) {
                 //Username is invalid, and is a cracked user
                 return;
             }
         }
 
-
         long unixTime = (System.currentTimeMillis() / 1000L) + 1382400;
         UUIDManager.getInstance().receivedUUID(packet1Login.name, uuid, unixTime, onlineMode);
         connectPlayer(uuid);
-
     }
 
     //This function is only run if the user is cracked
@@ -104,17 +99,19 @@ public class LoginProcessHandler {
             return false;
         }
         String regex = String.valueOf(PoseidonConfig.getInstance().getConfigOption("settings.check-username-validity.regex", "[a-zA-Z0-9_?]*"));
-        int minimumLength = Integer.valueOf(String.valueOf(PoseidonConfig.getInstance().getConfigOption("settings.check-username-validity.min-length", 3)));
-        int maximumLength = Integer.valueOf(String.valueOf(PoseidonConfig.getInstance().getConfigOption("settings.check-username-validity.max-length", 16)));
+        int minimumLength = Integer.parseInt(String.valueOf(PoseidonConfig.getInstance().getConfigOption("settings.check-username-validity.min-length", 3)));
+        int maximumLength = Integer.parseInt(String.valueOf(PoseidonConfig.getInstance().getConfigOption("settings.check-username-validity.max-length", 16)));
 
         if (username.length() > maximumLength) {
             cancelLoginProcess("Sorry, your username is too long. The maximum length is: " + maximumLength);
             return false;
         }
+
         if (username.length() < minimumLength) {
             cancelLoginProcess("Sorry, your username is too short. The minimum length is: " + minimumLength);
             return false;
         }
+
         if (!username.matches(regex)) {
             cancelLoginProcess("Sorry, your username is invalid, allowed characters: " + regex);
             return false;
@@ -149,12 +146,10 @@ public class LoginProcessHandler {
 
 
         if (!loginSuccessful && !loginCancelled) {
-
             //Bukkit Login Event Start
             if (this.netLoginHandler.getSocket() == null) {
                 return;
             }
-
 
             PlayerPreLoginEvent event = new PlayerPreLoginEvent(this.packet1Login.name, ((InetSocketAddress) netLoginHandler.networkManager.getSocketAddress()).getAddress(), loginProcessHandler);
             this.server.getPluginManager().callEvent(event);

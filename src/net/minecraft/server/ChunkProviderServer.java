@@ -1,7 +1,6 @@
 package net.minecraft.server;
 
 import com.legacyminecraft.poseidon.PoseidonConfig;
-import org.bukkit.craftbukkit.CraftChunk;
 import org.bukkit.craftbukkit.util.LongHashset;
 import org.bukkit.craftbukkit.util.LongHashtable;
 import org.bukkit.event.world.ChunkLoadEvent;
@@ -12,9 +11,6 @@ import org.bukkit.generator.BlockPopulator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-// CraftBukkit start
-// CraftBukkit end
 
 public class ChunkProviderServer implements IChunkProvider {
 

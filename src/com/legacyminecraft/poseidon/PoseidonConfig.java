@@ -37,7 +37,7 @@ public class PoseidonConfig extends Configuration {
     }
 
     private void write() {
-        if (this.getString("config-version") == null || Integer.valueOf(this.getString("config-version")) < configVersion) {
+        if (this.getString("config-version") == null || Integer.parseInt(this.getString("config-version")) < configVersion) {
             System.out.println("Converting to Config Version: " + configVersion);
             convertToNewConfig();
         }
@@ -128,7 +128,7 @@ public class PoseidonConfig extends Configuration {
 
         //Tree Leave Destroy Blacklist
 
-        if (Boolean.valueOf(String.valueOf(getConfigOption("world.settings.block-tree-growth.enabled", true)))) {
+        if (Boolean.parseBoolean(String.valueOf(getConfigOption("world.settings.block-tree-growth.enabled", true)))) {
             if (String.valueOf(this.getConfigOption("world.settings.block-tree-growth.list", "")).trim().isEmpty()) {
                 //Empty Blacklist
             } else {

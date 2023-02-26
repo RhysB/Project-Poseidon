@@ -30,11 +30,11 @@ public class LongHashset extends LongHash {
         wl.lock();
         try {
             int mainIdx = (int) (key & 255);
-            long outer[][] = this.values[mainIdx];
+            long[][] outer = this.values[mainIdx];
             if (outer == null) this.values[mainIdx] = outer = new long[256][];
 
             int outerIdx = (int) ((key >> 32) & 255);
-            long inner[] = outer[outerIdx];
+            long[] inner = outer[outerIdx];
 
             if (inner == null) {
                 synchronized (this) {
