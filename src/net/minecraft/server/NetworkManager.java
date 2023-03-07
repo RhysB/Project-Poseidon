@@ -237,7 +237,7 @@ public class NetworkManager {
     }
 
     public void b() {
-        if (this.x > 1048576) {
+        if (this.x > 2097152) {
             this.a("disconnect.overflow", new Object[0]);
         }
 
