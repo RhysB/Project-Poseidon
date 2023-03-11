@@ -134,6 +134,8 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("message.kick.ip-banned", "Your IP address is banned from this server!");
         generateConfigOption("message.kick.not-whitelisted", "You are not white-listed on this server!");
         generateConfigOption("message.kick.full", "The server is full!");
+        generateConfigOption("message.kick.shutdown", "\u00A7cServer is shutting down, please rejoin later.");
+        generateConfigOption("message.kick.already-online", "\u00A7cA player with your username or uuid is already online, try reconnecting in a minute.");
         generateConfigOption("message.player.join", "\u00A7e%player% joined the game.");
         generateConfigOption("message.player.leave", "\u00A7e%player% left the game.");
 

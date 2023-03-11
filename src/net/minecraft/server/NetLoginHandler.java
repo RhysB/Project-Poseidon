@@ -140,7 +140,7 @@ public class NetLoginHandler extends NetHandler {
             //Project Poseidon - End (Release2Beta
 
             if (((CraftServer) Bukkit.getServer()).isShuttingdown()) {
-                this.disconnect(ChatColor.RED + "Server is shutting down, please rejoin later.");
+                this.disconnect(PoseidonConfig.getInstance().getConfigString("message.kick.shutdown"));
                 return;
             }
 
