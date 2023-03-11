@@ -36,7 +36,7 @@ public class ServerConfigurationManager {
 
     // CraftBukkit start
     private CraftServer cserver;
-    private final String msgKickBanned, msgKickIPBanned, msgKickWhitelist, msgKickServerFull;
+    private final String msgKickBanned, msgKickIPBanned, msgKickWhitelist, msgKickServerFull, msgPlayerJoin, msgPlayerLeave;
 
     public ServerConfigurationManager(MinecraftServer minecraftserver) {
         minecraftserver.server = new CraftServer(minecraftserver, this);
@@ -47,6 +47,8 @@ public class ServerConfigurationManager {
         this.msgKickIPBanned = PoseidonConfig.getInstance().getConfigString("message.kick.ip-banned");
         this.msgKickWhitelist = PoseidonConfig.getInstance().getConfigString("message.kick.not-whitelisted");
         this.msgKickServerFull = PoseidonConfig.getInstance().getConfigString("message.kick.full");
+        this.msgPlayerJoin = PoseidonConfig.getInstance().getConfigString("message.player.join");
+        this.msgPlayerLeave = PoseidonConfig.getInstance().getConfigString("message.player.leave");
 
         this.server = minecraftserver;
         this.j = minecraftserver.a("banned-players.txt");
@@ -118,7 +120,7 @@ public class ServerConfigurationManager {
         }
 
         // CraftBukkit start
-        PlayerJoinEvent playerJoinEvent = new PlayerJoinEvent(this.cserver.getPlayer(entityplayer), "\u00A7e" + entityplayer.name + " joined the game.");
+        PlayerJoinEvent playerJoinEvent = new PlayerJoinEvent(this.cserver.getPlayer(entityplayer), msgPlayerJoin.replace("%player%", entityplayer.name));
         this.cserver.getPluginManager().callEvent(playerJoinEvent);
 
         String joinMessage = playerJoinEvent.getJoinMessage();
@@ -143,7 +145,7 @@ public class ServerConfigurationManager {
         // CraftBukkit start
         // Quitting must be before we do final save of data, in case plugins need to modify it
         this.getPlayerManager(entityplayer.dimension).removePlayer(entityplayer);
-        PlayerQuitEvent playerQuitEvent = new PlayerQuitEvent(this.cserver.getPlayer(entityplayer), "\u00A7e" + entityplayer.name + " left the game.");
+        PlayerQuitEvent playerQuitEvent = new PlayerQuitEvent(this.cserver.getPlayer(entityplayer), this.msgPlayerLeave.replace("%player%", entityplayer.name));
         this.cserver.getPluginManager().callEvent(playerQuitEvent);
         // CraftBukkit end
 

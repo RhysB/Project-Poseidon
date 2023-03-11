@@ -128,6 +128,8 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("message.kick.ip-banned", "Your IP address is banned from this server!");
         generateConfigOption("message.kick.not-whitelisted", "You are not white-listed on this server!");
         generateConfigOption("message.kick.full", "The server is full!");
+        generateConfigOption("message.player.join", "\u00A7e%player% joined the game.");
+        generateConfigOption("message.player.leave", "\u00A7e%player% left the game.");
 
         //Tree Leave Destroy Blacklist
         if (Boolean.valueOf(String.valueOf(getConfigOption("world.settings.block-tree-growth.enabled", true)))) {
