@@ -187,8 +187,8 @@ public class ServerConfigurationManager {
 
         PlayerLoginEvent.Result result =
                 this.banByName.contains(s.trim().toLowerCase()) ? PlayerLoginEvent.Result.KICK_BANNED :
-                this.banByIP.contains(s1) ?  PlayerLoginEvent.Result.KICK_BANNED_IP :
-                !this.isWhitelisted(s) ?  PlayerLoginEvent.Result.KICK_WHITELIST :
+                this.banByIP.contains(s1) ? PlayerLoginEvent.Result.KICK_BANNED_IP :
+                !this.isWhitelisted(s) ? PlayerLoginEvent.Result.KICK_WHITELIST :
                 this.players.size() >= this.maxPlayers ? PlayerLoginEvent.Result.KICK_FULL :
                 PlayerLoginEvent.Result.ALLOWED;
 
