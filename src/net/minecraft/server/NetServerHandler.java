@@ -294,6 +294,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
                 if (this.player.vehicle != null) {
                     this.player.vehicle.f();
+                    this.player.vehicle.airBorne = true;
                 }
 
                 this.minecraftServer.serverConfigurationManager.d(this.player);
@@ -715,9 +716,9 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void sendPacket(Packet packet) {
         //Poseidon Start - Send Packet Event
-    	if (packet == null) // Why do anything if there's no packet? (fixes Internal server error)
+        if (packet == null) // Why do anything if there's no packet? (fixes Internal server error)
             return;
-    	
+        
         if (firePacketEvents) {
             PlayerSendPacketEvent event = new PlayerSendPacketEvent(this.player.name, packet);
             Bukkit.getPluginManager().callEvent(event);
@@ -730,7 +731,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
 
         // CraftBukkit start
-    	if (packet instanceof Packet6SpawnPosition) {
+        if (packet instanceof Packet6SpawnPosition) {
             Packet6SpawnPosition packet6 = (Packet6SpawnPosition) packet;
             this.player.compassTarget = new Location(this.getPlayer().getWorld(), packet6.x, packet6.y, packet6.z);
         } else if (packet instanceof Packet3Chat) {

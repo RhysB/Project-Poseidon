@@ -237,7 +237,7 @@ public class NetworkManager {
     }
 
     public void b() {
-		boolean fast = PoseidonConfig.getInstance().getBoolean("settings.faster-packets.enabled", true);
+        boolean fast = PoseidonConfig.getInstance().getBoolean("settings.faster-packets.enabled", true);
         if (this.x > (fast ? 2097152 : 1048576)) {
             this.a("disconnect.overflow", new Object[0]);
         }

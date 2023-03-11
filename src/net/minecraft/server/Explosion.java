@@ -121,9 +121,9 @@ public class Explosion {
                 d2 /= d8;
                 double d9;
                 if (optimizeExplosions) {
-                	d9 = this.getBlockDensity(vec3d, entity); // Paper - Optimize explosions
+                    d9 = this.getBlockDensity(vec3d, entity); // Paper - Optimize explosions
                 } else {
-                	d9 = (double) this.world.a(vec3d, entity.boundingBox);
+                    d9 = (double) this.world.a(vec3d, entity.boundingBox);
                 }
                 double d10 = (1.0D - d7) * d9;
 

@@ -21,7 +21,7 @@ import java.util.UUID;
 
 public abstract class Entity {
 
-	// Poseidon start - Backport of 0070-Use-a-Shared-Random-for-Entities.patch from PaperSpigot
+    // Poseidon start - Backport of 0070-Use-a-Shared-Random-for-Entities.patch from PaperSpigot
     public static Random SHARED_RANDOM = new Random() {
         private boolean locked = false;
         @Override
@@ -35,7 +35,7 @@ public abstract class Entity {
         }
     };
     // Poseidon end
-	
+    
     private static int entityCount = 0;
     public int id;
     public double aH;
@@ -98,6 +98,7 @@ public abstract class Entity {
     public int bI;
     public int bJ;
     public boolean bK;
+    public boolean airBorne;
     public UUID uniqueId = UUID.randomUUID(); // CraftBukkit
 
     public Entity(World world) {
@@ -864,6 +865,7 @@ public abstract class Entity {
         this.motX += d0;
         this.motY += d1;
         this.motZ += d2;
+        this.airBorne = true;
     }
 
     protected void af() {

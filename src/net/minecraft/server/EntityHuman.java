@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.bukkit.craftbukkit.TrigMath;
 import org.bukkit.craftbukkit.entity.CraftItem;
 import org.bukkit.entity.Player;
@@ -561,9 +562,22 @@ public abstract class EntityHuman extends EntityLiving {
             // CraftBukkit end
 
             // CraftBukkit start - Return when the damage fails so that the item will not lose durability
+            double d0 = entity.motX;
+            double d1 = entity.motY;
+            double d2 = entity.motZ;
+            
             if (!entity.damageEntity(this, i)) {
                 return;
             }
+            
+            if (entity instanceof EntityPlayer && entity.velocityChanged && PoseidonConfig.getInstance().getBoolean("settings.player-knockback-fix.enabled", true)) {
+                ((EntityPlayer)entity).netServerHandler.sendPacket(new Packet28EntityVelocity(entity));
+                entity.velocityChanged = false;
+                entity.motX = d0;
+                entity.motY = d1;
+                entity.motZ = d2;
+            }
+            
             // CraftBukkit end
 
             ItemStack itemstack = this.G();
