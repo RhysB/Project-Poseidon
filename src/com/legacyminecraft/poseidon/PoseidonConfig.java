@@ -57,6 +57,10 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.faster-packets.enabled", true);
         generateConfigOption("settings.faster-packets.info", "This setting increases the speed of packets, a fix from newer Minecraft versions.");
 
+        generateConfigOption("settings.fix-drowning-push-down.enabled", true);
+        generateConfigOption("settings.fix-drowning-push-down.info", "This setting fixes taking drowning damage pushing you down.");
+
+
         //Watchdog
         //generateConfigOption("settings.enable-watchdog", true);
         generateConfigOption("settings.watchdog.info", "Watchdog is a automatic hang detection system which can print stacktraces and kill the server automatically after a predefined interval.");
