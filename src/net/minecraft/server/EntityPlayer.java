@@ -241,7 +241,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
         // Poseidon start
         if (flag && !this.chunkCoordIntPairQueue.isEmpty()) {
-        	if (PoseidonConfig.getInstance().getBoolean("settings.faster-chunk-sending.enabled", true)) {
+        	if (PoseidonConfig.getInstance().getBoolean("settings.faster-packets.enabled", true)) {
 	        	ArrayList arraylist = new ArrayList();
 	            Iterator iterator1 = this.chunkCoordIntPairQueue.iterator();
 	            ArrayList arraylist1 = new ArrayList();

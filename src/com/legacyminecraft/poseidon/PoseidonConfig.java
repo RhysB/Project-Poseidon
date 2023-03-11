@@ -54,8 +54,8 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.use-get-for-uuids.enabled", false);
         generateConfigOption("settings.use-get-for-uuids.info", "This setting causes the server to use the GET method for Username to UUID conversion. This is useful incase the POST method goes offline.");
 
-        generateConfigOption("settings.faster-chunk-sending.enabled", true);
-        generateConfigOption("settings.faster-chunk-sending.info", "This setting enables a newer chunk sending method that is a lot faster than the old one, which will load chunks for players faster.");
+        generateConfigOption("settings.faster-packets.enabled", true);
+        generateConfigOption("settings.faster-packets.info", "This setting increases the speed of packets, a fix from newer Minecraft versions.");
 
         //Watchdog
         //generateConfigOption("settings.enable-watchdog", true);
