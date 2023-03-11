@@ -133,7 +133,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void disconnect(String s) {
         // CraftBukkit start
-        String leaveMessage = this.minecraftServer.serverConfigurationManager.msgPlayerLeave.replace("%player%", entityplayer.name);
+        String leaveMessage = PoseidonConfig.getInstance().getConfigString("message.player.leave").replace("%player%", this.player.name);
 
         PlayerKickEvent event = new PlayerKickEvent(this.server.getPlayer(this.player), s, leaveMessage);
         this.server.getPluginManager().callEvent(event);
