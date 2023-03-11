@@ -112,6 +112,10 @@ public class PlayerLoginEvent extends PlayerEvent {
          */
         KICK_BANNED,
         /**
+         * The player is not allowed to log in, due to their ip being banned
+         */
+        KICK_BANNED_IP,
+        /**
          * The player is not allowed to log in, due to them not being on the white list
          */
         KICK_WHITELIST,
