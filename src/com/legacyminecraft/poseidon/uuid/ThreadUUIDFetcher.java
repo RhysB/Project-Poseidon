@@ -55,7 +55,8 @@ public class ThreadUUIDFetcher extends Thread {
             }
             return;
         }
-        System.out.println("Mojang failed contact for user " + loginPacket.name + ": " + uuidResult.getException().getMessage());
+        System.out.println("Mojang failed contact for user " + loginPacket.name + ":");
+        uuidResult.getException().printStackTrace();
         loginProcessHandler.cancelLoginProcess(ChatColor.RED + "Sorry, we can't connect to Mojang currently, please try again later");
 
     }
@@ -80,7 +81,8 @@ public class ThreadUUIDFetcher extends Thread {
                 loginProcessHandler.userUUIDReceived(uuid, true);
             }
         } catch (Exception e) {
-            System.out.println("Mojang failed contact for user " + loginPacket.name + ": " + e.getMessage());
+            System.out.println("Mojang failed contact for user " + loginPacket.name + ":");
+            e.printStackTrace();
             loginProcessHandler.cancelLoginProcess(ChatColor.RED + "Sorry, we can't connect to Mojang currently, please try again later");
         }
 

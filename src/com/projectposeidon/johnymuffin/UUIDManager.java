@@ -164,7 +164,10 @@ public class UUIDManager {
             JSONObject tmp = (JSONObject) UUIDJsonArray.get(i);
             if (UUID.fromString((String) tmp.get("uuid")).equals(uuid)) {
                 if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.delete-duplicate-uuids")) {
+                    //Remove the duplicate UUID
                     UUIDJsonArray.remove(i);
+                    //Decrement i to account for the removed element
+                    i--;
                 } else {
                     //This allows for plugins to use a old username and find UUID.
                     tmp.replace("expiresOn", 1);

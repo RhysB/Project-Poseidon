@@ -31,6 +31,7 @@ public class LoginProcessHandler {
     private ArrayList<Plugin> pluginPauses = new ArrayList<Plugin>();
     private ArrayList<ConnectionPause> pluginPauseObjects = new ArrayList<ConnectionPause>();
     private ArrayList<String> pluginPauseNames = new ArrayList<String>();
+    private ArrayList<String> allPluginPauseNames = new ArrayList<String>();
 
     public LoginProcessHandler(NetLoginHandler netloginhandler, Packet1Login packet1login, CraftServer server, boolean onlineMode) {
         this.loginProcessHandler = this;
@@ -39,6 +40,10 @@ public class LoginProcessHandler {
         this.server = server;
         this.onlineMode = onlineMode;
         processAuthentication();
+
+
+
+        long connectionStartTime = System.currentTimeMillis()/1000L;
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(new PoseidonPlugin(), () -> {
             if (!loginSuccessful && !loginCancelled) {
@@ -49,6 +54,21 @@ public class LoginProcessHandler {
             }
         }, 400);
 
+        runLoginTimer(connectionStartTime);
+
+    }
+
+    private void runLoginTimer(long connectionStartTime) {
+        int playerConnectionDebug = Bukkit.getScheduler().scheduleAsyncDelayedTask(new PoseidonPlugin(), () -> {
+            int currentRunningTime = (int) (System.currentTimeMillis()/1000L - connectionStartTime);
+            if (!loginSuccessful && !loginCancelled) {
+                System.out.println("[Poseidon] The login process for " + packet1Login.name + " is still running. It has been running for " + currentRunningTime + " seconds. The following plugins are still currently pausing the login process: " + pluginPauseNames.toString());
+                //This if statement shouldn't be needed, but this is here just in case a players login fails but the appropriate variables aren't changed
+                if (currentRunningTime < 60) {
+                    runLoginTimer(connectionStartTime);
+                }
+            }
+        }, 20*3);
     }
 
     private void processAuthentication() {
@@ -199,6 +219,7 @@ public class LoginProcessHandler {
         //Add plugin pause names and pauses for respective plugins
         final ConnectionPause connectionPause = new ConnectionPause(plugin.getDescription().getName(), connectionPauseName, loginProcessHandler);
         pluginPauseNames.add(plugin.getDescription().getName() + ":" + connectionPause.getConnectionPauseName());
+        allPluginPauseNames.add(plugin.getDescription().getName() + ":" + connectionPause.getConnectionPauseName());
         pluginPauseObjects.add(connectionPause);
         return connectionPause;
     }
@@ -214,10 +235,12 @@ public class LoginProcessHandler {
             if (!loginProcessHandler.isPlayerConnectionPaused()) {
                 long endTime = System.currentTimeMillis() / 1000L;
                 int difference = (int) (endTime - startTime);
-                System.out.println("[Poseidon] Player " + loginProcessHandler.packet1Login.name + " was allowed to join after being on hold for " + difference + " seconds by the following plugins: " + pluginPauseNames.toString());
-                loginProcessHandler.setLoginSuccessful(true);
                 if (!loginCancelled) {
+                    System.out.println("[Poseidon] Player " + loginProcessHandler.packet1Login.name + " was allowed to join after being on hold for " + difference + " seconds by the following plugins: " + allPluginPauseNames.toString());
+                    loginProcessHandler.setLoginSuccessful(true);
                     NetLoginHandler.a(netLoginHandler, packet1Login);
+                } else {
+                    System.out.println("[Poseidon] Player " + loginProcessHandler.packet1Login.name + " was not allowed to join after being on hold for " + difference + " seconds by the following plugins: " + allPluginPauseNames.toString());
                 }
             }
         } else {
