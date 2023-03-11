@@ -36,12 +36,17 @@ public class ServerConfigurationManager {
 
     // CraftBukkit start
     private CraftServer cserver;
+    private final String msgKickBanned, msgKickIPBanned, msgKickWhitelist, msgKickServerFull;
 
     public ServerConfigurationManager(MinecraftServer minecraftserver) {
         minecraftserver.server = new CraftServer(minecraftserver, this);
         minecraftserver.console = new ColouredConsoleSender(minecraftserver.server);
         this.cserver = minecraftserver.server;
         // CraftBukkit end
+        this.msgKickBanned = PoseidonConfig.getInstance().getConfigString("message.kick.banned");
+        this.msgKickIPBanned = PoseidonConfig.getInstance().getConfigString("message.kick.ip-banned");
+        this.msgKickWhitelist = PoseidonConfig.getInstance().getConfigString("message.kick.not-whitelisted");
+        this.msgKickServerFull = PoseidonConfig.getInstance().getConfigString("message.kick.full");
 
         this.server = minecraftserver;
         this.j = minecraftserver.a("banned-players.txt");
@@ -180,18 +185,21 @@ public class ServerConfigurationManager {
         s1 = s1.substring(s1.indexOf("/") + 1);
         s1 = s1.substring(0, s1.indexOf(":"));
 
-        if (this.banByName.contains(s.trim().toLowerCase())) {
-            event.disallow(PlayerLoginEvent.Result.KICK_BANNED, "You are banned from this server!");
-            // return null // CraftBukkit
-        } else if (!this.isWhitelisted(s)) {
-            event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, "You are not white-listed on this server!");
-        } else if (this.banByIP.contains(s1)) {
-            event.disallow(PlayerLoginEvent.Result.KICK_BANNED, "Your IP address is banned from this server!");
-        } else if (this.players.size() >= this.maxPlayers) {
-            event.disallow(PlayerLoginEvent.Result.KICK_FULL, "The server is full!");
-        } else {
-            event.disallow(PlayerLoginEvent.Result.ALLOWED, s1);
-        }
+        PlayerLoginEvent.Result result =
+                this.banByName.contains(s.trim().toLowerCase()) ? PlayerLoginEvent.Result.KICK_BANNED :
+                this.banByIP.contains(s1) ?  PlayerLoginEvent.Result.KICK_BANNED_IP :
+                !this.isWhitelisted(s) ?  PlayerLoginEvent.Result.KICK_WHITELIST :
+                this.players.size() >= this.maxPlayers ? PlayerLoginEvent.Result.KICK_FULL :
+                PlayerLoginEvent.Result.ALLOWED;
+
+        String kickMessage =
+                result.equals(PlayerLoginEvent.Result.KICK_BANNED) ? this.msgKickBanned :
+                result.equals(PlayerLoginEvent.Result.KICK_BANNED_IP) ? this.msgKickIPBanned :
+                result.equals(PlayerLoginEvent.Result.KICK_WHITELIST) ? this.msgKickWhitelist :
+                result.equals(PlayerLoginEvent.Result.KICK_FULL) ? msgKickServerFull :
+                s1;
+
+        event.disallow(result, kickMessage);
 
         this.cserver.getPluginManager().callEvent(event);
         if (event.getResult() != PlayerLoginEvent.Result.ALLOWED) {

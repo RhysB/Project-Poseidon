@@ -63,25 +63,23 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.watchdog.enable", true);
         generateConfigOption("settings.watchdog.timeout.value", 120);
         generateConfigOption("settings.watchdog.timeout.info", "The number of seconds to kill the server process after no ticks occurring.");
-
         generateConfigOption("settings.watchdog.debug-timeout.enabled", false);
         generateConfigOption("settings.watchdog.debug-timeout.value", 30);
         generateConfigOption("settings.watchdog.debug-timeout.info", "debug-timeout can be used to print a stack trace at a lower interval then the main timeout allowing admins to locate blocking tasks that cause hangs over a certain duration. Only enable this if you have experienced temporary hangs/server freezes.");
+
         //Packet Events
         generateConfigOption("settings.packet-events.enabled", false);
         generateConfigOption("settings.packet-events.info", "This setting causes the server to fire a Bukkit event for each packet received and sent to a player once they have finished the initial login process. This only needs to be enabled if you have a plugin that uses this specific feature.");
-
 //        generateConfigOption("settings.bukkit-event.disabled-plugin-unregister.value", true);
 //        generateConfigOption("settings.bukkit-event.disabled-plugin-unregister.info", "This setting will automatically unregister listeners from disabled plugins. This is useful if you have a plugin that can get disabled at runtime and you want to prevent errors to the disabled plugin.");
-
         generateConfigOption("settings.packet-spam-detection.enabled", true);
         generateConfigOption("settings.packet-spam-detection.info", "This setting causes the server to detect and kick malicious players who send too many packets in a short period of time. This is useful to prevent players from sending too many packets to the server to cause lag.");
         generateConfigOption("settings.packet-spam-detection.threshold", 10000);
 
-
         //Statistics
         generateConfigOption("settings.statistics.key", UUID.randomUUID().toString());
         generateConfigOption("settings.statistics.enabled", true);
+
         //World Settings
         generateConfigOption("world-settings.optimized-explosions", false);
         generateConfigOption("world-settings.send-explosion-velocity", true);
@@ -100,10 +98,9 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("world.settings.speed-hack-check.teleport", true);
         generateConfigOption("world.settings.speed-hack-check.distance", 100.0D);
         generateConfigOption("world.settings.speed-hack-check.info", "This setting allows you to configure the automatic speedhack detection.");
-
-
         //generateConfigOption("world-settings.eject-from-vehicle-on-teleport.enabled", true);
         //generateConfigOption("world-settings.eject-from-vehicle-on-teleport.info", "Eject the player from a boat or minecart before teleporting them preventing cross world coordinate exploits.");
+
         //Release2Beta Settings
         generateConfigOption("settings.release2beta.enable-ip-pass-through", false);
         generateConfigOption("settings.release2beta.proxy-ip", "127.0.0.1");
@@ -116,6 +113,7 @@ public class PoseidonConfig extends Configuration {
         //Modded Jar Support
         generateConfigOption("settings.support.modloader.enable", false);
         generateConfigOption("settings.support.modloader.info", "EXPERIMENTAL support for ModloaderMP.");
+
         //Offline Username Check
         generateConfigOption("settings.check-username-validity.enabled", true);
         generateConfigOption("settings.check-username-validity.info", "If enabled, verifies the validity of a usernames of cracked players.");
@@ -125,9 +123,13 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("emergency.debug.regenerate-corrupt-chunks.enable", false);
         generateConfigOption("emergency.debug.regenerate-corrupt-chunks.info", "This setting allows you to automatically regenerate corrupt chunks. This is useful after a ungraceful shutdown while a file is being written to or out of memory exception.");
 
+        //Messages
+        generateConfigOption("message.kick.banned", "You are banned from this server!");
+        generateConfigOption("message.kick.ip-banned", "Your IP address is banned from this server!");
+        generateConfigOption("message.kick.not-whitelisted", "You are not white-listed on this server!");
+        generateConfigOption("message.kick.full", "The server is full!");
 
         //Tree Leave Destroy Blacklist
-
         if (Boolean.valueOf(String.valueOf(getConfigOption("world.settings.block-tree-growth.enabled", true)))) {
             if (String.valueOf(this.getConfigOption("world.settings.block-tree-growth.list", "")).trim().isEmpty()) {
                 //Empty Blacklist
@@ -155,7 +157,6 @@ public class PoseidonConfig extends Configuration {
         } else {
             treeBlacklistIDs = new Integer[0];
         }
-
     }
 
 
