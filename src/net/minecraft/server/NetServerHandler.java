@@ -50,8 +50,8 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     private int rawConnectionType = 0; //Project Poseidon - Create Variable
     private boolean receivedKeepAlive = false;
     private boolean firePacketEvents;
-	
-	private final String msgPlayerLeave;
+    
+    private final String msgPlayerLeave;
 
     public boolean isReceivedKeepAlive() {
         return receivedKeepAlive;
@@ -71,7 +71,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         // CraftBukkit start
         this.server = minecraftserver.server;
         this.firePacketEvents = PoseidonConfig.getInstance().getBoolean("settings.packet-events.enabled", false); //Poseidon
-		this.msgPlayerLeave = PoseidonConfig.getInstance().getConfigString("message.player.leave");
+        this.msgPlayerLeave = PoseidonConfig.getInstance().getConfigString("message.player.leave");
     }
 
     //Project Poseidon - Start

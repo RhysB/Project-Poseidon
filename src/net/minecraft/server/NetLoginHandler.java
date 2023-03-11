@@ -30,15 +30,15 @@ public class NetLoginHandler extends NetHandler {
     private boolean receivedLoginPacket = false;
     private int rawConnectionType;
     private boolean receivedKeepAlive = false;
-	
-	private final String msgKickShutdown;
+    
+    private final String msgKickShutdown;
 
     public NetLoginHandler(MinecraftServer minecraftserver, Socket socket, String s) {
         this.server = minecraftserver;
         this.networkManager = new NetworkManager(socket, s, this);
         this.networkManager.f = 0;
-		
-		this.msgKickShutdown = PoseidonConfig.getInstance().getConfigString("message.kick.shutdown");
+        
+        this.msgKickShutdown = PoseidonConfig.getInstance().getConfigString("message.kick.shutdown");
     }
 
     // CraftBukkit start

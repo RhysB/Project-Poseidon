@@ -32,8 +32,8 @@ public class LoginProcessHandler {
     private ArrayList<ConnectionPause> pluginPauseObjects = new ArrayList<ConnectionPause>();
     private ArrayList<String> pluginPauseNames = new ArrayList<String>();
     private ArrayList<String> allPluginPauseNames = new ArrayList<String>();
-	
-	private final String msgKickAlreadyOnline;
+    
+    private final String msgKickAlreadyOnline;
 
     public LoginProcessHandler(NetLoginHandler netloginhandler, Packet1Login packet1login, CraftServer server, boolean onlineMode) {
         this.loginProcessHandler = this;
@@ -41,9 +41,9 @@ public class LoginProcessHandler {
         this.packet1Login = packet1login;
         this.server = server;
         this.onlineMode = onlineMode;
-		
-		this.msgKickAlreadyOnline = PoseidonConfig.getInstance().getConfigString("message.kick.already-online");
-		
+        
+        this.msgKickAlreadyOnline = PoseidonConfig.getInstance().getConfigString("message.kick.already-online");
+        
         processAuthentication();
 
         long connectionStartTime = System.currentTimeMillis()/1000L;

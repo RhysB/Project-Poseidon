@@ -11,14 +11,14 @@ import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Player;
 
 public class StopCommand extends VanillaCommand {
-	private final String msgKickShutdown;
-	
+    private final String msgKickShutdown;
+    
     public StopCommand() {
         super("stop");
         this.description = "Stops the server";
         this.usageMessage = "/stop";
         this.setPermission("bukkit.command.stop");
-		this.msgKickShutdown = PoseidonConfig.getInstance().getConfigString("message.kick.shutdown");
+        this.msgKickShutdown = PoseidonConfig.getInstance().getConfigString("message.kick.shutdown");
     }
 
     @Override
