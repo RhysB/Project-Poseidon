@@ -59,8 +59,8 @@ public class PoseidonConfig extends Configuration {
 
         generateConfigOption("settings.fix-drowning-push-down.enabled", true);
         generateConfigOption("settings.fix-drowning-push-down.info", "This setting fixes taking drowning damage pushing you down.");
-		
-		generateConfigOption("settings.player-knockback-fix.enabled", true);
+        
+        generateConfigOption("settings.player-knockback-fix.enabled", true);
         generateConfigOption("settings.player-knockback-fix.info", "This setting fixes reduced knockback for certain players on the server.");
 
         //Watchdog
