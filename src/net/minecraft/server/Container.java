@@ -27,7 +27,6 @@ public abstract class Container {
     protected void a(Slot slot) {
         addSlot(slot);
     }
-
     protected void addSlot(Slot slot) {
         slot.a = this.e.size();
         this.e.add(slot);

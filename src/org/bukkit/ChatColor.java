@@ -7,7 +7,6 @@ import java.util.Map;
  * All supported color values for chat
  */
 public enum ChatColor {
-
     /**
      * Represents black
      */
