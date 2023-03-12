@@ -54,8 +54,14 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.use-get-for-uuids.enabled", false);
         generateConfigOption("settings.use-get-for-uuids.info", "This setting causes the server to use the GET method for Username to UUID conversion. This is useful incase the POST method goes offline.");
 
-        generateConfigOption("settings.faster-chunk-sending.enabled", true);
-        generateConfigOption("settings.faster-chunk-sending.info", "This setting enables a newer chunk sending method that is a lot faster than the old one, which will load chunks for players faster.");
+        generateConfigOption("settings.faster-packets.enabled", true);
+        generateConfigOption("settings.faster-packets.info", "This setting increases the speed of packets, a fix from newer Minecraft versions.");
+
+        generateConfigOption("settings.fix-drowning-push-down.enabled", true);
+        generateConfigOption("settings.fix-drowning-push-down.info", "This setting fixes taking drowning damage pushing you down.");
+        
+        generateConfigOption("settings.player-knockback-fix.enabled", true);
+        generateConfigOption("settings.player-knockback-fix.info", "This setting fixes reduced knockback for certain players on the server.");
 
         //Watchdog
         //generateConfigOption("settings.enable-watchdog", true);
@@ -128,6 +134,8 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("message.kick.ip-banned", "Your IP address is banned from this server!");
         generateConfigOption("message.kick.not-whitelisted", "You are not white-listed on this server!");
         generateConfigOption("message.kick.full", "The server is full!");
+        generateConfigOption("message.kick.shutdown", "\u00A7cServer is shutting down, please rejoin later.");
+        generateConfigOption("message.kick.already-online", "\u00A7cA player with your username or uuid is already online, try reconnecting in a minute.");
         generateConfigOption("message.player.join", "\u00A7e%player% joined the game.");
         generateConfigOption("message.player.leave", "\u00A7e%player% left the game.");
 

@@ -23,7 +23,7 @@ class ChunkFile implements Comparable {
     }
 
     public int compareTo(Object o) {
-    	ChunkFile chunkfile = (ChunkFile) o;
+        ChunkFile chunkfile = (ChunkFile) o;
         int i = this.b >> 5;
         int j = chunkfile.b >> 5;
 

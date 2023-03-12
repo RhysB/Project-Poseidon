@@ -61,11 +61,11 @@ public class EntityTrackerEntry {
             this.scanPlayers(list);
         }
 
-        if (++this.l % this.c == 0) {
-        	++this.t; // Poseidon - moved below
-            
-        	// encoded means multiplied by 32
-        	// this is required to send it to the client, as the relative position is sent as the float multiplied by 32
+        if (++this.l % this.c == 0 || this.tracker.airBorne || this.tracker.aa().a()) {
+            ++this.t; // Poseidon - moved below
+
+            // encoded means multiplied by 32
+            // this is required to send it to the client, as the relative position is sent as the float multiplied by 32
             int newEncodedPosX = MathHelper.floor(this.tracker.locX * 32.0D);
             int newEncodedPosY = MathHelper.floor(this.tracker.locY * 32.0D);
             int newEncodedPosZ = MathHelper.floor(this.tracker.locZ * 32.0D);
@@ -80,7 +80,7 @@ public class EntityTrackerEntry {
             int movementUpdateTreshold = 1;
             int rotationUpdateTreshold = 1;
             boolean needsPositionUpdate = Math.abs(encodedDiffX) >= movementUpdateTreshold || Math.abs(encodedDiffY) >= movementUpdateTreshold || Math.abs(encodedDiffZ) >= movementUpdateTreshold
-            		|| tracker instanceof EntityBoat || tracker instanceof EntityMinecart;
+                    || tracker instanceof EntityBoat || tracker instanceof EntityMinecart;
             
             boolean needsRotationUpdate = Math.abs(newEncodedRotationYaw - this.g) >= rotationUpdateTreshold || Math.abs(newEncodedRotationPitch - this.h) >= rotationUpdateTreshold;
 
@@ -98,9 +98,9 @@ public class EntityTrackerEntry {
             // CraftBukkit end
             
             if (encodedDiffX >= -128 && encodedDiffX < 128 && encodedDiffY >= -128 && encodedDiffY < 128 && encodedDiffZ >= -128 && encodedDiffZ < 128 && this.t <= 400) {
-            	// entity has moved less than 4 blocks
+                // entity has moved less than 4 blocks
                 if (needsPositionUpdate && needsRotationUpdate) {
-                	packet = new Packet33RelEntityMoveLook(this.tracker.id, (byte) encodedDiffX, (byte) encodedDiffY, (byte) encodedDiffZ, (byte) newEncodedRotationYaw, (byte) newEncodedRotationPitch);
+                    packet = new Packet33RelEntityMoveLook(this.tracker.id, (byte) encodedDiffX, (byte) encodedDiffY, (byte) encodedDiffZ, (byte) newEncodedRotationYaw, (byte) newEncodedRotationPitch);
                 } else if (needsPositionUpdate) {
                     packet = new Packet31RelEntityMove(this.tracker.id, (byte) encodedDiffX, (byte) encodedDiffY, (byte) encodedDiffZ);
                 } else if (needsRotationUpdate) {
@@ -160,6 +160,7 @@ public class EntityTrackerEntry {
                 this.h = newEncodedRotationPitch;
             }
             // Craftbukkit end */
+            this.tracker.airBorne = false;
         }
 
         if (this.tracker.velocityChanged) {
@@ -207,21 +208,21 @@ public class EntityTrackerEntry {
     }
 
     public void a() {
-		// Poseidon start
+        // Poseidon start
         //this.a((Packet) (new Packet29DestroyEntity(this.tracker.id)));
-		Iterator iterator = this.trackedPlayers.iterator();
+        Iterator iterator = this.trackedPlayers.iterator();
 
         while (iterator.hasNext()) {
             EntityPlayer entityplayer = (EntityPlayer) iterator.next();
 
             entityplayer.removeQueue.add(Integer.valueOf(this.tracker.id));
         }
-		// Poseidon end
+        // Poseidon end
     }
 
     public void a(EntityPlayer entityplayer) {
         if (this.trackedPlayers.contains(entityplayer)) {
-			entityplayer.removeQueue.add(Integer.valueOf(this.tracker.id)); // Poseidon
+            entityplayer.removeQueue.add(Integer.valueOf(this.tracker.id)); // Poseidon
             this.trackedPlayers.remove(entityplayer);
         }
     }
@@ -248,23 +249,23 @@ public class EntityTrackerEntry {
                     Packet packet = this.b();
                     entityplayer.netServerHandler.sendPacket(packet);
                     // Poseidon Start
-					if (!this.tracker.datawatcher.getD()) {
+                    if (!this.tracker.datawatcher.getD()) {
                         entityplayer.netServerHandler.sendPacket(new Packet40EntityMetadata(this.tracker.id, this.tracker.datawatcher));
                     }
-					
-					this.i = this.tracker.motX;
+                    
+                    this.i = this.tracker.motX;
                     this.j = this.tracker.motY;
                     this.k = this.tracker.motZ;
                     if (this.isMoving) {
                         entityplayer.netServerHandler.sendPacket(new Packet28EntityVelocity(this.tracker.id, this.tracker.motX, this.tracker.motY, this.tracker.motZ));
                     }
 
-					if (this.tracker.vehicle != null) {
+                    if (this.tracker.vehicle != null) {
                         entityplayer.netServerHandler.sendPacket(new Packet39AttachEntity(this.tracker, this.tracker.vehicle));
                     }
-					// Poseidon end
-					
-					// CraftBukkit start
+                    // Poseidon end
+                    
+                    // CraftBukkit start
                     if (this.tracker.passenger != null) {
                         entityplayer.netServerHandler.sendPacket(new Packet39AttachEntity(this.tracker.passenger, this.tracker));
                     }
@@ -305,13 +306,13 @@ public class EntityTrackerEntry {
     }
 
     private Packet b() {
-    	if (this.tracker.dead) { // Poseidon
-    		// CraftBukkit start - Remove useless error spam, just return
+        if (this.tracker.dead) { // Poseidon
+            // CraftBukkit start - Remove useless error spam, just return
             // System.out.println("Fetching addPacket for removed entity");
             return null;
             // CraftBukkit end
         }
-    	
+        
         if (this.tracker instanceof EntityItem) {
             EntityItem entityitem = (EntityItem) this.tracker;
             Packet21PickupSpawn packet21pickupspawn = new Packet21PickupSpawn(entityitem);

@@ -24,11 +24,11 @@ public class Achievement extends Statistic {
         this.a = j;
         this.b = k;
         if (j < AchievementList.a) {
-        	AchievementList.a = j;
+            AchievementList.a = j;
         }
 
         if (k < AchievementList.b) {
-        	AchievementList.b = k;
+            AchievementList.b = k;
         }
 
         if (j > AchievementList.c) {

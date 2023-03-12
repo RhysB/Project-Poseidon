@@ -7,7 +7,7 @@ import java.util.*;
 
 public class DataWatcher {
 
-	private boolean d = true;
+    private boolean d = true;
     private static final HashMap a = new HashMap();
     private final Map b = new HashMap();
     private boolean c;

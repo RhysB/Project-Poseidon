@@ -1,14 +1,16 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import java.io.IOException;
 
 class NetworkWriterThread extends Thread {
-
+    private boolean fast; // Poseidon
     final NetworkManager a;
 
     NetworkWriterThread(NetworkManager networkmanager, String s) {
         super(s);
         this.a = networkmanager;
+        this.fast = PoseidonConfig.getInstance().getBoolean("settings.faster-packets.enabled", true); // Poseidon
     }
 
     public void run() {
@@ -32,10 +34,12 @@ class NetworkWriterThread extends Thread {
                     ;
                 }
 
-                try {
-                    sleep(100L);
-                } catch (InterruptedException interruptedexception) {
-                    ;
+                if (!this.fast) { // Poseidon
+                    try {
+                        sleep(100L);
+                    } catch (InterruptedException interruptedexception) {
+                        ;
+                    }
                 }
 
                 try {
@@ -48,6 +52,14 @@ class NetworkWriterThread extends Thread {
                     }
 
                     //ioexception.printStackTrace(); //Project Poseidon Remove - Credit to Notcz in Modification Station
+                }
+                
+                if (this.fast) { // Poseidon
+                    try {
+                        sleep(2L);
+                    } catch (InterruptedException interruptedexception) {
+                        ;
+                    }
                 }
             } finally {
                 if (flag) {

@@ -1,6 +1,7 @@
 package org.bukkit.command.defaults;
 
 import com.legacyminecraft.poseidon.PoseidonPlugin;
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -10,11 +11,14 @@ import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Player;
 
 public class StopCommand extends VanillaCommand {
+    private final String msgKickShutdown;
+    
     public StopCommand() {
         super("stop");
         this.description = "Stops the server";
         this.usageMessage = "/stop";
         this.setPermission("bukkit.command.stop");
+        this.msgKickShutdown = PoseidonConfig.getInstance().getConfigString("message.kick.shutdown");
     }
 
     @Override
@@ -26,7 +30,7 @@ public class StopCommand extends VanillaCommand {
         ((CraftServer) Bukkit.getServer()).setShuttingdown(true);
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.saveData();
-            player.kickPlayer(ChatColor.RED + "Server is shutting down, please rejoin later.");
+            player.kickPlayer(this.msgKickShutdown);
         }
         for (World world : Bukkit.getWorlds()) {
             world.save();

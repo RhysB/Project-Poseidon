@@ -237,7 +237,8 @@ public class NetworkManager {
     }
 
     public void b() {
-        if (this.x > 1048576) {
+        boolean fast = PoseidonConfig.getInstance().getBoolean("settings.faster-packets.enabled", true);
+        if (this.x > (fast ? 2097152 : 1048576)) {
             this.a("disconnect.overflow", new Object[0]);
         }
 
@@ -249,7 +250,7 @@ public class NetworkManager {
             this.w = 0;
         }
 
-        int i = 100;
+        int i = (fast ? 1000 : 100);
 
         //Poseidon - Packet spam detection
         if (spamDetection) {
