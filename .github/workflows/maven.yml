@@ -13,7 +13,10 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
+    
+permissions:
+  pull-requests: write
+  
 jobs:
   build:
 
