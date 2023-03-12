@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
@@ -20,7 +21,6 @@ import java.util.UUID;
 // CraftBukkit end
 
 public abstract class Entity {
-
     // Poseidon start - Backport of 0070-Use-a-Shared-Random-for-Entities.patch from PaperSpigot
     public static Random SHARED_RANDOM = new Random() {
         private boolean locked = false;
@@ -35,7 +35,7 @@ public abstract class Entity {
         }
     };
     // Poseidon end
-    
+
     private static int entityCount = 0;
     public int id;
     public double aH;
@@ -43,19 +43,10 @@ public abstract class Entity {
     public Entity passenger;
     public Entity vehicle;
     public World world;
-    public double lastX;
-    public double lastY;
-    public double lastZ;
-    public double locX;
-    public double locY;
-    public double locZ;
-    public double motX;
-    public double motY;
-    public double motZ;
-    public float yaw;
-    public float pitch;
-    public float lastYaw;
-    public float lastPitch;
+    public double lastX, lastY, lastZ,
+            locX, locY, locZ,
+            motX, motY, motZ;
+    public float yaw, pitch, lastYaw, lastPitch;
     public final AxisAlignedBB boundingBox;
     public boolean onGround;
     public boolean positionChanged;
@@ -65,9 +56,7 @@ public abstract class Entity {
     public boolean bf;
     public boolean bg;
     public boolean dead;
-    public float height;
-    public float length;
-    public float width;
+    public float height, length, width;
     public float bl;
     public float bm;
     public float fallDistance; // CraftBukkit - private -> public
@@ -143,12 +132,17 @@ public abstract class Entity {
 
     protected abstract void b();
 
-    public DataWatcher aa() {
+    /**
+     * Use {@link #getDataWatcher() getDataWatcher} instead.
+     */
+    @Deprecated
+    public DataWatcher aa() { return this.getDataWatcher(); }
+    public DataWatcher getDataWatcher() {
         return this.datawatcher;
     }
 
     public boolean equals(Object object) {
-        return object instanceof Entity ? ((Entity) object).id == this.id : false;
+        return object instanceof Entity && ((Entity) object).id == this.id;
     }
 
     public int hashCode() {
@@ -172,8 +166,8 @@ public abstract class Entity {
 
         if ((f == Float.POSITIVE_INFINITY) || (f == Float.NEGATIVE_INFINITY)) {
             if (this instanceof EntityPlayer) {
-                System.err.println(((CraftPlayer) this.getBukkitEntity()).getName() + " was caught trying to crash the server with an invalid yaw");
-                ((CraftPlayer) this.getBukkitEntity()).kickPlayer("Nope");
+                System.err.println(((CraftPlayer) this.getBukkitEntity()).getName() + " was caught trying to crash the server with an invalid yaw!");
+                ((CraftPlayer) this.getBukkitEntity()).kickPlayer(ChatColor.RED + "[Poseidon] You've been kicked for hacking.");
             }
             f = 0;
         }
@@ -185,8 +179,8 @@ public abstract class Entity {
 
         if ((f1 == Float.POSITIVE_INFINITY) || (f1 == Float.NEGATIVE_INFINITY)) {
             if (this instanceof EntityPlayer) {
-                System.err.println(((CraftPlayer) this.getBukkitEntity()).getName() + " was caught trying to crash the server with an invalid pitch");
-                ((CraftPlayer) this.getBukkitEntity()).kickPlayer("Nope");
+                System.err.println(((CraftPlayer) this.getBukkitEntity()).getName() + " was caught trying to crash the server with an invalid pitch!");
+                ((CraftPlayer) this.getBukkitEntity()).kickPlayer(ChatColor.RED + "[Poseidon] You've been kicked for hacking.");
             }
             f1 = 0;
         }
@@ -696,7 +690,7 @@ public abstract class Entity {
     }
 
     public boolean a(Material material) {
-        double d0 = this.locY + (double) this.t();
+        double d0 = this.locY + (double) this.getEyeHeight();
         int i = MathHelper.floor(this.locX);
         int j = MathHelper.d((float) MathHelper.floor(d0));
         int k = MathHelper.floor(this.locZ);
@@ -712,7 +706,14 @@ public abstract class Entity {
         }
     }
 
+    /**
+     * Use {@link #getEyeHeight() getEyeHeight} instead.
+     */
+    @Deprecated
     public float t() {
+        return getEyeHeight();
+    }
+    public float getEyeHeight() {
         return 0.0F;
     }
 
@@ -1075,7 +1076,7 @@ public abstract class Entity {
             float f1 = ((float) ((i >> 1) % 2) - 0.5F) * 0.1F;
             float f2 = ((float) ((i >> 2) % 2) - 0.5F) * this.length * 0.9F;
             int j = MathHelper.floor(this.locX + (double) f);
-            int k = MathHelper.floor(this.locY + (double) this.t() + (double) f1);
+            int k = MathHelper.floor(this.locY + (double) this.getEyeHeight() + (double) f1);
             int l = MathHelper.floor(this.locZ + (double) f2);
 
             if (this.world.e(j, k, l)) {

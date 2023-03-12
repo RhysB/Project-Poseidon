@@ -9,32 +9,32 @@ public class ContainerFurnace extends Container {
 
     public ContainerFurnace(InventoryPlayer inventoryplayer, TileEntityFurnace tileentityfurnace) {
         this.a = tileentityfurnace;
-        this.a(new Slot(tileentityfurnace, 0, 56, 17));
-        this.a(new Slot(tileentityfurnace, 1, 56, 53));
-        this.a(new SlotResult2(inventoryplayer.d, tileentityfurnace, 2, 116, 35));
+        this.addSlot(new Slot(tileentityfurnace, 0, 56, 17));
+        this.addSlot(new Slot(tileentityfurnace, 1, 56, 53));
+        this.addSlot(new SlotResult2(inventoryplayer.d, tileentityfurnace, 2, 116, 35));
 
         int i;
 
         for (i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
-                this.a(new Slot(inventoryplayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                this.addSlot(new Slot(inventoryplayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
             }
         }
 
         for (i = 0; i < 9; ++i) {
-            this.a(new Slot(inventoryplayer, i, 8 + i * 18, 142));
+            this.addSlot(new Slot(inventoryplayer, i, 8 + i * 18, 142));
         }
     }
 
-    public void a(ICrafting icrafting) {
-        super.a(icrafting);
-        icrafting.a(this, 0, this.a.cookTime);
-        icrafting.a(this, 1, this.a.burnTime);
-        icrafting.a(this, 2, this.a.ticksForCurrentFuel);
+    public void addListener(ICrafting iCrafting) {
+        super.addListener(iCrafting);
+        iCrafting.a(this, 0, this.a.cookTime);
+        iCrafting.a(this, 1, this.a.burnTime);
+        iCrafting.a(this, 2, this.a.ticksForCurrentFuel);
     }
 
-    public void a() {
-        super.a();
+    public void updateCraftingMatrix() {
+        super.updateCraftingMatrix();
 
         for (int i = 0; i < this.listeners.size(); ++i) {
             ICrafting icrafting = (ICrafting) this.listeners.get(i);

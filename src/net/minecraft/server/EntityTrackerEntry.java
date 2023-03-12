@@ -61,7 +61,7 @@ public class EntityTrackerEntry {
             this.scanPlayers(list);
         }
 
-        if (++this.l % this.c == 0 || this.tracker.airBorne || this.tracker.aa().a()) {
+        if (++this.l % this.c == 0 || this.tracker.airBorne || this.tracker.getDataWatcher().a()) {
             ++this.t; // Poseidon - moved below
 
             // encoded means multiplied by 32
@@ -142,7 +142,7 @@ public class EntityTrackerEntry {
                 this.a((Packet) packet);
             }
 
-            DataWatcher datawatcher = this.tracker.aa();
+            DataWatcher datawatcher = this.tracker.getDataWatcher();
 
             if (datawatcher.a()) {
                 this.b((Packet) (new Packet40EntityMetadata(this.tracker.id, datawatcher)));

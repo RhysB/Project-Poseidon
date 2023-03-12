@@ -684,7 +684,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         this.player.inventory.items[this.player.inventory.itemInHandIndex] = ItemStack.b(this.player.inventory.items[this.player.inventory.itemInHandIndex]);
         Slot slot = this.player.activeContainer.a(this.player.inventory, this.player.inventory.itemInHandIndex);
 
-        this.player.activeContainer.a();
+        this.player.activeContainer.updateCraftingMatrix();
         this.player.h = false;
         // CraftBukkit
         if (!ItemStack.equals(this.player.inventory.getItemInHand(), packet15place.itemstack) || always) {
@@ -1077,7 +1077,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
             if (ItemStack.equals(packet102windowclick.e, itemstack)) {
                 this.player.netServerHandler.sendPacket(new Packet106Transaction(packet102windowclick.a, packet102windowclick.d, true));
                 this.player.h = true;
-                this.player.activeContainer.a();
+                this.player.activeContainer.updateCraftingMatrix();
                 this.player.z();
                 this.player.h = false;
             } else {

@@ -49,7 +49,7 @@ public class InventoryCrafting implements IInventory {
             if (this.items[i].count <= j) {
                 itemstack = this.items[i];
                 this.items[i] = null;
-                this.c.a((IInventory) this);
+                this.c.onCraftMatrixChanged((IInventory) this);
                 return itemstack;
             } else {
                 itemstack = this.items[i].a(j);
@@ -57,7 +57,7 @@ public class InventoryCrafting implements IInventory {
                     this.items[i] = null;
                 }
 
-                this.c.a((IInventory) this);
+                this.c.onCraftMatrixChanged((IInventory) this);
                 return itemstack;
             }
         } else {
@@ -67,7 +67,7 @@ public class InventoryCrafting implements IInventory {
 
     public void setItem(int i, ItemStack itemstack) {
         this.items[i] = itemstack;
-        this.c.a((IInventory) this);
+        this.c.onCraftMatrixChanged((IInventory) this);
     }
 
     public int getMaxStackSize() {

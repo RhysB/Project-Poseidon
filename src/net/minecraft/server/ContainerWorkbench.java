@@ -14,31 +14,31 @@ public class ContainerWorkbench extends Container {
         this.h = i;
         this.i = j;
         this.j = k;
-        this.a((Slot) (new SlotResult(inventoryplayer.d, this.craftInventory, this.resultInventory, 0, 124, 35)));
+        this.addSlot((Slot) (new SlotResult(inventoryplayer.d, this.craftInventory, this.resultInventory, 0, 124, 35)));
 
         int l;
         int i1;
 
         for (l = 0; l < 3; ++l) {
             for (i1 = 0; i1 < 3; ++i1) {
-                this.a(new Slot(this.craftInventory, i1 + l * 3, 30 + i1 * 18, 17 + l * 18));
+                this.addSlot(new Slot(this.craftInventory, i1 + l * 3, 30 + i1 * 18, 17 + l * 18));
             }
         }
 
         for (l = 0; l < 3; ++l) {
             for (i1 = 0; i1 < 9; ++i1) {
-                this.a(new Slot(inventoryplayer, i1 + l * 9 + 9, 8 + i1 * 18, 84 + l * 18));
+                this.addSlot(new Slot(inventoryplayer, i1 + l * 9 + 9, 8 + i1 * 18, 84 + l * 18));
             }
         }
 
         for (l = 0; l < 9; ++l) {
-            this.a(new Slot(inventoryplayer, l, 8 + l * 18, 142));
+            this.addSlot(new Slot(inventoryplayer, l, 8 + l * 18, 142));
         }
 
-        this.a((IInventory) this.craftInventory);
+        this.onCraftMatrixChanged((IInventory) this.craftInventory);
     }
 
-    public void a(IInventory iinventory) {
+    public void onCraftMatrixChanged(IInventory iinventory) {
         // CraftBukkit start
         ItemStack craftResult = CraftingManager.getInstance().craft(this.craftInventory);
         this.resultInventory.setItem(0, craftResult);
@@ -51,8 +51,8 @@ public class ContainerWorkbench extends Container {
         // CraftBukkit end
     }
 
-    public void a(EntityHuman entityhuman) {
-        super.a(entityhuman);
+    public void onGuiClosed(EntityHuman entityhuman) {
+        super.onGuiClosed(entityhuman);
         if (!this.c.isStatic) {
             for (int i = 0; i < 9; ++i) {
                 ItemStack itemstack = this.craftInventory.getItem(i);

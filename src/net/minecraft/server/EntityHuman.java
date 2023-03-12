@@ -262,7 +262,7 @@ public abstract class EntityHuman extends EntityLiving {
 
     public void a(ItemStack itemstack, boolean flag) {
         if (itemstack != null) {
-            EntityItem entityitem = new EntityItem(this.world, this.locX, this.locY - 0.30000001192092896D + (double) this.t(), this.locZ, itemstack);
+            EntityItem entityitem = new EntityItem(this.world, this.locX, this.locY - 0.30000001192092896D + (double) this.getEyeHeight(), this.locZ, itemstack);
 
             entityitem.pickupDelay = 40;
             float f = 0.1F;
@@ -373,7 +373,7 @@ public abstract class EntityHuman extends EntityLiving {
 
     public void receive(Entity entity, int i) {}
 
-    public float t() {
+    public float getEyeHeight() {
         return 0.12F;
     }
 
@@ -620,9 +620,9 @@ public abstract class EntityHuman extends EntityLiving {
 
     public void die() {
         super.die();
-        this.defaultContainer.a(this);
+        this.defaultContainer.onGuiClosed(this);
         if (this.activeContainer != null) {
-            this.activeContainer.a(this);
+            this.activeContainer.onGuiClosed(this);
         }
     }
 

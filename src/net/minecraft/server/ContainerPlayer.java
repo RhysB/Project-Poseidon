@@ -15,35 +15,35 @@ public class ContainerPlayer extends Container {
         this.resultInventory = new InventoryCraftResult();
         this.c = false;
         this.c = flag;
-        this.a((Slot) (new SlotResult(inventoryplayer.d, this.craftInventory, this.resultInventory, 0, 144, 36)));
+        this.addSlot((Slot) (new SlotResult(inventoryplayer.d, this.craftInventory, this.resultInventory, 0, 144, 36)));
 
         int i;
         int j;
 
         for (i = 0; i < 2; ++i) {
             for (j = 0; j < 2; ++j) {
-                this.a(new Slot(this.craftInventory, j + i * 2, 88 + j * 18, 26 + i * 18));
+                this.addSlot(new Slot(this.craftInventory, j + i * 2, 88 + j * 18, 26 + i * 18));
             }
         }
 
         for (i = 0; i < 4; ++i) {
-            this.a((Slot) (new SlotArmor(this, inventoryplayer, inventoryplayer.getSize() - 1 - i, 8, 8 + i * 18, i)));
+            this.addSlot((Slot) (new SlotArmor(this, inventoryplayer, inventoryplayer.getSize() - 1 - i, 8, 8 + i * 18, i)));
         }
 
         for (i = 0; i < 3; ++i) {
             for (j = 0; j < 9; ++j) {
-                this.a(new Slot(inventoryplayer, j + (i + 1) * 9, 8 + j * 18, 84 + i * 18));
+                this.addSlot(new Slot(inventoryplayer, j + (i + 1) * 9, 8 + j * 18, 84 + i * 18));
             }
         }
 
         for (i = 0; i < 9; ++i) {
-            this.a(new Slot(inventoryplayer, i, 8 + i * 18, 142));
+            this.addSlot(new Slot(inventoryplayer, i, 8 + i * 18, 142));
         }
 
-        this.a((IInventory) this.craftInventory);
+        this.onCraftMatrixChanged((IInventory) this.craftInventory);
     }
 
-    public void a(IInventory iinventory) {
+    public void onCraftMatrixChanged(IInventory iinventory) {
         // CraftBukkit start
         ItemStack craftResult = CraftingManager.getInstance().craft(this.craftInventory);
         this.resultInventory.setItem(0, craftResult);
@@ -56,8 +56,8 @@ public class ContainerPlayer extends Container {
         // CraftBukkit end
     }
 
-    public void a(EntityHuman entityhuman) {
-        super.a(entityhuman);
+    public void onGuiClosed(EntityHuman entityhuman) {
+        super.onGuiClosed(entityhuman);
 
         for (int i = 0; i < 4; ++i) {
             ItemStack itemstack = this.craftInventory.getItem(i);

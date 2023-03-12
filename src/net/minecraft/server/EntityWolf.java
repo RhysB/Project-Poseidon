@@ -204,7 +204,7 @@ public class EntityWolf extends EntityAnimal {
         }
     }
 
-    public float t() {
+    public float getEyeHeight() {
         return this.width * 0.8F;
     }
 

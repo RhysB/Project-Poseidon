@@ -1,3 +1,4 @@
+
 package net.minecraft.server;
 
 import com.legacyminecraft.poseidon.PoseidonConfig;
@@ -7,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.ChunkCompressionThread;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 
 import java.util.*;
@@ -15,7 +15,6 @@ import java.util.*;
 // CraftBukkit start
 
 public class EntityPlayer extends EntityHuman implements ICrafting {
-
     public NetServerHandler netServerHandler;
     public MinecraftServer b;
     public ItemInWorldManager itemInWorldManager;
@@ -47,7 +46,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
             }
         }
 
-        this.setPositionRotation((double) i + 0.5D, (double) k, (double) j + 0.5D, 0.0F, 0.0F);
+        this.setPositionRotation((double) i + 0.5D, k, (double) j + 0.5D, 0.0F, 0.0F);
         this.b = minecraftserver;
         this.bs = 0.0F;
         this.name = s;
@@ -90,7 +89,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     }
 
     public void syncInventory() {
-        this.activeContainer.a((ICrafting) this);
+        this.activeContainer.addListener((ICrafting) this);
     }
 
     public ItemStack[] getEquipment() {
@@ -101,14 +100,14 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.height = 0.0F;
     }
 
-    public float t() {
+    public float getEyeHeight() {
         return 1.62F;
     }
 
     public void m_() {
         this.itemInWorldManager.a();
         --this.bM;
-        this.activeContainer.a();
+        this.activeContainer.updateCraftingMatrix();
 
         for (int i = 0; i < 5; ++i) {
             ItemStack itemstack = this.c_(i);
@@ -126,7 +125,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
     public void die(Entity entity) {
         // CraftBukkit start
-        java.util.List<org.bukkit.inventory.ItemStack> loot = new java.util.ArrayList<org.bukkit.inventory.ItemStack>();
+        java.util.List<org.bukkit.inventory.ItemStack> loot = new java.util.ArrayList<>();
 
         for (int i = 0; i < this.inventory.items.length; ++i) {
             if (this.inventory.items[i] != null) {
@@ -374,7 +373,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         }
 
         super.receive(entity, i);
-        this.activeContainer.a();
+        this.activeContainer.updateCraftingMatrix();
     }
 
     public void w() {
@@ -450,7 +449,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.netServerHandler.sendPacket(new Packet100OpenWindow(this.bO, 1, "Crafting", 9));
         this.activeContainer = new ContainerWorkbench(this.inventory, this.world, i, j, k);
         this.activeContainer.windowId = this.bO;
-        this.activeContainer.a((ICrafting) this);
+        this.activeContainer.addListener((ICrafting) this);
     }
 
     public void a(IInventory iinventory) {
@@ -459,7 +458,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.netServerHandler.sendPacket(new Packet100OpenWindow(this.bO, 0, iinventory.getName(), iinventory.getSize()));
         this.activeContainer = new ContainerChest(this.inventory, iinventory);
         this.activeContainer.windowId = this.bO;
-        this.activeContainer.a((ICrafting) this);
+        this.activeContainer.addListener((ICrafting) this);
     }
 
     public void a(TileEntityFurnace tileentityfurnace) {
@@ -467,7 +466,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.netServerHandler.sendPacket(new Packet100OpenWindow(this.bO, 2, tileentityfurnace.getName(), tileentityfurnace.getSize()));
         this.activeContainer = new ContainerFurnace(this.inventory, tileentityfurnace);
         this.activeContainer.windowId = this.bO;
-        this.activeContainer.a((ICrafting) this);
+        this.activeContainer.addListener((ICrafting) this);
     }
 
     public void a(TileEntityDispenser tileentitydispenser) {
@@ -475,11 +474,11 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.netServerHandler.sendPacket(new Packet100OpenWindow(this.bO, 3, tileentitydispenser.getName(), tileentitydispenser.getSize()));
         this.activeContainer = new ContainerDispenser(this.inventory, tileentitydispenser);
         this.activeContainer.windowId = this.bO;
-        this.activeContainer.a((ICrafting) this);
+        this.activeContainer.addListener((ICrafting) this);
     }
 
     public void a(Container container, int i, ItemStack itemstack) {
-        if (!(container.b(i) instanceof SlotResult)) {
+        if (!(container.getSlot(i) instanceof SlotResult)) {
             if (!this.h) {
                 this.netServerHandler.sendPacket(new Packet103SetSlot(container.windowId, i, itemstack));
             }
@@ -487,7 +486,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     }
 
     public void updateInventory(Container container) {
-        this.a(container, container.b());
+        this.a(container, container.getItems());
     }
 
     public void a(Container container, List list) {
@@ -514,7 +513,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     }
 
     public void A() {
-        this.activeContainer.a((EntityHuman) this);
+        this.activeContainer.onGuiClosed((EntityHuman) this);
         this.activeContainer = this.defaultContainer;
     }
 

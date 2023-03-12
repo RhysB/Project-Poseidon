@@ -55,7 +55,7 @@ public class EntitySkeleton extends EntityMonster {
                 EntityArrow entityarrow = new EntityArrow(this.world, this);
 
                 ++entityarrow.locY;
-                double d2 = entity.locY + (double) entity.t() - 0.20000000298023224D - entityarrow.locY;
+                double d2 = entity.locY + (double) entity.getEyeHeight() - 0.20000000298023224D - entityarrow.locY;
                 float f1 = MathHelper.a(d0 * d0 + d1 * d1) * 0.2F;
                 
                 if ((boolean) PoseidonConfig.getInstance().getConfigOption("world.settings.skeleton-shooting-sound-fix.enabled", true)) {

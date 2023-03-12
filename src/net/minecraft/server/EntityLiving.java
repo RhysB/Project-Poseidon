@@ -83,7 +83,7 @@ public abstract class EntityLiving extends Entity {
     protected void b() {}
 
     public boolean e(Entity entity) {
-        return this.world.a(Vec3D.create(this.locX, this.locY + (double) this.t(), this.locZ), Vec3D.create(entity.locX, entity.locY + (double) entity.t(), entity.locZ)) == null;
+        return this.world.a(Vec3D.create(this.locX, this.locY + (double) this.getEyeHeight(), this.locZ), Vec3D.create(entity.locX, entity.locY + (double) entity.getEyeHeight(), entity.locZ)) == null;
     }
 
     public boolean l_() {
@@ -94,7 +94,7 @@ public abstract class EntityLiving extends Entity {
         return !this.dead;
     }
 
-    public float t() {
+    public float getEyeHeight() {
         return this.width * 0.85F;
     }
 
@@ -809,9 +809,9 @@ public abstract class EntityLiving extends Entity {
         if (entity instanceof EntityLiving) {
             EntityLiving entityliving = (EntityLiving) entity;
 
-            d2 = this.locY + (double) this.t() - (entityliving.locY + (double) entityliving.t());
+            d2 = this.locY + (double) this.getEyeHeight() - (entityliving.locY + (double) entityliving.getEyeHeight());
         } else {
-            d2 = (entity.boundingBox.b + entity.boundingBox.e) / 2.0D - (this.locY + (double) this.t());
+            d2 = (entity.boundingBox.b + entity.boundingBox.e) / 2.0D - (this.locY + (double) this.getEyeHeight());
         }
 
         double d3 = (double) MathHelper.a(d0 * d0 + d1 * d1);

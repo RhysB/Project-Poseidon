@@ -6,8 +6,13 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class Container {
-
+    /**
+     * inventoryItemStacks
+     */
     public List d = new ArrayList();
+    /**
+     * inventorySlots
+     */
     public List e = new ArrayList();
     public int windowId = 0;
     private short a = 0;
@@ -16,23 +21,48 @@ public abstract class Container {
 
     public Container() {}
 
+    /**
+     * Use {@link #addSlot(Slot) addSlot} instead.
+     */
     protected void a(Slot slot) {
+        addSlot(slot);
+    }
+
+    protected void addSlot(Slot slot) {
         slot.a = this.e.size();
         this.e.add(slot);
         this.d.add(null);
     }
 
-    public void a(ICrafting icrafting) {
-        if (this.listeners.contains(icrafting)) {
+    /**
+     * Use {@link #addListener(ICrafting) addListener} instead.
+     */
+    @Deprecated
+    public void a(ICrafting iCrafting) {
+        addListener(iCrafting);
+    }
+    public void addListener(ICrafting iCrafting) {
+        if (this.listeners.contains(iCrafting)) {
             throw new IllegalArgumentException("Listener already listening");
         } else {
-            this.listeners.add(icrafting);
-            icrafting.a(this, this.b());
-            this.a();
+            this.listeners.add(iCrafting);
+            iCrafting.a(this, this.getItems());
+            this.updateCraftingMatrix();
         }
     }
 
+    /**
+     * Use {@link #getItems() getItems} instead.
+     */
+    @Deprecated
     public List b() {
+        return getItems();
+    }
+    /**
+     * TODO: Change List to List<ItemStack> and make sure it works properly.
+     * @return The item list.
+     */
+    public List getItems() {
         ArrayList arraylist = new ArrayList();
 
         for (int i = 0; i < this.e.size(); ++i) {
@@ -42,7 +72,14 @@ public abstract class Container {
         return arraylist;
     }
 
+    /**
+     * Use {@link #updateCraftingMatrix() updateCraftingMatrix} instead.
+     */
+    @Deprecated
     public void a() {
+        updateCraftingMatrix();
+    }
+    public void updateCraftingMatrix() {
         for (int i = 0; i < this.e.size(); ++i) {
             ItemStack itemstack = ((Slot) this.e.get(i)).getItem();
             ItemStack itemstack1 = (ItemStack) this.d.get(i);
@@ -70,7 +107,14 @@ public abstract class Container {
         return null;
     }
 
+    /**
+     * Use {@link #getSlot(int) getSlot} instead.
+     */
+    @Deprecated
     public Slot b(int i) {
+        return getSlot(i);
+    }
+    public Slot getSlot(int i) {
         return (Slot) this.e.get(i);
     }
 
@@ -86,18 +130,16 @@ public abstract class Container {
         if (j == 0 || j == 1) {
             InventoryPlayer inventoryplayer = entityhuman.inventory;
 
-            if (i == -999) {
-                if (inventoryplayer.j() != null && i == -999) {
-                    if (j == 0) {
-                        entityhuman.b(inventoryplayer.j());
-                        inventoryplayer.b((ItemStack) null);
-                    }
+            if (i == -999 && inventoryplayer.j() != null) {
+                if (j == 0) {
+                    entityhuman.b(inventoryplayer.j());
+                    inventoryplayer.b((ItemStack) null);
+                }
 
-                    if (j == 1) {
-                        entityhuman.b(inventoryplayer.j().a(1));
-                        if (inventoryplayer.j().count == 0) {
-                            inventoryplayer.b((ItemStack) null);
-                        }
+                if (j == 1) {
+                    entityhuman.b(inventoryplayer.j().a(1));
+                    if (inventoryplayer.j().count == 0) {
+                        inventoryplayer.b((ItemStack) null);
                     }
                 }
             } else {
@@ -194,7 +236,15 @@ public abstract class Container {
         return itemstack;
     }
 
-    public void a(EntityHuman entityhuman) {
+    /**
+     * Use {@link #onGuiClosed(EntityHuman) onGuiClosed} instead.
+     */
+    @Deprecated
+    public void a(EntityHuman entityHuman) {
+        onGuiClosed(entityHuman);
+    }
+
+    public void onGuiClosed(EntityHuman entityhuman) {
         InventoryPlayer inventoryplayer = entityhuman.inventory;
 
         if (inventoryplayer.j() != null) {
@@ -203,8 +253,15 @@ public abstract class Container {
         }
     }
 
-    public void a(IInventory iinventory) {
-        this.a();
+    /**
+     * Use {@link #onCraftMatrixChanged(IInventory) onCraftMatrixChanged} instead.
+     */
+    @Deprecated
+    public void a(IInventory iInventory) {
+        onCraftMatrixChanged(iInventory);
+    }
+    public void onCraftMatrixChanged(IInventory iinventory) {
+        this.updateCraftingMatrix();
     }
 
     public boolean c(EntityHuman entityhuman) {

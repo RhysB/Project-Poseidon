@@ -27,7 +27,7 @@ public class Packet24MobSpawn extends Packet {
         this.e = MathHelper.floor(entityliving.locZ * 32.0D);
         this.f = (byte) ((int) (entityliving.yaw * 256.0F / 360.0F));
         this.g = (byte) ((int) (entityliving.pitch * 256.0F / 360.0F));
-        this.h = entityliving.aa();
+        this.h = entityliving.getDataWatcher();
     }
 
     public void a(DataInputStream datainputstream) throws IOException {

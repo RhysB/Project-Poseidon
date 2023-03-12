@@ -15,18 +15,18 @@ public class ContainerChest extends Container {
 
         for (j = 0; j < this.b; ++j) {
             for (k = 0; k < 9; ++k) {
-                this.a(new Slot(iinventory1, k + j * 9, 8 + k * 18, 18 + j * 18));
+                this.addSlot(new Slot(iinventory1, k + j * 9, 8 + k * 18, 18 + j * 18));
             }
         }
 
         for (j = 0; j < 3; ++j) {
             for (k = 0; k < 9; ++k) {
-                this.a(new Slot(iinventory, k + j * 9 + 9, 8 + k * 18, 103 + j * 18 + i));
+                this.addSlot(new Slot(iinventory, k + j * 9 + 9, 8 + k * 18, 103 + j * 18 + i));
             }
         }
 
         for (j = 0; j < 9; ++j) {
-            this.a(new Slot(iinventory, j, 8 + j * 18, 161 + i));
+            this.addSlot(new Slot(iinventory, j, 8 + j * 18, 161 + i));
         }
     }
 
