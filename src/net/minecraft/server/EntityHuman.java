@@ -571,11 +571,26 @@ public abstract class EntityHuman extends EntityLiving {
             }
             
             if (entity instanceof EntityPlayer && entity.velocityChanged && PoseidonConfig.getInstance().getBoolean("settings.player-knockback-fix.enabled", true)) {
-                ((EntityPlayer)entity).netServerHandler.sendPacket(new Packet28EntityVelocity(entity));
-                entity.velocityChanged = false;
-                entity.motX = d0;
-                entity.motY = d1;
-                entity.motZ = d2;
+                boolean cancelled = false;
+                org.bukkit.entity.Player player = (org.bukkit.entity.Player) entity.getBukkitEntity();
+                org.bukkit.util.Vector velocity = new org.bukkit.util.Vector(d0, d1, d2);
+
+                org.bukkit.event.player.PlayerVelocityEvent event = new org.bukkit.event.player.PlayerVelocityEvent(player, velocity.clone());
+                this.world.getServer().getPluginManager().callEvent(event);
+
+                if(event.isCancelled()) {
+                    cancelled = true;
+                } else if(!velocity.equals(event.getVelocity())) {
+                    player.setVelocity(velocity);
+                }
+                
+                if (!cancelled) {
+                    ((EntityPlayer)entity).netServerHandler.sendPacket(new Packet28EntityVelocity(entity));
+                    entity.velocityChanged = false;
+                    entity.motX = d0;
+                    entity.motY = d1;
+                    entity.motZ = d2;
+                }
             }
             
             // CraftBukkit end
