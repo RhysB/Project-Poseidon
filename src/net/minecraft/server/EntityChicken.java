@@ -13,7 +13,7 @@ public class EntityChicken extends EntityAnimal {
     public EntityChicken(World world) {
         super(world);
         this.texture = "/mob/chicken.png";
-        this.b(0.3F, 0.4F);
+        this.setSize(0.3F, 0.4F);
         this.health = 4;
         this.i = this.random.nextInt(6000) + 6000;
     }

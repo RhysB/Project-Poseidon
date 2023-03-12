@@ -34,7 +34,7 @@ public class EntityFireball extends Entity {
 
     public EntityFireball(World world) {
         super(world);
-        this.b(1.0F, 1.0F);
+        this.setSize(1.0F, 1.0F);
     }
 
     protected void b() {}
@@ -42,7 +42,7 @@ public class EntityFireball extends Entity {
     public EntityFireball(World world, EntityLiving entityliving, double d0, double d1, double d2) {
         super(world);
         this.shooter = entityliving;
-        this.b(1.0F, 1.0F);
+        this.setSize(1.0F, 1.0F);
         this.setPositionRotation(entityliving.locX, entityliving.locY, entityliving.locZ, entityliving.yaw, entityliving.pitch);
         this.setPosition(this.locX, this.locY, this.locZ);
         this.height = 0.0F;
@@ -62,8 +62,8 @@ public class EntityFireball extends Entity {
         this.e = d2 / d3 * 0.1D;
     }
 
-    public void m_() {
-        super.m_();
+    public void onUpdate() {
+        super.onUpdate();
         this.fireTicks = 10;
         if (this.a > 0) {
             --this.a;

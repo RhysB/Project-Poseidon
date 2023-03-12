@@ -13,7 +13,7 @@ public class EntityFallingSand extends Entity {
         super(world);
         this.a = i;
         this.aI = true;
-        this.b(0.98F, 0.98F);
+        this.setSize(0.98F, 0.98F);
         this.height = this.width / 2.0F;
         this.setPosition(d0, d1, d2);
         this.motX = 0.0D;
@@ -34,7 +34,7 @@ public class EntityFallingSand extends Entity {
         return !this.dead;
     }
 
-    public void m_() {
+    public void onUpdate() {
         if (this.a == 0) {
             this.die();
         } else {

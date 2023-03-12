@@ -51,7 +51,7 @@ public class EntityMinecart extends Entity implements IInventory {
         this.c = 1;
         this.i = false;
         this.aI = true;
-        this.b(0.98F, 0.7F);
+        this.setSize(0.98F, 0.7F);
         this.height = this.width / 2.0F;
     }
 
@@ -206,7 +206,7 @@ public class EntityMinecart extends Entity implements IInventory {
         super.die();
     }
 
-    public void m_() {
+    public void onUpdate() {
         // CraftBukkit start
         double prevX = this.locX;
         double prevY = this.locY;
@@ -243,10 +243,10 @@ public class EntityMinecart extends Entity implements IInventory {
                 this.pitch = (float) ((double) this.pitch + (this.p - (double) this.pitch) / (double) this.k);
                 --this.k;
                 this.setPosition(d1, d2, d3);
-                this.c(this.yaw, this.pitch);
+                this.setRotation(this.yaw, this.pitch);
             } else {
                 this.setPosition(this.locX, this.locY, this.locZ);
-                this.c(this.yaw, this.pitch);
+                this.setRotation(this.yaw, this.pitch);
             }
         } else {
             this.lastX = this.locX;
@@ -546,7 +546,7 @@ public class EntityMinecart extends Entity implements IInventory {
                 this.i = !this.i;
             }
 
-            this.c(this.yaw, this.pitch);
+            this.setRotation(this.yaw, this.pitch);
 
             // CraftBukkit start
             org.bukkit.World bworld = this.world.getWorld();

@@ -104,7 +104,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         return 1.62F;
     }
 
-    public void m_() {
+    public void onUpdate() {
         this.itemInWorldManager.a();
         --this.bM;
         this.activeContainer.updateCraftingMatrix();
@@ -206,7 +206,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     }
     
     public void a(boolean flag) {
-        super.m_();
+        super.onUpdate();
         
         // Poseidon start
         while (!this.removeQueue.isEmpty()) {

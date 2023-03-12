@@ -19,7 +19,7 @@ public class EntityGhast extends EntityFlying implements IMonster {
     public EntityGhast(World world) {
         super(world);
         this.texture = "/mob/ghast.png";
-        this.b(4.0F, 4.0F);
+        this.setSize(4.0F, 4.0F);
         this.fireProof = true;
     }
 
@@ -28,8 +28,8 @@ public class EntityGhast extends EntityFlying implements IMonster {
         this.datawatcher.a(16, Byte.valueOf((byte) 0));
     }
 
-    public void m_() {
-        super.m_();
+    public void onUpdate() {
+        super.onUpdate();
         byte b0 = this.datawatcher.a(16);
 
         this.texture = b0 == 1 ? "/mob/ghast_fire.png" : "/mob/ghast.png";

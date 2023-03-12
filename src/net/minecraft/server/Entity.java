@@ -73,6 +73,9 @@ public abstract class Entity {
     public int maxFireTicks;
     public int fireTicks;
     public int maxAirTicks; // CraftBukkit - protected - >public
+    /**
+     * inWater
+     */
     protected boolean bA;
     public int noDamageTicks;
     public int airTicks;
@@ -153,41 +156,55 @@ public abstract class Entity {
         this.dead = true;
     }
 
-    protected void b(float f, float f1) {
-        this.length = f;
-        this.width = f1;
+    /**
+     * Use {@link #setSize(float, float) setSize} instead
+     */
+    @Deprecated
+    protected void b(float length, float width) {
+        this.setSize(length, width);
+    }
+    protected void setSize(float length, float width) {
+        this.length = length;
+        this.width = width;
     }
 
+    /**
+     * Use {@link #setRotation(float, float) setRotation} instead.
+     */
+    @Deprecated
     protected void c(float f, float f1) {
+        setRotation(f, f1);
+    }
+    protected void setRotation(float yaw, float pitch) {
         // CraftBukkit start - yaw was sometimes set to NaN, so we need to set it back to 0.
-        if (Float.isNaN(f)) {
-            f = 0;
+        if (Float.isNaN(yaw)) {
+            yaw = 0;
         }
 
-        if ((f == Float.POSITIVE_INFINITY) || (f == Float.NEGATIVE_INFINITY)) {
+        if ((yaw == Float.POSITIVE_INFINITY) || (yaw == Float.NEGATIVE_INFINITY)) {
             if (this instanceof EntityPlayer) {
                 System.err.println(((CraftPlayer) this.getBukkitEntity()).getName() + " was caught trying to crash the server with an invalid yaw!");
                 ((CraftPlayer) this.getBukkitEntity()).kickPlayer(ChatColor.RED + "[Poseidon] You've been kicked for hacking.");
             }
-            f = 0;
+            yaw = 0;
         }
 
         // pitch was sometimes set to NaN, so we need to set it back to 0.
-        if (Float.isNaN(f1)) {
-            f1 = 0;
+        if (Float.isNaN(pitch)) {
+            pitch = 0;
         }
 
-        if ((f1 == Float.POSITIVE_INFINITY) || (f1 == Float.NEGATIVE_INFINITY)) {
+        if ((pitch == Float.POSITIVE_INFINITY) || (pitch == Float.NEGATIVE_INFINITY)) {
             if (this instanceof EntityPlayer) {
                 System.err.println(((CraftPlayer) this.getBukkitEntity()).getName() + " was caught trying to crash the server with an invalid pitch!");
                 ((CraftPlayer) this.getBukkitEntity()).kickPlayer(ChatColor.RED + "[Poseidon] You've been kicked for hacking.");
             }
-            f1 = 0;
+            pitch = 0;
         }
         // CraftBukkit end
 
-        this.yaw = f % 360.0F;
-        this.pitch = f1 % 360.0F;
+        this.yaw = yaw % 360.0F;
+        this.pitch = pitch % 360.0F;
     }
 
     public void setPosition(double d0, double d1, double d2) {
@@ -200,11 +217,25 @@ public abstract class Entity {
         this.boundingBox.c(d0 - (double) f, d1 - (double) this.height + (double) this.br, d2 - (double) f, d0 + (double) f, d1 - (double) this.height + (double) this.br + (double) f1, d2 + (double) f);
     }
 
+    /**
+     * Use {@link #onUpdate() onUpdate} instead.
+     */
+    @Deprecated
     public void m_() {
-        this.R();
+        this.onUpdate();
+    }
+    public void onUpdate() {
+        this.onEntityUpdate();
     }
 
+    /**
+     * Use {@link #onEntityUpdate() onEntityUpdate} instead.
+     */
+    @Deprecated
     public void R() {
+        this.onEntityUpdate();
+    }
+    public void onEntityUpdate() {
         if (this.vehicle != null && this.vehicle.dead) {
             this.vehicle = null;
         }
@@ -219,10 +250,7 @@ public abstract class Entity {
         if (this.f_()) {
             if (!this.bA && !this.justCreated) {
                 float f = MathHelper.a(this.motX * this.motX * 0.20000000298023224D + this.motY * this.motY + this.motZ * this.motZ * 0.20000000298023224D) * 0.2F;
-
-                if (f > 1.0F) {
-                    f = 1.0F;
-                }
+                if (f > 1.0F) f = 1.0F;
 
                 this.world.makeSound(this, "random.splash", f, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.4F);
                 float f1 = (float) MathHelper.floor(this.boundingBox.b);
@@ -230,17 +258,16 @@ public abstract class Entity {
                 int i;
                 float f2;
                 float f3;
-
                 for (i = 0; (float) i < 1.0F + this.length * 20.0F; ++i) {
                     f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.length;
                     f3 = (this.random.nextFloat() * 2.0F - 1.0F) * this.length;
-                    this.world.a("bubble", this.locX + (double) f2, (double) (f1 + 1.0F), this.locZ + (double) f3, this.motX, this.motY - (double) (this.random.nextFloat() * 0.2F), this.motZ);
+                    this.world.a("bubble", this.locX + (double) f2, f1 + 1.0F, this.locZ + (double) f3, this.motX, this.motY - (double) (this.random.nextFloat() * 0.2F), this.motZ);
                 }
 
                 for (i = 0; (float) i < 1.0F + this.length * 20.0F; ++i) {
                     f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.length;
                     f3 = (this.random.nextFloat() * 2.0F - 1.0F) * this.length;
-                    this.world.a("splash", this.locX + (double) f2, (double) (f1 + 1.0F), this.locZ + (double) f3, this.motX, this.motY, this.motZ);
+                    this.world.a("splash", this.locX + (double) f2, f1 + 1.0F, this.locZ + (double) f3, this.motX, this.motY, this.motZ);
                 }
             }
 
@@ -267,10 +294,10 @@ public abstract class Entity {
                         this.world.getServer().getPluginManager().callEvent(event);
 
                         if (!event.isCancelled()) {
-                            this.damageEntity((Entity) null, event.getDamage());
+                            this.damageEntity(null, event.getDamage());
                         }
                     } else {
-                        this.damageEntity((Entity) null, 1);
+                        this.damageEntity(null, 1);
                     }
                     // CraftBukkit end
                 }
@@ -788,7 +815,7 @@ public abstract class Entity {
         }
 
         this.setPosition(this.locX, this.locY, this.locZ);
-        this.c(f, f1);
+        this.setRotation(f, f1);
     }
 
     public void setPositionRotation(double d0, double d1, double d2, float f, float f1) {
@@ -971,7 +998,7 @@ public abstract class Entity {
         }
         // CraftBukkit end
 
-        this.c(this.yaw, this.pitch);
+        this.setRotation(this.yaw, this.pitch);
         this.a(nbttagcompound);
 
         // CraftBukkit start - Exempt Vehicles from notch's sanity check
@@ -1102,7 +1129,7 @@ public abstract class Entity {
             this.motX = 0.0D;
             this.motY = 0.0D;
             this.motZ = 0.0D;
-            this.m_();
+            this.onUpdate();
             if (this.vehicle != null) {
                 this.vehicle.f();
                 this.e += (double) (this.vehicle.yaw - this.vehicle.lastYaw);
@@ -1351,5 +1378,9 @@ public abstract class Entity {
         }
 
         return false;
+    }
+
+    public boolean isInWater() {
+        return bA;
     }
 }

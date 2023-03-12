@@ -25,7 +25,7 @@ public class EntitySnowball extends Entity {
 
     public EntitySnowball(World world) {
         super(world);
-        this.b(0.25F, 0.25F);
+        this.setSize(0.25F, 0.25F);
     }
 
     protected void b() {}
@@ -33,7 +33,7 @@ public class EntitySnowball extends Entity {
     public EntitySnowball(World world, EntityLiving entityliving) {
         super(world);
         this.shooter = entityliving;
-        this.b(0.25F, 0.25F);
+        this.setSize(0.25F, 0.25F);
         this.setPositionRotation(entityliving.locX, entityliving.locY + (double) entityliving.getEyeHeight(), entityliving.locZ, entityliving.yaw, entityliving.pitch);
         this.locX -= (double) (MathHelper.cos(this.yaw / 180.0F * 3.1415927F) * 0.16F);
         this.locY -= 0.10000000149011612D;
@@ -51,7 +51,7 @@ public class EntitySnowball extends Entity {
     public EntitySnowball(World world, double d0, double d1, double d2) {
         super(world);
         this.h = 0;
-        this.b(0.25F, 0.25F);
+        this.setSize(0.25F, 0.25F);
         this.setPosition(d0, d1, d2);
         this.height = 0.0F;
     }
@@ -78,11 +78,11 @@ public class EntitySnowball extends Entity {
         this.h = 0;
     }
 
-    public void m_() {
+    public void onUpdate() {
         this.bo = this.locX;
         this.bp = this.locY;
         this.bq = this.locZ;
-        super.m_();
+        super.onUpdate();
         if (this.a > 0) {
             --this.a;
         }

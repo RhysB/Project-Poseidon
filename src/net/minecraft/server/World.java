@@ -1,6 +1,5 @@
 package net.minecraft.server;
 
-import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.BlockState;
@@ -1063,7 +1062,7 @@ public class World implements IBlockAccess {
                 continue;
             }
             // CraftBukkit end
-            entity.m_();
+            entity.onUpdate();
             if (entity.dead) {
                 this.e.remove(i--);
             }
@@ -1203,7 +1202,7 @@ public class World implements IBlockAccess {
                 if (entity.vehicle != null) {
                     entity.E();
                 } else {
-                    entity.m_();
+                    entity.onUpdate();
                 }
             }
 

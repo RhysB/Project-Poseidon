@@ -32,7 +32,7 @@ public class EntityFish extends Entity {
 
     public EntityFish(World world) {
         super(world);
-        this.b(0.25F, 0.25F);
+        this.setSize(0.25F, 0.25F);
         this.bK = true;
     }
 
@@ -41,7 +41,7 @@ public class EntityFish extends Entity {
         this.bK = true;
         this.owner = entityhuman;
         this.owner.hookedFish = this;
-        this.b(0.25F, 0.25F);
+        this.setSize(0.25F, 0.25F);
         this.setPositionRotation(entityhuman.locX, entityhuman.locY + 1.62D - (double) entityhuman.height, entityhuman.locZ, entityhuman.yaw, entityhuman.pitch);
         this.locX -= (double) (MathHelper.cos(this.yaw / 180.0F * 3.1415927F) * 0.16F);
         this.locY -= 0.10000000149011612D;
@@ -80,8 +80,8 @@ public class EntityFish extends Entity {
         this.i = 0;
     }
 
-    public void m_() {
-        super.m_();
+    public void onUpdate() {
+        super.onUpdate();
         if (this.l > 0) {
             double d0 = this.locX + (this.m - this.locX) / (double) this.l;
             double d1 = this.locY + (this.n - this.locY) / (double) this.l;
@@ -101,7 +101,7 @@ public class EntityFish extends Entity {
             this.pitch = (float) ((double) this.pitch + (this.q - (double) this.pitch) / (double) this.l);
             --this.l;
             this.setPosition(d0, d1, d2);
-            this.c(this.yaw, this.pitch);
+            this.setRotation(this.yaw, this.pitch);
         } else {
             if (!this.world.isStatic) {
                 ItemStack itemstack = this.owner.G();

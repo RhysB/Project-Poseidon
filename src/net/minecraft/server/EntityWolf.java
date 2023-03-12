@@ -26,7 +26,7 @@ public class EntityWolf extends EntityAnimal {
     public EntityWolf(World world) {
         super(world);
         this.texture = "/mob/wolf.png";
-        this.b(0.8F, 0.8F);
+        this.setSize(0.8F, 0.8F);
         this.aE = 1.1F;
         this.health = 8;
     }
@@ -158,8 +158,8 @@ public class EntityWolf extends EntityAnimal {
         }
     }
 
-    public void m_() {
-        super.m_();
+    public void onUpdate() {
+        super.onUpdate();
         this.c = this.b;
         if (this.a) {
             this.b += (1.0F - this.b) * 0.4F;

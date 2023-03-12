@@ -22,7 +22,7 @@ public class EntitySquid extends EntityWaterAnimal {
     public EntitySquid(World world) {
         super(world);
         this.texture = "/mob/squid.png";
-        this.b(0.95F, 0.95F);
+        this.setSize(0.95F, 0.95F);
         this.l = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
     }
 

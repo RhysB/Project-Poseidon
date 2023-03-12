@@ -45,7 +45,7 @@ public class EntityBoat extends Entity {
         this.b = 0;
         this.c = 1;
         this.aI = true;
-        this.b(1.5F, 0.6F);
+        this.setSize(1.5F, 0.6F);
         this.height = this.width / 2.0F;
     }
 
@@ -142,7 +142,7 @@ public class EntityBoat extends Entity {
         return !this.dead;
     }
 
-    public void m_() {
+    public void onUpdate() {
         // CraftBukkit start
         double prevX = this.locX;
         double prevY = this.locY;
@@ -151,7 +151,7 @@ public class EntityBoat extends Entity {
         float prevPitch = this.pitch;
         // CraftBukkit end
 
-        super.m_();
+        super.onUpdate();
         if (this.b > 0) {
             --this.b;
         }
@@ -199,7 +199,7 @@ public class EntityBoat extends Entity {
                 this.pitch = (float) ((double) this.pitch + (this.i - (double) this.pitch) / (double) this.d);
                 --this.d;
                 this.setPosition(d3, d4, d5);
-                this.c(this.yaw, this.pitch);
+                this.setRotation(this.yaw, this.pitch);
             } else {
                 d3 = this.locX + this.motX;
                 d4 = this.locY + this.motY;
@@ -328,7 +328,7 @@ public class EntityBoat extends Entity {
             }
 
             this.yaw = (float) ((double) this.yaw + d12);
-            this.c(this.yaw, this.pitch);
+            this.setRotation(this.yaw, this.pitch);
 
             // CraftBukkit start
             org.bukkit.Server server = this.world.getServer();

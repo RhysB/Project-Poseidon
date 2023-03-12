@@ -12,7 +12,7 @@ public class EntityCow extends EntityAnimal {
     public EntityCow(World world) {
         super(world);
         this.texture = "/mob/cow.png";
-        this.b(0.9F, 1.3F);
+        this.setSize(0.9F, 1.3F);
     }
 
     public void b(NBTTagCompound nbttagcompound) {

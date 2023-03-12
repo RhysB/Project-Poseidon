@@ -9,7 +9,7 @@ public class EntityGiantZombie extends EntityMonster {
         this.damage = 50;
         this.health *= 10;
         this.height *= 6.0F;
-        this.b(this.length * 6.0F, this.width * 6.0F);
+        this.setSize(this.length * 6.0F, this.width * 6.0F);
     }
 
     protected float a(int i, int j, int k) {

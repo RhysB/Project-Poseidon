@@ -28,12 +28,12 @@ public class EntityArrow extends Entity {
 
     public EntityArrow(World world) {
         super(world);
-        this.b(0.5F, 0.5F);
+        this.setSize(0.5F, 0.5F);
     }
 
     public EntityArrow(World world, double d0, double d1, double d2) {
         super(world);
-        this.b(0.5F, 0.5F);
+        this.setSize(0.5F, 0.5F);
         this.setPosition(d0, d1, d2);
         this.height = 0.0F;
     }
@@ -42,7 +42,7 @@ public class EntityArrow extends Entity {
         super(world);
         this.shooter = entityliving;
         this.fromPlayer = entityliving instanceof EntityHuman;
-        this.b(0.5F, 0.5F);
+        this.setSize(0.5F, 0.5F);
         this.setPositionRotation(entityliving.locX, entityliving.locY + (double) entityliving.getEyeHeight(), entityliving.locZ, entityliving.yaw, entityliving.pitch);
         this.locX -= (double) (MathHelper.cos(this.yaw / 180.0F * 3.1415927F) * 0.16F);
         this.locY -= 0.10000000149011612D;
@@ -79,8 +79,8 @@ public class EntityArrow extends Entity {
         this.j = 0;
     }
 
-    public void m_() {
-        super.m_();
+    public void onUpdate() {
+        super.onUpdate();
         if (this.lastPitch == 0.0F && this.lastYaw == 0.0F) {
             float f = MathHelper.a(this.motX * this.motX + this.motZ * this.motZ);
 

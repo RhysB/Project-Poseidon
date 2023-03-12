@@ -75,7 +75,7 @@ public abstract class EntityHuman extends EntityLiving {
         this.datawatcher.a(16, Byte.valueOf((byte) 0));
     }
 
-    public void m_() {
+    public void onUpdate() {
         if (this.isSleeping()) {
             ++this.sleepTicks;
             if (this.sleepTicks > 100) {
@@ -96,7 +96,7 @@ public abstract class EntityHuman extends EntityLiving {
             }
         }
 
-        super.m_();
+        super.onUpdate();
         if (!this.world.isStatic && this.activeContainer != null && !this.activeContainer.b(this)) {
             this.y();
             this.activeContainer = this.defaultContainer;
@@ -224,7 +224,7 @@ public abstract class EntityHuman extends EntityLiving {
 
     public void die(Entity entity) {
         super.die(entity);
-        this.b(0.2F, 0.2F);
+        this.setSize(0.2F, 0.2F);
         this.setPosition(this.locX, this.locY, this.locZ);
         this.motY = 0.10000000149011612D;
         if (this.name.equals("Notch")) {
@@ -663,7 +663,7 @@ public abstract class EntityHuman extends EntityLiving {
         }
         // CraftBukkit end
 
-        this.b(0.2F, 0.2F);
+        this.setSize(0.2F, 0.2F);
         this.height = 0.2F;
         if (this.world.isLoaded(i, j, k)) {
             int l = this.world.getData(i, j, k);
@@ -727,7 +727,7 @@ public abstract class EntityHuman extends EntityLiving {
     }
 
     public void a(boolean flag, boolean flag1, boolean flag2) {
-        this.b(0.6F, 1.8F);
+        this.setSize(0.6F, 1.8F);
         this.s();
         ChunkCoordinates chunkcoordinates = this.A;
         ChunkCoordinates chunkcoordinates1 = this.A;

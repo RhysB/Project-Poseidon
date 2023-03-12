@@ -110,9 +110,9 @@ public abstract class EntityLiving extends Entity {
         }
     }
 
-    public void R() {
+    public void onEntityUpdate() {
         this.Z = this.aa;
-        super.R();
+        super.onEntityUpdate();
         if (this.random.nextInt(1000) < this.a++) {
             this.a = -this.e();
             this.Q();
@@ -217,8 +217,8 @@ public abstract class EntityLiving extends Entity {
         this.N = 0.0F;
     }
 
-    public void m_() {
-        super.m_();
+    public void onUpdate() {
+        super.onUpdate();
         this.v();
         double d0 = this.locX - this.lastX;
         double d1 = this.locZ - this.lastZ;
@@ -314,8 +314,8 @@ public abstract class EntityLiving extends Entity {
         this.O += f2;
     }
 
-    protected void b(float f, float f1) {
-        super.b(f, f1);
+    protected void setSize(float f, float f1) {
+        super.setSize(f, f1);
     }
 
     // CraftBukkit start - delegate so we can handle providing a reason for health being regained
@@ -662,7 +662,7 @@ public abstract class EntityLiving extends Entity {
             this.pitch = (float) ((double) this.pitch + (this.av - (double) this.pitch) / (double) this.aq);
             --this.aq;
             this.setPosition(d0, d1, d2);
-            this.c(this.yaw, this.pitch);
+            this.setRotation(this.yaw, this.pitch);
             List list = this.world.getEntities(this, this.boundingBox.shrink(0.03125D, 0.0D, 0.03125D));
 
             if (list.size() > 0) {

@@ -47,7 +47,7 @@ public class EntityCreeper extends EntityMonster {
         }
     }
 
-    public void m_() {
+    public void onUpdate() {
         this.b = this.fuseTicks;
         if (this.world.isStatic) {
             int i = this.x();
@@ -66,7 +66,7 @@ public class EntityCreeper extends EntityMonster {
             }
         }
 
-        super.m_();
+        super.onUpdate();
         if (this.target == null && this.fuseTicks > 0) {
             this.e(-1);
             --this.fuseTicks;

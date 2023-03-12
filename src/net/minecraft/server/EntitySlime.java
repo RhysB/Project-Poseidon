@@ -23,7 +23,7 @@ public class EntitySlime extends EntityLiving implements IMonster {
 
     public void setSize(int i) {
         this.datawatcher.watch(16, new Byte((byte) i));
-        this.b(0.6F * (float) i, 0.6F * (float) i);
+        this.setSize(0.6F * (float) i, 0.6F * (float) i);
         this.health = i * i;
         this.setPosition(this.locX, this.locY, this.locZ);
     }
@@ -42,11 +42,11 @@ public class EntitySlime extends EntityLiving implements IMonster {
         this.setSize(nbttagcompound.e("Size") + 1);
     }
 
-    public void m_() {
+    public void onUpdate() {
         this.b = this.a;
         boolean flag = this.onGround;
 
-        super.m_();
+        super.onUpdate();
         if (this.onGround && !flag) {
             int i = this.getSize();
 

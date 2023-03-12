@@ -10,7 +10,7 @@ public class EntityPig extends EntityAnimal {
     public EntityPig(World world) {
         super(world);
         this.texture = "/mob/pig.png";
-        this.b(0.9F, 0.9F);
+        this.setSize(0.9F, 0.9F);
     }
 
     protected void b() {

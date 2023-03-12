@@ -26,8 +26,8 @@ public class EntityMonster extends EntityCreature implements IMonster {
         super.v();
     }
 
-    public void m_() {
-        super.m_();
+    public void onUpdate() {
+        super.onUpdate();
         if (!this.world.isStatic && this.world.spawnMonsters == 0) {
             this.die();
         }

@@ -23,7 +23,7 @@ public class EntityPainting extends Entity {
         this.f = 0;
         this.a = 0;
         this.height = 0.0F;
-        this.b(0.5F, 0.5F);
+        this.setSize(0.5F, 0.5F);
     }
 
     public EntityPainting(World world, int i, int j, int k, int l) {
@@ -118,7 +118,7 @@ public class EntityPainting extends Entity {
         return i == 32 ? 0.5F : (i == 64 ? 0.5F : 0.0F);
     }
 
-    public void m_() {
+    public void onUpdate() {
         if (this.f++ == 100 && !this.world.isStatic) {
             this.f = 0;
             if (!this.h()) {

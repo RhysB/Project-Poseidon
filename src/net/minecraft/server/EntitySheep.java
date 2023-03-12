@@ -9,7 +9,7 @@ public class EntitySheep extends EntityAnimal {
     public EntitySheep(World world) {
         super(world);
         this.texture = "/mob/sheep.png";
-        this.b(0.9F, 1.3F);
+        this.setSize(0.9F, 1.3F);
     }
 
     protected void b() {

@@ -15,7 +15,7 @@ public class EntityItem extends Entity {
 
     public EntityItem(World world, double d0, double d1, double d2, ItemStack itemstack) {
         super(world);
-        this.b(0.25F, 0.25F);
+        this.setSize(0.25F, 0.25F);
         this.height = this.width / 2.0F;
         this.setPosition(d0, d1, d2);
         this.itemStack = itemstack;
@@ -36,14 +36,14 @@ public class EntityItem extends Entity {
 
     public EntityItem(World world) {
         super(world);
-        this.b(0.25F, 0.25F);
+        this.setSize(0.25F, 0.25F);
         this.height = this.width / 2.0F;
     }
 
     protected void b() {}
 
-    public void m_() {
-        super.m_();
+    public void onUpdate() {
+        super.onUpdate();
         // CraftBukkit start
         int currentTick = (int) (System.currentTimeMillis() / 50);
         this.pickupDelay -= (currentTick - this.lastTick);
