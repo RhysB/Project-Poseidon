@@ -5,7 +5,7 @@ A CraftBukkit CB1060 fork for Beta 1.7.3 fixing bugs and adding basic features.<
 Discord: https://discord.gg/FwKg676
 
 ## Want to use Project Poseidon on your server?
-Please read the following article before changing over to Project Poseidon: https://github.com/RhysB/Project-Poseidon/wiki/Implementing-Project-Poseidon-In-Production
+Please read [this](https://github.com/RhysB/Project-Poseidon/wiki/Implementing-Project-Poseidon-In-Production) wiki article before changing over to Project Poseidon.
 
 ## Licensing
 CraftBukkit and Bukkit are licensed under GNU General Public License v3.0<br>
@@ -13,19 +13,15 @@ Any future commits to this repository will remain under the same GNU General Pub
 Libraries in the compiled .jar files distrusted may contain their own licenses.<br>
 This project contains decompiled code that is copyrighted by Mojang AB typically under the `net.minecraft.server` package.<br>
 
-## How To Setup - IntelliJ IDEA
-
+## Setup - IntelliJ IDEA
 1. Clone this project using Git or a desktop client.
 2. Open IntelliJ and create a new project in the same directory as the Project Poseidon folder.
 
 ## Compiling
-
 Compiling is done via maven. To compile a JAR, cd into the Project Poseidon directory and run the following command:
-
 ```
 mvn clean package
 ```
-
 You should now have a runnable JAR inside the /target folder!
 
 ## Regarding the DMCA of CraftBukkit in 2014
