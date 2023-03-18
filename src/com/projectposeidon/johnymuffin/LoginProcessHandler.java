@@ -51,7 +51,7 @@ public class LoginProcessHandler {
     }
 
     private void runLoginTimer(long connectionStartTime) {
-        int playerConnectionDebug = Bukkit.getScheduler().scheduleAsyncDelayedTask(new PoseidonPlugin(), () -> {
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(new PoseidonPlugin(), () -> {
             int currentRunningTime = (int) (System.currentTimeMillis() / 1000L - connectionStartTime);
             if (!loginSuccessful && !loginCancelled) {
                 //This if statement shouldn't be needed, but this is here just in case a players login fails but the appropriate variables aren't changed
