@@ -5,6 +5,8 @@ public class ConnectionPause {
     private String connectionPauseName;
     private LoginProcessHandler loginProcessHandler;
     private long creationTime;
+
+    private long completionTime;
     private boolean active;
 
     public ConnectionPause(String PluginName, String connectionPauseName, LoginProcessHandler loginProcessHandler) {
@@ -43,6 +45,28 @@ public class ConnectionPause {
      * This method is for Poseidon, not plugin use. DON'T TOUCH THIS IF YOU DON'T KNOW WHAT YOU ARE DOING.
      */
     public void setActive(boolean active) {
+        if(!active)
+            this.completionTime = System.currentTimeMillis();
         this.active = active;
+    }
+
+    public int getRunningTime() {
+        int running;
+        if (active) {
+            running = (int) (System.currentTimeMillis() - creationTime);
+        } else {
+            running = (int) (completionTime - creationTime);
+        }
+        running = running / 1000;
+        return running;
+    }
+
+
+    public LoginProcessHandler getLoginProcessHandler() {
+        return loginProcessHandler;
+    }
+
+    public long getCompletionTime() {
+        return completionTime;
     }
 }
