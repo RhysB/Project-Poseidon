@@ -259,5 +259,5 @@ public class EntitySnowball extends Entity {
         }
     }
 	
-	public void onHit() {} // poseidon
+    public void onHit() {} // poseidon
 }
