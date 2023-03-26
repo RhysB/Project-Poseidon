@@ -342,6 +342,12 @@ public abstract class Event implements Serializable {
 		 * @see org.bukkit.event.player.PlayerBungeeMessageEvent
 		 */
 		PLAYER_BUNGEE_MESSAGE(Category.PLAYER),
+        /**
+         * Called when a player's health is decreasing
+         *
+         * @see org.bukkit.event.player.PlayerHealthDecreaseEvent
+         */
+        PLAYER_HEALTH_DECREASE(Category.PLAYER),
 
         /**
          * BLOCK EVENTS

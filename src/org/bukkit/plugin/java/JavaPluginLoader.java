@@ -631,6 +631,13 @@ public class JavaPluginLoader implements PluginLoader
                         ((PlayerListener) listener).onPlayerBungeeMessage((PlayerBungeeMessageEvent) event);
                     }
                 };
+            case PLAYER_HEALTH_DECREASE:
+                return new EventExecutor() {
+                    public void execute(Listener listener, Event event)
+                    {
+                        ((PlayerListener) listener).onPlayerHealthDecrease((PlayerHealthDecreaseEvent) event);
+                    }
+                };
 
             // Block Events
             case BLOCK_PHYSICS:
