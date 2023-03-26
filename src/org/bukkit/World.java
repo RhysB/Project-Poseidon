@@ -264,6 +264,17 @@ public interface World {
     public Item dropItem(Location location, ItemStack item);
 
     /**
+     * Drops an item at the specified {@link Location} with the specified velocity and specified pickup delay
+     *
+     * @param location Location to drop the item
+     * @param item ItemStack to drop
+     * @param velocity The velocity of the drop
+     * @param pickupDelay The delay in ticks before this item can be picked up
+     * @return ItemDrop entity created as a result of this method
+     */
+    public Item dropItem(Location location, ItemStack item, Vector velocity, int pickupDelay);
+
+    /**
      * Drops an item at the specified {@link Location} with a random offset
      *
      * @param location Location to drop the item
