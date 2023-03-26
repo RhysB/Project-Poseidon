@@ -848,6 +848,15 @@ public final class CraftServer implements Server {
     public void setShuttingdown(boolean shuttingdown) {
         this.shuttingdown = shuttingdown;
     }
+	
+	public void sendBungeeMessage(Plugin source, byte[] message) {
+		if (message.length > 32766) {
+			throw new IllegalArgumentException("Bungee message is too long (" + message.length + " > 32766)");
+		}
+		for (Player player : getOnlinePlayers()) {
+            player.sendBungeeMessage(source, message);
+        }
+    }
 
 //    public GameMode getDefaultGameMode() {
 //        return GameMode.SURVIVAL;

@@ -10,6 +10,7 @@ import org.bukkit.map.MapView;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.plugin.Plugin;
 
 import java.util.List;
 import java.util.Map;
@@ -467,4 +468,6 @@ public interface Server {
      * @return Set containing banned players
      */
     public Set<OfflinePlayer> getBannedPlayers();
+
+    public void sendBungeeMessage(Plugin source, byte[] message);
 }
