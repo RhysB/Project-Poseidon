@@ -57,7 +57,7 @@ public class ContainerFurnace extends Container {
         this.h = this.a.ticksForCurrentFuel;
     }
 
-    public boolean b(EntityHuman entityhuman) {
+    public boolean canInteractWith(EntityHuman entityhuman) {
         return this.a.a_(entityhuman);
     }
 

@@ -30,7 +30,7 @@ public class ContainerChest extends Container {
         }
     }
 
-    public boolean b(EntityHuman entityhuman) {
+    public boolean canInteractWith(EntityHuman entityhuman) {
         return this.a.a_(entityhuman);
     }
 

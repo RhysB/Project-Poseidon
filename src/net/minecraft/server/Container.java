@@ -24,6 +24,7 @@ public abstract class Container {
     /**
      * Use {@link #addSlot(Slot) addSlot} instead.
      */
+    @Deprecated
     protected void a(Slot slot) {
         addSlot(slot);
     }
@@ -275,7 +276,7 @@ public abstract class Container {
         }
     }
 
-    public abstract boolean b(EntityHuman entityhuman);
+    public abstract boolean canInteractWith(EntityHuman entityhuman);
 
     protected void a(ItemStack itemstack, int i, int j, boolean flag) {
         int k = i;

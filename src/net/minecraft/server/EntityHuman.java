@@ -97,7 +97,7 @@ public abstract class EntityHuman extends EntityLiving {
         }
 
         super.onUpdate();
-        if (!this.world.isStatic && this.activeContainer != null && !this.activeContainer.b(this)) {
+        if (!this.world.isStatic && this.activeContainer != null && !this.activeContainer.canInteractWith(this)) {
             this.y();
             this.activeContainer = this.defaultContainer;
         }

@@ -69,7 +69,7 @@ public class ContainerPlayer extends Container {
         }
     }
 
-    public boolean b(EntityHuman entityhuman) {
+    public boolean canInteractWith(EntityHuman entityhuman) {
         return true;
     }
 
