@@ -43,9 +43,9 @@ public class ContainerChest extends Container {
 
             itemstack = itemstack1.cloneItemStack();
             if (i < this.b * 9) {
-                this.a(itemstack1, this.b * 9, this.e.size(), true);
+                this.mergeItemStack(itemstack1, this.b * 9, this.e.size(), true);
             } else {
-                this.a(itemstack1, 0, this.b * 9, false);
+                this.mergeItemStack(itemstack1, 0, this.b * 9, false);
             }
 
             if (itemstack1.count == 0) {

@@ -95,6 +95,9 @@ public abstract class Container {
         }
     }
 
+    /**
+     * Unknown name yet.
+     */
     public Slot a(IInventory iinventory, int i) {
         for (int j = 0; j < this.e.size(); ++j) {
             Slot slot = (Slot) this.e.get(j);
@@ -120,11 +123,17 @@ public abstract class Container {
 
     public ItemStack a(int i) {
         Slot slot = (Slot) this.e.get(i);
-
         return slot != null ? slot.getItem() : null;
     }
 
+    /**
+     * Use {@link #slotClick(int, int, boolean, EntityHuman) slotClick} instead.
+     */
+    @Deprecated
     public ItemStack a(int i, int j, boolean flag, EntityHuman entityhuman) {
+        return this.slotClick(i, j, flag, entityhuman);
+    }
+    public ItemStack slotClick(int i, int j, boolean flag, EntityHuman entityhuman) {
         ItemStack itemstack = null;
 
         if (j == 0 || j == 1) {
@@ -157,7 +166,7 @@ public abstract class Container {
                         if (slot != null && slot.getItem() != null) {
                             k = slot.getItem().count;
                             if (k < l) {
-                                this.a(i, j, flag, entityhuman);
+                                this.slotClick(i, j, flag, entityhuman);
                             }
                         }
                     }
@@ -243,7 +252,6 @@ public abstract class Container {
     public void a(EntityHuman entityHuman) {
         onGuiClosed(entityHuman);
     }
-
     public void onGuiClosed(EntityHuman entityhuman) {
         InventoryPlayer inventoryplayer = entityhuman.inventory;
 
@@ -264,11 +272,25 @@ public abstract class Container {
         this.updateCraftingMatrix();
     }
 
+    /**
+     * Use {@link #getCanCraft(EntityHuman) getCanCraft} instead.
+     */
+    @Deprecated
     public boolean c(EntityHuman entityhuman) {
+        return this.getCanCraft(entityhuman);
+    }
+    public boolean getCanCraft(EntityHuman entityhuman) {
         return !this.b.contains(entityhuman);
     }
 
+    /**
+     * Use {@link #setCanCraft(EntityHuman, boolean) setCanCraft} instead.
+     */
+    @Deprecated
     public void a(EntityHuman entityhuman, boolean flag) {
+        this.setCanCraft(entityhuman, flag);
+    }
+    public void setCanCraft(EntityHuman entityhuman, boolean flag) {
         if (flag) {
             this.b.remove(entityhuman);
         } else {
@@ -278,7 +300,14 @@ public abstract class Container {
 
     public abstract boolean canInteractWith(EntityHuman entityhuman);
 
+    /**
+     * Use {@link #mergeItemStack(ItemStack, int, int, boolean) mergeItemStack} instead.
+     */
+    @Deprecated
     protected void a(ItemStack itemstack, int i, int j, boolean flag) {
+        this.mergeItemStack(itemstack, i, j, flag);
+    }
+    protected void mergeItemStack(ItemStack itemstack, int i, int j, boolean flag) {
         int k = i;
 
         if (flag) {

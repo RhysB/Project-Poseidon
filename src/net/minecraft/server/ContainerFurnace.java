@@ -70,13 +70,13 @@ public class ContainerFurnace extends Container {
 
             itemstack = itemstack1.cloneItemStack();
             if (i == 2) {
-                this.a(itemstack1, 3, 39, true);
+                this.mergeItemStack(itemstack1, 3, 39, true);
             } else if (i >= 3 && i < 30) {
-                this.a(itemstack1, 30, 39, false);
+                this.mergeItemStack(itemstack1, 30, 39, false);
             } else if (i >= 30 && i < 39) {
-                this.a(itemstack1, 3, 30, false);
+                this.mergeItemStack(itemstack1, 3, 30, false);
             } else {
-                this.a(itemstack1, 3, 39, false);
+                this.mergeItemStack(itemstack1, 3, 39, false);
             }
 
             if (itemstack1.count == 0) {

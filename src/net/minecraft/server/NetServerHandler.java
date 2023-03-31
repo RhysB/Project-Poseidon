@@ -1071,8 +1071,8 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
         if (this.player.dead) return; // CraftBukkit
 
-        if (this.player.activeContainer.windowId == packet102windowclick.a && this.player.activeContainer.c(this.player)) {
-            ItemStack itemstack = this.player.activeContainer.a(packet102windowclick.b, packet102windowclick.c, packet102windowclick.f, this.player);
+        if (this.player.activeContainer.windowId == packet102windowclick.a && this.player.activeContainer.getCanCraft(this.player)) {
+            ItemStack itemstack = this.player.activeContainer.slotClick(packet102windowclick.b, packet102windowclick.c, packet102windowclick.f, this.player);
 
             if (ItemStack.equals(packet102windowclick.e, itemstack)) {
                 this.player.netServerHandler.sendPacket(new Packet106Transaction(packet102windowclick.a, packet102windowclick.d, true));
@@ -1083,7 +1083,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
             } else {
                 this.n.put(Integer.valueOf(this.player.activeContainer.windowId), Short.valueOf(packet102windowclick.d));
                 this.player.netServerHandler.sendPacket(new Packet106Transaction(packet102windowclick.a, packet102windowclick.d, false));
-                this.player.activeContainer.a(this.player, false);
+                this.player.activeContainer.setCanCraft(this.player, false);
                 ArrayList arraylist = new ArrayList();
 
                 for (int i = 0; i < this.player.activeContainer.e.size(); ++i) {
@@ -1106,8 +1106,8 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
         Short oshort = (Short) this.n.get(Integer.valueOf(this.player.activeContainer.windowId));
 
-        if (oshort != null && packet106transaction.b == oshort.shortValue() && this.player.activeContainer.windowId == packet106transaction.a && !this.player.activeContainer.c(this.player)) {
-            this.player.activeContainer.a(this.player, true);
+        if (oshort != null && packet106transaction.b == oshort.shortValue() && this.player.activeContainer.windowId == packet106transaction.a && !this.player.activeContainer.getCanCraft(this.player)) {
+            this.player.activeContainer.setCanCraft(this.player, true);
         }
     }
 

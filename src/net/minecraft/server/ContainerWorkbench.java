@@ -77,13 +77,13 @@ public class ContainerWorkbench extends Container {
 
             itemstack = itemstack1.cloneItemStack();
             if (i == 0) {
-                this.a(itemstack1, 10, 46, true);
+                this.mergeItemStack(itemstack1, 10, 46, true);
             } else if (i >= 10 && i < 37) {
-                this.a(itemstack1, 37, 46, false);
+                this.mergeItemStack(itemstack1, 37, 46, false);
             } else if (i >= 37 && i < 46) {
-                this.a(itemstack1, 10, 37, false);
+                this.mergeItemStack(itemstack1, 10, 37, false);
             } else {
-                this.a(itemstack1, 10, 46, false);
+                this.mergeItemStack(itemstack1, 10, 46, false);
             }
 
             if (itemstack1.count == 0) {
