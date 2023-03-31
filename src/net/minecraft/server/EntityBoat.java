@@ -49,17 +49,17 @@ public class EntityBoat extends Entity {
         this.height = this.width / 2.0F;
     }
 
-    protected boolean n() {
+    protected boolean canTriggerWalking() {
         return false;
     }
 
-    protected void b() {}
+    protected void entityInit() {}
 
     public AxisAlignedBB a_(Entity entity) {
         return entity.boundingBox;
     }
 
-    public AxisAlignedBB e_() {
+    public AxisAlignedBB getBoundingBox() {
         return this.boundingBox;
     }
 
@@ -102,7 +102,7 @@ public class EntityBoat extends Entity {
             this.c = -this.c;
             this.b = 10;
             this.damage += i * 10;
-            this.af();
+            this.setBeenAttacked();
             if (this.damage > 40) {
 
                 // CraftBukkit start

@@ -433,11 +433,11 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.netServerHandler.a(this.locX, this.locY, this.locZ, this.yaw, this.pitch);
     }
 
-    protected void a(double d0, boolean flag) {
+    protected void updateFallState(double d0, boolean flag) {
     }
 
     public void b(double d0, boolean flag) {
-        super.a(d0, flag);
+        super.updateFallState(d0, flag);
     }
 
     private void ai() {

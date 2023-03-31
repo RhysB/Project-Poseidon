@@ -13,7 +13,7 @@ public class EntityZombie extends EntityMonster {
 
     public void v() {
         if (this.world.d()) {
-            float f = this.c(1.0F);
+            float f = this.getBrightness(1.0F);
 
             if (f > 0.5F && this.world.isChunkLoaded(MathHelper.floor(this.locX), MathHelper.floor(this.locY), MathHelper.floor(this.locZ)) && this.random.nextFloat() * 30.0F < (f - 0.4F) * 2.0F) {
                 // CraftBukkit start

@@ -31,14 +31,14 @@ public class EntityWolf extends EntityAnimal {
         this.health = 8;
     }
 
-    protected void b() {
-        super.b();
+    protected void entityInit() {
+        super.entityInit();
         this.datawatcher.a(16, Byte.valueOf((byte) 0));
         this.datawatcher.a(17, "");
         this.datawatcher.a(18, new Integer(this.health));
     }
 
-    protected boolean n() {
+    protected boolean canTriggerWalking() {
         return false;
     }
 
@@ -95,12 +95,12 @@ public class EntityWolf extends EntityAnimal {
             EntityHuman entityhuman = this.world.a(this.getOwnerName());
 
             if (entityhuman != null) {
-                float f = entityhuman.f(this);
+                float f = entityhuman.getDistanceToEntity(this);
 
                 if (f > 5.0F) {
                     this.c(entityhuman, f);
                 }
-            } else if (!this.ad()) {
+            } else if (!this.isInWater()) {
                 this.setSitting(true);
             }
         } else if (this.target == null && !this.C() && !this.isTamed() && this.world.random.nextInt(100) == 0) {
@@ -121,7 +121,7 @@ public class EntityWolf extends EntityAnimal {
             }
         }
 
-        if (this.ad()) {
+        if (this.isInWater()) {
             this.setSitting(false);
         }
 
@@ -171,7 +171,7 @@ public class EntityWolf extends EntityAnimal {
             this.aF = 10;
         }
 
-        if (this.ac()) {
+        if (this.isWet()) {
             this.f = true;
             this.g = false;
             this.h = 0.0F;

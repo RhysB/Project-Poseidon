@@ -363,7 +363,7 @@ public class InventoryPlayer implements IInventory {
     }
 
     public boolean a_(EntityHuman entityhuman) {
-        return this.d.dead ? false : entityhuman.g(this.d) <= 64.0D;
+        return this.d.dead ? false : entityhuman.getDistanceSqToEntity(this.d) <= 64.0D;
     }
 
     public boolean c(ItemStack itemstack) {

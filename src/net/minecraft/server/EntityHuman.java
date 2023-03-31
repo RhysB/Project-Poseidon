@@ -70,8 +70,8 @@ public abstract class EntityHuman extends EntityLiving {
         this.texture = "/mob/char.png";
     }
 
-    protected void b() {
-        super.b();
+    protected void entityInit() {
+        super.entityInit();
         this.datawatcher.a(16, Byte.valueOf((byte) 0));
     }
 
@@ -219,7 +219,7 @@ public abstract class EntityHuman extends EntityLiving {
     }
 
     private void i(Entity entity) {
-        entity.b(this);
+        entity.onCollideWithPlayer(this);
     }
 
     public void die(Entity entity) {
@@ -313,7 +313,7 @@ public abstract class EntityHuman extends EntityLiving {
     public float a(Block block) {
         float f = this.inventory.a(block);
 
-        if (this.a(Material.WATER)) {
+        if (this.isInMaterial(Material.WATER)) {
             f /= 5.0F;
         }
 
@@ -841,12 +841,12 @@ public abstract class EntityHuman extends EntityLiving {
         if (this.vehicle == null) {
             int i;
 
-            if (this.a(Material.WATER)) {
+            if (this.isInMaterial(Material.WATER)) {
                 i = Math.round(MathHelper.a(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
                 if (i > 0) {
                     this.a(StatisticList.q, i);
                 }
-            } else if (this.ad()) {
+            } else if (this.isInWater()) {
                 i = Math.round(MathHelper.a(d0 * d0 + d2 * d2) * 100.0F);
                 if (i > 0) {
                     this.a(StatisticList.m, i);
@@ -890,12 +890,12 @@ public abstract class EntityHuman extends EntityLiving {
         }
     }
 
-    protected void a(float f) {
+    protected void fall(float f) {
         if (f >= 2.0F) {
             this.a(StatisticList.n, (int) Math.round((double) f * 100.0D));
         }
 
-        super.a(f);
+        super.fall(f);
     }
 
     public void a(EntityLiving entityliving) {

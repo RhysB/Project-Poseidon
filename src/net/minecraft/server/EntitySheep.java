@@ -12,8 +12,8 @@ public class EntitySheep extends EntityAnimal {
         this.setSize(0.9F, 1.3F);
     }
 
-    protected void b() {
-        super.b();
+    protected void entityInit() {
+        super.entityInit();
         this.datawatcher.a(16, new Byte((byte) 0));
     }
 

@@ -17,7 +17,7 @@ public class EntityMonster extends EntityCreature implements IMonster {
     }
 
     public void v() {
-        float f = this.c(1.0F);
+        float f = this.getBrightness(1.0F);
 
         if (f > 0.5F) {
             this.ay += 2;

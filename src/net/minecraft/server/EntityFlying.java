@@ -6,17 +6,17 @@ public class EntityFlying extends EntityLiving {
         super(world);
     }
 
-    protected void a(float f) {}
+    protected void fall(float f) {}
 
     public void a(float f, float f1) {
-        if (this.ad()) {
-            this.a(f, f1, 0.02F);
+        if (this.isInWater()) {
+            this.moveFlying(f, f1, 0.02F);
             this.move(this.motX, this.motY, this.motZ);
             this.motX *= 0.800000011920929D;
             this.motY *= 0.800000011920929D;
             this.motZ *= 0.800000011920929D;
-        } else if (this.ae()) {
-            this.a(f, f1, 0.02F);
+        } else if (this.handleLavaMovement()) {
+            this.moveFlying(f, f1, 0.02F);
             this.move(this.motX, this.motY, this.motZ);
             this.motX *= 0.5D;
             this.motY *= 0.5D;
@@ -35,7 +35,7 @@ public class EntityFlying extends EntityLiving {
 
             float f3 = 0.16277136F / (f2 * f2 * f2);
 
-            this.a(f, f1, this.onGround ? 0.1F * f3 : 0.02F);
+            this.moveFlying(f, f1, this.onGround ? 0.1F * f3 : 0.02F);
             f2 = 0.91F;
             if (this.onGround) {
                 f2 = 0.54600006F;

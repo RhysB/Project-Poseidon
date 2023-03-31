@@ -17,8 +17,8 @@ public class EntityCreeper extends EntityMonster {
         this.texture = "/mob/creeper.png";
     }
 
-    protected void b() {
-        super.b();
+    protected void entityInit() {
+        super.entityInit();
         this.datawatcher.a(16, Byte.valueOf((byte) -1));
         this.datawatcher.a(17, Byte.valueOf((byte) 0));
     }

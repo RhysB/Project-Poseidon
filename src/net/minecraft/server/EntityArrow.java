@@ -55,7 +55,7 @@ public class EntityArrow extends Entity {
         this.a(this.motX, this.motY, this.motZ, 1.5F, 1.0F);
     }
 
-    protected void b() {}
+    protected void entityInit() {}
 
     public void a(double d0, double d1, double d2, float f, float f1) {
         float f2 = MathHelper.a(d0 * d0 + d1 * d1 + d2 * d2);
@@ -251,7 +251,7 @@ public class EntityArrow extends Entity {
             float f3 = 0.99F;
 
             f1 = 0.03F;
-            if (this.ad()) {
+            if (this.isInWater()) {
                 for (int l = 0; l < 4; ++l) {
                     float f4 = 0.25F;
 
@@ -291,7 +291,7 @@ public class EntityArrow extends Entity {
         this.fromPlayer = nbttagcompound.m("player");
     }
 
-    public void b(EntityHuman entityhuman) {
+    public void onCollideWithPlayer(EntityHuman entityhuman) {
         if (!this.world.isStatic) {
             // CraftBukkit start
             ItemStack itemstack = new ItemStack(Item.ARROW, 1);

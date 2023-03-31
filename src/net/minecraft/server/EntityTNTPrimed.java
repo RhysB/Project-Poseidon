@@ -35,9 +35,9 @@ public class EntityTNTPrimed extends Entity {
         this.lastZ = d2;
     }
 
-    protected void b() {}
+    protected void entityInit() {}
 
-    protected boolean n() {
+    protected boolean canTriggerWalking() {
         return false;
     }
 

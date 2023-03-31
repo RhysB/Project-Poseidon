@@ -13,7 +13,7 @@ public class EntityPig extends EntityAnimal {
         this.setSize(0.9F, 0.9F);
     }
 
-    protected void b() {
+    protected void entityInit() {
         this.datawatcher.a(16, Byte.valueOf((byte) 0));
     }
 
@@ -84,8 +84,8 @@ public class EntityPig extends EntityAnimal {
         }
     }
 
-    protected void a(float f) {
-        super.a(f);
+    protected void fall(float f) {
+        super.fall(f);
         if (f > 5.0F && this.passenger instanceof EntityHuman) {
             ((EntityHuman) this.passenger).a((Statistic) AchievementList.u);
         }

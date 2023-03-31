@@ -30,7 +30,7 @@ public class EntityItem extends Entity {
         this.motZ = (double) ((float) (Math.random() * 0.20000000298023224D - 0.10000000149011612D));
     }
 
-    protected boolean n() {
+    protected boolean canTriggerWalking() {
         return false;
     }
 
@@ -40,7 +40,7 @@ public class EntityItem extends Entity {
         this.height = this.width / 2.0F;
     }
 
-    protected void b() {}
+    protected void entityInit() {}
 
     public void onUpdate() {
         super.onUpdate();
@@ -94,7 +94,7 @@ public class EntityItem extends Entity {
         }
     }
 
-    public boolean f_() {
+    public boolean handleWaterMovement() {
         return this.world.a(this.boundingBox, Material.WATER, this);
     }
 
@@ -103,7 +103,7 @@ public class EntityItem extends Entity {
     }
 
     public boolean damageEntity(Entity entity, int i) {
-        this.af();
+        this.setBeenAttacked();
         this.f -= i;
         if (this.f <= 0) {
             this.die();
@@ -126,7 +126,7 @@ public class EntityItem extends Entity {
         this.itemStack = new ItemStack(nbttagcompound1);
     }
 
-    public void b(EntityHuman entityhuman) {
+    public void onCollideWithPlayer(EntityHuman entityhuman) {
         if (!this.world.isStatic) {
             int i = this.itemStack.count;
 

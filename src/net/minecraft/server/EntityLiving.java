@@ -80,7 +80,7 @@ public abstract class EntityLiving extends Entity {
         this.bs = 0.5F;
     }
 
-    protected void b() {}
+    protected void entityInit() {}
 
     public boolean e(Entity entity) {
         return this.world.a(Vec3D.create(this.locX, this.locY + (double) this.getEyeHeight(), this.locZ), Vec3D.create(entity.locX, entity.locY + (double) entity.getEyeHeight(), entity.locZ)) == null;
@@ -135,7 +135,7 @@ public abstract class EntityLiving extends Entity {
 
         int i;
 
-        if (this.T() && this.a(Material.WATER) && !this.b_()) {
+        if (this.T() && this.isInMaterial(Material.WATER) && !this.b_()) {
             --this.airTicks;
             if (this.airTicks == -20) {
                 this.airTicks = 0;
@@ -370,7 +370,7 @@ public abstract class EntityLiving extends Entity {
                 this.af = 0.0F;
                 if (flag) {
                     this.world.a(this, (byte) 2);
-                    this.af();
+                    this.setBeenAttacked();
                     if (entity != null) {
                         this.airBorne = true;
                         double d0 = entity.locX - this.locX;
@@ -481,8 +481,8 @@ public abstract class EntityLiving extends Entity {
         return 0;
     }
 
-    protected void a(float f) {
-        super.a(f);
+    protected void fall(float f) {
+        super.fall(f);
         int i = (int) Math.ceil((double) (f - 3.0F));
 
         if (i > 0) {
@@ -508,26 +508,26 @@ public abstract class EntityLiving extends Entity {
     public void a(float f, float f1) {
         double d0;
 
-        if (this.ad()) {
+        if (this.isInWater()) {
             d0 = this.locY;
-            this.a(f, f1, 0.02F);
+            this.moveFlying(f, f1, 0.02F);
             this.move(this.motX, this.motY, this.motZ);
             this.motX *= 0.800000011920929D;
             this.motY *= 0.800000011920929D;
             this.motZ *= 0.800000011920929D;
             this.motY -= 0.02D;
-            if (this.positionChanged && this.d(this.motX, this.motY + 0.6000000238418579D - this.locY + d0, this.motZ)) {
+            if (this.positionChanged && this.isOffsetPositionInLiquid(this.motX, this.motY + 0.6000000238418579D - this.locY + d0, this.motZ)) {
                 this.motY = 0.30000001192092896D;
             }
-        } else if (this.ae()) {
+        } else if (this.handleLavaMovement()) {
             d0 = this.locY;
-            this.a(f, f1, 0.02F);
+            this.moveFlying(f, f1, 0.02F);
             this.move(this.motX, this.motY, this.motZ);
             this.motX *= 0.5D;
             this.motY *= 0.5D;
             this.motZ *= 0.5D;
             this.motY -= 0.02D;
-            if (this.positionChanged && this.d(this.motX, this.motY + 0.6000000238418579D - this.locY + d0, this.motZ)) {
+            if (this.positionChanged && this.isOffsetPositionInLiquid(this.motX, this.motY + 0.6000000238418579D - this.locY + d0, this.motZ)) {
                 this.motY = 0.30000001192092896D;
             }
         } else {
@@ -544,7 +544,7 @@ public abstract class EntityLiving extends Entity {
 
             float f3 = 0.16277136F / (f2 * f2 * f2);
 
-            this.a(f, f1, this.onGround ? 0.1F * f3 : 0.02F);
+            this.moveFlying(f, f1, this.onGround ? 0.1F * f3 : 0.02F);
             f2 = 0.91F;
             if (this.onGround) {
                 f2 = 0.54600006F;
@@ -690,8 +690,8 @@ public abstract class EntityLiving extends Entity {
             this.c_();
         }
 
-        boolean flag = this.ad();
-        boolean flag1 = this.ae();
+        boolean flag = this.isInWater();
+        boolean flag1 = this.handleLavaMovement();
 
         if (this.aC) {
             if (flag) {
@@ -777,7 +777,7 @@ public abstract class EntityLiving extends Entity {
 
         if (this.b != null) {
             this.a(this.b, 10.0F, (float) this.u());
-            if (this.aF-- <= 0 || this.b.dead || this.b.g(this) > (double) (f * f)) {
+            if (this.aF-- <= 0 || this.b.dead || this.b.getDistanceSqToEntity(this) > (double) (f * f)) {
                 this.b = null;
             }
         } else {
@@ -789,8 +789,8 @@ public abstract class EntityLiving extends Entity {
             this.pitch = this.aD;
         }
 
-        boolean flag = this.ad();
-        boolean flag1 = this.ae();
+        boolean flag = this.isInWater();
+        boolean flag1 = this.handleLavaMovement();
 
         if (flag || flag1) {
             this.aC = this.random.nextFloat() < 0.8F;
@@ -858,7 +858,7 @@ public abstract class EntityLiving extends Entity {
         return this.world.containsEntity(this.boundingBox) && this.world.getEntities(this, this.boundingBox).size() == 0 && !this.world.c(this.boundingBox);
     }
 
-    protected void Y() {
+    protected void kill() {
         // CraftBukkit start
         EntityDamageByBlockEvent event = new EntityDamageByBlockEvent(null, this.getBukkitEntity(), EntityDamageEvent.DamageCause.VOID, 4);
         this.world.getServer().getPluginManager().callEvent(event);

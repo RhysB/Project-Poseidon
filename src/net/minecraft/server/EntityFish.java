@@ -56,7 +56,7 @@ public class EntityFish extends Entity {
         this.a(this.motX, this.motY, this.motZ, 1.5F, 1.0F);
     }
 
-    protected void b() {}
+    protected void entityInit() {}
 
     public void a(double d0, double d1, double d2, float f, float f1) {
         float f2 = MathHelper.a(d0 * d0 + d1 * d1 + d2 * d2);
@@ -106,7 +106,7 @@ public class EntityFish extends Entity {
             if (!this.world.isStatic) {
                 ItemStack itemstack = this.owner.G();
 
-                if (this.owner.dead || !this.owner.T() || itemstack == null || itemstack.getItem() != Item.FISHING_ROD || this.g(this.owner) > 1024.0D) {
+                if (this.owner.dead || !this.owner.T() || itemstack == null || itemstack.getItem() != Item.FISHING_ROD || this.getDistanceSqToEntity(this.owner) > 1024.0D) {
                     this.die();
                     this.owner.hookedFish = null;
                     return;

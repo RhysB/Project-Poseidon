@@ -30,7 +30,7 @@ public class EntityEgg extends Entity {
         this.setSize(0.25F, 0.25F);
     }
 
-    protected void b() {}
+    protected void entityInit() {}
 
     public EntityEgg(World world, EntityLiving entityliving) {
         super(world);
@@ -298,7 +298,7 @@ public class EntityEgg extends Entity {
         float f2 = 0.99F;
         float f3 = 0.03F;
 
-        if (this.ad()) {
+        if (this.isInWater()) {
             for (int i1 = 0; i1 < 4; ++i1) {
                 float f4 = 0.25F;
 
@@ -333,7 +333,7 @@ public class EntityEgg extends Entity {
         this.f = nbttagcompound.c("inGround") == 1;
     }
 
-    public void b(EntityHuman entityhuman) {
+    public void onCollideWithPlayer(EntityHuman entityhuman) {
         if (this.f && this.thrower == entityhuman && this.a <= 0 && entityhuman.inventory.pickup(new ItemStack(Item.ARROW, 1))) {
             this.world.makeSound(this, "random.pop", 0.2F, ((this.random.nextFloat() - this.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
             entityhuman.receive(this, 1);

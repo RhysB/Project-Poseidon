@@ -79,7 +79,7 @@ public class EntitySquid extends EntityWaterAnimal {
         return false;
     }
 
-    public boolean ad() {
+    public boolean isInWater() {
         return this.world.a(this.boundingBox.b(0.0D, -0.6000000238418579D, 0.0D), Material.WATER, this);
     }
 
@@ -97,7 +97,7 @@ public class EntitySquid extends EntityWaterAnimal {
             }
         }
 
-        if (this.ad()) {
+        if (this.isInWater()) {
             float f;
 
             if (this.g < 3.1415927F) {

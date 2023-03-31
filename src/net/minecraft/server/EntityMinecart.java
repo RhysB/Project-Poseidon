@@ -55,17 +55,17 @@ public class EntityMinecart extends Entity implements IInventory {
         this.height = this.width / 2.0F;
     }
 
-    protected boolean n() {
+    protected boolean canTriggerWalking() {
         return false;
     }
 
-    protected void b() {}
+    protected void entityInit() {}
 
     public AxisAlignedBB a_(Entity entity) {
         return entity.boundingBox;
     }
 
-    public AxisAlignedBB e_() {
+    public AxisAlignedBB getBoundingBox() {
         return null;
     }
 
@@ -109,7 +109,7 @@ public class EntityMinecart extends Entity implements IInventory {
 
             this.c = -this.c;
             this.b = 10;
-            this.af();
+            this.setBeenAttacked();
             this.damage += i * 10;
             if (this.damage > 40) {
                 if (this.passenger != null) {
@@ -765,13 +765,13 @@ public class EntityMinecart extends Entity implements IInventory {
                         if (((EntityMinecart) entity).type == 2 && this.type != 2) {
                             this.motX *= 0.20000000298023224D;
                             this.motZ *= 0.20000000298023224D;
-                            this.b(entity.motX - d0, 0.0D, entity.motZ - d1);
+                            this.addVelocity(entity.motX - d0, 0.0D, entity.motZ - d1);
                             entity.motX *= 0.699999988079071D;
                             entity.motZ *= 0.699999988079071D;
                         } else if (((EntityMinecart) entity).type != 2 && this.type == 2) {
                             entity.motX *= 0.20000000298023224D;
                             entity.motZ *= 0.20000000298023224D;
-                            entity.b(this.motX + d0, 0.0D, this.motZ + d1);
+                            entity.addVelocity(this.motX + d0, 0.0D, this.motZ + d1);
                             this.motX *= 0.699999988079071D;
                             this.motZ *= 0.699999988079071D;
                         } else {
@@ -779,14 +779,14 @@ public class EntityMinecart extends Entity implements IInventory {
                             d8 /= 2.0D;
                             this.motX *= 0.20000000298023224D;
                             this.motZ *= 0.20000000298023224D;
-                            this.b(d7 - d0, 0.0D, d8 - d1);
+                            this.addVelocity(d7 - d0, 0.0D, d8 - d1);
                             entity.motX *= 0.20000000298023224D;
                             entity.motZ *= 0.20000000298023224D;
-                            entity.b(d7 + d0, 0.0D, d8 + d1);
+                            entity.addVelocity(d7 + d0, 0.0D, d8 + d1);
                         }
                     } else {
-                        this.b(-d0, 0.0D, -d1);
-                        entity.b(d0 / 4.0D, 0.0D, d1 / 4.0D);
+                        this.addVelocity(-d0, 0.0D, -d1);
+                        entity.addVelocity(d0 / 4.0D, 0.0D, d1 / 4.0D);
                     }
                 }
             }
@@ -882,6 +882,6 @@ public class EntityMinecart extends Entity implements IInventory {
     }
 
     public boolean a_(EntityHuman entityhuman) {
-        return this.dead ? false : entityhuman.g(this) <= 64.0D;
+        return this.dead ? false : entityhuman.getDistanceSqToEntity(this) <= 64.0D;
     }
 }

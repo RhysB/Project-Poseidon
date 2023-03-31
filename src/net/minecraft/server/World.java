@@ -952,7 +952,7 @@ public class World implements IBlockAccess {
         List list = this.b(entity, axisalignedbb.b(d0, d0, d0));
 
         for (int j2 = 0; j2 < list.size(); ++j2) {
-            AxisAlignedBB axisalignedbb1 = ((Entity) list.get(j2)).e_();
+            AxisAlignedBB axisalignedbb1 = ((Entity) list.get(j2)).getBoundingBox();
 
             if (axisalignedbb1 != null && axisalignedbb1.a(axisalignedbb)) {
                 this.K.add(axisalignedbb1);
@@ -1890,7 +1890,7 @@ public class World implements IBlockAccess {
                 if (l1 == 0 && this.k(l, k1, j1) <= this.random.nextInt(8) && this.a(EnumSkyBlock.SKY, l, k1, j1) <= 0) {
                     EntityHuman entityhuman1 = this.a((double) l + 0.5D, (double) k1 + 0.5D, (double) j1 + 0.5D, 8.0D);
 
-                    if (entityhuman1 != null && entityhuman1.e((double) l + 0.5D, (double) k1 + 0.5D, (double) j1 + 0.5D) > 4.0D) {
+                    if (entityhuman1 != null && entityhuman1.getDistanceSq((double) l + 0.5D, (double) k1 + 0.5D, (double) j1 + 0.5D) > 4.0D) {
                         this.makeSound((double) l + 0.5D, (double) k1 + 0.5D, (double) j1 + 0.5D, "ambient.cave.cave", 0.7F, 0.8F + this.random.nextFloat() * 0.2F);
                         this.Q = this.random.nextInt(12000) + 6000;
                     }
@@ -2177,7 +2177,7 @@ public class World implements IBlockAccess {
                 continue;
             }
             // CraftBukkit end
-            double d5 = entityhuman1.e(d0, d1, d2);
+            double d5 = entityhuman1.getDistanceSq(d0, d1, d2);
 
             if ((d3 < 0.0D || d5 < d3 * d3) && (d4 == -1.0D || d5 < d4)) {
                 d4 = d5;

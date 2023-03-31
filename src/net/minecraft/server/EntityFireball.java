@@ -37,7 +37,7 @@ public class EntityFireball extends Entity {
         this.setSize(1.0F, 1.0F);
     }
 
-    protected void b() {}
+    protected void entityInit() {}
 
     public EntityFireball(World world, EntityLiving entityliving, double d0, double d1, double d2) {
         super(world);
@@ -201,7 +201,7 @@ public class EntityFireball extends Entity {
         this.yaw = this.lastYaw + (this.yaw - this.lastYaw) * 0.2F;
         float f2 = 0.95F;
 
-        if (this.ad()) {
+        if (this.isInWater()) {
             for (int k = 0; k < 4; ++k) {
                 float f3 = 0.25F;
 
@@ -244,7 +244,7 @@ public class EntityFireball extends Entity {
     }
 
     public boolean damageEntity(Entity entity, int i) {
-        this.af();
+        this.setBeenAttacked();
         if (entity != null) {
             Vec3D vec3d = entity.Z();
 

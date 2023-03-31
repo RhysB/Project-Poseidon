@@ -52,7 +52,7 @@ public class EntityPainting extends Entity {
         this.b(l);
     }
 
-    protected void b() {}
+    protected void entityInit() {}
 
     public void b(int i) {
         this.a = i;
@@ -211,7 +211,7 @@ public class EntityPainting extends Entity {
             // CraftBukkit end
 
             this.die();
-            this.af();
+            this.setBeenAttacked();
             this.world.addEntity(new EntityItem(this.world, this.locX, this.locY, this.locZ, new ItemStack(Item.PAINTING)));
         }
 
@@ -257,7 +257,7 @@ public class EntityPainting extends Entity {
         }
     }
 
-    public void b(double d0, double d1, double d2) {
+    public void addVelocity(double d0, double d1, double d2) {
         if (!this.world.isStatic && d0 * d0 + d1 * d1 + d2 * d2 > 0.0D) {
             this.die();
             this.world.addEntity(new EntityItem(this.world, this.locX, this.locY, this.locZ, new ItemStack(Item.PAINTING)));

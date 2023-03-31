@@ -59,7 +59,7 @@ public class EntityCreature extends EntityLiving {
             }
             // CraftBukkit end
         } else {
-            float f1 = this.target.f(this);
+            float f1 = this.target.getDistanceToEntity(this);
 
             if (this.e(this.target)) {
                 this.a(this.target, f1);
@@ -75,8 +75,8 @@ public class EntityCreature extends EntityLiving {
         }
 
         int i = MathHelper.floor(this.boundingBox.b + 0.5D);
-        boolean flag = this.ad();
-        boolean flag1 = this.ae();
+        boolean flag = this.isInWater();
+        boolean flag1 = this.handleLavaMovement();
 
         this.pitch = 0.0F;
         if (this.pathEntity != null && this.random.nextInt(100) != 0) {

@@ -16,8 +16,8 @@ public class EntitySlime extends EntityLiving implements IMonster {
         this.setSize(i);
     }
 
-    protected void b() {
-        super.b();
+    protected void entityInit() {
+        super.entityInit();
         this.datawatcher.a(16, new Byte((byte) 1));
     }
 
@@ -117,10 +117,10 @@ public class EntitySlime extends EntityLiving implements IMonster {
         super.die();
     }
 
-    public void b(EntityHuman entityhuman) {
+    public void onCollideWithPlayer(EntityHuman entityhuman) {
         int i = this.getSize();
 
-        if (i > 1 && this.e(entityhuman) && (double) this.f(entityhuman) < 0.6D * (double) i && entityhuman.damageEntity(this, i)) {
+        if (i > 1 && this.e(entityhuman) && (double) this.getDistanceToEntity(entityhuman) < 0.6D * (double) i && entityhuman.damageEntity(this, i)) {
             this.world.makeSound(this, "mob.slimeattack", 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
         }
     }

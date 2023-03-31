@@ -130,10 +130,10 @@ public abstract class Entity {
         this.world = world;
         this.setPosition(0.0D, 0.0D, 0.0D);
         this.datawatcher.a(0, Byte.valueOf((byte) 0));
-        this.b();
+        this.entityInit();
     }
 
-    protected abstract void b();
+    protected abstract void entityInit();
 
     /**
      * Use {@link #getDataWatcher() getDataWatcher} instead.
@@ -247,7 +247,7 @@ public abstract class Entity {
         this.lastZ = this.locZ;
         this.lastPitch = this.pitch;
         this.lastYaw = this.yaw;
-        if (this.f_()) {
+        if (this.handleWaterMovement()) {
             if (!this.bA && !this.justCreated) {
                 float f = MathHelper.a(this.motX * this.motX * 0.20000000298023224D + this.motY * this.motY + this.motZ * this.motZ * 0.20000000298023224D) * 0.2F;
                 if (f > 1.0F) f = 1.0F;
@@ -306,12 +306,12 @@ public abstract class Entity {
             }
         }
 
-        if (this.ae()) {
-            this.ab();
+        if (this.handleLavaMovement()) {
+            this.setOnFireFromLava();
         }
 
         if (this.locY < -64.0D) {
-            this.Y();
+            this.kill();
         }
 
         if (!this.world.isStatic) {
@@ -322,7 +322,14 @@ public abstract class Entity {
         this.justCreated = false;
     }
 
+    /**
+     * Use {@link #setOnFireFromLava() setOnFireFromLava} instead.
+     */
+    @Deprecated
     protected void ab() {
+        this.setOnFireFromLava();
+    }
+    protected void setOnFireFromLava() {
         if (!this.fireProof) {
             // CraftBukkit start - TODO: this event spams!
             if (this instanceof EntityLiving) {
@@ -360,11 +367,25 @@ public abstract class Entity {
         }
     }
 
+    /**
+     * Use {@link #kill() kill} instead.
+     */
+    @Deprecated
     protected void Y() {
+        this.kill();
+    }
+    protected void kill() {
         this.die();
     }
 
+    /**
+     * Use {@link #isOffsetPositionInLiquid(double, double, double) isOffsetPositionInLiquid} instead.
+     */
+    @Deprecated
     public boolean d(double d0, double d1, double d2) {
+        return this.isOffsetPositionInLiquid(d0, d1, d2);
+    }
+    public boolean isOffsetPositionInLiquid(double d0, double d1, double d2) {
         AxisAlignedBB axisalignedbb = this.boundingBox.c(d0, d1, d2);
         List list = this.world.getEntities(this, axisalignedbb);
 
@@ -546,7 +567,7 @@ public abstract class Entity {
             this.bc = d6 != d1;
             this.onGround = d6 != d1 && d6 < 0.0D;
             this.bd = this.positionChanged || this.bc;
-            this.a(d1, this.onGround);
+            this.updateFallState(d1, this.onGround);
             if (d5 != d0) {
                 this.motX = 0.0D;
             }
@@ -585,7 +606,7 @@ public abstract class Entity {
             }
             // CraftBukkit end
 
-            if (this.n() && !flag && this.vehicle == null) {
+            if (this.canTriggerWalking() && !flag && this.vehicle == null) {
                 this.bm = (float) ((double) this.bm + (double) MathHelper.a(d9 * d9 + d10 * d10) * 0.6D);
                 l = MathHelper.floor(this.locX);
                 i1 = MathHelper.floor(this.locY - 0.20000000298023224D - (double) this.height);
@@ -631,7 +652,7 @@ public abstract class Entity {
                 }
             }
 
-            boolean flag2 = this.ac();
+            boolean flag2 = this.isWet();
 
             if (this.world.d(this.boundingBox.shrink(0.0010D, 0.0010D, 0.0010D))) {
                 this.burn(1);
@@ -661,14 +682,28 @@ public abstract class Entity {
         }
     }
 
+    /**
+     * Use {@link #canTriggerWalking() canTriggerWalking} instead.
+     */
+    @Deprecated
     protected boolean n() {
+        return this.canTriggerWalking();
+    }
+    protected boolean canTriggerWalking() {
         return true;
     }
 
+    /**
+     * Use {@link #updateFallState(double, boolean) updateFallState} instead.
+     */
+    @Deprecated
     protected void a(double d0, boolean flag) {
+        this.updateFallState(d0, flag);
+    }
+    protected void updateFallState(double d0, boolean flag) {
         if (flag) {
             if (this.fallDistance > 0.0F) {
-                this.a(this.fallDistance);
+                this.fall(this.fallDistance);
                 this.fallDistance = 0.0F;
             }
         } else if (d0 < 0.0D) {
@@ -676,7 +711,14 @@ public abstract class Entity {
         }
     }
 
+    /**
+     * Use {@link #getBoundingBox() getBoundingBox} instead.
+     */
+    @Deprecated
     public AxisAlignedBB e_() {
+        return this.getBoundingBox();
+    }
+    public AxisAlignedBB getBoundingBox() {
         return null;
     }
 
@@ -698,25 +740,60 @@ public abstract class Entity {
         }
     }
 
+    /**
+     * Use {@link #fall(float) fall} instead.
+     */
+    @Deprecated
     protected void a(float f) {
+        this.fall(f);
+    }
+    protected void fall(float f) {
         if (this.passenger != null) {
-            this.passenger.a(f);
+            this.passenger.fall(f);
         }
     }
 
+    /**
+     * Use {@link #isWet() isWet} instead.
+     */
+    @Deprecated
     public boolean ac() {
+        return this.isWet();
+    }
+    public boolean isWet() {
         return this.bA || this.world.s(MathHelper.floor(this.locX), MathHelper.floor(this.locY), MathHelper.floor(this.locZ));
     }
 
+    /**
+     * Use {@link #isInWater() isInWater} instead.
+     */
+    @Deprecated
     public boolean ad() {
+        return this.isInWater();
+    }
+    public boolean isInWater() {
         return this.bA;
     }
 
+    /**
+     * Use {@link #handleWaterMovement() handleWaterMovement} instead.
+     */
+    @Deprecated
     public boolean f_() {
+        return this.handleWaterMovement();
+    }
+    public boolean handleWaterMovement() {
         return this.world.a(this.boundingBox.b(0.0D, -0.4000000059604645D, 0.0D).shrink(0.0010D, 0.0010D, 0.0010D), Material.WATER, this);
     }
 
+    /**
+     * Use {@link #isInMaterial(Material) isInMaterial} instead.
+     */
+    @Deprecated
     public boolean a(Material material) {
+        return this.isInMaterial(material);
+    }
+    public boolean isInMaterial(Material material) {
         double d0 = this.locY + (double) this.getEyeHeight();
         int i = MathHelper.floor(this.locX);
         int j = MathHelper.d((float) MathHelper.floor(d0));
@@ -744,11 +821,25 @@ public abstract class Entity {
         return 0.0F;
     }
 
+    /**
+     * Use {@link #handleLavaMovement() handleLavaMovement} instead.
+     */
+    @Deprecated
     public boolean ae() {
+        return this.handleLavaMovement();
+    }
+    public boolean handleLavaMovement() {
         return this.world.a(this.boundingBox.b(-0.10000000149011612D, -0.4000000059604645D, -0.10000000149011612D), Material.LAVA);
     }
 
+    /**
+     * Use {@link #moveFlying(float, float, float) moveFlying} instead.
+     */
+    @Deprecated
     public void a(float f, float f1, float f2) {
+        this.moveFlying(f, f1, f2);
+    }
+    public void moveFlying(float f, float f1, float f2) {
         float f3 = MathHelper.c(f * f + f1 * f1);
 
         if (f3 >= 0.01F) {
@@ -767,7 +858,14 @@ public abstract class Entity {
         }
     }
 
+    /**
+     * Use {@link #getBrightness(float) getBrightness} instead.
+     */
+    @Deprecated
     public float c(float f) {
+        return this.getBrightness(f);
+    }
+    public float getBrightness(float f) {
         int i = MathHelper.floor(this.locX);
         double d0 = (this.boundingBox.e - this.boundingBox.b) * 0.66D;
         int j = MathHelper.floor(this.locY - (double) this.height + d0);
@@ -827,7 +925,14 @@ public abstract class Entity {
         this.setPosition(this.locX, this.locY, this.locZ);
     }
 
+    /**
+     * Use {@link #getDistanceToEntity(Entity) getDistanceToEntity} instead.
+     */
+    @Deprecated
     public float f(Entity entity) {
+        return this.getDistanceToEntity(entity);
+    }
+    public float getDistanceToEntity(Entity entity) {
         float f = (float) (this.locX - entity.locX);
         float f1 = (float) (this.locY - entity.locY);
         float f2 = (float) (this.locZ - entity.locZ);
@@ -835,7 +940,14 @@ public abstract class Entity {
         return MathHelper.c(f * f + f1 * f1 + f2 * f2);
     }
 
+    /**
+     * Use {@link #getDistanceSq(double, double, double) getDistanceToEntity} instead.
+     */
+    @Deprecated
     public double e(double d0, double d1, double d2) {
+        return this.getDistanceSq(d0, d1, d2);
+    }
+    public double getDistanceSq(double d0, double d1, double d2) {
         double d3 = this.locX - d0;
         double d4 = this.locY - d1;
         double d5 = this.locZ - d2;
@@ -843,7 +955,14 @@ public abstract class Entity {
         return d3 * d3 + d4 * d4 + d5 * d5;
     }
 
+    /**
+     * Use {@link #getDistance(double, double, double) getDistance} instead.
+     */
+    @Deprecated
     public double f(double d0, double d1, double d2) {
+        return this.getDistance(d0, d1, d2);
+    }
+    public double getDistance(double d0, double d1, double d2) {
         double d3 = this.locX - d0;
         double d4 = this.locY - d1;
         double d5 = this.locZ - d2;
@@ -851,7 +970,14 @@ public abstract class Entity {
         return MathHelper.a(d3 * d3 + d4 * d4 + d5 * d5);
     }
 
+    /**
+     * Use {@link #getDistanceSqToEntity(Entity) getDistanceSqToEntity} instead.
+     */
+    @Deprecated
     public double g(Entity entity) {
+        return this.getDistanceSqToEntity(entity);
+    }
+    public double getDistanceSqToEntity(Entity entity) {
         double d0 = this.locX - entity.locX;
         double d1 = this.locY - entity.locY;
         double d2 = this.locZ - entity.locZ;
@@ -859,7 +985,14 @@ public abstract class Entity {
         return d0 * d0 + d1 * d1 + d2 * d2;
     }
 
-    public void b(EntityHuman entityhuman) {}
+    /**
+     * Use {@link #onCollideWithPlayer(EntityHuman) onCollideWithPlayer} instead.
+     */
+    @Deprecated
+    public void b(EntityHuman entityhuman) {
+        this.onCollideWithPlayer(entityhuman);
+    }
+    public void onCollideWithPlayer(EntityHuman entityhuman) {}
 
     public void collide(Entity entity) {
         if (entity.passenger != this && entity.vehicle != this) {
@@ -883,25 +1016,39 @@ public abstract class Entity {
                 d1 *= 0.05000000074505806D;
                 d0 *= 1.0F - this.bu;
                 d1 *= 1.0F - this.bu;
-                this.b(-d0, 0.0D, -d1);
-                entity.b(d0, 0.0D, d1);
+                this.addVelocity(-d0, 0.0D, -d1);
+                entity.addVelocity(d0, 0.0D, d1);
             }
         }
     }
 
+    /**
+     * Use {@link #addVelocity(double, double, double) addVelocity} instead.
+     */
+    @Deprecated
     public void b(double d0, double d1, double d2) {
+        this.addVelocity(d0, d1, d2);
+    }
+    public void addVelocity(double d0, double d1, double d2) {
         this.motX += d0;
         this.motY += d1;
         this.motZ += d2;
         this.airBorne = true;
     }
 
+    /**
+     * Use {@link #setBeenAttacked() setBeenAttacked} instead.
+     */
+    @Deprecated
     protected void af() {
+        this.setBeenAttacked();
+    }
+    protected void setBeenAttacked() {
         this.velocityChanged = true;
     }
 
     public boolean damageEntity(Entity entity, int i) {
-        this.af();
+        this.setBeenAttacked();
         return false;
     }
 
@@ -1378,9 +1525,5 @@ public abstract class Entity {
         }
 
         return false;
-    }
-
-    public boolean isInWater() {
-        return bA;
     }
 }

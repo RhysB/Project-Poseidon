@@ -18,12 +18,12 @@ public class EntitySpider extends EntityMonster {
         return (double) this.width * 0.75D - 0.5D;
     }
 
-    protected boolean n() {
+    protected boolean canTriggerWalking() {
         return false;
     }
 
     protected Entity findTarget() {
-        float f = this.c(1.0F);
+        float f = this.getBrightness(1.0F);
 
         if (f < 0.5F) {
             double d0 = 16.0D;
@@ -47,7 +47,7 @@ public class EntitySpider extends EntityMonster {
     }
 
     protected void a(Entity entity, float f) {
-        float f1 = this.c(1.0F);
+        float f1 = this.getBrightness(1.0F);
 
         if (f1 > 0.5F && this.random.nextInt(100) == 0) {
             // CraftBukkit start

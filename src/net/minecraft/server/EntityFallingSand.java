@@ -24,11 +24,11 @@ public class EntityFallingSand extends Entity {
         this.lastZ = d2;
     }
 
-    protected boolean n() {
+    protected boolean canTriggerWalking() {
         return false;
     }
 
-    protected void b() {}
+    protected void entityInit() {}
 
     public boolean l_() {
         return !this.dead;

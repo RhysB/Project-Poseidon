@@ -23,8 +23,8 @@ public class EntityGhast extends EntityFlying implements IMonster {
         this.fireProof = true;
     }
 
-    protected void b() {
-        super.b();
+    protected void entityInit() {
+        super.entityInit();
         this.datawatcher.a(16, Byte.valueOf((byte) 0));
     }
 
@@ -104,7 +104,7 @@ public class EntityGhast extends EntityFlying implements IMonster {
 
         double d4 = 64.0D;
 
-        if (this.target != null && this.target.g(this) < d4 * d4) {
+        if (this.target != null && this.target.getDistanceSqToEntity(this) < d4 * d4) {
             double d5 = this.target.locX - this.locX;
             double d6 = this.target.boundingBox.b + (double) (this.target.width / 2.0F) - (this.locY + (double) (this.width / 2.0F));
             double d7 = this.target.locZ - this.locZ;

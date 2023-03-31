@@ -122,7 +122,7 @@ public class EntityWeatherStorm extends EntityWeather {
         }
     }
 
-    protected void b() {}
+    protected void entityInit() {}
 
     protected void a(NBTTagCompound nbttagcompound) {}
 
