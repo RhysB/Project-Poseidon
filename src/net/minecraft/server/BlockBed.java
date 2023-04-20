@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import org.bukkit.event.entity.EntityDamageEvent;
+
 import java.util.Iterator;
 import java.util.Random;
 
@@ -47,7 +49,7 @@ public class BlockBed extends Block {
                     d2 = (d2 + (double) k + 0.5D) / 2.0D;
                 }
 
-                world.createExplosion((Entity) null, (double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), 5.0F, true);
+                world.createExplosion((Entity) null, (double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), 5.0F, true, EntityDamageEvent.DamageCause.BED_EXPLOSION); //Project poseidon
                 return true;
             } else {
                 if (e(l)) {
