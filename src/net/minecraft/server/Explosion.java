@@ -137,7 +137,6 @@ public class Explosion {
                     // nothing was hurt
                 } else if (this.source == null || this.source instanceof EntityTNTPrimed) { // Block explosion
                     //This event gets fired by tnt, exploding beds, and explosions created by plugins
-                    // TODO: add custom DamageCause for explosions created by plugins
                     // TODO: get the x/y/z of the tnt block?
                     EntityDamageByBlockEvent event;
                     if (this.customDamageCause != null) {
@@ -150,7 +149,6 @@ public class Explosion {
                     server.getPluginManager().callEvent(event);
 
                     if (!event.isCancelled()) {
-                        System.out.println("Damage: " + event.getDamage());
                         entity.damageEntity(this.source, event.getDamage());
                         entity.motX += d0 * d10;
                         entity.motY += d1 * d10;
@@ -158,8 +156,6 @@ public class Explosion {
                         if (sendMotion) { // Poseidon: fix explosion velocity
                             entity.velocityChanged = true;
                         }
-                    }else{
-                        System.out.println("Damage was cancelled");
                     }
                 } else {
                     EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(this.source.getBukkitEntity(), damagee, EntityDamageEvent.DamageCause.ENTITY_EXPLOSION, damageDone);
