@@ -11,6 +11,7 @@ import org.bukkit.craftbukkit.entity.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.event.world.SpawnChangeEvent;
@@ -408,7 +409,11 @@ public class CraftWorld implements World {
     }
 
     public boolean createExplosion(double x, double y, double z, float power, boolean setFire) {
-        return world.createExplosion(null, x, y, z, power, setFire).wasCanceled ? false : true;
+        return createExplosion(x, y, z, power, setFire, EntityDamageEvent.DamageCause.PLUGIN_EXPLOSION);
+    }
+
+    public boolean createExplosion(double x, double y, double z, float power, boolean setFire, EntityDamageEvent.DamageCause customDamageCause){
+        return world.createExplosion(null, x, y, z, power, setFire, customDamageCause).wasCanceled ? false : true;
     }
 
     public boolean createExplosion(Location loc, float power) {
@@ -417,6 +422,10 @@ public class CraftWorld implements World {
 
     public boolean createExplosion(Location loc, float power, boolean setFire) {
         return createExplosion(loc.getX(), loc.getY(), loc.getZ(), power, setFire);
+    }
+
+    public boolean createExplosion(Location loc, float power, boolean setFire, EntityDamageEvent.DamageCause customDamageCause){
+        return createExplosion(loc.getX(), loc.getY(), loc.getZ(), power, setFire, customDamageCause);
     }
 
     public Environment getEnvironment() {

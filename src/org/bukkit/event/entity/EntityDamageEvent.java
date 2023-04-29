@@ -126,6 +126,18 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
          */
         BLOCK_EXPLOSION,
         /**
+         * Damage caused by being in the area when a block of TNT explodes.
+         */
+        TNT_EXPLOSION,
+        /**
+         * Damage caused by being in the area when a bed explodes.
+         */
+        BED_EXPLOSION,
+        /**
+         * Damage caused by being in the area when a plugin causes an explosion
+         */
+        PLUGIN_EXPLOSION,
+        /**
          * Damage caused by being in the area when an entity, such as a Creeper, explodes.
          *
          * Damage: variable

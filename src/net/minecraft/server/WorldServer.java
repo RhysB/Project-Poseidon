@@ -2,6 +2,7 @@ package net.minecraft.server;
 
 import org.bukkit.BlockChangeDelegate;
 import org.bukkit.craftbukkit.generator.*;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.generator.ChunkGenerator;
 
@@ -136,6 +137,19 @@ public class WorldServer extends World implements BlockChangeDelegate {
         // CraftBukkit
         this.server.getTracker(this.dimension).sendPacketToEntity(entity, packet38entitystatus);
     }
+
+    //Project Poseidon Start
+    public Explosion createExplosion(Entity entity, double d0, double d1, double d2, float f, boolean flag, EntityDamageEvent.DamageCause customDamageCause) {
+        Explosion explosion = super.createExplosion(entity, d0, d1, d2, f, flag, customDamageCause);
+
+        if (explosion.wasCanceled) {
+            return explosion;
+        }
+        this.server.serverConfigurationManager.sendPacketNearby(d0, d1, d2, 64.0D, this.dimension, new Packet60Explosion(d0, d1, d2, f, explosion.blocks));
+
+        return explosion;
+    }
+    //Project Poseidon End
 
     public Explosion createExplosion(Entity entity, double d0, double d1, double d2, float f, boolean flag) {
         // CraftBukkit start

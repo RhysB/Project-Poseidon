@@ -1,6 +1,5 @@
 package net.minecraft.server;
 
-import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.BlockState;
@@ -12,6 +11,7 @@ import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
@@ -1467,10 +1467,22 @@ public class World implements IBlockAccess {
         return this.createExplosion(entity, d0, d1, d2, f, false);
     }
 
+    //Project Poseidon Start
+    public Explosion createExplosion(Entity entity, double d0, double d1, double d2, float f, boolean flag, EntityDamageEvent.DamageCause customDamageCause) {
+        Explosion explosion = new Explosion(this, entity, d0, d1, d2, f);
+        explosion.customDamageCause = customDamageCause;
+
+        explosion.setFire = flag;
+        explosion.a();
+        explosion.a(true);
+        return explosion;
+    }
+    //Project Poseidon End
+
     public Explosion createExplosion(Entity entity, double d0, double d1, double d2, float f, boolean flag) {
         Explosion explosion = new Explosion(this, entity, d0, d1, d2, f);
 
-        explosion.a = flag;
+        explosion.setFire = flag;
         explosion.a();
         explosion.a(true);
         return explosion;

@@ -14,13 +14,14 @@ import java.util.*;
 
 public class Explosion {
 
-    public boolean a = false;
+    public boolean setFire = false;
     private Random h = new Random();
     private World world;
     public double posX;
     public double posY;
     public double posZ;
     public Entity source;
+    public EntityDamageEvent.DamageCause customDamageCause = null; // Poseidon
     public float size;
     public Set blocks = new HashSet();
 
@@ -105,7 +106,7 @@ public class Explosion {
          */
         boolean optimizeExplosions = (boolean) PoseidonConfig.getInstance().getProperty("world-settings.optimized-explosions");
         boolean sendMotion = (boolean) PoseidonConfig.getInstance().getProperty("world-settings.send-explosion-velocity");
-        
+
         for (int k2 = 0; k2 < list.size(); ++k2) {
             Entity entity = (Entity) list.get(k2);
             double d7 = entity.f(this.posX, this.posY, this.posZ) / (double) this.size;
@@ -136,9 +137,15 @@ public class Explosion {
                     // nothing was hurt
                 } else if (this.source == null || this.source instanceof EntityTNTPrimed) { // Block explosion
                     //This event gets fired by tnt, exploding beds, and explosions created by plugins
-                    // TODO: add custom DamageCause for explosions created by plugins
                     // TODO: get the x/y/z of the tnt block?
-                    EntityDamageByBlockEvent event = new EntityDamageByBlockEvent(null, damagee, EntityDamageEvent.DamageCause.BLOCK_EXPLOSION, damageDone);
+                    EntityDamageByBlockEvent event;
+                    if (this.customDamageCause != null) {
+                        event = new EntityDamageByBlockEvent(null, damagee, this.customDamageCause, damageDone);
+                    } else if (this.source instanceof EntityTNTPrimed) {
+                        event = new EntityDamageByBlockEvent(null, damagee, EntityDamageEvent.DamageCause.TNT_EXPLOSION, damageDone);
+                    } else {
+                        event = new EntityDamageByBlockEvent(null, damagee, EntityDamageEvent.DamageCause.BLOCK_EXPLOSION, damageDone);
+                    }
                     server.getPluginManager().callEvent(event);
 
                     if (!event.isCancelled()) {
@@ -172,7 +179,7 @@ public class Explosion {
         ArrayList arraylist = new ArrayList();
 
         arraylist.addAll(this.blocks);
-        if (this.a) {
+        if (this.setFire) {
             for (int l2 = arraylist.size() - 1; l2 >= 0; --l2) {
                 ChunkPosition chunkposition = (ChunkPosition) arraylist.get(l2);
                 int i3 = chunkposition.x;
@@ -219,7 +226,7 @@ public class Explosion {
         //Credit to Notcz in Modification Station
         arraylist.clear();
         this.blocks.clear();
-        for(final org.bukkit.block.Block block2: event.blockList()) {
+        for (final org.bukkit.block.Block block2 : event.blockList()) {
             final ChunkPosition coords = new ChunkPosition(block2.getX(), block2.getY(), block2.getZ());
             arraylist.add(coords);
             this.blocks.add(coords);
@@ -265,7 +272,7 @@ public class Explosion {
             }
         }
     }
-    
+
     // Paper start - Optimize explosions
     private float getBlockDensity(Vec3D vec3d, Entity entity) {
         /*if (!this.world.paperConfig.optimizeExplosions) {
