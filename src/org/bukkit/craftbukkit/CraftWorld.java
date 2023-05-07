@@ -291,6 +291,23 @@ public class CraftWorld implements World {
         return new CraftItem(world.getServer(), entity);
     }
 
+    public org.bukkit.entity.Item dropItem(Location loc, ItemStack item, Vector velocity, int pickupDelay) {
+        net.minecraft.server.ItemStack stack = new net.minecraft.server.ItemStack(
+            item.getTypeId(),
+            item.getAmount(),
+            item.getDurability()
+        );
+        EntityItem entity = new EntityItem(world, loc.getX(), loc.getY(), loc.getZ(), stack);
+        entity.pickupDelay = pickupDelay;
+        entity.motX = velocity.getX();
+        entity.motY = velocity.getY();
+        entity.motZ = velocity.getZ();
+        world.addEntity(entity);
+        // TODO this is inconsistent with how Entity.getBukkitEntity() works.
+        // However, this entity is not at the moment backed by a server entity class so it may be left.
+        return new CraftItem(world.getServer(), entity);
+    }
+
     public org.bukkit.entity.Item dropItemNaturally(Location loc, ItemStack item) {
         double xs = world.random.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;
         double ys = world.random.nextFloat() * 0.7F + (1.0F - 0.7F) * 0.5D;

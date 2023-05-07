@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerHealthDecreaseEvent;
 
 import java.util.Iterator;
 import java.util.List;
@@ -52,7 +53,7 @@ public abstract class EntityHuman extends EntityLiving {
     public int D = 20;
     protected boolean E = false;
     public float F;
-    private int d = 0;
+    public int d = 0; // Poseidon - private -> public
     public EntityFish hookedFish = null;
 
     public EntityHuman(World world) {
@@ -489,13 +490,21 @@ public abstract class EntityHuman extends EntityLiving {
         }
     }
 
-    protected void c(int i) {
+    // Poseidon = protected -> public
+    public void c(int i) {
         int j = 25 - this.inventory.g();
         int k = i * j + this.d;
 
         this.inventory.c(i);
         i = k / 25;
         this.d = k % 25;
+
+        // Poseidon start - Here's where the calculation will go.
+        PlayerHealthDecreaseEvent event = new PlayerHealthDecreaseEvent((Player) this.getBukkitEntity(), i);
+        this.world.getServer().getPluginManager().callEvent(event);
+        i = event.getCalculatedDamage();
+        // Poseidon end
+
         super.c(i);
     }
 

@@ -183,6 +183,8 @@ public class EntitySnowball extends Entity {
                 this.world.a("snowballpoof", this.locX, this.locY, this.locZ, 0.0D, 0.0D, 0.0D);
             }
 
+            this.onHit(); // poseidon
+
             this.die();
         }
 
@@ -256,4 +258,6 @@ public class EntitySnowball extends Entity {
             this.die();
         }
     }
+	
+    public void onHit() {} // poseidon
 }
