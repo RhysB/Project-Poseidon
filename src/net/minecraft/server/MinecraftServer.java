@@ -612,4 +612,8 @@ public class MinecraftServer implements Runnable, ICommandListener {
     public static boolean isRunning(MinecraftServer minecraftserver) {
         return minecraftserver.isRunning;
     }
+
+    public WatchDogThread getWatchdog() {
+        return this.watchDogThread;
+    }
 }
