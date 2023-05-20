@@ -125,15 +125,15 @@
     <!-- This builds a completely 'ready to start' jar with all dependencies inside -->
     <build>
         <defaultGoal>clean install</defaultGoal>
-        <sourceDirectory>src</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>src</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-        </resources>
+<!--        <sourceDirectory>src</sourceDirectory>-->
+<!--        <resources>-->
+<!--            <resource>-->
+<!--                <directory>src</directory>-->
+<!--                <excludes>-->
+<!--                    <exclude>**/*.java</exclude>-->
+<!--                </excludes>-->
+<!--            </resource>-->
+<!--        </resources>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
