@@ -69,6 +69,7 @@ public final class CraftServer implements Server {
     private final Configuration configuration;
     private final Yaml yaml = new Yaml(new SafeConstructor());
     private boolean shuttingdown = false;
+    private final List<String> hiddenCommands = new ArrayList<>(); //Project Poseidon - Create variable
 
     public CraftServer(MinecraftServer console, ServerConfigurationManager server) {
         this.console = console;
@@ -83,6 +84,10 @@ public final class CraftServer implements Server {
         enablePlugins(PluginLoadOrder.STARTUP);
 
         ChunkCompressionThread.startThread();
+
+        // Project Poseidon start
+        addHiddenCommands(Arrays.asList("login", "l", "register", "reg", "unregister", "changepassword", "changepw"));
+        // Project Poseidon end
     }
 
     private void loadConfig() {
@@ -847,6 +852,27 @@ public final class CraftServer implements Server {
 
     public void setShuttingdown(boolean shuttingdown) {
         this.shuttingdown = shuttingdown;
+    }
+
+    public boolean isCommandHidden(String cmdName) {
+        return hiddenCommands.contains(cmdName.toLowerCase());
+    }
+
+    public void addHiddenCommand(String cmd) {
+        cmd = cmd.toLowerCase();
+
+        if(hiddenCommands.contains(cmd)) {
+            Logger.getLogger(NetServerHandler.class.getName()).warning("List of Hidden commands already contains " + cmd);
+            return;
+        }
+
+        hiddenCommands.add(cmd);
+    }
+
+    public void addHiddenCommands(List<String> commands) {
+        for(String cmd : commands) {
+            addHiddenCommand(cmd);
+        }
     }
 
 //    public GameMode getDefaultGameMode() {

@@ -467,4 +467,26 @@ public interface Server {
      * @return Set containing banned players
      */
     public Set<OfflinePlayer> getBannedPlayers();
+
+    /**
+     * Returns the current hide state of the command from param (Hide from console)
+     *
+     * @param cmdName Command name
+     * @return True if the command from param is hidden and false otherwise
+     */
+    public boolean isCommandHidden(String cmdName);
+
+    /**
+     * Hides the command from param from being logged to server console
+     *
+     * @param cmd Command name
+     */
+    public void addHiddenCommand(String cmd);
+
+    /**
+     * Hides the commands from param from being logged to server console
+     *
+     * @param commands List of command names
+     */
+    public void addHiddenCommands(List<String> commands);
 }
