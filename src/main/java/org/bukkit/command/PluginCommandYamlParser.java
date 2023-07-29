@@ -27,6 +27,11 @@ public class PluginCommandYamlParser {
                 Object usage = entry.getValue().get("usage");
                 Object aliases = entry.getValue().get("aliases");
                 Object permission = entry.getValue().get("permission");
+                Object isHidden = entry.getValue().get("hidden");
+
+                if(isHidden != null) {
+                    newCmd.setHidden(String.valueOf(isHidden).equalsIgnoreCase("true"));
+                }
 
                 if (description != null) {
                     newCmd.setDescription(description.toString());

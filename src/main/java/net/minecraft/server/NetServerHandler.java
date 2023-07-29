@@ -846,8 +846,10 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         try {
             if (this.server.dispatchCommand(player, s.substring(1))) {
                 //Project Poseidon Start
-                //Basic XAuth & Authme Firewall
-                if (s.toLowerCase().startsWith("/register") || s.toLowerCase().startsWith("/login") || s.toLowerCase().startsWith("/changepw") || s.toLowerCase().startsWith("/changepassword") || s.toLowerCase().startsWith("/unregister")) {
+                //Hide commands from being logged in console
+                String cmdName = s.split(" ")[0].replaceAll("/", "");
+
+                if (server.isCommandHidden(cmdName)) {
                     a.info(player.getName() + " issued server command: COMMAND REDACTED");
                 } else {
                     a.info(player.getName() + " issued server command: " + s);

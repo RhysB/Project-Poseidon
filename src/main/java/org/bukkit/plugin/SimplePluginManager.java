@@ -289,6 +289,13 @@ public final class SimplePluginManager implements PluginManager {
 
             if (!pluginCommands.isEmpty()) {
                 commandMap.registerAll(plugin.getDescription().getName(), pluginCommands);
+
+                for(Command c : pluginCommands) {
+                    if(c.isHidden()) {
+                        server.addHiddenCommand(c.getLabel());
+                        server.addHiddenCommands(c.getAliases());
+                    }
+                }
             }
             
             try {

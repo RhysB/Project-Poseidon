@@ -22,6 +22,7 @@ public abstract class Command {
     protected String description = "";
     protected String usageMessage;
     private String permission;
+    private boolean isHidden;
 
     protected Command(String name) {
         this(name, "", "/" + name, new ArrayList<String>());
@@ -246,5 +247,23 @@ public abstract class Command {
                 }
             }
         }
+    }
+
+    /**
+     * Returns the current hide state of this command (Hide from console)
+     *
+     * @return True if the current command is hidden and false otherwise
+     */
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    /**
+     * Sets the current hide state of this command (Hide from console)
+     *
+     * @param hidden New hide state of this command
+     */
+    public void setHidden(boolean hidden) {
+        isHidden = hidden;
     }
 }
