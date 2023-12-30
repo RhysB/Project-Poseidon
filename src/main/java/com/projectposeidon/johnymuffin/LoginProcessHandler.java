@@ -110,10 +110,9 @@ public class LoginProcessHandler {
         }
 
 
-        long unixTime = (System.currentTimeMillis() / 1000L) + 1382400;
+        long unixTime = (System.currentTimeMillis() / 1000L);
         UUIDManager.getInstance().receivedUUID(packet1Login.name, uuid, unixTime, onlineMode);
         connectPlayer(uuid);
-
     }
 
     //This function is only run if the user is cracked
