@@ -1,6 +1,9 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.Poseidon;
 import com.legacyminecraft.poseidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.uuid.SQLitePlayerDAO;
+import com.legacyminecraft.poseidon.uuid.UUIDPlayerDAO;
 import com.projectposeidon.johnymuffin.UUIDManager;
 import com.legacyminecraft.poseidon.watchdog.WatchDogThread;
 import jline.ConsoleReader;
@@ -66,6 +69,8 @@ public class MinecraftServer implements Runnable, ICommandListener {
     private WatchDogThread watchDogThread;
     private boolean modLoaderSupport = false;
     //Poseidon End
+
+    private UUIDPlayerDAO uuidPlayerDAO;
 
     public MinecraftServer(OptionSet options) { // CraftBukkit - adds argument OptionSet
         new ThreadSleepForever(this);
@@ -145,10 +150,29 @@ public class MinecraftServer implements Runnable, ICommandListener {
         }
 
         if (!this.onlineMode) {
+            //New modern information
             log.warning("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
-            log.warning("The server will make no attempt to authenticate usernames. Beware.");
-            log.warning("While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.");
+            log.warning("The server will not attempt to authenticate account ownership with Mojang.");
+            log.warning("This means that ANYONE can connect with any username they choose including an op'd player.");
+            log.warning("Poseidon supports modern online mode, however, to use it you need to utilize a modded client that supports it.");
+            log.warning("If that isn't possible, you should utilize a plugin like AuthMe or XAuth to authenticate users.");
             log.warning("To change this, set \"online-mode\" to \"true\" in the server.settings file.");
+
+//            log.warning("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
+//            log.warning("The server will make no attempt to authenticate usernames. Beware.");
+//            log.warning("While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.");
+//            log.warning("To change this, set \"online-mode\" to \"true\" in the server.settings file.");
+        }
+
+        //Initialize SQLLite Database
+        try {
+            log.info("[Poseidon] Initializing UUID SQLite Database!");
+            uuidPlayerDAO = new SQLitePlayerDAO(new File("players.db"));
+            Poseidon.setUUIDPlayerDAO(uuidPlayerDAO);
+        } catch (Exception exception) {
+            log.severe("[Poseidon] Failed to initialize SQLite Database! Server will not start!");
+            exception.printStackTrace();
+            return false;
         }
 
         this.serverConfigurationManager = new ServerConfigurationManager(this);
@@ -182,6 +206,7 @@ public class MinecraftServer implements Runnable, ICommandListener {
             watchDogThread.start();
             watchDogThread.tickUpdate();
         }
+        Poseidon.setWatchDogThread(watchDogThread);
         //Start Poseidon Statistics
         if (PoseidonConfig.getInstance().getBoolean("settings.settings.statistics.enabled", true)) {
 //            new PoseidonStatisticsAgent(this, this.server);
@@ -364,7 +389,9 @@ public class MinecraftServer implements Runnable, ICommandListener {
         log.info("Stopping server");
 
         //Project Poseidon Start
-        UUIDManager.getInstance().saveJsonArray();
+        uuidPlayerDAO.closeDatabase();
+
+//        UUIDManager.getInstance().saveJsonArray();
         if (watchDogThread != null) {
             log.info("Stopping Poseidon Watchdog");
             watchDogThread.interrupt();
