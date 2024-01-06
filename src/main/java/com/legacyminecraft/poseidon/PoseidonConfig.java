@@ -51,8 +51,12 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.fetch-uuids-from", "https://api.mojang.com/profiles/minecraft");
         generateConfigOption("settings.remove-join-leave-debug", true);
         generateConfigOption("settings.enable-tpc-nodelay", false);
-        generateConfigOption("settings.use-get-for-uuids.enabled", false);
+
+        generateConfigOption("settings.use-get-for-uuids.enabled", true);
         generateConfigOption("settings.use-get-for-uuids.info", "This setting causes the server to use the GET method for Username to UUID conversion. This is useful incase the POST method goes offline.");
+
+        generateConfigOption("settings.use-get-for-uuids.case-sensitive.enabled", true);
+        generateConfigOption("settings.use-get-for-uuids.case-sensitive.info", "This setting will verify sensitivity of the username as the GET method is case-insensitive.");
 
         generateConfigOption("settings.faster-packets.enabled", true);
         generateConfigOption("settings.faster-packets.info", "This setting increases the speed of packets, a fix from newer Minecraft versions.");

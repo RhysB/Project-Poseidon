@@ -15,31 +15,55 @@ import static com.projectposeidon.johnymuffin.UUIDManager.generateOfflineUUID;
 
 public class GetUUIDFetcher {
 
+    public static class UUIDAndUsernameResult {
+        private UUIDResult uuidResult;
+        private String returnedUsername;
 
-    public static UUIDResult getUUID(String username) {
+        public UUIDAndUsernameResult(UUIDResult uuidResult, String returnedUsername) {
+            this.uuidResult = uuidResult;
+            this.returnedUsername = returnedUsername;
+        }
+
+        public UUIDResult getUuidResult() {
+            return uuidResult;
+        }
+
+        public String getReturnedUsername() {
+            return returnedUsername;
+        }
+    }
+
+
+    public static UUIDAndUsernameResult getUUID(String username) {
         try {
             JSONObject jsonObject = readJsonFromUrl("https://api.mojang.com/users/profiles/minecraft/" + encode(username));
+            UUIDResult uuidResult;
+            String returnedUsername = null;
+
             if (!jsonObject.containsKey("id")) {
-                return new UUIDResult(generateOfflineUUID(username), UUIDResult.ReturnType.OFFLINE);
-            }
-            UUID uuid = toUUIDWithDashes(String.valueOf(jsonObject.get("id")));
-            if (uuid == null) {
-                return new UUIDResult(null, UUIDResult.ReturnType.API_OFFLINE);
+                uuidResult = new UUIDResult(generateOfflineUUID(username), UUIDResult.ReturnType.OFFLINE);
+            } else {
+                UUID uuid = toUUIDWithDashes(String.valueOf(jsonObject.get("id")));
+                if (uuid == null) {
+                    uuidResult = new UUIDResult(null, UUIDResult.ReturnType.API_OFFLINE);
+                } else {
+                    returnedUsername = String.valueOf(jsonObject.get("name"));
+                    uuidResult = new UUIDResult(uuid, UUIDResult.ReturnType.ONLINE);
+                }
             }
 
-            return new UUIDResult(uuid, UUIDResult.ReturnType.ONLINE);
-
+            return new UUIDAndUsernameResult(uuidResult, returnedUsername);
 
         } catch (Exception exception) {
-            UUIDResult uuidResult;
+            UUIDResult uuidResult = null;
             if (exception == null || exception.getMessage() == null) {
-                //This is a hacky solution to tell if the API is offline, or the user is cracked.
+                // This is a hacky solution to tell if the API is offline, or the user is cracked.
                 uuidResult = new UUIDResult(generateOfflineUUID(username), UUIDResult.ReturnType.OFFLINE);
             } else {
                 uuidResult = new UUIDResult(null, UUIDResult.ReturnType.API_OFFLINE);
+                uuidResult.setException(exception);
             }
-            uuidResult.setException(exception);
-            return uuidResult;
+            return new UUIDAndUsernameResult(uuidResult, null);
         }
     }
 
