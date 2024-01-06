@@ -55,8 +55,9 @@ public class GetUUIDFetcher {
             return new UUIDAndUsernameResult(uuidResult, returnedUsername);
 
         } catch (Exception exception) {
+            System.out.println(exception);
             UUIDResult uuidResult = null;
-            if (exception == null || exception.getMessage() == null) {
+            if (exception == null || exception instanceof FileNotFoundException || exception.getMessage() == null) {
                 // This is a hacky solution to tell if the API is offline, or the user is cracked.
                 uuidResult = new UUIDResult(generateOfflineUUID(username), UUIDResult.ReturnType.OFFLINE);
             } else {
