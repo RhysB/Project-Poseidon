@@ -38,11 +38,23 @@ public class ThreadUUIDFetcher extends Thread {
 
     public void getMethod() {
         UUIDResult uuidResult;
-        uuidResult = GetUUIDFetcher.getUUID(loginPacket.name);
-        if (uuidResult.getReturnType().equals(UUIDResult.ReturnType.ONLINE)) {
+        GetUUIDFetcher.UUIDAndUsernameResult uuidAndUsernameResult = GetUUIDFetcher.getUUID(loginPacket.name);
+        uuidResult = uuidAndUsernameResult.getUuidResult();
+
+        if (uuidResult.getReturnType().equals(UUIDResult.ReturnType.ONLINE) && uuidAndUsernameResult.getReturnedUsername().equals(loginPacket.name)) {
             System.out.println("Fetched UUID from Mojang for " + loginPacket.name + " - " + uuidResult.getUuid().toString());
             loginProcessHandler.userUUIDReceived(uuidResult.getUuid(), true);
             return;
+        } else if (uuidResult.getReturnType().equals(UUIDResult.ReturnType.ONLINE)) {
+            if(PoseidonConfig.getInstance().getConfigBoolean("settings.use-get-for-uuids.case-sensitive.enabled")) {
+                System.out.println("Fetched UUID from Mojang for " + loginPacket.name + " - " + uuidResult.getUuid().toString() + " however, the username returned was " + uuidAndUsernameResult.getReturnedUsername() + ". The user has been kicked as the server is configured to use case sensitive usernames");
+                loginProcessHandler.cancelLoginProcess(ChatColor.RED + "Sorry, that username has invalid casing");
+                return;
+            } else {
+                System.out.println("Fetched UUID from Mojang for " + loginPacket.name + " - " + uuidResult.getUuid().toString());
+                loginProcessHandler.userUUIDReceived(uuidResult.getUuid(), true);
+                return;
+            }
         } else if (uuidResult.getReturnType().equals(UUIDResult.ReturnType.OFFLINE)) {
             if ((boolean) PoseidonConfig.getInstance().getProperty("settings.allow-graceful-uuids")) {
                 System.out.println(loginPacket.name + " does not have a Mojang UUID associated with their name");
@@ -82,6 +94,7 @@ public class ThreadUUIDFetcher extends Thread {
             }
         } catch (Exception e) {
             System.out.println("Mojang failed contact for user " + loginPacket.name + ":");
+            System.out.println("If this issue persists, please utilize the GET method by setting settings.use-get-for-uuids.enabled to true in the config");
             e.printStackTrace();
             loginProcessHandler.cancelLoginProcess(ChatColor.RED + "Sorry, we can't connect to Mojang currently, please try again later");
         }
