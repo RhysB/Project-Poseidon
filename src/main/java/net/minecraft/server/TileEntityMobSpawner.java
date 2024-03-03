@@ -1,6 +1,9 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+
+import java.util.List;
 
 public class TileEntityMobSpawner extends TileEntity {
 
@@ -8,6 +11,10 @@ public class TileEntityMobSpawner extends TileEntity {
     public String mobName = "Pig"; // CraftBukkit - private -> public
     public double b;
     public double c = 0.0D;
+
+    private static boolean poseidonAreaLimit = PoseidonConfig.getInstance().getConfigBoolean("world.settings.mob-spawner-area-limit.enable");
+    private static int poseidonAreaLimitRadius = PoseidonConfig.getInstance().getConfigInteger("world.settings.mob-spawner-area-limit.limit");
+    private static int poseidonChunkRadius = PoseidonConfig.getInstance().getConfigInteger("world.settings.mob-spawner-area-limit.chunk-radius");
 
     public TileEntityMobSpawner() {
         this.spawnDelay = 20;
@@ -61,12 +68,26 @@ public class TileEntityMobSpawner extends TileEntity {
                     }
                     // CraftBukkit end
 
+
+                    // Check mob cap within the spawning radius
                     int j = this.world.a(entityliving.getClass(), AxisAlignedBB.b((double) this.x, (double) this.y, (double) this.z, (double) (this.x + 1), (double) (this.y + 1), (double) (this.z + 1)).b(8.0D, 4.0D, 8.0D)).size();
 
                     if (j >= 6) {
                         this.c();
                         return;
                     }
+
+                    //Poseidon Start - Ensure the mob cound of the specific type of mob is under the defined limit within the area
+                    if(poseidonAreaLimit) {
+                        double chunkSize = 16.0D;
+                        AxisAlignedBB searchArea = AxisAlignedBB.b(this.x - poseidonChunkRadius * chunkSize, 0.0D, this.z - poseidonChunkRadius * chunkSize, this.x + poseidonChunkRadius * chunkSize, 128, this.z + poseidonChunkRadius * chunkSize);
+                        List<Entity> existingEntities = this.world.a(entityliving.getClass(), searchArea);
+                        if (existingEntities.size() >= poseidonAreaLimitRadius) {
+                            this.c();
+                            return;
+                        }
+                    }
+                    //Poseidon End
 
                     if (entityliving != null) {
                         double d3 = (double) this.x + (this.world.random.nextDouble() - this.world.random.nextDouble()) * 4.0D;
