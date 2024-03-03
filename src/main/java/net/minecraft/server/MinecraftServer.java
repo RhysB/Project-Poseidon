@@ -467,6 +467,16 @@ public class MinecraftServer implements Runnable, ICommandListener {
         }
     }
 
+    //Project Poseidon Start - Tick Update
+    private final LinkedList<Double> tpsRecords = new LinkedList<>();
+    private long lastTick = System.currentTimeMillis();
+    private int tickCount = 0;
+
+    public LinkedList<Double> getTpsRecords() {
+        return tpsRecords;
+    }
+    //Project Poseidon End - Tick Update
+
     private void h() {
         ArrayList arraylist = new ArrayList();
         Iterator iterator = trackerList.keySet().iterator();
@@ -493,6 +503,26 @@ public class MinecraftServer implements Runnable, ICommandListener {
         ++this.ticks;
 
         ((CraftScheduler) this.server.getScheduler()).mainThreadHeartbeat(this.ticks); // CraftBukkit
+
+        //Project Poseidon Start - Tick Update
+        long currentTime = System.currentTimeMillis();
+        tickCount++;
+
+        //Check if a second has passed
+        if (currentTime - lastTick >= 1000) {
+            double tps = tickCount / ((currentTime - lastTick) / 1000.0);
+            tpsRecords.addFirst(tps);
+            if(tpsRecords.size() > 900) { //Don't keep more than 15 minutes of data
+                tpsRecords.removeLast();
+            }
+
+            tickCount = 0;
+            lastTick = currentTime;
+        }
+
+        //Project Poseidon End - Tick Update
+
+
 
         for (j = 0; j < this.worlds.size(); ++j) { // CraftBukkit
             // if (j == 0 || this.propertyManager.getBoolean("allow-nether", true)) { // CraftBukkit

@@ -143,6 +143,11 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("message.player.join", "\u00A7e%player% joined the game.");
         generateConfigOption("message.player.leave", "\u00A7e%player% left the game.");
 
+        //Optional Poseidon Commands
+        generateConfigOption("command.info", "This section allows you to enable or disable optional Poseidon commands. This is useful if you have a plugin that conflicts with a Poseidon command.");
+        generateConfigOption("command.tps.info", "Enables the /tps command to show the server's TPS for various intervals.");
+        generateConfigOption("command.tps.enabled", true);
+
         //Tree Leave Destroy Blacklist
         if (Boolean.valueOf(String.valueOf(getConfigOption("world.settings.block-tree-growth.enabled", true)))) {
             if (String.valueOf(this.getConfigOption("world.settings.block-tree-growth.list", "")).trim().isEmpty()) {
