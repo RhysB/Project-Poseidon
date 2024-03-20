@@ -21,7 +21,7 @@ import java.util.logging.*;
 public class ServerLogRotator {
 
     private final String latestLogFileName;
-    private final Logger a;
+    private final Logger logger;
 
     /**
      * Constructor for the ServerLogRotator class.
@@ -30,7 +30,7 @@ public class ServerLogRotator {
      */
     public ServerLogRotator(String latestLogFileName) {
         this.latestLogFileName = latestLogFileName;
-        this.a = Logger.getLogger("Minecraft");
+        this.logger = Logger.getLogger("Minecraft");
     }
     // end of constructor
 
@@ -44,7 +44,7 @@ public class ServerLogRotator {
     private void archiveLog() {
         try {
 
-            this.a.log(Level.INFO, "Archiving contents of latest.log to a new file!");
+            logger.log(Level.INFO, "Archiving contents of latest.log to a new file!");
 
             // Check if the latest.log file exists (if it does not, do nothing)
             File latestLog = new File("." + File.separator + "logs" + File.separator + this.latestLogFileName + ".log");
@@ -66,8 +66,8 @@ public class ServerLogRotator {
                 writer.close();
             }
         } catch (Exception e) {
-            this.a.log(Level.SEVERE, "Failed to move logs!");
-            this.a.log(Level.SEVERE, e.toString());
+            logger.log(Level.SEVERE, "Failed to move logs!");
+            logger.log(Level.SEVERE, e.toString());
         }
     }
     // end of archiveLog method
@@ -89,7 +89,7 @@ public class ServerLogRotator {
         long period = TimeUnit.DAYS.toSeconds(1);
 
         // Schedule the log rotation task
-        this.a.log(Level.INFO, "Log rotation task scheduled for first run in " + initialDelay + " seconds, and then every " + period + " seconds.");
+        logger.log(Level.INFO, "Log rotation task scheduled for first run in " + initialDelay + " seconds, and then every " + period + " seconds.");
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(new PoseidonPlugin(), this::archiveLog, initialDelay * 20, period * 20);
         // function can be tested by changing the period to 10 seconds, and the initial delay to 0
         // change the DateTimeFormatter  in archiveLog() to "yyyy-MM-dd-HH-mm" to test the log rotation every min
