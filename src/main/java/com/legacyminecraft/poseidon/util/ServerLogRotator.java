@@ -1,5 +1,8 @@
 package com.legacyminecraft.poseidon.util;
 
+import org.bukkit.Bukkit;
+import com.legacyminecraft.poseidon.PoseidonPlugin;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -7,8 +10,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.logging.*;
@@ -19,8 +20,8 @@ import java.util.logging.*;
  */
 public class ServerLogRotator {
 
-    private final ScheduledExecutorService executorService;
     private final String latestLogFileName;
+    private final Logger a;
 
     /**
      * Constructor for the ServerLogRotator class.
@@ -28,8 +29,8 @@ public class ServerLogRotator {
      * @param latestLogFileName The name of the latest log file. This file will be archived by the log rotation task.
      */
     public ServerLogRotator(String latestLogFileName) {
-        this.executorService = Executors.newScheduledThreadPool(1);
         this.latestLogFileName = latestLogFileName;
+        this.a = Logger.getLogger("Minecraft");
     }
     // end of constructor
 
@@ -41,8 +42,9 @@ public class ServerLogRotator {
      * If any exception occurs during the process, it logs the exception message.
      */
     private void archiveLog() {
-        Logger a = Logger.getLogger("Minecraft");
         try {
+
+            this.a.log(Level.INFO, "Archiving contents of latest.log to a new file!");
 
             // Check if the latest.log file exists (if it does not, do nothing)
             File latestLog = new File("." + File.separator + "logs" + File.separator + this.latestLogFileName + ".log");
@@ -50,7 +52,9 @@ public class ServerLogRotator {
 
                 // checks if a log file with the same date already exists (if so, don't overwrite it)
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                String archivedLogFileName = LocalDateTime.now().format(formatter);
+                String archivedLogFileName = LocalDateTime.now().minusDays(1).format(formatter);
+//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm"); // debug
+//                String archivedLogFileName = LocalDateTime.now().minusMinutes(1).format(formatter); // debug
                 File archivedLogFile = new File("." + File.separator + "logs" + File.separator + archivedLogFileName + ".log");
                 if (archivedLogFile.exists()) { return; }
 
@@ -62,10 +66,9 @@ public class ServerLogRotator {
                 writer.close();
             }
         } catch (Exception e) {
-            a.log(Level.SEVERE, "Failed to move logs!");
-            a.log(Level.SEVERE, e.toString());
+            this.a.log(Level.SEVERE, "Failed to move logs!");
+            this.a.log(Level.SEVERE, e.toString());
         }
-        a.log(Level.INFO, "Latest.log has not been created! Skipping log rotation..");
     }
     // end of archiveLog method
 
@@ -85,10 +88,11 @@ public class ServerLogRotator {
         long initialDelay = duration.getSeconds();
         long period = TimeUnit.DAYS.toSeconds(1);
 
-        // Schedule a task to run every day at midnight
-        executorService.scheduleAtFixedRate(this::archiveLog, initialDelay, period, TimeUnit.SECONDS);
+        // Schedule the log rotation task
+        this.a.log(Level.INFO, "Log rotation task scheduled for first run in " + initialDelay + " seconds, and then every " + period + " seconds.");
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(new PoseidonPlugin(), this::archiveLog, initialDelay * 20, period * 20);
         // function can be tested by changing the period to 10 seconds, and the initial delay to 0
-        // change the DateTimeFormatter  in archiveLog() to "yyyy-MM-dd-HH-mm-ss"
+        // change the DateTimeFormatter  in archiveLog() to "yyyy-MM-dd-HH-mm" to test the log rotation every min
     }
     // end of start method
 
