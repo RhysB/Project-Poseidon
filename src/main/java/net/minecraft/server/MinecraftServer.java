@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import com.legacyminecraft.poseidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.util.ServerLogRotator;
 import com.projectposeidon.johnymuffin.UUIDManager;
 import com.legacyminecraft.poseidon.watchdog.WatchDogThread;
 import jline.ConsoleReader;
@@ -398,6 +399,12 @@ public class MinecraftServer implements Runnable, ICommandListener {
         try {
             if (this.init()) {
                 long i = System.currentTimeMillis();
+
+                if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.per-day-logfile")) {
+                    String latestLogFileName = "latest";
+                    ServerLogRotator serverLogRotator = new ServerLogRotator(latestLogFileName);
+                    serverLogRotator.start();
+                }
 
                 for (long j = 0L; this.isRunning; Thread.sleep(1L)) {
                     if (modLoaderSupport) {
