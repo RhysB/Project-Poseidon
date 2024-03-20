@@ -46,9 +46,6 @@ public class ConsoleLogManager {
                 log.getParentFile().mkdirs();
                 log.mkdirs();
                 filehandler = new FileHandler("." + File.separator + "logs" + File.separator + latestLogFileName + ".log", true);
-                // Start the server log rotator (scheduled task)
-                ServerLogRotator serverLogRotator = new ServerLogRotator(latestLogFileName);
-                serverLogRotator.start();
 
             } else {
                 // CraftBukkit start
