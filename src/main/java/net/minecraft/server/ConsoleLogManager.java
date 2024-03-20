@@ -1,12 +1,11 @@
 package net.minecraft.server;
 
 import com.legacyminecraft.poseidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.util.ServerLogRotator;
 import org.bukkit.craftbukkit.util.ShortConsoleLogFormatter;
 import org.bukkit.craftbukkit.util.TerminalConsoleHandler;
 
 import java.io.File;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.logging.*;
 
 // CraftBukkit start
@@ -42,12 +41,15 @@ public class ConsoleLogManager {
             //Project Poseidon Start
             FileHandler filehandler;
             if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.per-day-logfile")) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                String logfile = LocalDate.now().format(formatter);
+                String latestLogFileName = "latest";
                 File log = new File("." + File.separator + "logs" + File.separator);
                 log.getParentFile().mkdirs();
                 log.mkdirs();
-                filehandler = new FileHandler("." + File.separator + "logs" + File.separator + logfile + ".log", true);
+                filehandler = new FileHandler("." + File.separator + "logs" + File.separator + latestLogFileName + ".log", true);
+                // Start the server log rotator (scheduled task)
+                ServerLogRotator serverLogRotator = new ServerLogRotator(latestLogFileName);
+                serverLogRotator.start();
+
             } else {
                 // CraftBukkit start
                 String pattern = (String) server.options.valueOf("log-pattern");
@@ -58,7 +60,6 @@ public class ConsoleLogManager {
                 // CraftBukkit start
             }
             //Project Poseidon End
-
 
             filehandler.setFormatter(consolelogformatter);
             a.addHandler(filehandler);
