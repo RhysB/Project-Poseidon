@@ -53,7 +53,7 @@ public class BlockPressurePlate extends Block {
         }
 
         if (flag) {
-            this.g(world, i, j, k, world.getData(i, j, k));
+            this.dropNaturally(world, i, j, k, world.getData(i, j, k));
             world.setTypeId(i, j, k, 0);
         }
     }

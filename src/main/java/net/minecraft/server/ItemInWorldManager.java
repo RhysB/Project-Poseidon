@@ -43,7 +43,7 @@ public class ItemInWorldManager {
 
                 if (f >= 1.0F) {
                     this.i = false;
-                    this.c(this.j, this.k, this.l);
+                    this.breakBlockAt(this.j, this.k, this.l);
                 }
             } else {
                 this.i = false;
@@ -101,7 +101,7 @@ public class ItemInWorldManager {
 
         if (toolDamage >= 1.0F) {
             // CraftBukkit end
-            this.c(i, j, k);
+            this.breakBlockAt(i, j, k);
         } else {
             this.e = i;
             this.f = j;
@@ -120,7 +120,7 @@ public class ItemInWorldManager {
                 float f = block.getDamage(this.player) * (float) (l + 1);
 
                 if (f >= 0.7F) {
-                    this.c(i, j, k);
+                    this.breakBlockAt(i, j, k);
                 } else if (!this.i) {
                     this.i = true;
                     this.j = i;
@@ -138,7 +138,7 @@ public class ItemInWorldManager {
         this.c = 0.0F;
     }
 
-    public boolean b(int i, int j, int k) {
+    public boolean removeBlockAt(int i, int j, int k) {
         Block block = Block.byId[this.world.getTypeId(i, j, k)];
         int l = this.world.getData(i, j, k);
         boolean flag = this.world.setTypeId(i, j, k, 0);
@@ -150,15 +150,15 @@ public class ItemInWorldManager {
         return flag;
     }
 
-    public boolean c(int i, int j, int k) {
+    public boolean breakBlockAt(int x, int y, int z) {
         // CraftBukkit start
         if (this.player instanceof EntityPlayer) {
-            org.bukkit.block.Block block = this.world.getWorld().getBlockAt(i, j, k);
+            org.bukkit.block.Block block = this.world.getWorld().getBlockAt(x, y, z);
 
             //Project Poseidon Start - Craft Bukkit backport
             // Tell client the block is gone immediately then process events
-            if (world.getTileEntity(i, j, k) == null) {
-                ((EntityPlayer) this.player).netServerHandler.sendPacket(new ArtificialPacket53BlockChange(i, j, k, 0,0));
+            if (world.getTileEntity(x, y, z) == null) {
+                ((EntityPlayer) this.player).netServerHandler.sendPacket(new ArtificialPacket53BlockChange(x, y, z, 0,0));
             }
             //Project Poseidon End
             BlockBreakEvent event = new BlockBreakEvent(block, (org.bukkit.entity.Player) this.player.getBukkitEntity());
@@ -170,24 +170,24 @@ public class ItemInWorldManager {
         }
         // CraftBukkit end
 
-        int l = this.world.getTypeId(i, j, k);
-        int i1 = this.world.getData(i, j, k);
+        int blockId = this.world.getTypeId(x, y, z);
+        int blockData = this.world.getData(x, y, z);
 
-        this.world.a(this.player, 2001, i, j, k, l + this.world.getData(i, j, k) * 256);
-        boolean flag = this.b(i, j, k);
-        ItemStack itemstack = this.player.G();
+        this.world.a(this.player, 2001, x, y, z, blockId + this.world.getData(x, y, z) * 256);
+        boolean flag = this.removeBlockAt(x, y, z);
+        ItemStack itemstack = this.player.getItemInHand();
 
         if (itemstack != null) {
-            itemstack.a(l, i, j, k, this.player);
+            itemstack.a(blockId, x, y, z, this.player);
             if (itemstack.count == 0) {
                 itemstack.a(this.player);
                 this.player.H();
             }
         }
 
-        if (flag && this.player.b(Block.byId[l])) {
-            Block.byId[l].a(this.world, this.player, i, j, k, i1);
-            ((EntityPlayer) this.player).netServerHandler.sendPacket(new Packet53BlockChange(i, j, k, this.world));
+        if (flag && this.player.canGetDropFrom(Block.byId[blockId])) {
+            Block.byId[blockId].dropNaturally(this.world, this.player, x, y, z, blockData);
+            ((EntityPlayer) this.player).netServerHandler.sendPacket(new Packet53BlockChange(x, y, z, this.world));
         }
 
         return flag;

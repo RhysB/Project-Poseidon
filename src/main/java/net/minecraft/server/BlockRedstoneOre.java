@@ -47,7 +47,7 @@ public class BlockRedstoneOre extends Block {
         }
     }
 
-    public int a(int i, Random random) {
+    public int getDropId(int i, Random random) {
         return Item.REDSTONE.id;
     }
 

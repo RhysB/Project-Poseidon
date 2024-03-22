@@ -104,7 +104,7 @@ public class EntityFish extends Entity {
             this.c(this.yaw, this.pitch);
         } else {
             if (!this.world.isStatic) {
-                ItemStack itemstack = this.owner.G();
+                ItemStack itemstack = this.owner.getItemInHand();
 
                 if (this.owner.dead || !this.owner.T() || itemstack == null || itemstack.getItem() != Item.FISHING_ROD || this.g(this.owner) > 1024.0D) {
                     this.die();

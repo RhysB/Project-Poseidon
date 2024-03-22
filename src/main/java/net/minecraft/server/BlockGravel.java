@@ -8,7 +8,7 @@ public class BlockGravel extends BlockSand {
         super(i, j);
     }
 
-    public int a(int i, Random random) {
+    public int getDropId(int i, Random random) {
         return random.nextInt(10) == 0 ? Item.FLINT.id : this.id;
     }
 }

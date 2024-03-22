@@ -107,7 +107,7 @@ public class BlockTrapdoor extends Block {
 
             if (!world.e(j1, j, k1)) {
                 world.setTypeId(i, j, k, 0);
-                this.g(world, i, j, k, i1);
+                this.dropNaturally(world, i, j, k, i1);
             }
 
             // CraftBukkit start

@@ -104,7 +104,7 @@ public class BlockTorch extends Block {
             }
 
             if (flag) {
-                this.g(world, i, j, k, world.getData(i, j, k));
+                this.dropNaturally(world, i, j, k, world.getData(i, j, k));
                 world.setTypeId(i, j, k, 0);
             }
         }
@@ -112,7 +112,7 @@ public class BlockTorch extends Block {
 
     private boolean h(World world, int i, int j, int k) {
         if (!this.canPlace(world, i, j, k)) {
-            this.g(world, i, j, k, world.getData(i, j, k));
+            this.dropNaturally(world, i, j, k, world.getData(i, j, k));
             world.setTypeId(i, j, k, 0);
             return false;
         } else {

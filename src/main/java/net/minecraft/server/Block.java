@@ -5,6 +5,7 @@ import com.legacyminecraft.poseidon.PoseidonConfig;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class Block {
@@ -289,36 +290,50 @@ public class Block {
         return 1;
     }
 
-    public int a(int i, Random random) {
+    public int getDropId(int data, Random random) {
         return this.id;
     }
 
     public float getDamage(EntityHuman entityhuman) {
-        return this.strength < 0.0F ? 0.0F : (!entityhuman.b(this) ? 1.0F / this.strength / 100.0F : entityhuman.a(this) / this.strength / 30.0F);
+        return this.strength < 0.0F ? 0.0F : (!entityhuman.canGetDropFrom(this) ? 1.0F / this.strength / 100.0F : entityhuman.a(this) / this.strength / 30.0F);
     }
 
-    public final void g(World world, int i, int j, int k, int l) {
+    public final void dropNaturally(World world, int i, int j, int k, int l) {
         this.dropNaturally(world, i, j, k, l, 1.0F);
     }
 
-    public void dropNaturally(World world, int i, int j, int k, int l, float f) {
+    public final void dropNaturally(World world, int i, int j, int k, int l, float f) {
         if (!world.isStatic) {
             int i1 = this.a(world.random);
 
             for (int j1 = 0; j1 < i1; ++j1) {
                 // CraftBukkit - <= to < to allow for plugins to completely disable block drops from explosions
                 if (world.random.nextFloat() < f) {
-                    int k1 = this.a(l, world.random);
+                    /*int k1 = this.getDropId(l, world.random);
 
                     if (k1 > 0) {
-                        this.a(world, i, j, k, new ItemStack(k1, 1, this.a_(l)));
+                        this.a(world, i, j, k, new ItemStack(k1, 1, this.getDamageValueOfDrop(l)));
+                    }*/
+                    Optional<List<ItemStack>> items = getDrops(world, i, j, k, l);
+                    if(items.isPresent()) {
+                        for(ItemStack item : items.get()) {
+                            this.dropItemStack(world, i, j, k, item);
+                        }
                     }
                 }
             }
         }
     }
 
-    protected void a(World world, int i, int j, int k, ItemStack itemstack) {
+    public Optional<List<ItemStack>> getDrops(World world, int x, int y, int z, int data){
+        if(this.getDropId(data, world.random) <= 0){
+            return Optional.empty();
+        }else{
+            return Optional.of(Arrays.asList(new ItemStack(this.getDropId(data, world.random), 1, this.getDamageValueOfDrop(data))));
+        }
+    }
+
+    protected void dropItemStack(World world, int i, int j, int k, ItemStack itemstack) {
         if (!world.isStatic) {
             float f = 0.7F;
             double d0 = (double) (world.random.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
@@ -331,7 +346,7 @@ public class Block {
         }
     }
 
-    protected int a_(int i) {
+    protected int getDamageValueOfDrop(int i) {
         return 0;
     }
 
@@ -492,9 +507,9 @@ public class Block {
         return false;
     }
 
-    public void a(World world, EntityHuman entityhuman, int i, int j, int k, int l) {
+    public void dropNaturally(World world, EntityHuman entityhuman, int i, int j, int k, int l) {
         entityhuman.a(StatisticList.C[this.id], 1);
-        this.g(world, i, j, k, l);
+        this.dropNaturally(world, i, j, k, l);
     }
 
     public boolean f(World world, int i, int j, int k) {

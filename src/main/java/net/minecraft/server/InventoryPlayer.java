@@ -283,13 +283,13 @@ public class InventoryPlayer implements IInventory {
         return itemstack != null ? itemstack.a(entity) : 1;
     }
 
-    public boolean b(Block block) {
-        if (block.material.i()) {
+    public boolean canGetDropFrom(Block block) {
+        if (block.material.doesntRequireTool()) {
             return true;
         } else {
             ItemStack itemstack = this.getItem(this.itemInHandIndex);
 
-            return itemstack != null ? itemstack.b(block) : false;
+            return itemstack != null ? itemstack.canGetDropFrom(block) : false;
         }
     }
 

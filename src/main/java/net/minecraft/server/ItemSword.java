@@ -29,7 +29,7 @@ public class ItemSword extends Item {
         return this.a;
     }
 
-    public boolean a(Block block) {
+    public boolean canGetDropFrom(Block block) {
         return block.id == Block.WEB.id;
     }
 }

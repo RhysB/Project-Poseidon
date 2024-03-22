@@ -46,7 +46,7 @@ public class BlockStep extends Block {
         }
     }
 
-    public int a(int i, Random random) {
+    public int getDropId(int i, Random random) {
         return Block.STEP.id;
     }
 
@@ -54,7 +54,7 @@ public class BlockStep extends Block {
         return this.b ? 2 : 1;
     }
 
-    protected int a_(int i) {
+    protected int getDamageValueOfDrop(int i) {
         return i;
     }
 

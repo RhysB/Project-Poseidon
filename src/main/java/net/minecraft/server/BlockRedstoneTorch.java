@@ -152,7 +152,7 @@ public class BlockRedstoneTorch extends BlockTorch {
         return l == 0 ? this.a(world, i, j, k, l) : false;
     }
 
-    public int a(int i, Random random) {
+    public int getDropId(int i, Random random) {
         return Block.REDSTONE_TORCH_ON.id;
     }
 

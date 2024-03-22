@@ -55,7 +55,7 @@ public class BlockLever extends Block {
         }
 
         if (i1 == -1) {
-            this.g(world, i, j, k, world.getData(i, j, k));
+            this.dropNaturally(world, i, j, k, world.getData(i, j, k));
             world.setTypeId(i, j, k, 0);
         } else {
             world.setData(i, j, k, i1 + j1);
@@ -92,7 +92,7 @@ public class BlockLever extends Block {
             }
 
             if (flag) {
-                this.g(world, i, j, k, world.getData(i, j, k));
+                this.dropNaturally(world, i, j, k, world.getData(i, j, k));
                 world.setTypeId(i, j, k, 0);
             }
         }
@@ -100,7 +100,7 @@ public class BlockLever extends Block {
 
     private boolean g(World world, int i, int j, int k) {
         if (!this.canPlace(world, i, j, k)) {
-            this.g(world, i, j, k, world.getData(i, j, k));
+            this.dropNaturally(world, i, j, k, world.getData(i, j, k));
             world.setTypeId(i, j, k, 0);
             return false;
         } else {

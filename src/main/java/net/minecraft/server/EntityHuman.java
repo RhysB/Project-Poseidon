@@ -324,8 +324,8 @@ public abstract class EntityHuman extends EntityLiving {
         return f;
     }
 
-    public boolean b(Block block) {
-        return this.inventory.b(block);
+    public boolean canGetDropFrom(Block block) {
+        return this.inventory.canGetDropFrom(block);
     }
 
     public void a(NBTTagCompound nbttagcompound) {
@@ -507,7 +507,7 @@ public abstract class EntityHuman extends EntityLiving {
 
     public void c(Entity entity) {
         if (!entity.a(this)) {
-            ItemStack itemstack = this.G();
+            ItemStack itemstack = this.getItemInHand();
 
             if (itemstack != null && entity instanceof EntityLiving) {
                 itemstack.a((EntityLiving) entity);
@@ -520,7 +520,7 @@ public abstract class EntityHuman extends EntityLiving {
         }
     }
 
-    public ItemStack G() {
+    public ItemStack getItemInHand() {
         return this.inventory.getItemInHand();
     }
 
@@ -595,7 +595,7 @@ public abstract class EntityHuman extends EntityLiving {
             
             // CraftBukkit end
 
-            ItemStack itemstack = this.G();
+            ItemStack itemstack = this.getItemInHand();
 
             if (itemstack != null && entity instanceof EntityLiving) {
                 itemstack.a((EntityLiving) entity, this);

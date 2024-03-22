@@ -126,7 +126,7 @@ public class BlockLeaves extends BlockLeavesBase {
         if (event.isCancelled()) return;
         // CraftBukkit end
 
-        this.g(world, i, j, k, world.getData(i, j, k));
+        this.dropNaturally(world, i, j, k, world.getData(i, j, k));
         world.setTypeId(i, j, k, 0);
     }
 
@@ -134,20 +134,20 @@ public class BlockLeaves extends BlockLeavesBase {
         return random.nextInt(20) == 0 ? 1 : 0;
     }
 
-    public int a(int i, Random random) {
+    public int getDropId(int i, Random random) {
         return Block.SAPLING.id;
     }
 
-    public void a(World world, EntityHuman entityhuman, int i, int j, int k, int l) {
-        if (!world.isStatic && entityhuman.G() != null && entityhuman.G().id == Item.SHEARS.id) {
+    public void dropNaturally(World world, EntityHuman entityhuman, int i, int j, int k, int l) {
+        if (!world.isStatic && entityhuman.getItemInHand() != null && entityhuman.getItemInHand().id == Item.SHEARS.id) {
             entityhuman.a(StatisticList.C[this.id], 1);
-            this.a(world, i, j, k, new ItemStack(Block.LEAVES.id, 1, l & 3));
+            this.dropItemStack(world, i, j, k, new ItemStack(Block.LEAVES.id, 1, l & 3));
         } else {
-            super.a(world, entityhuman, i, j, k, l);
+            super.dropNaturally(world, entityhuman, i, j, k, l);
         }
     }
 
-    protected int a_(int i) {
+    protected int getDamageValueOfDrop(int i) {
         return i & 3;
     }
 

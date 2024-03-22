@@ -67,7 +67,7 @@ public abstract class BlockFluids extends Block {
         return null;
     }
 
-    public int a(int i, Random random) {
+    public int getDropId(int i, Random random) {
         return 0;
     }
 

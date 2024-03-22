@@ -13,12 +13,12 @@ public class BlockLog extends Block {
         return 1;
     }
 
-    public int a(int i, Random random) {
+    public int getDropId(int i, Random random) {
         return Block.LOG.id;
     }
 
-    public void a(World world, EntityHuman entityhuman, int i, int j, int k, int l) {
-        super.a(world, entityhuman, i, j, k, l);
+    public void dropNaturally(World world, EntityHuman entityhuman, int i, int j, int k, int l) {
+        super.dropNaturally(world, entityhuman, i, j, k, l);
     }
 
     public void remove(World world, int i, int j, int k) {
@@ -48,7 +48,7 @@ public class BlockLog extends Block {
         return i == 1 ? 21 : (i == 0 ? 21 : (j == 1 ? 116 : (j == 2 ? 117 : 20)));
     }
 
-    protected int a_(int i) {
+    protected int getDamageValueOfDrop(int i) {
         return i;
     }
 }

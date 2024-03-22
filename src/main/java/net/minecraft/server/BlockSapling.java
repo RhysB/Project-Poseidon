@@ -60,7 +60,7 @@ public class BlockSapling extends BlockFlower {
         // CraftBukkit end
     }
 
-    protected int a_(int i) {
+    protected int getDamageValueOfDrop(int i) {
         return i & 3;
     }
 

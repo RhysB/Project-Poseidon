@@ -1,5 +1,8 @@
 package net.minecraft.server;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class BlockCrops extends BlockFlower {
@@ -86,25 +89,18 @@ public class BlockCrops extends BlockFlower {
         return this.textureId + j;
     }
 
-    public void dropNaturally(World world, int i, int j, int k, int l, float f) {
-        super.dropNaturally(world, i, j, k, l, f);
-        if (!world.isStatic) {
-            for (int i1 = 0; i1 < 3; ++i1) {
-                if (world.random.nextInt(15) <= l) {
-                    float f1 = 0.7F;
-                    float f2 = world.random.nextFloat() * f1 + (1.0F - f1) * 0.5F;
-                    float f3 = world.random.nextFloat() * f1 + (1.0F - f1) * 0.5F;
-                    float f4 = world.random.nextFloat() * f1 + (1.0F - f1) * 0.5F;
-                    EntityItem entityitem = new EntityItem(world, (double) ((float) i + f2), (double) ((float) j + f3), (double) ((float) k + f4), new ItemStack(Item.SEEDS));
-
-                    entityitem.pickupDelay = 10;
-                    world.addEntity(entityitem);
-                }
+    public Optional<List<ItemStack>> getDrops(World world, int x, int y, int z, int data){
+        Optional<List<ItemStack>> ret = super.getDrops(world, x, y, z, data);
+        List<ItemStack> stacks = ret.orElse(new ArrayList<>(3));
+        for(int i = 0; i < 3; i++){
+            if(world.random.nextInt(15) <= 1){
+                stacks.add(new ItemStack(Item.SEEDS));
             }
         }
+        return Optional.of(stacks);
     }
 
-    public int a(int i, Random random) {
+    public int getDropId(int i, Random random) {
         return i == 7 ? Item.WHEAT.id : -1;
     }
 

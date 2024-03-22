@@ -199,7 +199,7 @@ public class Item {
         return 1;
     }
 
-    public boolean a(Block block) {
+    public boolean canGetDropFrom(Block block) {
         return false;
     }
 
