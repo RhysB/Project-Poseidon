@@ -89,7 +89,7 @@ public class Material {
         return this.F ? false : this.isSolid();
     }
 
-    public boolean doesntRequireTool() {
+    public boolean i() {
         return this.G;
     }
 
