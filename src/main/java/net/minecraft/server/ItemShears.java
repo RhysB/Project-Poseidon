@@ -16,7 +16,7 @@ public class ItemShears extends Item {
         return super.a(itemstack, i, j, k, l, entityliving);
     }
 
-    public boolean canGetDropFrom(Block block) {
+    public boolean a(Block block) {
         return block.id == Block.WEB.id;
     }
 

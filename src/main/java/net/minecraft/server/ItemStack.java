@@ -172,7 +172,7 @@ public final class ItemStack {
     }
 
     public boolean canGetDropFrom(Block block) {
-        return Item.byId[this.id].canGetDropFrom(block);
+        return Item.byId[this.id].a(block);
     }
 
     public void a(EntityHuman entityhuman) {}

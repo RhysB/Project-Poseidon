@@ -8,7 +8,7 @@ public class ItemSpade extends ItemTool {
         super(i, 1, enumtoolmaterial, bk);
     }
 
-    public boolean canGetDropFrom(Block block) {
+    public boolean a(Block block) {
         return block == Block.SNOW ? true : block == Block.SNOW_BLOCK;
     }
 }
