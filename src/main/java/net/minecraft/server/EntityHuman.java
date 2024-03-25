@@ -325,7 +325,7 @@ public abstract class EntityHuman extends EntityLiving {
     }
 
     public boolean b(Block block) {
-        return this.inventory.canGetDropFrom(block);
+        return this.inventory.b(block);
     }
 
     public void a(NBTTagCompound nbttagcompound) {

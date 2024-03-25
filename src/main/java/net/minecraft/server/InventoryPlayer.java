@@ -283,7 +283,7 @@ public class InventoryPlayer implements IInventory {
         return itemstack != null ? itemstack.a(entity) : 1;
     }
 
-    public boolean canGetDropFrom(Block block) {
+    public boolean b(Block block) {
         if (block.material.doesntRequireTool()) {
             return true;
         } else {
