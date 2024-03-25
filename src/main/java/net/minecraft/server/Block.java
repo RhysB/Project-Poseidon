@@ -309,22 +309,20 @@ public class Block {
             for (int j1 = 0; j1 < i1; ++j1) {
                 // CraftBukkit - <= to < to allow for plugins to completely disable block drops from explosions
                 if (world.random.nextFloat() < f) {
-                    /*int k1 = this.getDropId(l, world.random);
-
-                    if (k1 > 0) {
-                        this.a(world, i, j, k, new ItemStack(k1, 1, this.getDamageValueOfDrop(l)));
-                    }*/
+                    //Project Poseidon Start - New way to handle block drops to allow for plugins to know what items a block will drop
                     Optional<List<ItemStack>> items = getDrops(world, i, j, k, l);
                     if(items.isPresent()) {
                         for(ItemStack item : items.get()) {
-                            this.dropItemStack(world, i, j, k, item);
+                            this.a(world, i, j, k, item);
                         }
                     }
+                    //Project Poseidon End
                 }
             }
         }
     }
 
+    //Project Poseidon - API to get the drops of a block
     public Optional<List<ItemStack>> getDrops(World world, int x, int y, int z, int data){
         if(this.a(data, world.random) <= 0){
             return Optional.empty();
@@ -333,7 +331,7 @@ public class Block {
         }
     }
 
-    protected void dropItemStack(World world, int i, int j, int k, ItemStack itemstack) {
+    protected void a(World world, int i, int j, int k, ItemStack itemstack) {
         if (!world.isStatic) {
             float f = 0.7F;
             double d0 = (double) (world.random.nextFloat() * f) + (double) (1.0F - f) * 0.5D;

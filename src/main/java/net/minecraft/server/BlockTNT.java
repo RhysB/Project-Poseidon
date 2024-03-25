@@ -41,7 +41,7 @@ public class BlockTNT extends Block {
     public void postBreak(World world, int i, int j, int k, int l) {
         if (!world.isStatic) {
             if ((l & 1) == 0) {
-                this.dropItemStack(world, i, j, k, new ItemStack(Block.TNT.id, 1, 0));
+                this.a(world, i, j, k, new ItemStack(Block.TNT.id, 1, 0));
             } else {
                 EntityTNTPrimed entitytntprimed = new EntityTNTPrimed(world, (double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F));
 

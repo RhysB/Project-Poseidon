@@ -141,7 +141,7 @@ public class BlockLeaves extends BlockLeavesBase {
     public void a(World world, EntityHuman entityhuman, int i, int j, int k, int l) {
         if (!world.isStatic && entityhuman.G() != null && entityhuman.G().id == Item.SHEARS.id) {
             entityhuman.a(StatisticList.C[this.id], 1);
-            this.dropItemStack(world, i, j, k, new ItemStack(Block.LEAVES.id, 1, l & 3));
+            this.a(world, i, j, k, new ItemStack(Block.LEAVES.id, 1, l & 3));
         } else {
             super.a(world, entityhuman, i, j, k, l);
         }
