@@ -129,12 +129,12 @@ public class BlockBed extends Block {
         } else if (world.getTypeId(i + a[j1][0], j, k + a[j1][1]) != this.id) {
             world.setTypeId(i, j, k, 0);
             if (!world.isStatic) {
-                this.dropNaturally(world, i, j, k, i1);
+                this.g(world, i, j, k, i1);
             }
         }
     }
 
-    public int getDropId(int i, Random random) {
+    public int a(int i, Random random) {
         return d(i) ? 0 : Item.BED.id;
     }
 

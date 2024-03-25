@@ -66,7 +66,7 @@ public class BlockDiode extends Block {
 
     public void doPhysics(World world, int i, int j, int k, int l) {
         if (!this.f(world, i, j, k)) {
-            this.dropNaturally(world, i, j, k, world.getData(i, j, k));
+            this.g(world, i, j, k, world.getData(i, j, k));
             world.setTypeId(i, j, k, 0);
         } else {
             int i1 = world.getData(i, j, k);
@@ -139,7 +139,7 @@ public class BlockDiode extends Block {
         return false;
     }
 
-    public int getDropId(int i, Random random) {
+    public int a(int i, Random random) {
         return Item.DIODE.id;
     }
 }

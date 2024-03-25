@@ -160,7 +160,7 @@ public class BlockDoor extends Block {
 
             if (flag) {
                 if (!world.isStatic) {
-                    this.dropNaturally(world, i, j, k, i1);
+                    this.g(world, i, j, k, i1);
                 }
             } else if (l > 0 && Block.byId[l].isPowerSource()) {
                 // CraftBukkit start
@@ -184,7 +184,7 @@ public class BlockDoor extends Block {
         }
     }
 
-    public int getDropId(int i, Random random) {
+    public int a(int i, Random random) {
         return (i & 8) != 0 ? 0 : (this.material == Material.ORE ? Item.IRON_DOOR.id : Item.WOOD_DOOR.id);
     }
 

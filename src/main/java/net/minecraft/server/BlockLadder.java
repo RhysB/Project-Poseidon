@@ -86,7 +86,7 @@ public class BlockLadder extends Block {
         }
 
         if (!flag) {
-            this.dropNaturally(world, i, j, k, i1);
+            this.g(world, i, j, k, i1);
             world.setTypeId(i, j, k, 0);
         }
 

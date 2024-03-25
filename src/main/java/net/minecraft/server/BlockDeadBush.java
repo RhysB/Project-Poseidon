@@ -19,7 +19,7 @@ public class BlockDeadBush extends BlockFlower {
         return this.textureId;
     }
 
-    public int getDropId(int i, Random random) {
+    public int a(int i, Random random) {
         return -1;
     }
 }

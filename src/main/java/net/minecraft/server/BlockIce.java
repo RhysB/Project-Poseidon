@@ -12,8 +12,8 @@ public class BlockIce extends BlockBreakable {
         this.a(true);
     }
 
-    public void dropNaturally(World world, EntityHuman entityhuman, int i, int j, int k, int l) {
-        super.dropNaturally(world, entityhuman, i, j, k, l);
+    public void a(World world, EntityHuman entityhuman, int i, int j, int k, int l) {
+        super.a(world, entityhuman, i, j, k, l);
         Material material = world.getMaterial(i, j - 1, k);
 
         if (material.isSolid() || material.isLiquid()) {
@@ -33,7 +33,7 @@ public class BlockIce extends BlockBreakable {
             }
             // CraftBukkit end
 
-            this.dropNaturally(world, i, j, k, world.getData(i, j, k));
+            this.g(world, i, j, k, world.getData(i, j, k));
             world.setTypeId(i, j, k, Block.STATIONARY_WATER.id);
         }
     }

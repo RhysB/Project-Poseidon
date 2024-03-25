@@ -22,7 +22,7 @@ public class BlockDispenser extends BlockContainer {
         return 4;
     }
 
-    public int getDropId(int i, Random random) {
+    public int a(int i, Random random) {
         return Block.DISPENSER.id;
     }
 

@@ -100,7 +100,7 @@ public class BlockCrops extends BlockFlower {
         return Optional.of(stacks);
     }
 
-    public int getDropId(int i, Random random) {
+    public int a(int i, Random random) {
         return i == 7 ? Item.WHEAT.id : -1;
     }
 

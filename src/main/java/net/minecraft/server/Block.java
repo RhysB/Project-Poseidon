@@ -290,7 +290,7 @@ public class Block {
         return 1;
     }
 
-    public int getDropId(int data, Random random) {
+    public int a(int i, Random random) {
         return this.id;
     }
 
@@ -298,7 +298,7 @@ public class Block {
         return this.strength < 0.0F ? 0.0F : (!entityhuman.canGetDropFrom(this) ? 1.0F / this.strength / 100.0F : entityhuman.a(this) / this.strength / 30.0F);
     }
 
-    public final void dropNaturally(World world, int i, int j, int k, int l) {
+    public final void g(World world, int i, int j, int k, int l) {
         this.dropNaturally(world, i, j, k, l, 1.0F);
     }
 
@@ -326,10 +326,10 @@ public class Block {
     }
 
     public Optional<List<ItemStack>> getDrops(World world, int x, int y, int z, int data){
-        if(this.getDropId(data, world.random) <= 0){
+        if(this.a(data, world.random) <= 0){
             return Optional.empty();
         }else{
-            return Optional.of(Arrays.asList(new ItemStack(this.getDropId(data, world.random), 1, this.getDamageValueOfDrop(data))));
+            return Optional.of(Arrays.asList(new ItemStack(this.a(data, world.random), 1, this.a_(data))));
         }
     }
 
@@ -346,7 +346,7 @@ public class Block {
         }
     }
 
-    protected int getDamageValueOfDrop(int i) {
+    protected int a_(int i) {
         return 0;
     }
 
@@ -507,9 +507,9 @@ public class Block {
         return false;
     }
 
-    public void dropNaturally(World world, EntityHuman entityhuman, int i, int j, int k, int l) {
+    public void a(World world, EntityHuman entityhuman, int i, int j, int k, int l) {
         entityhuman.a(StatisticList.C[this.id], 1);
-        this.dropNaturally(world, i, j, k, l);
+        this.g(world, i, j, k, l);
     }
 
     public boolean f(World world, int i, int j, int k) {

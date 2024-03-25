@@ -14,7 +14,7 @@ public class BlockFurnace extends BlockContainer {
         this.textureId = 45;
     }
 
-    public int getDropId(int i, Random random) {
+    public int a(int i, Random random) {
         return Block.FURNACE.id;
     }
 

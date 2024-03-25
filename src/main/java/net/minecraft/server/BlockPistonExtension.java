@@ -27,7 +27,7 @@ public class BlockPistonExtension extends Block {
         if (j1 == Block.PISTON.id || j1 == Block.PISTON_STICKY.id) {
             l = world.getData(i, j, k);
             if (BlockPiston.d(l)) {
-                Block.byId[j1].dropNaturally(world, i, j, k, l);
+                Block.byId[j1].g(world, i, j, k, l);
                 world.setTypeId(i, j, k, 0);
             }
         }

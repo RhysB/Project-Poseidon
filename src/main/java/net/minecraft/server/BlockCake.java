@@ -72,7 +72,7 @@ public class BlockCake extends Block {
 
     public void doPhysics(World world, int i, int j, int k, int l) {
         if (!this.f(world, i, j, k)) {
-            this.dropNaturally(world, i, j, k, world.getData(i, j, k));
+            this.g(world, i, j, k, world.getData(i, j, k));
             world.setTypeId(i, j, k, 0);
         }
     }
@@ -85,7 +85,7 @@ public class BlockCake extends Block {
         return 0;
     }
 
-    public int getDropId(int i, Random random) {
+    public int a(int i, Random random) {
         return 0;
     }
 }

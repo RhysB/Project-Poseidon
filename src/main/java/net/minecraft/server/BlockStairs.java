@@ -74,8 +74,8 @@ public class BlockStairs extends Block {
         return this.a.a(entity);
     }
 
-    public int getDropId(int i, Random random) {
-        return this.a.getDropId(i, random);
+    public int a(int i, Random random) {
+        return this.a.a(i, random);
     }
 
     public int a(Random random) {

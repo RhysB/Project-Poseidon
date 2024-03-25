@@ -339,7 +339,7 @@ public class BlockPiston extends Block {
                         continue;
                     }
 
-                    Block.byId[i2].dropNaturally(world, i1, j1, k1, world.getData(i1, j1, k1));
+                    Block.byId[i2].g(world, i1, j1, k1, world.getData(i1, j1, k1));
                     world.setTypeId(i1, j1, k1, 0);
                 }
             }

@@ -68,7 +68,7 @@ public class BlockSign extends BlockContainer {
         }
     }
 
-    public int getDropId(int i, Random random) {
+    public int a(int i, Random random) {
         return Item.SIGN.id;
     }
 
@@ -101,7 +101,7 @@ public class BlockSign extends BlockContainer {
         }
 
         if (flag) {
-            this.dropNaturally(world, i, j, k, world.getData(i, j, k));
+            this.g(world, i, j, k, world.getData(i, j, k));
             world.setTypeId(i, j, k, 0);
         }
 

@@ -186,7 +186,7 @@ public class ItemInWorldManager {
         }
 
         if (flag && this.player.canGetDropFrom(Block.byId[blockId])) {
-            Block.byId[blockId].dropNaturally(this.world, this.player, x, y, z, blockData);
+            Block.byId[blockId].a(this.world, this.player, x, y, z, blockData);
             ((EntityPlayer) this.player).netServerHandler.sendPacket(new Packet53BlockChange(x, y, z, this.world));
         }
 

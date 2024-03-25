@@ -280,7 +280,7 @@ public class BlockRedstoneWire extends Block {
             boolean flag = this.canPlace(world, i, j, k);
 
             if (!flag) {
-                this.dropNaturally(world, i, j, k, i1);
+                this.g(world, i, j, k, i1);
                 world.setTypeId(i, j, k, 0);
             } else {
                 this.g(world, i, j, k);
@@ -290,7 +290,7 @@ public class BlockRedstoneWire extends Block {
         }
     }
 
-    public int getDropId(int i, Random random) {
+    public int a(int i, Random random) {
         return Item.REDSTONE.id;
     }
 

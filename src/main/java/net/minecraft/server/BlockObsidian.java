@@ -12,7 +12,7 @@ public class BlockObsidian extends BlockStone {
         return 1;
     }
 
-    public int getDropId(int i, Random random) {
+    public int a(int i, Random random) {
         return Block.OBSIDIAN.id;
     }
 }

@@ -111,7 +111,7 @@ public class BlockMinecartTrack extends Block {
             }
 
             if (flag) {
-                this.dropNaturally(world, i, j, k, world.getData(i, j, k));
+                this.g(world, i, j, k, world.getData(i, j, k));
                 world.setTypeId(i, j, k, 0);
             } else if (this.id == Block.GOLDEN_RAIL.id) {
                 boolean flag1 = world.isBlockIndirectlyPowered(i, j, k) || world.isBlockIndirectlyPowered(i, j + 1, k);
