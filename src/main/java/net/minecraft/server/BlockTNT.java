@@ -52,7 +52,7 @@ public class BlockTNT extends Block {
     }
 
     public void b(World world, int i, int j, int k, EntityHuman entityhuman) {
-        if (entityhuman.getItemInHand() != null && entityhuman.getItemInHand().id == Item.FLINT_AND_STEEL.id) {
+        if (entityhuman.G() != null && entityhuman.G().id == Item.FLINT_AND_STEEL.id) {
             world.setRawData(i, j, k, 1);
         }
 

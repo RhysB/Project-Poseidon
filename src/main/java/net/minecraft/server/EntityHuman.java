@@ -324,7 +324,7 @@ public abstract class EntityHuman extends EntityLiving {
         return f;
     }
 
-    public boolean canGetDropFrom(Block block) {
+    public boolean b(Block block) {
         return this.inventory.canGetDropFrom(block);
     }
 
@@ -507,7 +507,7 @@ public abstract class EntityHuman extends EntityLiving {
 
     public void c(Entity entity) {
         if (!entity.a(this)) {
-            ItemStack itemstack = this.getItemInHand();
+            ItemStack itemstack = this.G();
 
             if (itemstack != null && entity instanceof EntityLiving) {
                 itemstack.a((EntityLiving) entity);
@@ -520,7 +520,7 @@ public abstract class EntityHuman extends EntityLiving {
         }
     }
 
-    public ItemStack getItemInHand() {
+    public ItemStack G() {
         return this.inventory.getItemInHand();
     }
 
@@ -595,7 +595,7 @@ public abstract class EntityHuman extends EntityLiving {
             
             // CraftBukkit end
 
-            ItemStack itemstack = this.getItemInHand();
+            ItemStack itemstack = this.G();
 
             if (itemstack != null && entity instanceof EntityLiving) {
                 itemstack.a((EntityLiving) entity, this);

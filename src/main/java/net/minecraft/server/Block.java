@@ -295,7 +295,7 @@ public class Block {
     }
 
     public float getDamage(EntityHuman entityhuman) {
-        return this.strength < 0.0F ? 0.0F : (!entityhuman.canGetDropFrom(this) ? 1.0F / this.strength / 100.0F : entityhuman.a(this) / this.strength / 30.0F);
+        return this.strength < 0.0F ? 0.0F : (!entityhuman.b(this) ? 1.0F / this.strength / 100.0F : entityhuman.a(this) / this.strength / 30.0F);
     }
 
     public final void g(World world, int i, int j, int k, int l) {

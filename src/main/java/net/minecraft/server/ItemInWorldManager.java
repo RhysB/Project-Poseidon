@@ -175,7 +175,7 @@ public class ItemInWorldManager {
 
         this.world.a(this.player, 2001, x, y, z, blockId + this.world.getData(x, y, z) * 256);
         boolean flag = this.removeBlockAt(x, y, z);
-        ItemStack itemstack = this.player.getItemInHand();
+        ItemStack itemstack = this.player.G();
 
         if (itemstack != null) {
             itemstack.a(blockId, x, y, z, this.player);
@@ -185,7 +185,7 @@ public class ItemInWorldManager {
             }
         }
 
-        if (flag && this.player.canGetDropFrom(Block.byId[blockId])) {
+        if (flag && this.player.b(Block.byId[blockId])) {
             Block.byId[blockId].a(this.world, this.player, x, y, z, blockData);
             ((EntityPlayer) this.player).netServerHandler.sendPacket(new Packet53BlockChange(x, y, z, this.world));
         }
