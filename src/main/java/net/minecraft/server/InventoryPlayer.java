@@ -289,7 +289,7 @@ public class InventoryPlayer implements IInventory {
         } else {
             ItemStack itemstack = this.getItem(this.itemInHandIndex);
 
-            return itemstack != null ? itemstack.canGetDropFrom(block) : false;
+            return itemstack != null ? itemstack.b(block) : false;
         }
     }
 
