@@ -2,13 +2,22 @@ package org.bukkit.craftbukkit.block;
 
 import net.minecraft.server.BiomeBase;
 import net.minecraft.server.BlockRedstoneWire;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.*;
 import org.bukkit.craftbukkit.CraftChunk;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BlockVector;
+import org.bukkit.craftbukkit.CraftWorld;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
 
 public class CraftBlock implements Block {
     private final CraftChunk chunk;
@@ -308,5 +317,51 @@ public class CraftBlock implements Block {
     public PistonMoveReaction getPistonMoveReaction() {
         return PistonMoveReaction.getById(net.minecraft.server.Block.byId[this.getTypeId()].material.j());
 
+    }
+
+    @Override
+    public Collection<ItemStack> getDrops() {
+        net.minecraft.server.Block block = net.minecraft.server.Block.byId[getTypeId()];
+        if (block == null) {
+            return new ArrayList<ItemStack>();
+        }else if(block.material.i()) {
+            return Arrays.asList(block.getDrops(((CraftWorld) this.getWorld()).getHandle(), x, y, z, (int)getData()).map((list) -> list.stream().map(itemStack -> new CraftItemStack(itemStack)).toArray(ItemStack[]::new)).orElse(new ItemStack[0]));
+        }else {
+            return new ArrayList<ItemStack>();
+        }
+    }
+
+    @Override
+    public Collection<ItemStack> getDrops(ItemStack tool) {
+        net.minecraft.server.Block block = net.minecraft.server.Block.byId[getTypeId()];
+        if (block == null) {
+            return new ArrayList<ItemStack>();
+        }else if(block.material.i() || ((CraftItemStack)tool).getHandle().b(block)) {
+            return Arrays.asList(block.getDrops(((CraftWorld) this.getWorld()).getHandle(), x, y, z, (int)getData()).map((list) -> list.stream().map(itemStack -> new CraftItemStack(itemStack)).toArray(ItemStack[]::new)).orElse(new ItemStack[0]));
+        }else {
+            return new ArrayList<ItemStack>();
+        }
+    }
+
+    @Override
+    public boolean breakNaturally() {
+        return breakNaturally(new ItemStack(Material.AIR));
+    }
+
+    @Override
+    public boolean breakNaturally(ItemStack tool) {
+        net.minecraft.server.Block block = net.minecraft.server.Block.byId[getTypeId()];
+        if (block == null) {
+            return false;
+        }else{
+            Collection<ItemStack> drops = getDrops(tool);
+            boolean flag = setTypeId(0);
+            if (flag) {
+                for (ItemStack drop : drops) {
+                    getWorld().dropItemNaturally(getLocation(), drop);
+                }
+            }
+            return flag;
+        }
     }
 }

@@ -58,12 +58,6 @@ public class BlockJukeBox extends BlockContainer {
         super.remove(world, i, j, k);
     }
 
-    public void dropNaturally(World world, int i, int j, int k, int l, float f) {
-        if (!world.isStatic) {
-            super.dropNaturally(world, i, j, k, l, f);
-        }
-    }
-
     protected TileEntity a_() {
         return new TileEntityRecordPlayer();
     }
