@@ -302,7 +302,7 @@ public class Block {
         this.dropNaturally(world, i, j, k, l, 1.0F);
     }
 
-    public final void dropNaturally(World world, int i, int j, int k, int l, float f) {
+    public void dropNaturally(World world, int i, int j, int k, int l, float f) {
         if (!world.isStatic) {
             int i1 = this.a(world.random);
 
