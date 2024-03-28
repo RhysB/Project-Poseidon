@@ -198,6 +198,13 @@ public class MinecraftServer implements Runnable, ICommandListener {
         String time = String.format("%.3fs", elapsed / 10000000000.0D);
         log.info("Done (" + time + ")! For help, type \"help\" or \"?\"");
 
+        // log rotator process start.
+        if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.per-day-logfile")) {
+            String latestLogFileName = "latest";
+            ServerLogRotator serverLogRotator = new ServerLogRotator(latestLogFileName);
+            serverLogRotator.start();
+        }
+
         if (this.propertyManager.properties.containsKey("spawn-protection")) {
             log.info("'spawn-protection' in server.properties has been moved to 'settings.spawn-radius' in bukkit.yml. I will move your config for you.");
             this.server.setSpawnRadius(this.propertyManager.getInt("spawn-protection", 16));
@@ -399,12 +406,6 @@ public class MinecraftServer implements Runnable, ICommandListener {
         try {
             if (this.init()) {
                 long i = System.currentTimeMillis();
-
-                if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.per-day-logfile")) {
-                    String latestLogFileName = "latest";
-                    ServerLogRotator serverLogRotator = new ServerLogRotator(latestLogFileName);
-                    serverLogRotator.start();
-                }
 
                 for (long j = 0L; this.isRunning; Thread.sleep(1L)) {
                     if (modLoaderSupport) {
