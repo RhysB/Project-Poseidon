@@ -62,7 +62,7 @@ public class ServerLogRotator {
 
         // catch any exceptions that occur during the process, and log them. IOExceptions are possible when calling createNewFile()
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Failed to create new log file!");
+            logger.log(Level.SEVERE, "[Poseidon]  Failed to create new log file!");
             logger.log(Level.SEVERE, e.toString());
         }
     }
@@ -73,13 +73,13 @@ public class ServerLogRotator {
      */
     private void buildHistoricalLogsFromLatestLogFile() {
 
-        logger.log(Level.INFO, "Building logs from latest.log...");
+        logger.log(Level.INFO, "[Poseidon] Building logs from latest.log...");
 
         try {
             // open latest log file
             File latestLog = new File("." + File.separator + "logs" + File.separator + this.latestLogFileName + ".log");
             if (!latestLog.exists()) {
-                logger.log(Level.INFO, "No logs to build from latest.log!");
+                logger.log(Level.INFO, "[Poseidon] No logs to build from latest.log!");
                 return;
             }
 
@@ -118,11 +118,11 @@ public class ServerLogRotator {
             writer.print(todayLogs);
             writer.close();
 
-            logger.log(Level.INFO, "Logs built from latest.log!");
+            logger.log(Level.INFO, "[Poseidon] Logs built from latest.log!");
 
         // catch any exceptions that occur during the process, and log them
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to build logs from latest.log!");
+            logger.log(Level.SEVERE, "[Poseidon] Failed to build logs from latest.log!");
             logger.log(Level.SEVERE, e.toString());
         }
     }
@@ -141,8 +141,8 @@ public class ServerLogRotator {
         buildHistoricalLogsFromLatestLogFile();
 
         // Schedule the log rotation task to run every day at midnight offset by one second to avoid missing logs
-        logger.log(Level.INFO, "Log rotation task scheduled for run in " + initialDelay + " seconds, and then every " + period + " seconds.");
-        logger.log(Level.INFO, "If latest.log contains logs from earlier, not previously archived dates, they will be archived to the appropriate log files " +
+        logger.log(Level.INFO, "[Poseidon] Log rotation task scheduled for run in " + initialDelay + " seconds, and then every " + period + " seconds.");
+        logger.log(Level.INFO, "[Poseidon] If latest.log contains logs from earlier, not previously archived dates, they will be archived to the appropriate log files " +
                                "upon first run of the log rotation task. If log files already exist for these dates, the logs will be appended to the existing log files!");
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(new PoseidonPlugin(), this::buildHistoricalLogsFromLatestLogFile, (initialDelay + 1) * 20, period * 20);
     }

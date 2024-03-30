@@ -199,7 +199,7 @@ public class MinecraftServer implements Runnable, ICommandListener {
         log.info("Done (" + time + ")! For help, type \"help\" or \"?\"");
 
         // log rotator process start.
-        if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.per-day-logfile")) {
+        if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.per-day-log-file.enabled") && (boolean) PoseidonConfig.getInstance().getConfigOption("settings.per-day-log-file.latest-log.enabled")) {
             String latestLogFileName = "latest";
             ServerLogRotator serverLogRotator = new ServerLogRotator(latestLogFileName);
             serverLogRotator.start();

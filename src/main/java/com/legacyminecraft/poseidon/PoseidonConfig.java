@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class PoseidonConfig extends Configuration {
     private static PoseidonConfig singleton;
-    private final int configVersion = 3;
+    private final int configVersion = 4;
     private Integer[] treeBlacklistIDs;
 
     public Integer[] getTreeBlacklistIDs() {
@@ -38,16 +38,22 @@ public class PoseidonConfig extends Configuration {
 
     private void write() {
         if (this.getString("config-version") == null || Integer.valueOf(this.getString("config-version")) < configVersion) {
-            System.out.println("Converting to Config Version: " + configVersion);
+            System.out.println("[Poseidon] Converting from config version " + (this.getString("config-version") == null ? "0" : this.getString("config-version")) + " to " + configVersion);
             convertToNewConfig();
+            this.setProperty("config-version", configVersion);
         }
         //Main
-        generateConfigOption("config-version", 3);
+        generateConfigOption("config-version", configVersion);
         //Setting
         generateConfigOption("settings.allow-graceful-uuids", true);
         generateConfigOption("settings.delete-duplicate-uuids", false);
         generateConfigOption("settings.save-playerdata-by-uuid", true);
-        generateConfigOption("settings.per-day-logfile", false);
+        // Log management and rotation
+        generateConfigOption("settings.per-day-log-file.info", "This setting causes the server to create a new log file each day. This is useful for log rotation and log file management.");
+        generateConfigOption("settings.per-day-log-file.enabled", false);
+        generateConfigOption("settings.per-day-log-file.latest-log.info", "This setting causes the server to create a latest.log similar to modern Minecraft servers. This can be useful for certain control panels and log file management.");
+        generateConfigOption("settings.per-day-log-file.latest-log.enabled", true);
+
         generateConfigOption("settings.fetch-uuids-from", "https://api.mojang.com/profiles/minecraft");
         generateConfigOption("settings.remove-join-leave-debug", true);
         generateConfigOption("settings.enable-tpc-nodelay", false);
@@ -237,8 +243,14 @@ public class PoseidonConfig extends Configuration {
         convertToNewAddress("settings.statistics.enabled", "settings.enable-statistics");
         convertToNewAddress("settings.allow-graceful-uuids", "allowGracefulUUID");
         convertToNewAddress("settings.save-playerdata-by-uuid", "savePlayerdataByUUID");
+        convertToNewAddress("settings.watchdog.enable", "settings.enable-watchdog");
+        // 3-4 Conversion
 
-        convertToNewAddress("settings.enable-watchdog", "settings.watchdog.enable");
+        // Don't automatically enable the latest log file for servers that have the per-day-logfile setting enabled as this is a change in behavior
+        if(this.getString("settings.per-day-logfile") != null && this.getConfigBoolean("settings.per-day-logfile")) {
+            this.setProperty("settings.per-day-log-file.latest-log.enabled", false);
+        }
+        convertToNewAddress("settings.per-day-log-file.enabled", "settings.per-day-logfile");
     }
 
     private boolean convertToNewAddress(String newKey, String oldKey) {
@@ -246,9 +258,10 @@ public class PoseidonConfig extends Configuration {
             return false;
         }
         if (this.getString(oldKey) == null) {
+            System.out.println("[Poseidon] Config: " + oldKey + " does not exist. Skipping conversion.");
             return false;
         }
-        System.out.println("Converting Config: " + oldKey + " to " + newKey);
+        System.out.println("[Poseidon] Converting Config: " + oldKey + " to " + newKey);
         Object value = this.getProperty(oldKey);
         this.setProperty(newKey, value);
         this.removeProperty(oldKey);
