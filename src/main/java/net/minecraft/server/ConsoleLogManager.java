@@ -41,13 +41,23 @@ public class ConsoleLogManager {
         try {
             //Project Poseidon Start
             FileHandler filehandler;
-            if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.per-day-logfile")) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                String logfile = LocalDate.now().format(formatter);
-                File log = new File("." + File.separator + "logs" + File.separator);
-                log.getParentFile().mkdirs();
-                log.mkdirs();
-                filehandler = new FileHandler("." + File.separator + "logs" + File.separator + logfile + ".log", true);
+            if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.per-day-log-file.enabled")) {
+                //If latest log file is enabled, create a new log file for each day
+                if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.per-day-log-file.latest-log.enabled")) {
+                    String latestLogFileName = "latest";
+                    File log = new File("." + File.separator + "logs" + File.separator);
+                    log.getParentFile().mkdirs();
+                    log.mkdirs();
+                    filehandler = new FileHandler("." + File.separator + "logs" + File.separator + latestLogFileName + ".log", true);
+                } else {
+                    //If latest log file is disabled, create a new log file for each day with the date as the file name
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    String logfile = LocalDate.now().format(formatter);
+                    File log = new File("." + File.separator + "logs" + File.separator);
+                    log.getParentFile().mkdirs();
+                    log.mkdirs();
+                    filehandler = new FileHandler("." + File.separator + "logs" + File.separator + logfile + ".log", true);
+                }
             } else {
                 // CraftBukkit start
                 String pattern = (String) server.options.valueOf("log-pattern");
@@ -58,7 +68,6 @@ public class ConsoleLogManager {
                 // CraftBukkit start
             }
             //Project Poseidon End
-
 
             filehandler.setFormatter(consolelogformatter);
             a.addHandler(filehandler);

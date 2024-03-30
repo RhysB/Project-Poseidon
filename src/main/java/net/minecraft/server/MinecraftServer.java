@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import com.legacyminecraft.poseidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.util.ServerLogRotator;
 import com.projectposeidon.johnymuffin.UUIDManager;
 import com.legacyminecraft.poseidon.watchdog.WatchDogThread;
 import jline.ConsoleReader;
@@ -196,6 +197,13 @@ public class MinecraftServer implements Runnable, ICommandListener {
         long elapsed = System.nanoTime() - j;
         String time = String.format("%.3fs", elapsed / 10000000000.0D);
         log.info("Done (" + time + ")! For help, type \"help\" or \"?\"");
+
+        // log rotator process start.
+        if ((boolean) PoseidonConfig.getInstance().getConfigOption("settings.per-day-log-file.enabled") && (boolean) PoseidonConfig.getInstance().getConfigOption("settings.per-day-log-file.latest-log.enabled")) {
+            String latestLogFileName = "latest";
+            ServerLogRotator serverLogRotator = new ServerLogRotator(latestLogFileName);
+            serverLogRotator.start();
+        }
 
         if (this.propertyManager.properties.containsKey("spawn-protection")) {
             log.info("'spawn-protection' in server.properties has been moved to 'settings.spawn-radius' in bukkit.yml. I will move your config for you.");
