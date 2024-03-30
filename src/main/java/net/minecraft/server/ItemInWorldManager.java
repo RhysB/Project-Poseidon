@@ -170,23 +170,23 @@ public class ItemInWorldManager {
         }
         // CraftBukkit end
 
-        int blockId = this.world.getTypeId(i, j, k);
-        int blockData = this.world.getData(i, j, k);
+        int l = this.world.getTypeId(i, j, k);
+        int i1 = this.world.getData(i, j, k);
 
-        this.world.a(this.player, 2001, i, j, k, blockId + this.world.getData(i, j, k) * 256);
+        this.world.a(this.player, 2001, i, j, k, l + this.world.getData(i, j, k) * 256);
         boolean flag = this.b(i, j, k);
         ItemStack itemstack = this.player.G();
 
         if (itemstack != null) {
-            itemstack.a(blockId, i, j, k, this.player);
+            itemstack.a(l, i, j, k, this.player);
             if (itemstack.count == 0) {
                 itemstack.a(this.player);
                 this.player.H();
             }
         }
 
-        if (flag && this.player.b(Block.byId[blockId])) {
-            Block.byId[blockId].a(this.world, this.player, i, j, k, blockData);
+        if (flag && this.player.b(Block.byId[l])) {
+            Block.byId[l].a(this.world, this.player, i, j, k, i1);
             ((EntityPlayer) this.player).netServerHandler.sendPacket(new Packet53BlockChange(i, j, k, this.world));
         }
 
