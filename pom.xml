@@ -20,10 +20,10 @@
             <id>bukkit-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots</url>
         </repository>
-        <repository>
-            <id>chew-jenkins</id>
-            <url>https://jenkins.chew.pw/plugin/repository/everything</url>
-        </repository>
+<!--        <repository>-->
+<!--            <id>chew-jenkins</id>-->
+<!--            <url>https://jenkins.chew.pw/plugin/repository/everything</url>-->
+<!--        </repository>-->
         <repository>
             <id>jline</id>
             <name>JLine Project Repository</name>
