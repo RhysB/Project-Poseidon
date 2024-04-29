@@ -16,7 +16,7 @@ import java.util.concurrent.Callable;
 
 public class UUIDFetcher implements Callable<Map<String, UUID>> {
     private static final double PROFILES_PER_REQUEST = 100;
-    private static final String PROFILE_URL = PoseidonConfig.getInstance().getString("settings.fetch-uuids-from", "https://api.mojang.com/profiles/minecraft");
+    private static final String PROFILE_URL = PoseidonConfig.getInstance().getString("settings.uuid-fetcher.post.value", "https://api.minecraftservices.com/minecraft/profile/lookup/bulk/byname");
     private final JSONParser jsonParser = new JSONParser();
     private final List<String> names;
     private final boolean rateLimiting;

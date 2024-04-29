@@ -1,5 +1,6 @@
 package com.legacyminecraft.poseidon.util;
 
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -36,7 +37,10 @@ public class GetUUIDFetcher {
 
     public static UUIDAndUsernameResult getUUID(String username) {
         try {
-            JSONObject jsonObject = readJsonFromUrl("https://api.mojang.com/users/profiles/minecraft/" + encode(username));
+            String url = PoseidonConfig.getInstance().getString("settings.uuid-fetcher.get.value", "https://api.minecraftservices.com/minecraft/profile/lookup/name/{username}");
+            url = url.replace("{username}", encode(username));
+
+            JSONObject jsonObject = readJsonFromUrl(url);
             UUIDResult uuidResult;
             String returnedUsername = null;
 
