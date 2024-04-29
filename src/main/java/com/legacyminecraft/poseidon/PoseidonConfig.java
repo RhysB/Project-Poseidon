@@ -23,8 +23,8 @@ public class PoseidonConfig extends Configuration {
 
     public void reload() {
         this.load();
-        this.validation();
         this.write();
+        this.validation();
         this.save();
     }
 
@@ -71,6 +71,9 @@ public class PoseidonConfig extends Configuration {
 
         generateConfigOption("settings.uuid-fetcher.get.info", "This setting allows you to change the URL that the server fetches UUIDs from. This is useful if you have a custom UUID server or a proxy server that fetches UUIDs.");
         generateConfigOption("settings.uuid-fetcher.get.value", "https://api.minecraftservices.com/minecraft/profile/lookup/name/{username}");
+        generateConfigOption("settings.uuid-fetcher.get.enforce-case-sensitivity.enabled", true);
+        generateConfigOption("settings.uuid-fetcher.get.enforce-case-sensitivity.info", "The Mojang API is case-insensitive by default meaning usernames with different casing will return the same UUID. This setting checks the case of the username to prevent this issue. If the name is invalid, the player will be kicked.");
+
 
         generateConfigOption("settings.uuid-fetcher.method.value", "POST");
         generateConfigOption("settings.uuid-fetcher.method.info", "This setting allows for POST or GET method for fetching UUIDs. This is useful if you have a custom UUID server, Mojang API is down, or a proxy server that fetches UUIDs.");
@@ -78,15 +81,14 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("settings.uuid-fetcher.allow-graceful-uuids.value", true);
         generateConfigOption("settings.uuid-fetcher.allow-graceful-uuids.info", "This setting means offline UUIDs are generated for players who don't have a Mojang UUID. This is useful for cracked or semi-cracked servers.");
 
-
         generateConfigOption("settings.remove-join-leave-debug", true);
         generateConfigOption("settings.enable-tpc-nodelay", false);
 
         //generateConfigOption("settings.use-get-for-uuids.enabled", true);
         //generateConfigOption("settings.use-get-for-uuids.info", "This setting causes the server to use the GET method for Username to UUID conversion. This is useful incase the POST method goes offline.");
 
-        generateConfigOption("settings.use-get-for-uuids.case-sensitive.enabled", true);
-        generateConfigOption("settings.use-get-for-uuids.case-sensitive.info", "This setting will verify sensitivity of the username as the GET method is case-insensitive.");
+        //generateConfigOption("settings.use-get-for-uuids.case-sensitive.enabled", true);
+        //generateConfigOption("settings.use-get-for-uuids.case-sensitive.info", "This setting will verify sensitivity of the username as the GET method is case-insensitive.");
 
         generateConfigOption("settings.faster-packets.enabled", true);
         generateConfigOption("settings.faster-packets.info", "This setting increases the speed of packets, a fix from newer Minecraft versions.");
@@ -294,17 +296,32 @@ public class PoseidonConfig extends Configuration {
         }
 
         boolean usePost = !this.getConfigBoolean("settings.use-get-for-uuids.enabled", false); // Is the server currently using POST?
-        if(usePost) {
+        if (usePost) {
             this.setProperty("settings.uuid-fetcher.method.value", "POST");
         } else {
             this.setProperty("settings.uuid-fetcher.method.value", "GET");
         }
-        this.removeProperty("settings.use-get-for-uuids.enabled");
-        this.removeProperty("settings.use-get-for-uuids.info");
+
+        removeDeprecatedConfig("settings.use-get-for-uuids.enabled", "settings.use-get-for-uuids.info");
 
         convertToNewAddress("settings.uuid-fetcher.allow-graceful-uuids.value", "settings.allow-graceful-uuids");
+        convertToNewAddress("settings.uuid-fetcher.get.enforce-case-sensitivity.enabled", "settings.use-get-for-uuids.case-sensitive.enabled");
+        removeDeprecatedConfig("settings.use-get-for-uuids.case-sensitive.info");
 
 
+    }
+
+    //Allow any number of string arguments to be passed to this method
+    private boolean removeDeprecatedConfig(String... keys) {
+        boolean removed = false;
+        for (String key : keys) {
+            if (this.getString(key) != null) {
+                System.out.println("[Poseidon] Config: " + key + " is deprecated. Removing.");
+                this.removeProperty(key);
+                removed = true;
+            }
+        }
+        return removed;
     }
 
     private boolean convertToNewAddress(String newKey, String oldKey) {
