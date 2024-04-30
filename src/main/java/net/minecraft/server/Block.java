@@ -324,10 +324,11 @@ public class Block {
 
     //Project Poseidon - API to get the drops of a block
     public Optional<List<ItemStack>> getDrops(World world, int x, int y, int z, int data){
-        if(this.a(data, world.random) <= 0){
+        int id = this.a(data, world.random);
+        if(id <= 0){
             return Optional.empty();
         }else{
-            return Optional.of(Arrays.asList(new ItemStack(this.a(data, world.random), 1, this.a_(data))));
+            return Optional.of(Arrays.asList(new ItemStack(id, 1, this.a_(data))));
         }
     }
 
