@@ -1,7 +1,5 @@
 package net.minecraft.server;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 public class BlockPistonMoving extends BlockContainer {
@@ -56,13 +54,13 @@ public class BlockPistonMoving extends BlockContainer {
         return 0;
     }
 
+    public void dropNaturally(World world, int i, int j, int k, int l, float f) {
+        if (!world.isStatic) {
+            TileEntityPiston tileentitypiston = this.b(world, i, j, k);
 
-    public Optional<List<ItemStack>> getDrops(World world, int x, int y, int z, int data){
-        TileEntityPiston tileentitypiston = this.b(world, x, y, z);
-        if(tileentitypiston != null){
-            return Block.byId[tileentitypiston.a()].getDrops(world, x, y, z, tileentitypiston.e());
-        }else{
-            return Optional.empty();
+            if (tileentitypiston != null) {
+                Block.byId[tileentitypiston.a()].g(world, i, j, k, tileentitypiston.e());
+            }
         }
     }
 

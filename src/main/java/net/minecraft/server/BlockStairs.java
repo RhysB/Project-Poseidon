@@ -1,8 +1,6 @@
 package net.minecraft.server;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 public class BlockStairs extends Block {
@@ -119,8 +117,8 @@ public class BlockStairs extends Block {
         this.a.remove(world, i, j, k);
     }
 
-    public Optional<List<ItemStack>> getDrops(World world, int x, int y, int z, int data){
-        return this.a.getDrops(world, x, y, z, data);
+    public void dropNaturally(World world, int i, int j, int k, int l, float f) {
+        this.a.dropNaturally(world, i, j, k, l, f);
     }
 
     public void b(World world, int i, int j, int k, Entity entity) {
