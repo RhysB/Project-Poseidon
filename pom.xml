@@ -20,21 +20,50 @@
             <id>bukkit-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots</url>
         </repository>
-        <repository>
-            <id>chew-jenkins</id>
-            <url>https://jenkins.chew.pw/plugin/repository/everything</url>
-        </repository>
+        <!--        <repository>-->
+        <!--            <id>chew-jenkins</id>-->
+        <!--            <url>https://jenkins.chew.pw/plugin/repository/everything</url>-->
+        <!--        </repository>-->
         <repository>
             <id>jline</id>
             <name>JLine Project Repository</name>
             <url>http://jline.sourceforge.net/m2repo</url>
         </repository>
+        <!-- Repository for resolving release dependencies -->
+        <repository>
+            <id>johnymuffin-nexus-releases</id>
+            <url>https://repository.johnymuffin.com/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <!-- Repository for resolving snapshot dependencies -->
+        <repository>
+            <id>johnymuffin-nexus-snapshots</id>
+            <url>https://repository.johnymuffin.com/repository/maven-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
     <dependencies>
+        <!--        <dependency>-->
+        <!--            <groupId>org.bukkit</groupId>-->
+        <!--            <artifactId>bukkit</artifactId>-->
+        <!--            <version>0.0.1-SNAPSHOT</version>-->
+        <!--            <type>jar</type>-->
+        <!--            <scope>compile</scope>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1-POSEIDON</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
