@@ -5,6 +5,7 @@ import com.legacyminecraft.poseidon.PoseidonConfig;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class Block {
@@ -308,13 +309,26 @@ public class Block {
             for (int j1 = 0; j1 < i1; ++j1) {
                 // CraftBukkit - <= to < to allow for plugins to completely disable block drops from explosions
                 if (world.random.nextFloat() < f) {
-                    int k1 = this.a(l, world.random);
-
-                    if (k1 > 0) {
-                        this.a(world, i, j, k, new ItemStack(k1, 1, this.a_(l)));
+                    //Project Poseidon Start - New way to handle block drops to allow for plugins to know what items a block will drop
+                    Optional<List<ItemStack>> items = getDrops(world, i, j, k, l);
+                    if(items.isPresent()) {
+                        for(ItemStack item : items.get()) {
+                            this.a(world, i, j, k, item);
+                        }
                     }
+                    //Project Poseidon End
                 }
             }
+        }
+    }
+
+    //Project Poseidon - API to get the drops of a block
+    public Optional<List<ItemStack>> getDrops(World world, int x, int y, int z, int data){
+        int id = this.a(data, world.random);
+        if(id <= 0){
+            return Optional.empty();
+        }else{
+            return Optional.of(Arrays.asList(new ItemStack(id, 1, this.a_(data))));
         }
     }
 

@@ -1,9 +1,12 @@
 package org.bukkit.block;
 
+import java.util.Collection;
+
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Represents a block. This is a live object, and only one Block may exist for
@@ -277,4 +280,30 @@ public interface Block {
      * @return reaction
      */
     PistonMoveReaction getPistonMoveReaction();
+
+    /**
+     * Returns a list of items which would drop by destroying this block
+     * @return a list of dropped items for this type of block
+     */
+    Collection<ItemStack> getDrops();
+
+    /**
+     * Returns a list of items which would drop by destroying this block with a specific tool
+     * @param tool The tool or item in hand used for digging
+     * @return a list of dropped items for this type of block
+     */
+    Collection<ItemStack> getDrops(ItemStack tool);
+
+    /**
+     * Breaks the block and spawns items as if a player had digged it regardless of the tool
+     * @return true if the block was broken
+     */
+    boolean breakNaturally();
+
+    /**
+     * Breaks the block and spawns items as if a player had digged it
+     * @param tool The tool or item in hand used for digging
+     * @return true if the block was broken
+     */
+    boolean breakNaturally(ItemStack tool);
 }
