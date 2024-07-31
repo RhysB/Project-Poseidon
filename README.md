@@ -1,5 +1,5 @@
 
-![](/img/ban.png)
+![](/ban.jpg)
 
 
 Hello moi Englizh dgyr
