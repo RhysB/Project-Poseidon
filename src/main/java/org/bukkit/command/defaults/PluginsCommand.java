@@ -22,7 +22,7 @@ public class PluginsCommand extends Command {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
         
-        sender.sendMessage("Plugins" + getPluginList());
+        sender.sendMessage("Plugz" + getPluginList());
         return true;
     }
 
