@@ -14,18 +14,18 @@ public class PoseidonCommand extends Command {
 
     public PoseidonCommand(String name) {
         super(name);
-        this.description = "Show data regarding the servers version of Project Poseidon";
-        this.usageMessage = "/poseidon";
+        this.description = "Show data regarding the servers version of Project Vodka";
+        this.usageMessage = "/vodka";
         this.setAliases(Arrays.asList("projectposeidon"));
     }
 
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.GRAY + "This server is running " + ChatColor.AQUA + "Project Poseidon" + ChatColor.GRAY + " Version: " + ChatColor.RED + Bukkit.getServer().getPoseidonVersion());
+            sender.sendMessage(ChatColor.GRAY + "This server is running " + ChatColor.AQUA + "Project Vodka" + ChatColor.GRAY + " Version: " + ChatColor.RED + Bukkit.getServer().getPoseidonVersion());
         } else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("uuid")) {
-                sender.sendMessage(ChatColor.GRAY + "Please specify a user /poseidon uuid (username)");
+                sender.sendMessage(ChatColor.GRAY + "Please specify a user /vodka uuid (username)");
             } else {
                 sender.sendMessage(ChatColor.GRAY + "Unknown sub command.");
             }
