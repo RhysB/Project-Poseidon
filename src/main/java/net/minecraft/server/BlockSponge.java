@@ -1,33 +1,40 @@
 package net.minecraft.server;
 
-public class BlockSponge extends Block {
+import com.legacyminecraft.poseidon.PoseidonConfig;
 
+public class BlockSponge extends Block {
     protected BlockSponge(int i) {
         super(i, Material.SPONGE);
         this.textureId = 48;
     }
 
-    public void c(World world, int i, int j, int k) {
-        byte b0 = 2;
+    public void remove(World world, int i, int j, int k) {
+        byte radius = 2;
 
-        for (int l = i - b0; l <= i + b0; ++l) {
-            for (int i1 = j - b0; i1 <= j + b0; ++i1) {
-                for (int j1 = k - b0; j1 <= k + b0; ++j1) {
-                    if (world.getMaterial(l, i1, j1) == Material.WATER) {
-                        ;
-                    }
+        if (PoseidonConfig.getInstance().getConfigBoolean("fix.optimize-sponges")) {
+            this.optimizedRemove(world, i, j, k, radius);
+            return;
+        }
+
+        for (int x = i - radius; x <= i + radius; ++x) {
+            for (int y = j - radius; y <= j + radius; ++y) {
+                for (int z = k - radius; z <= k + radius; ++z) {
+                    world.applyPhysics(x, y, z, world.getTypeId(x, y, z));
                 }
             }
         }
     }
 
-    public void remove(World world, int i, int j, int k) {
-        byte b0 = 2;
+    private void optimizedRemove(World world, int i, int j, int k, byte radius) {
+        for (int x = i - radius; x <= i + radius; ++x) {
+            for (int y = j - radius; y <= j + radius; ++y) {
+                if (y > 127 || y < 0) continue;
 
-        for (int l = i - b0; l <= i + b0; ++l) {
-            for (int i1 = j - b0; i1 <= j + b0; ++i1) {
-                for (int j1 = k - b0; j1 <= k + b0; ++j1) {
-                    world.applyPhysics(l, i1, j1, world.getTypeId(l, i1, j1));
+                for (int z = k - radius; z <= k + radius; ++z) {
+                    int type = world.getTypeId(x, y, z);
+                    if ((type != Block.WATER.id && type != Block.STATIONARY_WATER.id)) continue;
+
+                    world.applyPhysics(x, y, z, type);
                 }
             }
         }

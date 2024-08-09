@@ -188,6 +188,9 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("command.tps.info", "Enables the /tps command to show the server's TPS for various intervals.");
         generateConfigOption("command.tps.enabled", true);
 
+        //UberBukkit
+        generateConfigOption("fix.optimize-sponges", true);
+
         //Tree Leave Destroy Blacklist
         if (Boolean.valueOf(String.valueOf(getConfigOption("world.settings.block-tree-growth.enabled", true)))) {
             if (String.valueOf(this.getConfigOption("world.settings.block-tree-growth.list", "")).trim().isEmpty()) {
