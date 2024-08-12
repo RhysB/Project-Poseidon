@@ -190,6 +190,7 @@ public class PoseidonConfig extends Configuration {
 
         //UberBukkit
         generateConfigOption("fix.optimize-sponges", true);
+        generateConfigOption("fix.optimize-sponges.info", "Optimizes sponges by removing unnecessary block updates");
 
         //Tree Leave Destroy Blacklist
         if (Boolean.valueOf(String.valueOf(getConfigOption("world.settings.block-tree-growth.enabled", true)))) {
