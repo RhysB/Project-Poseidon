@@ -11,7 +11,7 @@ public class BlockSponge extends Block {
     public void remove(World world, int i, int j, int k) {
         byte radius = 2;
 
-        if (PoseidonConfig.getInstance().getConfigBoolean("fix.optimize-sponges")) {
+        if (PoseidonConfig.getInstance().getConfigBoolean("fix.optimize-sponges.enabled", true)) {
             this.optimizedRemove(world, i, j, k, radius);
             return;
         }
