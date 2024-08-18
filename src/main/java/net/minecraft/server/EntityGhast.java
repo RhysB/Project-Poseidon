@@ -51,9 +51,7 @@ public class EntityGhast extends EntityFlying implements IMonster {
             this.b = this.locX + (double) ((this.random.nextFloat() * 2.0F - 1.0F) * 16.0F);
             this.c = this.locY + (double) ((this.random.nextFloat() * 2.0F - 1.0F) * 16.0F);
             this.d = this.locZ + (double) ((this.random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-        }
-
-        if (this.a-- <= 0) {
+        } else if (this.a-- <= 0) {
             this.a += this.random.nextInt(5) + 2;
             if (this.a(this.b, this.c, this.d, d3)) {
                 this.motX += d0 / d3 * 0.1D;
