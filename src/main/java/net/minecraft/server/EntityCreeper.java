@@ -86,8 +86,11 @@ public class EntityCreeper extends EntityMonster {
 
     public void die(Entity entity) {
         super.die(entity);
-        if (entity instanceof EntitySkeleton) {
-            this.b(Item.GOLD_RECORD.id + this.random.nextInt(2), 1);
+        if (entity instanceof EntityArrow) {
+            EntityLiving shooter = ((EntityArrow) entity).shooter;
+            if (shooter instanceof EntitySkeleton) {
+                this.b(Item.GOLD_RECORD.id + this.random.nextInt(2), 1);
+            }
         }
     }
 
