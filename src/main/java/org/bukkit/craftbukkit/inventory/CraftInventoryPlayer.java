@@ -1,8 +1,11 @@
 package org.bukkit.craftbukkit.inventory;
 
 import net.minecraft.server.InventoryPlayer;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+
+import java.util.ArrayList;
 
 public class CraftInventoryPlayer extends CraftInventory implements PlayerInventory {
     public CraftInventoryPlayer(net.minecraft.server.InventoryPlayer inventory) {
@@ -42,7 +45,7 @@ public class CraftInventoryPlayer extends CraftInventory implements PlayerInvent
     }
 
     public ItemStack getBoots() {
-        return getItem(getSize() + 0);
+        return getItem(getSize());
     }
 
     public void setHelmet(ItemStack helmet) {
@@ -58,17 +61,33 @@ public class CraftInventoryPlayer extends CraftInventory implements PlayerInvent
     }
 
     public void setBoots(ItemStack boots) {
-        setItem(getSize() + 0, boots);
+        setItem(getSize(), boots);
     }
 
-    public CraftItemStack[] getArmorContents() {
-        net.minecraft.server.ItemStack[] mcItems = getInventory().getArmorContents();
-        CraftItemStack[] ret = new CraftItemStack[mcItems.length];
+    public ItemStack[] getArmorContents() {
+        ArrayList<ItemStack> contents = new ArrayList<>();
 
-        for (int i = 0; i < mcItems.length; i++) {
-            ret[i] = new CraftItemStack(mcItems[i]);
+        ItemStack boots = getItem(getSize());
+        if (boots != null && boots.getType() != Material.AIR) {
+            contents.add(boots);
         }
-        return ret;
+
+        ItemStack leggings = getItem(getSize() + 1);
+        if (leggings != null && leggings.getType() != Material.AIR) {
+            contents.add(leggings);
+        }
+
+        ItemStack chestplate = getItem(getSize() + 2);
+        if (chestplate != null && chestplate.getType() != Material.AIR) {
+            contents.add(chestplate);
+        }
+
+        ItemStack helmet = getItem(getSize() + 3);
+        if (helmet != null && helmet.getType() != Material.AIR) {
+            contents.add(helmet);
+        }
+
+        return contents.toArray(new ItemStack[0]);
     }
 
     public void setArmorContents(ItemStack[] items) {
