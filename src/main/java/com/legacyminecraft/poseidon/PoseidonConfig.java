@@ -185,8 +185,18 @@ public class PoseidonConfig extends Configuration {
 
         //Optional Poseidon Commands
         generateConfigOption("command.info", "This section allows you to enable or disable optional Poseidon commands. This is useful if you have a plugin that conflicts with a Poseidon command.");
+
+        // TPS command options
         generateConfigOption("command.tps.info", "Enables the /tps command to show the server's TPS for various intervals.");
         generateConfigOption("command.tps.enabled", true);
+
+        // ShowIP command options
+        generateConfigOption("command.showip.info", "Enables the /showip command to show your current IP address.");
+        generateConfigOption("command.showip.enabled", true);
+
+        // Memory command options
+        generateConfigOption("command.memory.info", "Enables the /memory command to display the current memory usage of the server.");
+        generateConfigOption("command.memory.enabled", true);
 
         //UberBukkit
         generateConfigOption("fix.optimize-sponges.enabled", true);
