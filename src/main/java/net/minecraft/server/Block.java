@@ -299,9 +299,6 @@ public class Block {
 
     public final void g(World world, int i, int j, int k, int l) {
         this.dropNaturally(world, i, j, k, l, 1.0F);
-        if (this instanceof BlockRedstoneTorch) {
-            world.setTypeId(i, j, k, 0);
-        }
     }
 
     public void dropNaturally(World world, int i, int j, int k, int l, float f) {
