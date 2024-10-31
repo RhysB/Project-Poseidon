@@ -101,6 +101,10 @@ public class ItemBlock extends Item {
                     return true;
 
                 }
+                if (this.id == 29 || this.id == 33) {
+                    Block.byId[this.id].postPlace(world, i, j, k, l);
+                    Block.byId[this.id].postPlace(world, i, j, k, entityhuman);
+                }
                 world.update(i, j, k, this.id); // <-- world.setTypeIdAndData does this on success (tell the world)
 
                 // CraftBukkit end
