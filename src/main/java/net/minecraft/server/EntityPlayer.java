@@ -7,8 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.ChunkCompressionThread;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
+import org.bukkit.event.inventory.ChestOpenedEvent;
 
 import java.util.*;
 
@@ -455,6 +455,12 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
     public void a(IInventory iinventory) {
         this.ai();
+
+        // Poseidon start
+        ChestOpenedEvent event = new ChestOpenedEvent((org.bukkit.entity.Player) this.getBukkitEntity(), iinventory.getContents());
+        this.world.getServer().getPluginManager().callEvent(event);
+        if (event.isCancelled()) return;
+        // Poseidon end
 
         this.netServerHandler.sendPacket(new Packet100OpenWindow(this.bO, 0, iinventory.getName(), iinventory.getSize()));
         this.activeContainer = new ContainerChest(this.inventory, iinventory);

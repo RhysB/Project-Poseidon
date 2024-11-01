@@ -18,5 +18,5 @@ public interface IInventory {
 
     boolean a_(EntityHuman entityhuman);
 
-    public abstract ItemStack[] getContents(); // CraftBukkit
+    ItemStack[] getContents(); // CraftBukkit
 }
