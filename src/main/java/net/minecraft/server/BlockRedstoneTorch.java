@@ -63,12 +63,12 @@ public class BlockRedstoneTorch extends BlockTorch {
 
     public void remove(World world, int i, int j, int k) {
         if (this.isOn) {
-            world.applyPhysics(i, j - 1, k, this.id);
-            world.applyPhysics(i, j + 1, k, this.id);
-            world.applyPhysics(i - 1, j, k, this.id);
-            world.applyPhysics(i + 1, j, k, this.id);
-            world.applyPhysics(i, j, k - 1, this.id);
-            world.applyPhysics(i, j, k + 1, this.id);
+            if (world.getTypeId(i, j, k) == this.id) world.applyPhysics(i, j - 1, k, this.id);
+            if (world.getTypeId(i, j, k) == this.id) world.applyPhysics(i, j + 1, k, this.id);
+            if (world.getTypeId(i, j, k) == this.id) world.applyPhysics(i - 1, j, k, this.id);
+            if (world.getTypeId(i, j, k) == this.id) world.applyPhysics(i + 1, j, k, this.id);
+            if (world.getTypeId(i, j, k) == this.id) world.applyPhysics(i, j, k - 1, this.id);
+            if (world.getTypeId(i, j, k) == this.id) world.applyPhysics(i, j, k + 1, this.id);
         }
     }
 

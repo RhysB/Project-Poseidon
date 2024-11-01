@@ -340,7 +340,7 @@ public class BlockPiston extends Block {
                     }
 
                     Block.byId[i2].g(world, i1, j1, k1, world.getData(i1, j1, k1));
-                    world.setTypeId(i1, j1, k1, 0);
+                    world.setRawTypeId(i1, j1, k1, 0);
                 }
             }
 
