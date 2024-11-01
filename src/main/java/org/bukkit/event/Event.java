@@ -140,7 +140,7 @@ public abstract class Event implements Serializable {
     /**
      * Provides a lookup for all core events
      *
-     * @see org.bukkit.event.
+     * @see org.bukkit.event
      */
     public enum Type {
 
@@ -154,6 +154,7 @@ public abstract class Event implements Serializable {
 
         PACKET_RECEIVED(Category.PACKET),
 
+        CHEST_OPENED(Category.BLOCK),
 
         /**
          * Called when a player first starts their connection. Called before UUID is known.
