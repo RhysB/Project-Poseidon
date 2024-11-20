@@ -16,7 +16,7 @@ public class EntityTracker {
     public EntityTracker(MinecraftServer minecraftserver, int i) {
         this.c = minecraftserver;
         this.e = i;
-        this.d = minecraftserver.serverConfigurationManager.a();
+        this.d = minecraftserver.serverConfigurationManager.assignPlayerToDimension();
     }
 
     // CraftBukkit - synchronized

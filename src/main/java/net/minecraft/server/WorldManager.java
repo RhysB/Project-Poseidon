@@ -33,7 +33,7 @@ public class WorldManager implements IWorldAccess {
     public void a(String s, int i, int j, int k) {}
 
     public void a(int i, int j, int k, TileEntity tileentity) {
-        this.server.serverConfigurationManager.a(i, j, k, tileentity);
+        this.server.serverConfigurationManager.assignPlayerToDimension(i, j, k, tileentity);
     }
 
     public void a(EntityHuman entityhuman, int i, int j, int k, int l, int i1) {

@@ -37,9 +37,9 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         if (value == isOp()) return;
 
         if (value) {
-            server.getHandle().e(getName());
+            server.getHandle().addOperator(getName());
         } else {
-            server.getHandle().f(getName());
+            server.getHandle().reloadWhiteList(getName());
         }
 
         perm.recalculatePermissions();
@@ -383,21 +383,21 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
     public void setBanned(boolean value) {
         if (value) {
-            server.getHandle().a(getName().toLowerCase());
+            server.getHandle().assignPlayerToDimension(getName().toLowerCase());
         } else {
             server.getHandle().b(getName().toLowerCase());
         }
     }
 
     public boolean isWhitelisted() {
-        return server.getHandle().e().contains(getName().toLowerCase());
+        return server.getHandle().addOperator().contains(getName().toLowerCase());
     }
 
     public void setWhitelisted(boolean value) {
         if (value) {
-            server.getHandle().k(getName().toLowerCase());
+            server.getHandle().loadOps(getName().toLowerCase());
         } else {
-            server.getHandle().l(getName().toLowerCase());
+            server.getHandle().saveOps(getName().toLowerCase());
         }
     }
 

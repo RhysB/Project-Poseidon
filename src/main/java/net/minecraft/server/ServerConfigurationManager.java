@@ -25,14 +25,14 @@ public class ServerConfigurationManager {
     public int maxPlayers; // CraftBukkit - private -> public
     public Set banByName = new HashSet(); // CraftBukkit - private -> public
     public Set banByIP = new HashSet(); // CraftBukkit - private -> public
-    private Set h = new HashSet();
-    private Set i = new HashSet();
-    private File j;
-    private File k;
-    private File l;
-    private File m;
+    private Set bannedPlayers = new HashSet();
+    private Set bannedIps = new HashSet();
+    private File bannedPlayersFile;
+    private File bannedIpsFile;
+    private File opsFile;
+    private File whiteListFile;
     public PlayerFileData playerFileData; // CraftBukkit - private - >public
-    public boolean o; // Craftbukkit - private -> public
+    public boolean whiteListBoolean; // Craftbukkit - private -> public
 
     // CraftBukkit start
     private CraftServer cserver;
@@ -51,23 +51,23 @@ public class ServerConfigurationManager {
         this.msgPlayerLeave = PoseidonConfig.getInstance().getConfigString("message.player.leave");
 
         this.server = minecraftserver;
-        this.j = minecraftserver.a("banned-players.txt");
-        this.k = minecraftserver.a("banned-ips.txt");
-        this.l = minecraftserver.a("ops.txt");
-        this.m = minecraftserver.a("white-list.txt");
-        int i = minecraftserver.propertyManager.getInt("view-distance", 10);
+        this.bannedPlayersFile = minecraftserver.a("banned-players.txt");
+        this.bannedIpsFile = minecraftserver.a("banned-ips.txt");
+        this.opsFile = minecraftserver.a("ops.txt");
+        this.whiteListFile = minecraftserver.a("white-list.txt");
+        int viewDistanceInt = minecraftserver.propertyManager.getInt("view-distance", 10);
 
         // CraftBukkit - removed playermanagers
         this.maxPlayers = minecraftserver.propertyManager.getInt("max-players", 20);
-        this.o = minecraftserver.propertyManager.getBoolean("white-list", false);
-        this.g();
-        this.i();
-        this.k();
-        this.m();
-        this.h();
-        this.j();
-        this.l();
-        this.n();
+        this.whiteListBoolean = minecraftserver.propertyManager.getBoolean("white-list", false);
+        this.loadBannedPlayers();
+        this.loadBannedIps();
+        this.loadOps();
+        this.loadWhiteList();
+        this.saveBannedPlayers();
+        this.saveBannedIps();
+        this.saveOps();
+        this.saveWhiteList();
     }
 
     public void setPlayerFileData(WorldServer[] aworldserver) {
@@ -75,7 +75,7 @@ public class ServerConfigurationManager {
         this.playerFileData = aworldserver[0].p().d();
     }
 
-    public void a(EntityPlayer entityplayer) {
+    public void assignPlayerToDimension(EntityPlayer entityplayer) {
         // CraftBukkit - removed playermanagers
         for (WorldServer world : this.server.worlds) {
             if (world.manager.managedPlayers.contains(entityplayer)) {
@@ -89,7 +89,7 @@ public class ServerConfigurationManager {
         worldserver.chunkProviderServer.getChunkAt((int) entityplayer.locX >> 4, (int) entityplayer.locZ >> 4);
     }
 
-    public int a() {
+    public int assignPlayerToDimension() {
         // CraftBukkit start
         if (this.server.worlds.size() == 0) {
             return this.server.propertyManager.getInt("view-distance", 10) * 16 - 16;
@@ -106,7 +106,7 @@ public class ServerConfigurationManager {
         this.playerFileData.b(entityplayer);
     }
 
-    public void c(EntityPlayer entityplayer) {
+    public void getPlayerNames(EntityPlayer entityplayer) {
         this.players.add(entityplayer);
         //PlayerTracker.getInstance().addPlayer(entityplayer.name);
         WorldServer worldserver = this.server.getWorldServer(entityplayer.dimension);
@@ -173,7 +173,7 @@ public class ServerConfigurationManager {
         return playerQuitEvent.getQuitMessage(); // CraftBukkit
     }
 
-    public EntityPlayer a(NetLoginHandler netloginhandler, String s) {
+    public EntityPlayer assignPlayerToDimension(NetLoginHandler netloginhandler, String s) {
         // CraftBukkit start - note: this entire method needs to be changed
         // Instead of kicking then returning, we need to store the kick reason
         // in the event, check with plugins to see if it's ok, and THEN kick
@@ -287,7 +287,7 @@ public class ServerConfigurationManager {
         entityplayer1.dead = false;
         entityplayer1.netServerHandler.teleport(new Location(worldserver.getWorld(), entityplayer1.locX, entityplayer1.locY, entityplayer1.locZ, entityplayer1.yaw, entityplayer1.pitch));
         // CraftBukkit end
-        this.a(entityplayer1, worldserver);
+        this.assignPlayerToDimension(entityplayer1, worldserver);
         this.getPlayerManager(entityplayer1.dimension).addPlayer(entityplayer1);
         worldserver.addEntity(entityplayer1);
         this.players.add(entityplayer1);
@@ -303,7 +303,7 @@ public class ServerConfigurationManager {
         return entityplayer1;
     }
 
-    public void f(EntityPlayer entityplayer) {
+    public void reloadWhiteList(EntityPlayer entityplayer) {
         // CraftBukkit start -- Replaced the standard handling of portals with a more customised method.
         int dimension = entityplayer.dimension;
         WorldServer fromWorld = this.server.getWorldServer(dimension);
@@ -357,7 +357,7 @@ public class ServerConfigurationManager {
         }
     }
 
-    public void a(Packet packet, int i) {
+    public void assignPlayerToDimension(Packet packet, int i) {
         for (int j = 0; j < this.players.size(); ++j) {
             EntityPlayer entityplayer = (EntityPlayer) this.players.get(j);
 
@@ -367,7 +367,7 @@ public class ServerConfigurationManager {
         }
     }
 
-    public String c() {
+    public String getPlayerNames() {
         String s = "";
 
         for (int i = 0; i < this.players.size(); ++i) {
@@ -381,20 +381,20 @@ public class ServerConfigurationManager {
         return s;
     }
 
-    public void a(String s) {
+    public void assignPlayerToDimension(String s) {
         this.banByName.add(s.toLowerCase());
-        this.h();
+        this.saveBannedPlayers();
     }
 
     public void b(String s) {
         this.banByName.remove(s.toLowerCase());
-        this.h();
+        this.saveBannedPlayers();
     }
 
-    private void g() {
+    private void loadBannedPlayers() {
         try {
             this.banByName.clear();
-            BufferedReader bufferedreader = new BufferedReader(new FileReader(this.j));
+            BufferedReader bufferedreader = new BufferedReader(new FileReader(this.bannedPlayersFile));
             String s = "";
 
             while ((s = bufferedreader.readLine()) != null) {
@@ -407,9 +407,9 @@ public class ServerConfigurationManager {
         }
     }
 
-    private void h() {
+    private void saveBannedPlayers() {
         try {
-            PrintWriter printwriter = new PrintWriter(new FileWriter(this.j, false));
+            PrintWriter printwriter = new PrintWriter(new FileWriter(this.bannedPlayersFile, false));
             Iterator iterator = this.banByName.iterator();
 
             while (iterator.hasNext()) {
@@ -424,20 +424,20 @@ public class ServerConfigurationManager {
         }
     }
 
-    public void c(String s) {
+    public void getPlayerNames(String s) {
         this.banByIP.add(s.toLowerCase());
-        this.j();
+        this.saveBannedIps();
     }
 
     public void d(String s) {
         this.banByIP.remove(s.toLowerCase());
-        this.j();
+        this.saveBannedIps();
     }
 
-    private void i() {
+    private void loadBannedIps() {
         try {
             this.banByIP.clear();
-            BufferedReader bufferedreader = new BufferedReader(new FileReader(this.k));
+            BufferedReader bufferedreader = new BufferedReader(new FileReader(this.bannedIpsFile));
             String s = "";
 
             while ((s = bufferedreader.readLine()) != null) {
@@ -450,9 +450,9 @@ public class ServerConfigurationManager {
         }
     }
 
-    private void j() {
+    private void saveBannedIps() {
         try {
-            PrintWriter printwriter = new PrintWriter(new FileWriter(this.k, false));
+            PrintWriter printwriter = new PrintWriter(new FileWriter(this.bannedIpsFile, false));
             Iterator iterator = this.banByIP.iterator();
 
             while (iterator.hasNext()) {
@@ -467,9 +467,9 @@ public class ServerConfigurationManager {
         }
     }
 
-    public void e(String s) {
-        this.h.add(s.toLowerCase());
-        this.l();
+    public void addOperator(String s) {
+        this.bannedPlayers.add(s.toLowerCase());
+        this.saveOps();
 
         // Craftbukkit start
         Player player = server.server.getPlayer(s);
@@ -479,9 +479,9 @@ public class ServerConfigurationManager {
         // Craftbukkit end
     }
 
-    public void f(String s) {
-        this.h.remove(s.toLowerCase());
-        this.l();
+    public void reloadWhiteList(String s) {
+        this.bannedPlayers.remove(s.toLowerCase());
+        this.saveOps();
 
         // Craftbukkit start
         Player player = server.server.getPlayer(s);
@@ -491,14 +491,14 @@ public class ServerConfigurationManager {
         // Craftbukkit end
     }
 
-    private void k() {
+    private void loadOps() {
         try {
-            this.h.clear();
-            BufferedReader bufferedreader = new BufferedReader(new FileReader(this.l));
+            this.bannedPlayers.clear();
+            BufferedReader bufferedreader = new BufferedReader(new FileReader(this.opsFile));
             String s = "";
 
             while ((s = bufferedreader.readLine()) != null) {
-                this.h.add(s.trim().toLowerCase());
+                this.bannedPlayers.add(s.trim().toLowerCase());
             }
 
             bufferedreader.close();
@@ -508,10 +508,10 @@ public class ServerConfigurationManager {
         }
     }
 
-    private void l() {
+    private void saveOps() {
         try {
-            PrintWriter printwriter = new PrintWriter(new FileWriter(this.l, false));
-            Iterator iterator = this.h.iterator();
+            PrintWriter printwriter = new PrintWriter(new FileWriter(this.opsFile, false));
+            Iterator iterator = this.bannedPlayers.iterator();
 
             while (iterator.hasNext()) {
                 String s = (String) iterator.next();
@@ -526,14 +526,14 @@ public class ServerConfigurationManager {
         }
     }
 
-    private void m() {
+    private void loadWhiteList() {
         try {
-            this.i.clear();
-            BufferedReader bufferedreader = new BufferedReader(new FileReader(this.m));
+            this.bannedIps.clear();
+            BufferedReader bufferedreader = new BufferedReader(new FileReader(this.whiteListFile));
             String s = "";
 
             while ((s = bufferedreader.readLine()) != null) {
-                this.i.add(s.trim().toLowerCase());
+                this.bannedIps.add(s.trim().toLowerCase());
             }
 
             bufferedreader.close();
@@ -542,10 +542,10 @@ public class ServerConfigurationManager {
         }
     }
 
-    private void n() {
+    private void saveWhiteList() {
         try {
-            PrintWriter printwriter = new PrintWriter(new FileWriter(this.m, false));
-            Iterator iterator = this.i.iterator();
+            PrintWriter printwriter = new PrintWriter(new FileWriter(this.whiteListFile, false));
+            Iterator iterator = this.bannedIps.iterator();
 
             while (iterator.hasNext()) {
                 String s = (String) iterator.next();
@@ -561,14 +561,14 @@ public class ServerConfigurationManager {
 
     public boolean isWhitelisted(String s) {
         s = s.trim().toLowerCase();
-        return !this.o || this.h.contains(s) || this.i.contains(s);
+        return !this.whiteListBoolean || this.bannedPlayers.contains(s) || this.bannedIps.contains(s);
     }
 
     public boolean isOp(String s) {
-        return this.h.contains(s.trim().toLowerCase());
+        return this.bannedPlayers.contains(s.trim().toLowerCase());
     }
 
-    public EntityPlayer i(String s) {
+    public EntityPlayer loadBannedIps(String s) {
         for (int i = 0; i < this.players.size(); ++i) {
             EntityPlayer entityplayer = (EntityPlayer) this.players.get(i);
 
@@ -580,8 +580,8 @@ public class ServerConfigurationManager {
         return null;
     }
 
-    public void a(String s, String s1) {
-        EntityPlayer entityplayer = this.i(s);
+    public void assignPlayerToDimension(String s, String s1) {
+        EntityPlayer entityplayer = this.loadBannedIps(s);
 
         if (entityplayer != null) {
             entityplayer.netServerHandler.sendPacket(new Packet3Chat(s1));
@@ -608,7 +608,7 @@ public class ServerConfigurationManager {
         }
     }
 
-    public void j(String s) {
+    public void saveBannedIps(String s) {
         Packet3Chat packet3chat = new Packet3Chat(s);
 
         for (int i = 0; i < this.players.size(); ++i) {
@@ -620,8 +620,8 @@ public class ServerConfigurationManager {
         }
     }
 
-    public boolean a(String s, Packet packet) {
-        EntityPlayer entityplayer = this.i(s);
+    public boolean assignPlayerToDimension(String s, Packet packet) {
+        EntityPlayer entityplayer = this.loadBannedIps(s);
 
         if (entityplayer != null) {
             entityplayer.netServerHandler.sendPacket(packet);
@@ -637,28 +637,28 @@ public class ServerConfigurationManager {
         }
     }
 
-    public void a(int i, int j, int k, TileEntity tileentity) {
+    public void assignPlayerToDimension(int i, int j, int k, TileEntity tileentity) {
     }
 
-    public void k(String s) {
-        this.i.add(s);
-        this.n();
+    public void loadOps(String s) {
+        this.bannedIps.add(s);
+        this.saveWhiteList();
     }
 
-    public void l(String s) {
-        this.i.remove(s);
-        this.n();
+    public void saveOps(String s) {
+        this.bannedIps.remove(s);
+        this.saveWhiteList();
     }
 
-    public Set e() {
-        return this.i;
+    public Set addOperator() {
+        return this.bannedIps;
     }
 
-    public void f() {
-        this.m();
+    public void reloadWhiteList() {
+        this.loadWhiteList();
     }
 
-    public void a(EntityPlayer entityplayer, WorldServer worldserver) {
+    public void assignPlayerToDimension(EntityPlayer entityplayer, WorldServer worldserver) {
         entityplayer.netServerHandler.sendPacket(new Packet4UpdateTime(worldserver.getTime()));
         if (worldserver.v()) {
             entityplayer.netServerHandler.sendPacket(new Packet70Bed(1));

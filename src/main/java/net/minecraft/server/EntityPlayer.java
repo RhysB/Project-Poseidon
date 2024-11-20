@@ -320,7 +320,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
                 if (this.F >= 1.0F) {
                     this.F = 1.0F;
                     this.D = 10;
-                    this.b.serverConfigurationManager.f(this);
+                    this.b.serverConfigurationManager.reloadWhiteList(this);
                 }
             }
 
