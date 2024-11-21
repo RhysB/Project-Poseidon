@@ -809,7 +809,7 @@ public final class CraftServer implements Server {
     }
 
     public void banIP(String address) {
-        server.getPlayerNames(address);
+        server.c(address);
     }
 
     public void unbanIP(String address) {
@@ -827,7 +827,7 @@ public final class CraftServer implements Server {
     }
 
     public void setWhitelist(boolean value) {
-        server.whiteListBoolean = value;
+        server.o = value;
         console.propertyManager.b("white-list", value);
         console.propertyManager.savePropertiesFile();
     }
@@ -835,7 +835,7 @@ public final class CraftServer implements Server {
     public Set<OfflinePlayer> getWhitelistedPlayers() {
         Set<OfflinePlayer> result = new HashSet<OfflinePlayer>();
 
-        for (Object name : server.addOperator()) {
+        for (Object name : server.e()) {
             result.add(getOfflinePlayer((String) name));
         }
 
@@ -843,7 +843,7 @@ public final class CraftServer implements Server {
     }
 
     public void reloadWhitelist() {
-        server.reloadWhiteList();
+        server.f();
     }
 
     public boolean isShuttingdown() {

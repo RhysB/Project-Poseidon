@@ -55,7 +55,7 @@ public class ConsoleCommandHandler {
         if (!s.toLowerCase().startsWith("help") && !s.toLowerCase().startsWith("?")) {
             if (s.toLowerCase().startsWith("list")) {
                 if (!checkPermission(listener, "list")) return true; // Craftbukkit
-                icommandlistener.sendMessage("Connected players: " + serverconfigurationmanager.getPlayerNames());
+                icommandlistener.sendMessage("Connected players: " + serverconfigurationmanager.c());
             } else if (s.toLowerCase().startsWith("stop")) {
                 if (!checkPermission(listener, "stop")) return true; // Craftbukkit
                 this.print(s1, "Stopping the server..");
@@ -104,19 +104,19 @@ public class ConsoleCommandHandler {
                     if (s.toLowerCase().startsWith("op ")) {
                         if (!checkPermission(listener, "op.give")) return true; // Craftbukkit
                         s2 = s.substring(s.indexOf(" ")).trim();
-                        serverconfigurationmanager.addOperator(s2);
+                        serverconfigurationmanager.e(s2);
                         this.print(s1, "Opping " + s2);
-                        serverconfigurationmanager.assignPlayerToDimension(s2, "\u00A7eYou are now op!");
+                        serverconfigurationmanager.a(s2, "\u00A7eYou are now op!");
                     } else if (s.toLowerCase().startsWith("deop ")) {
                         if (!checkPermission(listener, "op.take")) return true; // Craftbukkit
                         s2 = s.substring(s.indexOf(" ")).trim();
-                        serverconfigurationmanager.reloadWhiteList(s2);
-                        serverconfigurationmanager.assignPlayerToDimension(s2, "\u00A7eYou are no longer op!");
+                        serverconfigurationmanager.f(s2);
+                        serverconfigurationmanager.a(s2, "\u00A7eYou are no longer op!");
                         this.print(s1, "De-opping " + s2);
                     } else if (s.toLowerCase().startsWith("ban-ip ")) {
                         if (!checkPermission(listener, "ban.ip")) return true; // Craftbukkit
                         s2 = s.substring(s.indexOf(" ")).trim();
-                        serverconfigurationmanager.getPlayerNames(s2);
+                        serverconfigurationmanager.c(s2);
                         this.print(s1, "Banning ip " + s2);
                     } else if (s.toLowerCase().startsWith("pardon-ip ")) {
                         if (!checkPermission(listener, "unban.ip")) return true; // Craftbukkit
@@ -129,9 +129,9 @@ public class ConsoleCommandHandler {
                         if (s.toLowerCase().startsWith("ban ")) {
                             if (!checkPermission(listener, "ban.player")) return true; // Craftbukkit
                             s2 = s.substring(s.indexOf(" ")).trim();
-                            serverconfigurationmanager.assignPlayerToDimension(s2);
+                            serverconfigurationmanager.a(s2);
                             this.print(s1, "Banning " + s2);
-                            entityplayer = serverconfigurationmanager.loadBannedIps(s2);
+                            entityplayer = serverconfigurationmanager.i(s2);
                             if (entityplayer != null) {
                                 entityplayer.netServerHandler.disconnect("Banned by admin");
                             }
@@ -173,8 +173,8 @@ public class ConsoleCommandHandler {
                                     if (!checkPermission(listener, "teleport")) return true; // Craftbukkit
                                     astring = s.split(" ");
                                     if (astring.length == 3) {
-                                        entityplayer = serverconfigurationmanager.loadBannedIps(astring[1]);
-                                        entityplayer2 = serverconfigurationmanager.loadBannedIps(astring[2]);
+                                        entityplayer = serverconfigurationmanager.i(astring[1]);
+                                        entityplayer2 = serverconfigurationmanager.i(astring[2]);
                                         if (entityplayer == null) {
                                             icommandlistener.sendMessage("Can\'t find user " + astring[1] + ". No tp.");
                                         } else if (entityplayer2 == null) {
@@ -200,7 +200,7 @@ public class ConsoleCommandHandler {
                                         }
 
                                         s3 = astring[1];
-                                        entityplayer2 = serverconfigurationmanager.loadBannedIps(s3);
+                                        entityplayer2 = serverconfigurationmanager.i(s3);
                                         if (entityplayer2 != null) {
                                             try {
                                                 k = Integer.parseInt(astring[2]);
@@ -278,7 +278,7 @@ public class ConsoleCommandHandler {
                                             a.info("[" + s1 + "->" + astring[1] + "] " + s);
                                             s = "\u00A77" + s1 + " whispers " + s;
                                             a.info(s);
-                                            if (!serverconfigurationmanager.assignPlayerToDimension(astring[1], (Packet) (new Packet3Chat(s)))) {
+                                            if (!serverconfigurationmanager.a(astring[1], (Packet) (new Packet3Chat(s)))) {
                                                 icommandlistener.sendMessage("There\'s no player by that name online.");
                                             }
                                         }
@@ -319,7 +319,7 @@ public class ConsoleCommandHandler {
                 this.server.propertyManager.b("white-list", false);
             } else if ("list".equals(s2)) {
                 if (!checkPermission(listener, "whitelist.list")) return; // Craftbukkit
-                Set set = this.server.serverConfigurationManager.addOperator();
+                Set set = this.server.serverConfigurationManager.e();
                 String s3 = "";
 
                 String s4;
@@ -335,16 +335,16 @@ public class ConsoleCommandHandler {
                 if ("add".equals(s2) && astring.length == 3) {
                     if (!checkPermission(listener, "whitelist.add")) return; // Craftbukkit
                     s5 = astring[2].toLowerCase();
-                    this.server.serverConfigurationManager.loadOps(s5);
+                    this.server.serverConfigurationManager.k(s5);
                     this.print(s, "Added " + s5 + " to white-list");
                 } else if ("remove".equals(s2) && astring.length == 3) {
                     if (!checkPermission(listener, "whitelist.remove")) return; // Craftbukkit
                     s5 = astring[2].toLowerCase();
-                    this.server.serverConfigurationManager.saveOps(s5);
+                    this.server.serverConfigurationManager.l(s5);
                     this.print(s, "Removed " + s5 + " from white-list");
                 } else if ("reload".equals(s2)) {
                     if (!checkPermission(listener, "whitelist.reload")) return; // Craftbukkit
-                    this.server.serverConfigurationManager.reloadWhiteList();
+                    this.server.serverConfigurationManager.f();
                     this.print(s, "Reloaded white-list from file");
                 }
             }

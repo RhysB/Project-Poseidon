@@ -32,9 +32,9 @@ public class CraftOfflinePlayer implements OfflinePlayer {
         if (value == isOp()) return;
 
         if (value) {
-            server.getHandle().addOperator(getName().toLowerCase());
+            server.getHandle().e(getName().toLowerCase());
         } else {
-            server.getHandle().reloadWhiteList(getName().toLowerCase());
+            server.getHandle().f(getName().toLowerCase());
         }
     }
 
@@ -44,21 +44,21 @@ public class CraftOfflinePlayer implements OfflinePlayer {
 
     public void setBanned(boolean value) {
         if (value) {
-            server.getHandle().assignPlayerToDimension(name.toLowerCase());
+            server.getHandle().a(name.toLowerCase());
         } else {
             server.getHandle().b(name.toLowerCase());
         }
     }
 
     public boolean isWhitelisted() {
-        return server.getHandle().addOperator().contains(name.toLowerCase());
+        return server.getHandle().e().contains(name.toLowerCase());
     }
 
     public void setWhitelisted(boolean value) {
         if (value) {
-            server.getHandle().loadOps(name.toLowerCase());
+            server.getHandle().k(name.toLowerCase());
         } else {
-            server.getHandle().saveOps(name.toLowerCase());
+            server.getHandle().l(name.toLowerCase());
         }
     }
 }
