@@ -55,7 +55,7 @@ public class ServerConfigurationManager {
         this.k = minecraftserver.a("banned-ips.txt");
         this.l = minecraftserver.a("ops.txt");
         this.m = minecraftserver.a("white-list.txt");
-        int viewDistanceInt = minecraftserver.propertyManager.getInt("view-distance", 10);
+        int i = minecraftserver.propertyManager.getInt("view-distance", 10);
 
         // CraftBukkit - removed playermanagers
         this.maxPlayers = minecraftserver.propertyManager.getInt("max-players", 20);
