@@ -27,6 +27,7 @@ public class BlockSand extends Block {
             byte b0 = 32;
 
             if (!instaFall && world.a(i - b0, j - b0, k - b0, i + b0, j + b0, k + b0)) {
+                world.setTypeId(i, j, k, 0);
                 EntityFallingSand entityfallingsand = new EntityFallingSand(world, i + 0.5D, j + 0.5D, k + 0.5D, this.id);
 
                 world.addEntity(entityfallingsand);
