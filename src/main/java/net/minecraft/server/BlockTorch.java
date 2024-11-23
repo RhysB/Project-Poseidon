@@ -112,7 +112,7 @@ public class BlockTorch extends Block {
     }
 
     private boolean h(World world, int i, int j, int k) {
-        if (!this.canPlace(world, i, j, k)) {
+        if (!this.canPlace(world, i, j, k) && world.getTypeId(i, j, k) == this.id) {
             this.g(world, i, j, k, world.getData(i, j, k));
             world.setTypeId(i, j, k, 0);
             return false;
