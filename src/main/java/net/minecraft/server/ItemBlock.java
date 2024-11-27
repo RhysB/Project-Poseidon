@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.bukkit.craftbukkit.block.CraftBlockState;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -103,7 +104,7 @@ public class ItemBlock extends Item {
                 }
                 // CraftBukkit end
 
-                if (this.id == 29 || this.id == 33) {
+                if (PoseidonConfig.getInstance().getConfigBoolean("world.settings.pistons.other-fixes.enabled", true) && (this.id == 29 || this.id == 33)) {
                     Block.byId[this.id].postPlace(world, i, j, k, l);
                     Block.byId[this.id].postPlace(world, i, j, k, entityhuman);
                     world.update(i, j, k, this.id); // <-- world.setTypeIdAndData does this on success (tell the world)

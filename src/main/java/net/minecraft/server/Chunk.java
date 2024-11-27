@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.PoseidonConfig;
+
 import java.util.*;
 
 public class Chunk {
@@ -233,9 +235,16 @@ public class Chunk {
             int i2 = this.z * 16 + k;
 
             this.b[i << 11 | k << 7 | j] = (byte) (b0 & 255);
-            this.e.a(i, j, k, i1);
-            if (k1 != 0 && !this.world.isStatic) {
-                Block.byId[k1].remove(this.world, l1, j, i2);
+            if (PoseidonConfig.getInstance().getConfigBoolean("world.settings.pistons.transmutation-fix.enabled", true)) {
+                this.e.a(i, j, k, i1);
+                if (k1 != 0 && !this.world.isStatic) {
+                    Block.byId[k1].remove(this.world, l1, j, i2);
+                }
+            } else {
+                if (k1 != 0 && !this.world.isStatic) {
+                    Block.byId[k1].remove(this.world, l1, j, i2);
+                }
+                this.e.a(i, j, k, i1);
             }
 
             if (!this.world.worldProvider.e) {
