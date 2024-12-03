@@ -1,5 +1,5 @@
 ---
-name: build-and-test
+name: build,-test-and-produce-jar
 on:
   pull_request:
     types:
@@ -36,8 +36,8 @@ jobs:
         shell: bash
         run: |
           mvn clean install 
-      - run: mkdir artifacts && cp target/*.jar artifacts
+      - run: mkdir ${{ matrix.java-version}}-artifacts && cp target/*.jar ${{ matrix.java-version}}-artifacts
       - uses: actions/upload-artifact@v4
         with:
-         name: Package
-         path: artifacts
+         name: ${{ matrix.java-version}}-Package
+         path: ${{ matrix.java-version}}-artifacts
