@@ -1,4 +1,4 @@
-name: build-and-test
+name: build-and-test-lts
 on:
   pull_request:
     types:
@@ -13,29 +13,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        # Java 8 is tested as a part of the build-and-test workflow
+        java-version: ['17', '21' ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Set up JDK 1.8
+      - name: Set up Java ${{ matrix.java-version }}
         uses: actions/setup-java@v2
         with:
-          distribution: 'temurin'
-          java-version: 8
+          java-version: ${{ matrix.java-version }}
+          distribution: temurin
+          java-package: jdk
 
       - name: Set up Maven
         uses: stCarolas/setup-maven@v4.5
         with:
           maven-version: 3.9.1
 
-      - name: build application
+      - name: Build application
         shell: bash
         run: |
           mvn clean install
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ github.event.repository.name }}-artifact
-          path: target/*.jar
