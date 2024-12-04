@@ -22,20 +22,20 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
 
-      # Step 3: Extract POM version
+      # Step 3: Extract POM Version
       - name: Extract POM Version
         id: pom_version
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "POM_VERSION=$VERSION" >> $GITHUB_ENV
 
-      # Step 4: Get current date and SHA
+      # Step 4: Generate Release Version
       - name: Generate Release Version
         id: release_version
         run: |
           DATE=$(date +'%y%m%d')
           SHA=$(echo $GITHUB_SHA | cut -c1-7)
-          VERSION="${POM_VERSION}--${DATE}-${SHA}"
+          VERSION="${POM_VERSION}-${DATE}-${SHA}"
           echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
 
       # Step 5: Build the JAR
@@ -44,6 +44,7 @@ jobs:
 
       # Step 6: Create Release
       - name: Create Release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -53,13 +54,13 @@ jobs:
           draft: false
           prerelease: false
 
-      # Step 7: Upload the JAR as a Release Asset
+      # Step 7: Upload the JAR
       - name: Upload JAR
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: target/*.jar
           asset_name: your-project-name-${{ env.RELEASE_VERSION }}.jar
           asset_content_type: application/java-archive
