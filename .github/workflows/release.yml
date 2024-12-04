@@ -1,0 +1,65 @@
+name: Release JAR on Push to Main
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Java 8
+      - name: Set up JDK 8
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+
+      # Step 3: Extract POM version
+      - name: Extract POM Version
+        id: pom_version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "POM_VERSION=$VERSION" >> $GITHUB_ENV
+
+      # Step 4: Get current date and SHA
+      - name: Generate Release Version
+        id: release_version
+        run: |
+          DATE=$(date +'%y%m%d')
+          SHA=$(echo $GITHUB_SHA | cut -c1-7)
+          VERSION="${POM_VERSION}--${DATE}-${SHA}"
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+
+      # Step 5: Build the JAR
+      - name: Build JAR
+        run: mvn package
+
+      # Step 6: Create Release
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: ${{ env.RELEASE_VERSION }}
+          draft: false
+          prerelease: false
+
+      # Step 7: Upload the JAR as a Release Asset
+      - name: Upload JAR
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: target/*.jar
+          asset_name: your-project-name-${{ env.RELEASE_VERSION }}.jar
+          asset_content_type: application/java-archive
