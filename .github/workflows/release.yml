@@ -58,7 +58,7 @@ jobs:
           # Application Information
           echo "app_name=Project Poseidon" >> src/main/resources/version.properties
           echo "release_version=${{ env.RELEASE_VERSION }}" >> src/main/resources/version.properties
-          ech0 "maven_version=${{ env.PROJECT_VERSION }}" >> src/main/resources/version.properties
+          echo "maven_version=${{ env.PROJECT_VERSION }}" >> src/main/resources/version.properties
           
           # Build Type
           if [[ "${{ github.ref }}" == "refs/heads/master" || "${{ github.ref }}" == "refs/heads/main" ]]; then
