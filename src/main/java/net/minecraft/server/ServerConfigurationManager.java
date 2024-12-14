@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.Poseidon;
 import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -120,7 +121,8 @@ public class ServerConfigurationManager {
         }
 
         // CraftBukkit start
-        PlayerJoinEvent playerJoinEvent = new PlayerJoinEvent(this.cserver.getPlayer(entityplayer), msgPlayerJoin.replace("%player%", entityplayer.name));
+        Player player = this.cserver.getPlayer(entityplayer);
+        PlayerJoinEvent playerJoinEvent = new PlayerJoinEvent(player, msgPlayerJoin.replace("%player%", entityplayer.name));
         this.cserver.getPluginManager().callEvent(playerJoinEvent);
 
         String joinMessage = playerJoinEvent.getJoinMessage();
@@ -129,6 +131,18 @@ public class ServerConfigurationManager {
             this.server.serverConfigurationManager.sendAll(new Packet3Chat(joinMessage));
         }
         // CraftBukkit end
+
+        // Poseidon Start
+        // Notify staff of Poseidon update if they are op or have poseidon.update permission
+        if(PoseidonConfig.getInstance().getConfigBoolean("settings.update-checker.notify-staff.enabled", true) && Poseidon.getServer().isUpdateAvailable()) {
+            if (player.isOp() || player.hasPermission("poseidon.update")) {
+                String updateMessage = PoseidonConfig.getInstance().getConfigString("message.update.available");
+                updateMessage = updateMessage.replace("%newversion%", Poseidon.getServer().getNewestVersion());
+                updateMessage = updateMessage.replace("%currentversion%", Poseidon.getServer().getReleaseVersion());
+                player.sendMessage(updateMessage);
+            }
+        }
+        // Poseidon End
 
         worldserver.addEntity(entityplayer);
         this.getPlayerManager(entityplayer.dimension).addPlayer(entityplayer);

@@ -30,7 +30,7 @@ public class PoseidonConfig extends Configuration {
 
     public void resetConfig() {
         // Delete all the config options
-        for(String key : this.getKeys()) {
+        for (String key : this.getKeys()) {
             this.removeProperty(key);
         }
         // Reload the config
@@ -95,7 +95,7 @@ public class PoseidonConfig extends Configuration {
 
         generateConfigOption("settings.fix-drowning-push-down.enabled", true);
         generateConfigOption("settings.fix-drowning-push-down.info", "This setting fixes taking drowning damage pushing you down.");
-        
+
         generateConfigOption("settings.player-knockback-fix.enabled", true);
         generateConfigOption("settings.player-knockback-fix.info", "This setting fixes reduced knockback for certain players on the server.");
 
@@ -179,6 +179,11 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("emergency.debug.regenerate-corrupt-chunks.enable", false);
         generateConfigOption("emergency.debug.regenerate-corrupt-chunks.info", "This setting allows you to automatically regenerate corrupt chunks. This is useful after a ungraceful shutdown while a file is being written to or out of memory exception.");
 
+        generateConfigOption("settings.update-checker.enabled", true);
+        generateConfigOption("settings.update-checker.info", "This setting allows you to disable the update checker. This is useful if you have a custom build of Poseidon or don't want to be notified of updates.");
+        generateConfigOption("settings.update-checker.notify-staff.enabled", true);
+        generateConfigOption("settings.update-checker.notify-staff.info", "This setting notifies operators and players with the permission poseidon.update when a new version of Poseidon is available on join.");
+
         //Messages
         generateConfigOption("message.kick.banned", "You are banned from this server!");
         generateConfigOption("message.kick.ip-banned", "Your IP address is banned from this server!");
@@ -188,6 +193,7 @@ public class PoseidonConfig extends Configuration {
         generateConfigOption("message.kick.already-online", "\u00A7cA player with your username or uuid is already online, try reconnecting in a minute.");
         generateConfigOption("message.player.join", "\u00A7e%player% joined the game.");
         generateConfigOption("message.player.leave", "\u00A7e%player% left the game.");
+        generateConfigOption("message.update.available", "\u00A7dA newer version of Poseidon is available: %newversion%");
 
         //Optional Poseidon Commands
         generateConfigOption("command.info", "This section allows you to enable or disable optional Poseidon commands. This is useful if you have a plugin that conflicts with a Poseidon command.");
