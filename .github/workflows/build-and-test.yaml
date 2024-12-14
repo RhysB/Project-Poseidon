@@ -83,13 +83,3 @@ jobs:
         with:
           name: ${{ github.event.repository.name }}-artifact
           path: target/*.jar
-
-      # Step 9: Notify Build Status
-      - name: Notify Build Status
-        if: ${{ always() }}
-        run: |
-          if [ "${{ success() }}" = "true" ]; then
-            echo "Build succeeded for ${{ github.event.repository.name }} on ${{ github.ref_name }}"
-          else
-            echo "Build failed for ${{ github.event.repository.name }} on ${{ github.ref_name }}"
-          fi
