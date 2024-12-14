@@ -38,6 +38,7 @@ public class PoseidonCommand extends Command {
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (args.length == 0) {
+            String appName = versionProperties.getProperty("app_name", "Unknown");
             String releaseVersion = versionProperties.getProperty("release_version", "Unknown");
             String mavenVersion = versionProperties.getProperty("maven_version", "Unknown");
             String buildTimestamp = versionProperties.getProperty("build_timestamp", "Unknown");
@@ -52,7 +53,7 @@ public class PoseidonCommand extends Command {
             if ("Unknown".equals(releaseVersion)) {
                 sender.sendMessage(ChatColor.RED + "Warning: version.properties not found. This is a local or unconfigured build.");
             } else {
-                sender.sendMessage(ChatColor.GRAY + "This server is running " + ChatColor.AQUA + "Project Poseidon" + ChatColor.GRAY + ":");
+                sender.sendMessage(ChatColor.GRAY + "This server is running " + ChatColor.AQUA + appName + ChatColor.GRAY + ":");
                 sender.sendMessage(ChatColor.GRAY + " - Version: " + ChatColor.YELLOW + releaseVersion);
                 sender.sendMessage(ChatColor.GRAY + " - Built at: " + ChatColor.YELLOW + buildTimestamp);
                 sender.sendMessage(ChatColor.GRAY + " - Git SHA: " + ChatColor.YELLOW + gitCommit);
