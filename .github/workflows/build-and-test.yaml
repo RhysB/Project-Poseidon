@@ -44,12 +44,22 @@ jobs:
       - name: Create version.properties file
         run: |
           mkdir -p src/main/resources
-          echo "version=${{ env.RELEASE_VERSION }}" > src/main/resources/version.properties
-          echo "date=$(date +'%Y-%m-%d %H:%M:%S')" >> src/main/resources/version.properties
-          echo "sha=${GITHUB_SHA}" >> src/main/resources/version.properties
-          echo "release_tag=${{ env.RELEASE_VERSION }}" >> src/main/resources/version.properties
           
-          # Determine build type
+          # Core Metadata
+          echo "version=${{ env.RELEASE_VERSION }}" > src/main/resources/version.properties
+          echo "build_timestamp=$(date --utc +'%Y-%m-%dT%H:%M:%SZ')" >> src/main/resources/version.properties
+          echo "git_branch=${{ github.ref_name }}" >> src/main/resources/version.properties
+          echo "git_commit=${GITHUB_SHA}" >> src/main/resources/version.properties
+          
+          # Application Information
+          echo "app_name=MyApplication" >> src/main/resources/version.properties
+          echo "app_version=${{ env.RELEASE_VERSION }}" >> src/main/resources/version.properties
+          
+          # Build Environment
+          echo "build_os=ubuntu-latest" >> src/main/resources/version.properties
+          echo "java_version=8" >> src/main/resources/version.properties
+          
+          # Build Type
           if [[ "${{ github.ref }}" == "refs/heads/master" || "${{ github.ref }}" == "refs/heads/main" ]]; then
             BUILD_TYPE="production"
           elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
@@ -57,8 +67,20 @@ jobs:
           else
             BUILD_TYPE="development"
           fi
-          
           echo "build_type=${BUILD_TYPE}" >> src/main/resources/version.properties
+          
+          # CI/CD Metadata
+          echo "workflow_name=${{ github.workflow }}" >> src/main/resources/version.properties
+          echo "workflow_run_id=${{ github.run_id }}" >> src/main/resources/version.properties
+          echo "workflow_run_number=${{ github.run_number }}" >> src/main/resources/version.properties
+          
+          # Team or Author Information
+          echo "build_author=${{ github.actor }}" >> src/main/resources/version.properties
+          echo "maintainer_email=devteam@example.com" >> src/main/resources/version.properties
+          
+          # Custom Fields
+          echo "feature_x_enabled=true" >> src/main/resources/version.properties
+          echo "feature_y_enabled=false" >> src/main/resources/version.properties
 
       - name: Set up Maven
         uses: stCarolas/setup-maven@v4.5
