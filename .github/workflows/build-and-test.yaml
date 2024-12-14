@@ -45,16 +45,16 @@ jobs:
         run: |
           mkdir -p src/main/resources
           
+          # Application Information
+          APP_NAME=$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout)          
+
           # Core Metadata
-          echo "version=${{ env.RELEASE_VERSION }}" > src/main/resources/version.properties
+          echo "version=${{ env.RELEASE_VERSION }}" >> src/main/resources/version.properties
           echo "build_timestamp=$(date --utc +'%Y-%m-%dT%H:%M:%SZ')" >> src/main/resources/version.properties
           echo "git_branch=${{ github.ref_name }}" >> src/main/resources/version.properties
           echo "git_commit=${GITHUB_SHA}" >> src/main/resources/version.properties
           
-          # Application Information
-          APP_NAME=$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout)
-          
-          echo "app_name=${APP_NAME}" > src/main/resources/version.properties
+          echo "app_name=${APP_NAME}" >> src/main/resources/version.properties
           echo "release_version=${{ env.RELEASE_VERSION }}" >> src/main/resources/version.properties
           echo "maven_version=${{ env.PROJECT_VERSION }}" >> src/main/resources/version.properties
           
