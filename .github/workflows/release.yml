@@ -56,12 +56,9 @@ jobs:
           echo "git_commit=${GITHUB_SHA}" >> src/main/resources/version.properties
           
           # Application Information
-          echo "app_name=MyApplication" >> src/main/resources/version.properties
-          echo "app_version=${{ env.RELEASE_VERSION }}" >> src/main/resources/version.properties
-          
-          # Build Environment
-          echo "build_os=ubuntu-latest" >> src/main/resources/version.properties
-          echo "java_version=8" >> src/main/resources/version.properties
+          echo "app_name=Project Poseidon" >> src/main/resources/version.properties
+          echo "release_version=${{ env.RELEASE_VERSION }}" >> src/main/resources/version.properties
+          ech0 "maven_version=${{ env.PROJECT_VERSION }}" >> src/main/resources/version.properties
           
           # Build Type
           if [[ "${{ github.ref }}" == "refs/heads/master" || "${{ github.ref }}" == "refs/heads/main" ]]; then
@@ -80,11 +77,6 @@ jobs:
           
           # Team or Author Information
           echo "build_author=${{ github.actor }}" >> src/main/resources/version.properties
-          echo "maintainer_email=devteam@example.com" >> src/main/resources/version.properties
-          
-          # Custom Fields
-          echo "feature_x_enabled=true" >> src/main/resources/version.properties
-          echo "feature_y_enabled=false" >> src/main/resources/version.properties
 
       # Step 7: Build with Maven
       - name: Build with Maven
