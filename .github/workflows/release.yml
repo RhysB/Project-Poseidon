@@ -39,16 +39,36 @@ jobs:
       - name: Generate Release Version
         id: release_version
         run: |
-          DATE=$(date +'%y%m%d')
+          DATE=$(date +'%y%m%d-%H%M')
           SHA=$(echo $GITHUB_SHA | cut -c1-7)
           RELEASE_VERSION="${PROJECT_VERSION}-${DATE}-${SHA}"
           echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
 
-      # Step 6: Build with Maven
+      # Step 6: Create version.properties file
+      - name: Create version.properties file
+        run: |
+          mkdir -p src/main/resources
+          echo "version=${{ env.RELEASE_VERSION }}" > src/main/resources/version.properties
+          echo "date=$(date +'%Y-%m-%d %H:%M:%S')" >> src/main/resources/version.properties
+          echo "sha=${GITHUB_SHA}" >> src/main/resources/version.properties
+          echo "release_tag=${{ env.RELEASE_VERSION }}" >> src/main/resources/version.properties
+          
+          # Determine build type
+          if [[ "${{ github.ref }}" == "refs/heads/master" || "${{ github.ref }}" == "refs/heads/main" ]]; then
+            BUILD_TYPE="production"
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            BUILD_TYPE="pull_request"
+          else
+            BUILD_TYPE="development"
+          fi
+          
+          echo "build_type=${BUILD_TYPE}" >> src/main/resources/version.properties
+
+      # Step 7: Build with Maven
       - name: Build with Maven
         run: mvn clean package
 
-      # Step 7: Create GitHub Release
+      # Step 8: Create GitHub Release
       - name: Create GitHub Release
         if: ${{ !endsWith(env.PROJECT_VERSION, '-SNAPSHOT') }}
         uses: softprops/action-gh-release@v1
