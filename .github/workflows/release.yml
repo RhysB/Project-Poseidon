@@ -39,16 +39,52 @@ jobs:
       - name: Generate Release Version
         id: release_version
         run: |
-          DATE=$(date +'%y%m%d')
+          DATE=$(date +'%y%m%d-%H%M')
           SHA=$(echo $GITHUB_SHA | cut -c1-7)
           RELEASE_VERSION="${PROJECT_VERSION}-${DATE}-${SHA}"
           echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
 
-      # Step 6: Build with Maven
+      # Step 6: Create version.properties file
+      - name: Create version.properties file
+        run: |
+          mkdir -p src/main/resources
+          
+          # Application Information
+          APP_NAME=$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout)          
+
+          # Core Metadata
+          echo "version=${{ env.RELEASE_VERSION }}" >> src/main/resources/version.properties
+          echo "build_timestamp=$(date --utc +'%Y-%m-%dT%H:%M:%SZ')" >> src/main/resources/version.properties
+          echo "git_branch=${{ github.ref_name }}" >> src/main/resources/version.properties
+          echo "git_commit=${GITHUB_SHA}" >> src/main/resources/version.properties
+          
+          echo "app_name=${APP_NAME}" >> src/main/resources/version.properties
+          echo "release_version=${{ env.RELEASE_VERSION }}" >> src/main/resources/version.properties
+          echo "maven_version=${{ env.PROJECT_VERSION }}" >> src/main/resources/version.properties
+          
+          # Build Type
+          if [[ "${{ github.ref }}" == "refs/heads/master" || "${{ github.ref }}" == "refs/heads/main" ]]; then
+            BUILD_TYPE="production"
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            BUILD_TYPE="pull_request"
+          else
+            BUILD_TYPE="development"
+          fi
+          echo "build_type=${BUILD_TYPE}" >> src/main/resources/version.properties
+          
+          # CI/CD Metadata
+          echo "workflow_name=${{ github.workflow }}" >> src/main/resources/version.properties
+          echo "workflow_run_id=${{ github.run_id }}" >> src/main/resources/version.properties
+          echo "workflow_run_number=${{ github.run_number }}" >> src/main/resources/version.properties
+          
+          # Team or Author Information
+          echo "build_author=${{ github.actor }}" >> src/main/resources/version.properties
+
+      # Step 7: Build with Maven
       - name: Build with Maven
         run: mvn clean package
 
-      # Step 7: Create GitHub Release
+      # Step 8: Create GitHub Release
       - name: Create GitHub Release
         if: ${{ !endsWith(env.PROJECT_VERSION, '-SNAPSHOT') }}
         uses: softprops/action-gh-release@v1
