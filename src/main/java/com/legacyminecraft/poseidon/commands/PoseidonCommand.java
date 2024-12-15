@@ -1,5 +1,6 @@
 package com.legacyminecraft.poseidon.commands;
 
+import com.legacyminecraft.poseidon.Poseidon;
 import com.projectposeidon.api.PoseidonUUID;
 import com.projectposeidon.api.UUIDType;
 import org.bukkit.Bukkit;
@@ -22,28 +23,17 @@ public class PoseidonCommand extends Command {
         this.description = "Show data regarding the server's version of Project Poseidon";
         this.usageMessage = "/poseidon";
         this.setAliases(Arrays.asList("projectposeidon"));
-        loadVersionProperties();
-    }
-
-    private void loadVersionProperties() {
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("version.properties")) {
-            if (inputStream != null) {
-                versionProperties.load(inputStream);
-            }
-        } catch (IOException e) {
-            Bukkit.getLogger().warning("Failed to load version.properties: " + e.getMessage());
-        }
     }
 
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (args.length == 0) {
-            String appName = versionProperties.getProperty("app_name", "Unknown");
-            String releaseVersion = versionProperties.getProperty("release_version", "Unknown");
-            String mavenVersion = versionProperties.getProperty("maven_version", "Unknown");
-            String buildTimestamp = versionProperties.getProperty("build_timestamp", "Unknown");
-            String gitCommit = versionProperties.getProperty("git_commit", "Unknown");
-            String buildType = versionProperties.getProperty("build_type", "Unknown");
+            String appName = Poseidon.getServer().getAppName();
+            String releaseVersion = Poseidon.getServer().getReleaseVersion();
+            String mavenVersion = Poseidon.getServer().getMavenVersion();
+            String buildTimestamp = Poseidon.getServer().getBuildTimestamp();
+            String gitCommit = Poseidon.getServer().getGitCommit();
+            String buildType = Poseidon.getServer().getBuildType();
 
             // Shorten the git commit hash to 7 characters
             if (gitCommit.length() > 7) {

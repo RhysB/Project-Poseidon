@@ -2,6 +2,7 @@ package org.bukkit.plugin;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.MapMaker;
+import com.legacyminecraft.poseidon.Poseidon;
 import com.legacyminecraft.poseidon.event.PoseidonCustomListener;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -290,12 +291,14 @@ public final class SimplePluginManager implements PluginManager {
             if (!pluginCommands.isEmpty()) {
                 commandMap.registerAll(plugin.getDescription().getName(), pluginCommands);
 
+                // Project Poseidon - Start - Hide commands
                 for(Command c : pluginCommands) {
                     if(c.isHidden()) {
-                        server.addHiddenCommand(c.getLabel());
-                        server.addHiddenCommands(c.getAliases());
+                        Poseidon.getServer().addHiddenCommand(c.getLabel());
+                        Poseidon.getServer().addHiddenCommands(c.getAliases());
                     }
                 }
+                // Project Poseidon - End - Hide commands
             }
             
             try {
