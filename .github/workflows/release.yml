@@ -1,14 +1,10 @@
-name: build-and-test
+name: Release Workflow
+
 on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
   push:
     branches:
-      - master
       - main
+      - master
 
 jobs:
   build:
@@ -31,7 +27,15 @@ jobs:
         id: get_version
         run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
-      # Step 4: Generate custom release version
+      # Step 4: Fail if snapshot version
+      - name: Fail if snapshot version
+        run: |
+          if [[ $PROJECT_VERSION == *"-SNAPSHOT"* ]]; then
+            echo "Snapshot versions are not releasable"
+            exit 0
+          fi
+
+      # Step 5: Generate custom release version
       - name: Generate Release Version
         id: release_version
         run: |
@@ -40,7 +44,7 @@ jobs:
           RELEASE_VERSION="${PROJECT_VERSION}-${DATE}-${SHA}"
           echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
 
-      # Step 5: Create version.properties file
+      # Step 6: Create version.properties file
       - name: Create version.properties file
         run: |
           mkdir -p src/main/resources
@@ -76,26 +80,18 @@ jobs:
           # Team or Author Information
           echo "build_author=${{ github.actor }}" >> src/main/resources/version.properties
 
-      - name: Set up Maven
-        uses: stCarolas/setup-maven@v4.5
+      # Step 7: Build with Maven
+      - name: Build with Maven
+        run: mvn clean package
+
+      # Step 8: Create GitHub Release
+      - name: Create GitHub Release
+        if: ${{ !endsWith(env.PROJECT_VERSION, '-SNAPSHOT') }}
+        uses: softprops/action-gh-release@v1
         with:
-          maven-version: 3.9.1
-
-      # Step 6: Build application
-      - name: Build Application
-        shell: bash
-        run: |
-          mvn clean install
-
-      # Step 7: Run Tests
-      - name: Run Tests
-        shell: bash
-        run: |
-          mvn test
-
-      # Step 8: Upload artifact
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ github.event.repository.name }}-artifact
-          path: target/*.jar
+          tag_name: ${{ env.RELEASE_VERSION }}
+          name: ${{ env.RELEASE_VERSION }}
+          files: |
+            target/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

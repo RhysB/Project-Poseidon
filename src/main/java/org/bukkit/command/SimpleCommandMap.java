@@ -1,6 +1,7 @@
 package org.bukkit.command;
 
 import com.legacyminecraft.poseidon.PoseidonConfig;
+import com.legacyminecraft.poseidon.commands.PoseidonCommand;
 import com.legacyminecraft.poseidon.commands.TPSCommand;
 import org.bukkit.Server;
 import org.bukkit.command.defaults.*;

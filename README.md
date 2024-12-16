@@ -39,7 +39,9 @@ This is a non-exhaustive list of features that Project Poseidon includes:
 Please read the following article before changing over to Project Poseidon: https://github.com/RhysB/Project-Poseidon/wiki/Implementing-Project-Poseidon-In-Production
 
 # Download
-You can download the latest builds at the [Glass Launcher Jenkins](https://jenkins.glass-launcher.net/job/Project-Poseidon/).
+You can download the latest builds at the [GitHub Releases](https://github.com/retromcorg/Project-Poseidon/releases/).
+
+Historical builds can be found on the [Glass Launcher Jenkins](https://jenkins.glass-launcher.net/job/Project-Poseidon/).
 
 Please note, download the artifact (JAR) without original in the name, eg. `project-poseidon-1.1.8.jar`.
 

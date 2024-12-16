@@ -1,5 +1,7 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.Poseidon;
+import com.legacyminecraft.poseidon.PoseidonServer;
 import com.legacyminecraft.poseidon.event.PlayerSendPacketEvent;
 import com.projectposeidon.ConnectionType;
 import com.legacyminecraft.poseidon.PoseidonConfig;
@@ -98,6 +100,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     public int getRawConnectionType() {
         return this.rawConnectionType;
     }
+
 
     //Project Poseidon - End
 
@@ -285,6 +288,19 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
                 if (packet10flying.h && packet10flying.y == -999.0D && packet10flying.stance == -999.0D) {
                     d5 = packet10flying.x;
                     d4 = packet10flying.z;
+
+                    // Project Poseidon - Start
+                    // Boat crash fix ported from UberBukkit
+
+                    double d8 = d5 * d5 + d4 * d4;
+                    if (d8 > 100.0D) {
+                        a.warning("[Poseidon]" + this.player.name + " tried crashing server on entity " + this.player.vehicle.toString() + ". They have been kicked.");
+                        player.kickPlayer("Boat crash attempt detected!");
+                        return;
+                    }
+
+                    // Project Poseidon - End
+
                 }
 
                 this.player.onGround = packet10flying.g;
@@ -849,7 +865,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
                 //Hide commands from being logged in console
                 String cmdName = s.split(" ")[0].replaceAll("/", "");
 
-                if (server.isCommandHidden(cmdName)) {
+                if (Poseidon.getServer().isCommandHidden(cmdName)) {
                     a.info(player.getName() + " issued server command: COMMAND REDACTED");
                 } else {
                     a.info(player.getName() + " issued server command: " + s);
